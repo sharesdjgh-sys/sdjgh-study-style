@@ -20,7 +20,7 @@ export function Share({ type }: { type?: StudyType }) {
   const [message, setMessage] = useState("");
   const [manual, setManual] = useState("");
   const url = () =>
-    `${window.location.origin}${type ? `/types/${type.code}` : "/"}?from=share`;
+    `${window.location.origin}${type ? `/share/${type.code}` : "/"}?from=share`;
   function event(channel: string) {
     const s = readSession();
     if (s?.result) track(s, "share", channel);

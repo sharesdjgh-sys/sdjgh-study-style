@@ -12,14 +12,14 @@ export default async function Page({
       <div className="page-intro">
         <span className="eyebrow">16가지 공부의 결</span>
         <h1>
-          모두 다른 취향.
+          나와 닮은 친구,
           <br />
-          <span className="accent-text">모두 가능한 공부.</span>
+          <span className="accent-text">누구일까요?</span>
         </h1>
         <p>
-          내 스타일도, 친구의 스타일도 만나보세요.
+          16명의 공부 친구들이 실루엣 뒤에 숨어 있어요.
           <br />
-          하나의 유형이 공부의 가능성을 정하지는 않아요.
+          검사로 내 친구를 만나고, 다른 친구의 정체는 서로 물어봐요.
         </p>
       </div>
       <TypeGallery

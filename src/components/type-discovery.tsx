@@ -7,7 +7,8 @@ import {
   PACE_LABELS,
   type StudyType,
 } from "@/lib/content";
-import { Icon } from "./icon";
+import Image from "next/image";
+import { CHARACTERS, characterThumbnail } from "@/lib/characters";
 
 export function TypeDiscovery({
   type,
@@ -60,8 +61,23 @@ export function TypeDiscovery({
               <span className="discovery-number">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <Icon name={FAMILIES[candidate.modality].icon} size={26} />
-              <span>{candidate.name}</span>
+              <Image
+                src={characterThumbnail(candidate.code)}
+                alt=""
+                width={80}
+                height={80}
+                className={
+                  stage === 3 && active
+                    ? "discovery-revealed"
+                    : "discovery-silhouette"
+                }
+                unoptimized
+              />
+              <span>
+                {stage === 3 && active
+                  ? CHARACTERS[candidate.code].name
+                  : "???"}
+              </span>
             </div>
           );
         })}

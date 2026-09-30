@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { STUDY_TYPES, getType } from "@/lib/content";
-import { TypeResult } from "@/components/result";
+import { TypeAccess } from "@/components/type-access";
 export function generateStaticParams() {
   return STUDY_TYPES.map((t) => ({ typeCode: t.code }));
 }
@@ -14,22 +14,28 @@ export async function generateMetadata({
   const t = getType(typeCode);
   if (!t) return {};
   return {
-    title: t.name,
-    description: t.subtitle,
+    title: "아직은 비밀인 공부 친구",
+    description: "16개의 실루엣 중, 나와 닮은 공부 친구를 만나보세요.",
+    robots: { index: false, follow: true },
     openGraph: {
-      title: `나의 공부 취향은 ${t.name}`,
-      description: t.subtitle,
-      images: [{ url: `/api/og?type=${t.code}`, width: 1200, height: 630 }],
+      title: "내 공부 친구는 누구일까요?",
+      description: "검사를 마치면 나만의 캐릭터가 모습을 드러내요.",
+      images: [{ url: "/api/og", width: 1200, height: 630 }],
     },
   };
 }
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ typeCode: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { typeCode } = await params;
   const type = getType(typeCode);
   if (!type) notFound();
-  return <TypeResult type={type} />;
+  // Preserve previously copied links without opening the public catalog.
+  if ((await searchParams).from === "share")
+    redirect(`/share/${type.code}?from=share`);
+  return <TypeAccess type={type} />;
 }

@@ -12,7 +12,8 @@ import {
 } from "@/lib/content";
 import { readSession, clearSession, type Session } from "@/lib/storage";
 import { scoreAnswers } from "@/lib/scoring";
-import { StudyArt } from "./study-art";
+import { CharacterCard } from "./character-card";
+import { CHARACTERS } from "@/lib/characters";
 import { Share } from "./share";
 import { Mission } from "./mission";
 import { Icon } from "./icon";
@@ -43,6 +44,10 @@ export function TypeResult({
               : "스타일 도감 · 대표 스타일 소개"}
           </span>
           <h1>{type.name}</h1>
+          <p className="result-character-intro">
+            나와 같은 공부 취향을 가진 친구,{" "}
+            <strong>{CHARACTERS[type.code].name}</strong>
+          </p>
           <p className="result-subtitle">{type.subtitle}</p>
           <div className="tag-row">
             <span>{f.label}</span>
@@ -85,14 +90,8 @@ export function TypeResult({
             </Link>
           )}
         </div>
-        <div className="result-art">
-          <span className="card-topline">
-            공부결 취향 카드 <span>{f.label}</span>
-          </span>
-          <StudyArt modality={type.modality} asset={type.asset} />
-          <div className="result-art-footer">
-            공부에도, 나만의 결이 있으니까.
-          </div>
+        <div className="result-character">
+          <CharacterCard type={type} priority />
         </div>
       </section>
       <TypeStory key={type.code} type={type} session={session} />
@@ -174,8 +173,11 @@ export function TypeResult({
       </section>
       <section className="share-section" id="share-style">
         <span className="eyebrow">친구의 공부 취향도 궁금하다면</span>
-        <h2>다른 취향, 같은 응원.</h2>
-        <p>대표 스타일만 공유돼요. 답변과 상세 점수는 링크에 담지 않아요.</p>
+        <h2>“넌 어떤 캐릭터 나왔어?”</h2>
+        <p>
+          내 캐릭터 한 명만 친구에게 보여줘요. 답변과 상세 점수는 링크에 담지
+          않아요.
+        </p>
         <Share type={type} />
       </section>
     </main>

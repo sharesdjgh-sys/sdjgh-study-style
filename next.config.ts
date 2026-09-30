@@ -3,7 +3,10 @@ const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   outputFileTracingIncludes: {
-    "/api/og": ["./public/fonts/Pretendard-Bold.woff"],
+    "/api/og": [
+      "./public/fonts/Pretendard-Bold.woff",
+      "./public/characters/share/*.png",
+    ],
   },
   async headers() {
     return [

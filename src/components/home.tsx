@@ -1,18 +1,16 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FAMILIES, MODALITIES, type Modality } from "@/lib/content";
-import { readSession, type Session } from "@/lib/storage";
-import { StudyArt } from "./study-art";
+import { useState } from "react";
+import { FAMILIES, MODALITIES, getType, type Modality } from "@/lib/content";
+import { CharacterCard } from "./character-card";
+import { MysteryCard } from "./mystery-card";
+import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
 export function Home() {
   const [active, setActive] = useState<Modality>("visual");
-  const [saved, setSaved] = useState<Session | null>(null);
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setSaved(readSession()));
-    return () => cancelAnimationFrame(id);
-  }, []);
+  const { session: saved } = useSavedSession();
+  const ownType = saved?.result ? getType(saved.result) : null;
   return (
     <main id="main">
       <section className="hero">
@@ -60,48 +58,41 @@ export function Home() {
             </p>
           </div>
         </div>
-        <div className="hero-visual">
+        <div className="hero-visual hero-character-visual">
           <div className="hero-grid" />
           <span className="floating-label">
             <Icon name="stars-linear" size={18} />
-            당신의 공부 취향은?
+            {ownType
+              ? "나만의 공부 친구를 만났어요"
+              : "16명 중, 내 친구는 누구?"}
           </span>
           <div className="deck-back" />
-          <div className="hero-study-card">
-            <div className="card-topline">
-              <span>나의 공부 취향 카드</span>
-              <span>0{MODALITIES.indexOf(active) + 1} / 04</span>
-            </div>
-            <StudyArt key={active} modality={active} />
-            <div className="hero-card-caption">
-              <span>{FAMILIES[active].title}</span>
-              <h2>{FAMILIES[active].name}</h2>
-              <div className="tag-row">
-                {FAMILIES[active].tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
-            </div>
+          <div className="hero-character-card">
+            {ownType ? (
+              <CharacterCard type={ownType} detailLink priority />
+            ) : (
+              <MysteryCard
+                key={active}
+                type={getType(`${active}-solo-planned`)!}
+                priority
+              />
+            )}
           </div>
-          <span className="round-stamp">
-            다른 방법도
-            <br />
-            <strong>괜찮아요</strong>
-            <Icon name="check-read-linear" size={22} />
-          </span>
-          <div className="deck-selector" aria-label="공부 스타일 미리보기">
-            {MODALITIES.map((m) => (
-              <button
-                key={m}
-                aria-pressed={active === m}
-                className={active === m ? "selected" : ""}
-                onClick={() => setActive(m)}
-              >
-                <Icon name={FAMILIES[m].icon} size={18} />
-                {FAMILIES[m].verb}
-              </button>
-            ))}
-          </div>
+          {!ownType && (
+            <div className="deck-selector" aria-label="실루엣 미리보기">
+              {MODALITIES.map((m) => (
+                <button
+                  key={m}
+                  aria-pressed={active === m}
+                  className={active === m ? "selected" : ""}
+                  onClick={() => setActive(m)}
+                >
+                  <Icon name={FAMILIES[m].icon} size={18} />
+                  {FAMILIES[m].verb}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       <section className="fact-strip" aria-label="검사 안내">

@@ -4,8 +4,9 @@ test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async 
   await expect(page.getByRole("heading", { name: /남들 말고/ })).toBeVisible();
   await page.getByRole("button", { name: "말해서", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "이야기 편집자", exact: true }),
+    page.getByRole("article", { name: "미공개 캐릭터 05" }),
   ).toBeVisible();
+  await expect(page.locator(".character-card")).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -50,12 +51,15 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toBeVisible();
   await expect(page.locator(".discovery-tile")).toHaveCount(16);
+  await expect(page.locator(".discovery-silhouette")).toHaveCount(16);
   await expect(page.locator(".discovery-shell button")).toHaveCount(0);
   await expect(page.locator(".discovery-shell")).toHaveAttribute(
     "data-stage",
     "3",
   );
   await expect(page.locator(".discovery-tile.is-match")).toHaveCount(1);
+  await expect(page.locator(".discovery-revealed")).toHaveCount(1);
+  await expect(page.locator(".discovery-silhouette")).toHaveCount(15);
   await expect(page).toHaveURL(/\/result$/);
   await expect(
     page.getByRole("heading", { name: "차분한 지도 설계자", exact: true }),
@@ -107,8 +111,8 @@ test("저장소 차단과 공유 실패에서도 사용 가능", async ({ page }
   await page.getByRole("radio", { name: "그런 편이에요", exact: true }).check();
   await page.getByRole("button", { name: "다음 질문" }).click();
   await expect(page.locator(".question-number")).toHaveText("질문 02");
-  await page.goto("/types/visual-solo-planned");
-  await expect(page.getByText(/개인 검사 결과는 아니에요/)).toBeVisible();
+  await page.goto("/share/visual-solo-planned");
+  await expect(page.getByText(/내 검사 결과는 아니에요/)).toBeVisible();
   await page.getByRole("button", { name: "카카오톡 공유" }).click();
   await expect(page.locator(".share-block [role=status]")).toContainText(
     "링크 복사",
