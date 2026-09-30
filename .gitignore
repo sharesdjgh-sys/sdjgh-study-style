@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.env*
+!.env.example
+*.tsbuildinfo
+*.log
+.vercel/
+.artifacts/
+.playwright-mcp/
+/ref/
