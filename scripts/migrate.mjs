@@ -19,7 +19,17 @@ await sql.transaction(
 await sql.query(
   await readFile(new URL("../db/002_retention.sql", import.meta.url), "utf8"),
 );
-await sql.query(
-  await readFile(new URL("../db/003_collections.sql", import.meta.url), "utf8"),
+const collections = await readFile(
+  new URL("../db/003_collections.sql", import.meta.url),
+  "utf8",
+);
+// Neon prepared queries accept one statement. Explicit boundaries preserve the
+// semicolons inside the PL/pgSQL function while applying this migration atomically.
+await sql.transaction(
+  collections
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+    .map((statement) => sql.query(statement)),
 );
 console.log("공부결 이용 통계·계정·캐릭터 도감 테이블 준비 완료");

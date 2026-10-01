@@ -9,22 +9,27 @@ CREATE TABLE IF NOT EXISTS collection_accounts (
   CHECK ((first_type IS NULL AND first_run_id IS NULL AND registered_at IS NULL)
     OR (first_type IS NOT NULL AND first_run_id IS NOT NULL AND registered_at IS NOT NULL))
 );
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_sessions (
   token_hash text PRIMARY KEY,
   account_id uuid NOT NULL REFERENCES collection_accounts(id) ON DELETE CASCADE,
   expires_at timestamptz NOT NULL
 );
+-- statement-breakpoint
 CREATE INDEX IF NOT EXISTS collection_session_expiry ON collection_sessions(expires_at);
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_oauth_states (
   state_hash text PRIMARY KEY,
   browser_hash text NOT NULL,
   expires_at timestamptz NOT NULL
 );
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_invites (
   token_hash text PRIMARY KEY,
   inviter_id uuid NOT NULL REFERENCES collection_accounts(id) ON DELETE CASCADE,
   expires_at timestamptz NOT NULL
 );
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_referrals (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   invitee_id uuid UNIQUE REFERENCES collection_accounts(id) ON DELETE SET NULL,
@@ -32,6 +37,7 @@ CREATE TABLE IF NOT EXISTS collection_referrals (
   created_at timestamptz NOT NULL DEFAULT now(),
   CHECK (inviter_id <> invitee_id)
 );
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_cards (
   account_id uuid NOT NULL REFERENCES collection_accounts(id) ON DELETE CASCADE,
   type_code text NOT NULL CHECK (type_code ~ '^(visual|auditory|tactile|motion)-(solo|team)-(planned|flexible)$'),
@@ -41,12 +47,14 @@ CREATE TABLE IF NOT EXISTS collection_cards (
   created_at timestamptz NOT NULL DEFAULT now(),
   PRIMARY KEY (account_id,type_code)
 );
+-- statement-breakpoint
 CREATE TABLE IF NOT EXISTS collection_limits (
   key text PRIMARY KEY,
   hits integer NOT NULL,
   expires_at timestamptz NOT NULL
 );
 
+-- statement-breakpoint
 -- A single SQL statement invokes this transaction. Locking the inviter serializes
 -- simultaneous referrals; the browser never chooses a card or awards a reward.
 CREATE OR REPLACE FUNCTION register_collection(
