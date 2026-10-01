@@ -1,4 +1,5 @@
 import { ClearRecords } from "@/components/clear-records";
+import { QUESTIONS } from "@/lib/content";
 export const metadata = { title: "저장 및 개인정보 안내" };
 export default function Page() {
   return (
@@ -54,10 +55,10 @@ export default function Page() {
           않아요.
         </p>
         <p>
-          첫 결과를 도감에 등록할 때 16개 답변을 서버로 잠깐 전송해 완료 여부와
-          유형을 검증해요. 답변 원문과 상세 점수는 DB나 애플리케이션 로그에
-          저장하지 않아요. 비로그인 검사만 이용하면 이 등록 검증을 요청하지
-          않아요.
+          첫 결과를 도감에 등록할 때 {QUESTIONS.length}개 답변을 서버로 잠깐
+          전송해 완료 여부와 유형을 검증해요. 답변 원문과 상세 점수는 DB나
+          애플리케이션 로그에 저장하지 않아요. 비로그인 검사만 이용하면 이 등록
+          검증을 요청하지 않아요.
         </p>
         <p>
           계정과 도감은 계정 삭제 전까지 보관해요. 로그인 세션은 30일, 초대

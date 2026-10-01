@@ -1,13 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  FAMILIES,
-  STUDY_TYPES,
-  SOCIAL_LABELS,
-  PACE_LABELS,
-  type StudyType,
-} from "@/lib/content";
 import Image from "next/image";
+import { QUESTIONS, STUDY_TYPES, type StudyType } from "@/lib/content";
 import { CHARACTERS, characterThumbnail } from "@/lib/characters";
 
 export function TypeDiscovery({
@@ -20,6 +14,7 @@ export function TypeDiscovery({
   revealCharacter?: boolean;
 }) {
   const [stage, setStage] = useState(0);
+  const [current, setCurrent] = useState(0);
   const complete = useRef(onComplete);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -27,86 +22,106 @@ export function TypeDiscovery({
   }, [onComplete]);
   useEffect(() => {
     heading.current?.focus();
-    const timers = [900, 1900, 2900].map((delay, index) =>
-      setTimeout(() => setStage(index + 1), delay),
-    );
-    timers.push(setTimeout(() => complete.current(), 4400));
-    return () => timers.forEach(clearTimeout);
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    let timer: ReturnType<typeof setTimeout>;
+    let tick = 0;
+    let previous = 0;
+    // Only the silhouettes are random; the final character always comes from the result.
+    function shuffle() {
+      previous =
+        (previous + 1 + Math.floor(Math.random() * (STUDY_TYPES.length - 1))) %
+        STUDY_TYPES.length;
+      setCurrent(previous);
+      tick++;
+      timer = setTimeout(shuffle, tick < 23 ? 85 : tick < 29 ? 150 : 280);
+    }
+    if (!reduced) timer = setTimeout(shuffle, 85);
+    const pause = setTimeout(() => {
+      clearTimeout(timer);
+      setStage(2);
+    }, 3300);
+    const reveal = setTimeout(() => setStage(3), 3800);
+    const finish = setTimeout(() => complete.current(), 6000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(pause);
+      clearTimeout(reveal);
+      clearTimeout(finish);
+    };
   }, []);
-  const messages = [
-    "16개의 답변에서 취향 조각을 모으고 있어요",
-    "그림으로, 말로, 손으로, 움직이며! 어떤 방식이 끌렸나요?",
-    "혼자 또는 함께, 계획대로 또는 자유롭게!",
-    revealCharacter
-      ? "발견 완료! 나를 닮은 공부캐를 만났어요"
-      : "발견 완료! 지금의 공부 취향을 살펴봐요",
-  ];
+  const revealed = stage === 3;
   return (
-    <main id="main" className="discovery-shell" data-stage={stage}>
-      <span className="eyebrow">16개의 답변, 하나의 발견</span>
+    <main
+      id="main"
+      className="discovery-shell discovery-roulette"
+      data-stage={stage}
+    >
+      <span className="eyebrow">{QUESTIONS.length}개의 답변, 하나의 발견</span>
       <h1 ref={heading} tabIndex={-1}>
-        취향 조각을 모아,
-        <br />
-        {revealCharacter ? "나의 공부캐 찾는 중" : "지금의 공부 스타일 찾는 중"}
+        {revealed
+          ? revealCharacter
+            ? "짠! 나의 공부캐 등장"
+            : "나의 공부 스타일 발견!"
+          : stage === 2
+            ? "바로… 이 친구!"
+            : "어떤 공부캐가 나타날까?"}
       </h1>
       <p className="discovery-status" role="status" aria-live="polite">
-        {messages[stage]}
+        {revealed
+          ? revealCharacter
+            ? `반가워, ${CHARACTERS[type.code].name}!`
+            : "지금의 공부 취향을 찾았어요"
+          : "두근두근, 나를 닮은 친구를 만나고 있어요"}
       </p>
-      <div className="discovery-grid" aria-hidden="true">
+      <div className="discovery-reel" aria-hidden="true">
+        <div className="discovery-aura" />
+        <span className="discovery-orbit orbit-one">✦</span>
+        <span className="discovery-orbit orbit-two">✧</span>
+        <span className="discovery-orbit orbit-three">✦</span>
         {STUDY_TYPES.map((candidate, index) => {
-          const active =
-            (stage < 1 || candidate.modality === type.modality) &&
-            (stage < 2 || candidate.social === type.social) &&
-            (stage < 3 || candidate.pace === type.pace);
+          const active = revealed
+            ? candidate.code === type.code
+            : index === current;
           return (
             <div
               key={candidate.code}
-              className={`discovery-tile ${active ? "is-candidate" : "is-dismissed"} ${stage === 3 && active ? "is-match" : ""}`}
+              className={`discovery-frame ${active ? "is-current" : ""} ${revealed && active ? "is-match" : ""}`}
             >
-              <span className="discovery-number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
               <Image
                 src={characterThumbnail(candidate.code)}
                 alt=""
-                width={80}
-                height={80}
+                fill
+                sizes="320px"
+                loading="eager"
+                unoptimized
                 className={
-                  stage === 3 && active && revealCharacter
+                  revealed && active && revealCharacter
                     ? "discovery-revealed"
                     : "discovery-silhouette"
                 }
-                unoptimized
               />
-              <span>
-                {stage === 3 && active && revealCharacter
-                  ? CHARACTERS[candidate.code].name
-                  : "???"}
-              </span>
             </div>
           );
         })}
-      </div>
-      <div className="discovery-clues" aria-label="발견한 공부 취향">
-        {[
-          FAMILIES[type.modality].label,
-          SOCIAL_LABELS[type.social],
-          PACE_LABELS[type.pace],
-        ].map((clue, index) => (
-          <span key={clue} className={stage > index ? "is-found" : ""}>
-            {stage > index ? clue : "아직 펼치지 않은 취향"}
-          </span>
-        ))}
+        <span className="discovery-reel-label">
+          {revealed
+            ? revealCharacter
+              ? CHARACTERS[type.code].name
+              : "발견 완료"
+            : "???"}
+        </span>
       </div>
       <div className="discovery-progress" aria-hidden="true">
         <span />
       </div>
       <p className="discovery-note">
-        {stage === 3
-          ? revealCharacter
-            ? "잠시 후, 나만의 취향 카드가 펼쳐져요"
-            : "잠시 후, 지금의 유형과 공부법 설명을 보여드릴게요"
-          : "공부 방식 · 집중 환경 · 공부 리듬을 살펴보고 있어요"}
+        {revealed
+          ? "잠시 후, 나만의 취향 카드가 펼쳐져요"
+          : stage === 2
+            ? "준비됐나요?"
+            : "나와 닮은 공부 스타일을 찾는 중"}
       </p>
     </main>
   );

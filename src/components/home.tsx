@@ -118,7 +118,8 @@ export function Home() {
       <section className="fact-strip" aria-label="테스트 안내">
         <div>
           <strong>
-            16<span>개의 질문</span>
+            {QUESTIONS.length}
+            <span>개의 질문</span>
           </strong>
           <p>정답 없이, 평소의 나답게</p>
         </div>

@@ -64,14 +64,14 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
   await page.getByRole("radio", { name: "기억으로 개념 지도 그리기" }).check();
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toBeVisible();
-  await expect(page.locator(".discovery-tile")).toHaveCount(16);
+  await expect(page.locator(".discovery-frame")).toHaveCount(16);
   await expect(page.locator(".discovery-silhouette")).toHaveCount(16);
   await expect(page.locator(".discovery-shell button")).toHaveCount(0);
   await expect(page.locator(".discovery-shell")).toHaveAttribute(
     "data-stage",
     "3",
   );
-  await expect(page.locator(".discovery-tile.is-match")).toHaveCount(1);
+  await expect(page.locator(".discovery-frame.is-match")).toHaveCount(1);
   await expect(page.locator(".discovery-revealed")).toHaveCount(1);
   await expect(page.locator(".discovery-silhouette")).toHaveCount(15);
   await expect(page).toHaveURL(/\/result$/);
