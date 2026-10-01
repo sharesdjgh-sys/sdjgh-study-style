@@ -1,0 +1,27 @@
+{
+  "validatedOn": "2026-10-01",
+  "browser": "Chrome through Playwright",
+  "projects": {
+    "desktop": { "passed": 35, "failed": 0 },
+    "mobileViewportEmulation": { "passed": 35, "failed": 0 }
+  },
+  "suites": {
+    "tests/e2e/character-motion.spec.ts": 22,
+    "tests/e2e/characters.spec.ts": 6,
+    "tests/e2e/collection.spec.ts": 7
+  },
+  "checks": {
+    "typescriptNoEmit": "passed",
+    "eslintChangedSourceTestsAndScripts": "passed",
+    "nextProductionBuild": "passed",
+    "trackedDiffWhitespace": "passed",
+    "allVideoFramesDecoded": "passed",
+    "allSixteenVideosTenSeconds720Square24FpsNoAudio": "passed",
+    "twoContinuousLoopsOfEachVideoInReviewGrid": "passed",
+    "twoBoundaryChecksOfEachVideoInActualShareCard": "passed"
+  },
+  "additionalPaidGenerationRequests": 15,
+  "automaticRetries": 0,
+  "manualPaidReplacements": 0,
+  "note": "Mobile checks emulate a phone viewport in Chrome; they do not represent a physical iOS or Kakao in-app browser test."
+}

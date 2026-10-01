@@ -1,0 +1,167 @@
+[
+  {
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "species": "fox",
+    "action": "노트의 연결을 살펴보고 연필을 살짝 들어 새로운 생각을 떠올려요.",
+    "identity": "orange fox with white cheek fur, a large bushy orange-and-white tail, green study outfit, orange pencil and the existing concept-map notebook; retain the seated pose and every existing floating diagram decoration",
+    "personality": "a curious independent thinker who explores unexpected connections in a visual notebook",
+    "observe": "The seated fox slowly looks toward the concept-map notebook and tilts the head 4 degrees in curiosity. Blink once softly. Keep the notebook completely steady.",
+    "gesture": "Move the pencil-holding paw in one tiny searching arc on its original side of the body, hovering as if considering a new connection, without writing or touching the page. The seated body remains still.",
+    "reaction": "Pause thoughtfully, then lift the gaze toward the viewer with a tiny pleased head tilt. Preserve the existing mouth shape."
+  },
+  {
+    "code": "visual-team-planned",
+    "name": "루트",
+    "species": "deer",
+    "action": "개념 지도의 순서를 짚고 친구에게 보여주듯 고개를 끄덕여요.",
+    "identity": "young spotted deer with small branching antlers, cream muzzle, green study clothes, coral scarf and the existing rigid concept-map clipboard; retain all antler ornaments and colored map dots",
+    "personality": "a welcoming guide who helps friends follow a visual concept map in a clear order",
+    "observe": "Look down at the existing concept-map clipboard and blink once, as though checking the explanation order. Keep the board at its reference angle.",
+    "gesture": "Use the existing pointing forehoof to make two tiny ordered indicating gestures close to its reference location, as if showing the first and next ideas to an unseen friend. Keep the clipboard and diagram unchanged.",
+    "reaction": "Look back toward the viewer and give one small reassuring nod, inviting them to follow along."
+  },
+  {
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "species": "chameleon",
+    "action": "도형을 다른 각도로 살펴보고 친구에게 아이디어를 건네듯 손을 움직여요.",
+    "identity": "small green-and-yellow chameleon with large brown eyes, coral cap worn backward, cream hoodie, small satchel, coiled striped tail and the existing colored geometric shapes floating above the raised hand; keep every shape fixed and unchanged",
+    "personality": "a playful visual collaborator who considers a different point of view and offers an idea",
+    "observe": "Slowly tilt the head 4 degrees to look at the existing floating colored shapes from another angle; blink once softly. Keep the shapes at their exact reference positions.",
+    "gesture": "Rotate the already-raised wrist outward by only 3 degrees, as if sharing the visual idea with an unseen friend. Do not move, recolor or add geometric shapes. Keep the coiled tail shape intact.",
+    "reaction": "Return the gaze to the viewer with a small curious nod and the original gentle expression."
+  },
+  {
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "species": "fennec fox",
+    "action": "녹음기를 살펴보고 귀를 살짝 기울이며 차분히 복습해요.",
+    "identity": "cream fennec fox with very large upright ears, brown eyes, headphones resting around the neck, cream collared shirt, soft green study clothes, a small green notebook and the existing orange-and-cream recorder; keep its buttons and headphones unchanged",
+    "personality": "a calm independent listener who reviews an explanation in an orderly routine",
+    "observe": "Look at the existing handheld recorder, blink slowly once, then tilt the head by 3 degrees as if listening to a remembered explanation. Keep the recorder steady.",
+    "gesture": "Make one small listening twitch with the ear tips and one measured head nod. Keep the headphone band rigid and in its exact position around the neck. No visible speech or button changes.",
+    "reaction": "Pause, return the gaze to the viewer and settle into a quiet satisfied expression identical to the reference."
+  },
+  {
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "species": "cat",
+    "action": "생각하듯 턱을 짚고 고개를 기울인 뒤 꼬리를 살짝 움직여요.",
+    "identity": "cream-and-orange cat with brown eyes, pink hoodie, rounded headphones on the ears, the existing handheld orange music player, curled fluffy tail and the two existing small thought-cloud decorations; preserve the exact headphone cable and all props",
+    "personality": "a curious cat who asks itself a spontaneous question and quietly considers the answer",
+    "observe": "Tilt the head 4 degrees as if considering a question, keeping the existing thinking paw near the chin. Blink once gently. Keep the thought-cloud decorations fixed.",
+    "gesture": "Move the thinking paw just a little closer to the chin, then pause; sway only the tip of the existing curled tail a few pixels. Keep the music player and headphone cable stationary and intact.",
+    "reaction": "Make a tiny recognition nod and let the eyes return toward the viewer, keeping the same face and mouth shape."
+  },
+  {
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "species": "golden retriever",
+    "action": "마이크를 살짝 들고 설명 차례를 건네듯 고개를 끄덕여요.",
+    "identity": "golden retriever puppy with floppy ears, large brown eyes, red varsity jacket with cream sleeves, the existing coral microphone and green notebook, and the fluffy golden tail; preserve jacket patches, microphone grille and notebook shape",
+    "personality": "a friendly study partner who takes an orderly explanation turn and then invites the next friend",
+    "observe": "Look toward the viewer and blink once with an attentive, welcoming expression. Keep the notebook in its original position.",
+    "gesture": "Raise the existing microphone-holding paw only slightly, as though ready for an explanation turn, pause, then lower it. No speech, singing, tongue motion or mouth animation; preserve the original smile.",
+    "reaction": "Give one small friendly nod as if handing the turn to an unseen partner; let the existing tail tip sway very gently and return."
+  },
+  {
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "species": "cockatiel",
+    "action": "새 질문이 떠오른 듯 고개를 기울이고 펼친 날개를 작게 들어요.",
+    "identity": "cream-and-coral cockatiel with a swept feather crest, orange cheek patches, brown eyes, teal jacket, existing cream-and-coral megaphone, extended feathered wing and yellow feet; preserve crest feather count, wing feathers and megaphone geometry",
+    "personality": "an enthusiastic conversation spark who notices a surprising question and wants to share it",
+    "observe": "Tilt the head 4 degrees in curiosity and blink once. Let only the very tip of the crest move slightly with the head; keep every feather attached.",
+    "gesture": "Lift the already-extended free wing by only 5 degrees, as if politely signaling a spontaneous question. Keep the megaphone on its original side and fully unchanged. No flying, flapping or beak animation.",
+    "reaction": "Give one tiny eager nod toward the viewer, retaining the original open-beak expression without changing the mouth."
+  },
+  {
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "species": "beaver",
+    "action": "자로 종이의 위치를 확인하고 가지런히 정리하듯 손을 움직여요.",
+    "identity": "brown beaver with rounded ears, cream cheeks, two front teeth, purple overalls, the existing wooden ruler, pastel paper notebook and broad patterned beaver tail; preserve paper edges, ruler marks and overalls",
+    "personality": "a careful organizer who checks physical study materials and puts them in order",
+    "observe": "Look down toward the existing ruler and paper, with one slow blink and a tiny focused head inclination. Keep the paper in the original grip.",
+    "gesture": "Make a tiny straightening adjustment of the paper-holding paw, no more than 3 degrees, as if aligning the paper with the ruler. The paper stays rigid with the same edges and content. Keep the ruler visible and unchanged.",
+    "reaction": "Pause to inspect the alignment, then give one precise small satisfied nod. Keep the mouth and two front teeth unchanged."
+  },
+  {
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "species": "raccoon",
+    "action": "손에 든 종이 별을 조금 돌려보고 새로운 조합을 떠올려요.",
+    "identity": "seated gray raccoon with a dark eye mask, brown eyes, lavender hoodie, fluffy striped tail, existing folded paper star in one paw and purple paper shape in the other; preserve every folded edge and all existing paper pieces around the feet",
+    "personality": "an independent tinkerer who discovers ideas by inspecting and experimenting with paper shapes",
+    "observe": "Look between the two existing handheld paper shapes and tilt the head 4 degrees with one gentle blink. Stay seated in the same pose.",
+    "gesture": "Rotate the existing folded paper star by only 5 degrees using the current paw grip, pause to inspect its angle, then rotate it back. Do not unfold, transform, merge, recolor or replace any paper shape. All loose pieces remain fixed.",
+    "reaction": "Give a tiny curious recognition nod, preserving the exact eye mask and original smile."
+  },
+  {
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "species": "bear",
+    "action": "블록 집을 꼼꼼히 살펴보고 친구에게 보여주듯 살짝 들어요.",
+    "identity": "brown bear cub with cream muzzle, brown eyes, cream short-sleeved shirt, purple backpack and the existing pastel toy house made of rigid green, yellow and pink blocks; retain all block seams and holes",
+    "personality": "a steady teammate who carefully checks a shared construction before showing it to a friend",
+    "observe": "Look down at the existing block house and blink once slowly, as though checking that its pieces fit. Keep both paws gripping the house exactly as shown.",
+    "gesture": "Raise the whole rigid block house by just a few pixels with both paws together and tilt it no more than 2 degrees, as though showing the completed assembly. Never move an individual block or change its shape, color, hole or connection.",
+    "reaction": "Look toward the viewer and give one reassuring small nod, then let the house settle back into the reference position."
+  },
+  {
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "species": "otter",
+    "action": "두 퍼즐 조각을 번갈아 보고 친구에게 조합을 제안하듯 움직여요.",
+    "identity": "brown otter with cream face, brown eyes, purple knit beanie, lavender hoodie, cream overalls and the existing two large orange and purple puzzle pieces; retain the lifted-foot reference pose and both puzzle-piece silhouettes",
+    "personality": "a playful collaborator who compares two puzzle pieces and proposes a new combination",
+    "observe": "Look from the orange puzzle piece to the purple puzzle piece, tilt the head 4 degrees and blink once softly. Retain the same lifted-foot balance pose.",
+    "gesture": "Make one tiny alternating wrist tilt to present first one existing puzzle piece, then the other. Keep them separate, rigid and exactly the same shape. Do not join, merge, add or remove pieces.",
+    "reaction": "Turn the gaze toward the viewer and make one little inviting nod as if asking what combination to try. Preserve the original smile."
+  },
+  {
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "species": "penguin",
+    "action": "타이머를 확인하고 정해둔 리듬에 맞춰 작게 몸을 기울여요.",
+    "identity": "black-and-cream penguin with a pale blue head tuft, large brown eyes, orange beak, teal zip hoodie, backpack, coral sneakers and the existing cream stopwatch with coral rim; preserve stopwatch hand and button positions",
+    "personality": "a calm student who keeps a personal study rhythm in short measured intervals",
+    "observe": "Look at the existing stopwatch and blink once gently. Keep its face, hand, rim and buttons unchanged.",
+    "gesture": "Make two very small evenly spaced weight shifts in place, no more than a few pixels, as though resetting a steady study rhythm. Maintain the original foot positions and sneaker shapes; no walking, hopping or timer-button presses.",
+    "reaction": "Give one measured small nod, then become still and return the gaze toward the viewer."
+  },
+  {
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "species": "rabbit",
+    "action": "자세를 가볍게 바꾸고 카드에 시선을 돌리며 다시 시작해요.",
+    "identity": "cream rabbit with long asymmetrical ears, brown eyes, blue hoodie, coral sneakers, carrot-decorated backpack and the existing small blank study card; preserve the raised-foot reference pose and the card's blank face",
+    "personality": "an independent learner who refreshes concentration with a small comfortable posture change",
+    "observe": "Look toward the existing study card, blink once and incline the head 3 degrees, as though returning to one question. Keep the card blank and steady.",
+    "gesture": "Make one tiny comfortable upper-body lean and gently rotate the already-raised sneaker by only 4 degrees, then return it. Keep the supporting foot planted and retain the original raised-leg pose; no hopping, stepping or new pose.",
+    "reaction": "Let the ear tips follow the small lean naturally, then give a tiny ready-to-restart nod. Do not change ear length or add a second card."
+  },
+  {
+    "code": "motion-team-planned",
+    "name": "루카",
+    "species": "husky",
+    "action": "친구를 안내하듯 손을 움직이고 체크판을 보며 다음 구간을 확인해요.",
+    "identity": "blue-gray and white husky puppy with pointed ears, large brown eyes, teal varsity jacket, satchel, fluffy tail and the existing concept-check clipboard; retain the extended free paw and all clipboard diagram marks",
+    "personality": "a dependable rhythm partner who checks the next study interval and encourages the group to continue",
+    "observe": "Glance down at the existing clipboard and blink once, as if checking the next shared study interval. Keep the clipboard rigid at its reference angle.",
+    "gesture": "Make two small evenly spaced downward-and-back motions with the already-extended free paw, only a few pixels, as a gentle shared rhythm cue. Do not swing the whole arm or alter the paw shape. Keep all feet fixed.",
+    "reaction": "Return the gaze to the viewer and give one confident small nod as if inviting friends to the next interval."
+  },
+  {
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "species": "quokka",
+    "action": "펼친 손과 몸을 가볍게 움직여 친구들에게 다시 시작할 신호를 보내요.",
+    "identity": "brown quokka with rounded ears, large brown eyes, cream muzzle, teal hoodie, satchel, coral shorts and sneaker, existing small blank study card and outstretched free paw; preserve the raised-leg reference pose and cheerful mouth shape",
+    "personality": "a cheerful group encourager who changes the mood with a small relaxed rhythm cue",
+    "observe": "Look toward the viewer with the existing cheerful expression and blink once softly. Retain the same lifted-leg pose and card position.",
+    "gesture": "Give one small relaxed wave with the already-outstretched free paw, no more than 5 degrees, and a tiny side-to-side upper-body sway as if encouraging friends to restart. No jumping, stepping, spinning or large bouncing.",
+    "reaction": "Pause warmly, return the paw and torso to the exact reference positions and let the gaze settle toward the viewer. Keep the study card blank."
+  }
+]

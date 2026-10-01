@@ -1,0 +1,180 @@
+{
+  "model": "gemini-omni-1.1-flash",
+  "characterCount": 16,
+  "activeVideoCount": 15,
+  "correctedStaticCharacters": [
+    {
+      "code": "auditory-solo-flexible",
+      "image": "public/characters/auditory-solo-flexible-v2.webp",
+      "correction": "art/characters/melo-anatomy-v2.json"
+    }
+  ],
+  "additionalPaidRequests": 15,
+  "additionalEstimatedUSD": 15.4190265,
+  "currentCollectionEstimatedUSD": 16.450184,
+  "resolution": "720x720",
+  "secondsPerVideo": 10,
+  "fps": 24,
+  "videos": [
+    {
+      "code": "visual-solo-planned",
+      "name": "루미",
+      "active": true,
+      "video": "public/characters/motion/lumi-loop-v2.mp4",
+      "poster": "public/characters/motion/lumi-loop-v2.webp",
+      "estimatedUSD": 1.0311575,
+      "boundaryMeanPixelDifference": 1.6823746141975309
+    },
+    {
+      "code": "visual-solo-flexible",
+      "name": "모아",
+      "active": true,
+      "video": "public/characters/motion/visual-solo-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/visual-solo-flexible-loop-v1.webp",
+      "estimatedUSD": 1.026905,
+      "boundaryMeanPixelDifference": 2.152602237654321
+    },
+    {
+      "code": "visual-team-planned",
+      "name": "루트",
+      "active": true,
+      "video": "public/characters/motion/visual-team-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/visual-team-planned-loop-v1.webp",
+      "estimatedUSD": 1.0277945000000002,
+      "boundaryMeanPixelDifference": 1.5036213991769547
+    },
+    {
+      "code": "visual-team-flexible",
+      "name": "피코",
+      "active": true,
+      "video": "public/characters/motion/visual-team-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/visual-team-flexible-loop-v1.webp",
+      "estimatedUSD": 1.0289270000000001,
+      "boundaryMeanPixelDifference": 1.7001060956790124
+    },
+    {
+      "code": "auditory-solo-planned",
+      "name": "소리",
+      "active": true,
+      "video": "public/characters/motion/auditory-solo-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/auditory-solo-planned-loop-v1.webp",
+      "estimatedUSD": 1.0293260000000002,
+      "boundaryMeanPixelDifference": 1.600570987654321
+    },
+    {
+      "code": "auditory-solo-flexible",
+      "name": "멜로",
+      "active": false,
+      "video": "public/characters/motion/auditory-solo-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/auditory-solo-flexible-loop-v1.webp",
+      "estimatedUSD": 1.0293125,
+      "boundaryMeanPixelDifference": 1.7677565586419752
+    },
+    {
+      "code": "auditory-team-planned",
+      "name": "토크",
+      "active": true,
+      "video": "public/characters/motion/auditory-team-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/auditory-team-planned-loop-v1.webp",
+      "estimatedUSD": 1.0314035,
+      "boundaryMeanPixelDifference": 1.536653163580247
+    },
+    {
+      "code": "auditory-team-flexible",
+      "name": "리프",
+      "active": true,
+      "video": "public/characters/motion/auditory-team-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/auditory-team-flexible-loop-v1.webp",
+      "estimatedUSD": 1.0242125,
+      "boundaryMeanPixelDifference": 1.498170653292181
+    },
+    {
+      "code": "tactile-solo-planned",
+      "name": "토리",
+      "active": true,
+      "video": "public/characters/motion/tactile-solo-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/tactile-solo-planned-loop-v1.webp",
+      "estimatedUSD": 1.0293275,
+      "boundaryMeanPixelDifference": 1.6466576646090536
+    },
+    {
+      "code": "tactile-solo-flexible",
+      "name": "몽",
+      "active": true,
+      "video": "public/characters/motion/tactile-solo-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/tactile-solo-flexible-loop-v1.webp",
+      "estimatedUSD": 1.027859,
+      "boundaryMeanPixelDifference": 2.0932458847736624
+    },
+    {
+      "code": "tactile-team-planned",
+      "name": "블록",
+      "active": true,
+      "video": "public/characters/motion/tactile-team-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/tactile-team-planned-loop-v1.webp",
+      "estimatedUSD": 1.0272965,
+      "boundaryMeanPixelDifference": 1.88065329218107
+    },
+    {
+      "code": "tactile-team-flexible",
+      "name": "조이",
+      "active": true,
+      "video": "public/characters/motion/tactile-team-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/tactile-team-flexible-loop-v1.webp",
+      "estimatedUSD": 1.028615,
+      "boundaryMeanPixelDifference": 1.717227366255144
+    },
+    {
+      "code": "motion-solo-planned",
+      "name": "페이스",
+      "active": true,
+      "video": "public/characters/motion/motion-solo-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/motion-solo-planned-loop-v1.webp",
+      "estimatedUSD": 1.0259945000000001,
+      "boundaryMeanPixelDifference": 2.0738670267489714
+    },
+    {
+      "code": "motion-solo-flexible",
+      "name": "바니",
+      "active": true,
+      "video": "public/characters/motion/motion-solo-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/motion-solo-flexible-loop-v1.webp",
+      "estimatedUSD": 1.0269424999999999,
+      "boundaryMeanPixelDifference": 1.7331938014403292
+    },
+    {
+      "code": "motion-team-planned",
+      "name": "루카",
+      "active": true,
+      "video": "public/characters/motion/motion-team-planned-loop-v1.mp4",
+      "poster": "public/characters/motion/motion-team-planned-loop-v1.webp",
+      "estimatedUSD": 1.027592,
+      "boundaryMeanPixelDifference": 1.826304012345679
+    },
+    {
+      "code": "motion-team-flexible",
+      "name": "스킵",
+      "active": true,
+      "video": "public/characters/motion/motion-team-flexible-loop-v1.mp4",
+      "poster": "public/characters/motion/motion-team-flexible-loop-v1.webp",
+      "estimatedUSD": 1.0275185,
+      "boundaryMeanPixelDifference": 1.9607523148148147
+    }
+  ],
+  "initialGenerationQuality": {
+    "decodedAllFrames": true,
+    "visuallyReviewedStoryboards": 16,
+    "browser": "Headless Chrome; desktop viewport and mobile viewport emulation",
+    "verifiedContinuousLoopsPerVideo": 2,
+    "pageErrors": 0,
+    "mobileOverflow": false,
+    "maximumObservedBoundaryFrameGapMs": 232.89999999999964,
+    "previewStressTest": "Two continuous loops of all 16 videos playing simultaneously in the local review grid; maximum observed callback gap belongs to that stress test.",
+    "realCardBoundaryChecksPerVideo": 2,
+    "realCardMaximumObservedBoundaryFrameGapMs": 83.30000000000018
+  },
+  "knownIssues": [
+    "Initial videos markedly reduce motion after about eight seconds because the prompt specified an ending hold. Continuous-motion loops require a revised design.",
+    "Melo v1 inherited three arms from the original artwork and is retired from current playback; its source image has been corrected."
+  ]
+}

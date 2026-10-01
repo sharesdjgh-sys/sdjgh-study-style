@@ -1,0 +1,30 @@
+{
+  "code": "visual-team-planned",
+  "name": "루트",
+  "source": "public/characters/motion/visual-team-planned-loop-v1.mp4",
+  "video": "public/characters/motion/visual-team-planned-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/visual-team-planned-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:44:33.721Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "599802"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 0,
+  "boundaryMeanPixelDifference": 1.566172839506173,
+  "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+}

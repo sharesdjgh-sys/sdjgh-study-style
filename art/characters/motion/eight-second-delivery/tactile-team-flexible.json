@@ -1,0 +1,30 @@
+{
+  "code": "tactile-team-flexible",
+  "name": "조이",
+  "source": "public/characters/motion/tactile-team-flexible-loop-v1.mp4",
+  "video": "public/characters/motion/tactile-team-flexible-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/tactile-team-flexible-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:45:37.364Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "605659"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 0,
+  "boundaryMeanPixelDifference": 1.2363374485596708,
+  "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+}

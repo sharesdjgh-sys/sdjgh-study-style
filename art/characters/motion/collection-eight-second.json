@@ -1,0 +1,573 @@
+{
+  "characterCount": 16,
+  "activeVideoCount": 16,
+  "secondsPerVideo": 8,
+  "fps": 24,
+  "resolution": "720x720",
+  "trimmedExistingVideos": 15,
+  "additionalPaidRequests": 1,
+  "additionalEstimatedUSD": 0.8288005,
+  "priorGenerationRecord": "art/characters/motion/collection-generation.json",
+  "correction": "art/characters/melo-anatomy-v2.json",
+  "videos": [
+    {
+      "code": "visual-solo-planned",
+      "name": "루미",
+      "source": "public/characters/motion/lumi-loop-v2.mp4",
+      "video": "public/characters/motion/visual-solo-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/visual-solo-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:03.961Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "631244"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 2.1233539094650205,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "visual-solo-flexible",
+      "name": "모아",
+      "source": "public/characters/motion/visual-solo-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/visual-solo-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/visual-solo-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:27.338Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "792113"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 6,
+      "boundaryMeanPixelDifference": 1.6033230452674898,
+      "processing": "First eight seconds at original speed; removed final two seconds. Final 6 frame intervals blended toward the actual first frame; no ending hold. No reversal or new generation."
+    },
+    {
+      "code": "visual-team-planned",
+      "name": "루트",
+      "source": "public/characters/motion/visual-team-planned-loop-v1.mp4",
+      "video": "public/characters/motion/visual-team-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/visual-team-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:33.721Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "599802"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.566172839506173,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "visual-team-flexible",
+      "name": "피코",
+      "source": "public/characters/motion/visual-team-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/visual-team-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/visual-team-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:40.200Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "649445"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.165380658436214,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "auditory-solo-planned",
+      "name": "소리",
+      "source": "public/characters/motion/auditory-solo-planned-loop-v1.mp4",
+      "video": "public/characters/motion/auditory-solo-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/auditory-solo-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:47.405Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "636466"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 2.1692798353909466,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "auditory-solo-flexible",
+      "name": "멜로",
+      "source": ".artifacts/melo-video-v2/raw.mp4",
+      "video": "public/characters/motion/auditory-solo-flexible-loop-8s-v2.mp4",
+      "poster": "public/characters/motion/auditory-solo-flexible-loop-8s-v2.webp",
+      "createdAt": "2026-10-01T11:46:40.768Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "824165"
+        }
+      },
+      "newPaidRequests": 1,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.4540843621399178,
+      "processing": "New corrected two-arm source; center-square crop; eight seconds at original speed.",
+      "model": "gemini-omni-1.1-flash",
+      "usage": {
+        "total_tokens": 49743,
+        "total_input_tokens": 1699,
+        "input_tokens_by_modality": [
+          {
+            "modality": "image",
+            "tokens": 1100
+          },
+          {
+            "modality": "text",
+            "tokens": 599
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 47379,
+        "output_tokens_by_modality": [
+          {
+            "modality": "video",
+            "tokens": 46336
+          }
+        ],
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 665,
+        "raw_prompt_token": 36411,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 2385
+              },
+              {
+                "modality": "image",
+                "tokens": 1100
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1050
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 665
+              }
+            ]
+          }
+        ],
+        "non_grounding_model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 2385
+              },
+              {
+                "modality": "image",
+                "tokens": 1100
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1050
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 665
+              }
+            ]
+          }
+        ]
+      },
+      "estimatedUSD": 0.8288005
+    },
+    {
+      "code": "auditory-team-planned",
+      "name": "토크",
+      "source": "public/characters/motion/auditory-team-planned-loop-v1.mp4",
+      "video": "public/characters/motion/auditory-team-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/auditory-team-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:44:53.978Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "658813"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.714125514403292,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "auditory-team-flexible",
+      "name": "리프",
+      "source": "public/characters/motion/auditory-team-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/auditory-team-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/auditory-team-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:00.786Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "727844"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.6543004115226339,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "tactile-solo-planned",
+      "name": "토리",
+      "source": "public/characters/motion/tactile-solo-planned-loop-v1.mp4",
+      "video": "public/characters/motion/tactile-solo-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/tactile-solo-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:18.665Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "583581"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 10,
+      "boundaryMeanPixelDifference": 1.4289506172839506,
+      "processing": "First eight seconds at original speed; removed final two seconds. Final 10 frame intervals blended toward the actual first frame; no ending hold. No reversal or new generation."
+    },
+    {
+      "code": "tactile-solo-flexible",
+      "name": "몽",
+      "source": "public/characters/motion/tactile-solo-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/tactile-solo-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/tactile-solo-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:24.837Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "569005"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.5821707818930042,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "tactile-team-planned",
+      "name": "블록",
+      "source": "public/characters/motion/tactile-team-planned-loop-v1.mp4",
+      "video": "public/characters/motion/tactile-team-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/tactile-team-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:31.239Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "525806"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 2.8157921810699587,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "tactile-team-flexible",
+      "name": "조이",
+      "source": "public/characters/motion/tactile-team-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/tactile-team-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/tactile-team-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:37.364Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "605659"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.2363374485596708,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "motion-solo-planned",
+      "name": "페이스",
+      "source": "public/characters/motion/motion-solo-planned-loop-v1.mp4",
+      "video": "public/characters/motion/motion-solo-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/motion-solo-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:45:44.228Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "663949"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.455082304526749,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "motion-solo-flexible",
+      "name": "바니",
+      "source": "public/characters/motion/motion-solo-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/motion-solo-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/motion-solo-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:46:03.239Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "660959"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 12,
+      "boundaryMeanPixelDifference": 1.5418930041152263,
+      "processing": "First eight seconds at original speed; removed final two seconds. Final 12 frame intervals blended toward the actual first frame; no ending hold. No reversal or new generation."
+    },
+    {
+      "code": "motion-team-planned",
+      "name": "루카",
+      "source": "public/characters/motion/motion-team-planned-loop-v1.mp4",
+      "video": "public/characters/motion/motion-team-planned-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/motion-team-planned-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:46:10.079Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "673003"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.0623559670781892,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    },
+    {
+      "code": "motion-team-flexible",
+      "name": "스킵",
+      "source": "public/characters/motion/motion-team-flexible-loop-v1.mp4",
+      "video": "public/characters/motion/motion-team-flexible-loop-8s-v1.mp4",
+      "poster": "public/characters/motion/motion-team-flexible-loop-8s-v1.webp",
+      "createdAt": "2026-10-01T11:46:17.261Z",
+      "seconds": 8,
+      "delivery": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 720,
+            "r_frame_rate": "24/1",
+            "nb_frames": "192"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "604876"
+        }
+      },
+      "newPaidRequests": 0,
+      "closingBlendFrameIntervals": 0,
+      "boundaryMeanPixelDifference": 1.355493827160494,
+      "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+    }
+  ]
+}

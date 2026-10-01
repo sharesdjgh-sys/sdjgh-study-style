@@ -1,0 +1,921 @@
+{
+  "codeValidation": {
+    "typescript": "passed",
+    "changedFileEslint": "passed",
+    "productionBuild": "passed",
+    "browserTests": { "desktop": 22, "mobileChromeViewport": 22, "failed": 0 }
+  },
+  "validatedAt": "2026-10-01T11:56:26.124Z",
+  "decodedVideoCount": 16,
+  "secondsPerVideo": 8,
+  "fps": 24,
+  "framesPerVideo": 192,
+  "audioTracks": 0,
+  "motionPerSecond": [
+    {
+      "code": "visual-solo-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.4952286430027173,
+          "max": 2.923583984375
+        },
+        {
+          "second": 1,
+          "mean": 1.541119893391927,
+          "max": 3.64013671875
+        },
+        {
+          "second": 2,
+          "mean": 0.540802001953125,
+          "max": 1.9420166015625
+        },
+        {
+          "second": 3,
+          "mean": 0.9210561116536459,
+          "max": 2.65185546875
+        },
+        {
+          "second": 4,
+          "mean": 1.001482645670573,
+          "max": 2.65509033203125
+        },
+        {
+          "second": 5,
+          "mean": 0.9420445760091146,
+          "max": 2.31646728515625
+        },
+        {
+          "second": 6,
+          "mean": 1.5971272786458333,
+          "max": 3.3057861328125
+        },
+        {
+          "second": 7,
+          "mean": 1.5306065877278645,
+          "max": 3.07427978515625
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 2.1233539094650205
+    },
+    {
+      "code": "visual-solo-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.4262058423913044,
+          "max": 3.15374755859375
+        },
+        {
+          "second": 1,
+          "mean": 2.035130818684896,
+          "max": 4.29718017578125
+        },
+        {
+          "second": 2,
+          "mean": 0.36690521240234375,
+          "max": 1.2523193359375
+        },
+        {
+          "second": 3,
+          "mean": 2.9016393025716147,
+          "max": 6.5167236328125
+        },
+        {
+          "second": 4,
+          "mean": 0.5448481241861979,
+          "max": 1.15252685546875
+        },
+        {
+          "second": 5,
+          "mean": 0.6285222371419271,
+          "max": 2.82855224609375
+        },
+        {
+          "second": 6,
+          "mean": 1.6492335001627605,
+          "max": 4.60711669921875
+        },
+        {
+          "second": 7,
+          "mean": 2.4990336100260415,
+          "max": 4.81732177734375
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.6033230452674898
+    },
+    {
+      "code": "visual-team-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.9916089928668478,
+          "max": 1.86993408203125
+        },
+        {
+          "second": 1,
+          "mean": 1.2851842244466145,
+          "max": 3.04193115234375
+        },
+        {
+          "second": 2,
+          "mean": 0.3969472249348958,
+          "max": 1.0570068359375
+        },
+        {
+          "second": 3,
+          "mean": 1.1825230916341145,
+          "max": 2.74530029296875
+        },
+        {
+          "second": 4,
+          "mean": 0.4728444417317708,
+          "max": 0.79296875
+        },
+        {
+          "second": 5,
+          "mean": 0.9459762573242188,
+          "max": 3.3408203125
+        },
+        {
+          "second": 6,
+          "mean": 1.9683634440104167,
+          "max": 4.72467041015625
+        },
+        {
+          "second": 7,
+          "mean": 2.1042327880859375,
+          "max": 4.9920654296875
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.566172839506173
+    },
+    {
+      "code": "visual-team-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.21179995329483695,
+          "max": 0.398681640625
+        },
+        {
+          "second": 1,
+          "mean": 2.1169306437174478,
+          "max": 4.31463623046875
+        },
+        {
+          "second": 2,
+          "mean": 0.8693135579427084,
+          "max": 1.68865966796875
+        },
+        {
+          "second": 3,
+          "mean": 0.3399403889973958,
+          "max": 0.57855224609375
+        },
+        {
+          "second": 4,
+          "mean": 1.0618260701497395,
+          "max": 2.53997802734375
+        },
+        {
+          "second": 5,
+          "mean": 0.6958287556966146,
+          "max": 3.17877197265625
+        },
+        {
+          "second": 6,
+          "mean": 1.4999898274739583,
+          "max": 3.887939453125
+        },
+        {
+          "second": 7,
+          "mean": 1.0853296915690105,
+          "max": 3.3172607421875
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.165380658436214
+    },
+    {
+      "code": "auditory-solo-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.28586213485054346,
+          "max": 0.480712890625
+        },
+        {
+          "second": 1,
+          "mean": 1.196764628092448,
+          "max": 2.19073486328125
+        },
+        {
+          "second": 2,
+          "mean": 0.375152587890625,
+          "max": 1.04205322265625
+        },
+        {
+          "second": 3,
+          "mean": 1.004132588704427,
+          "max": 1.88671875
+        },
+        {
+          "second": 4,
+          "mean": 0.3472086588541667,
+          "max": 0.6571044921875
+        },
+        {
+          "second": 5,
+          "mean": 1.1965433756510417,
+          "max": 2.47265625
+        },
+        {
+          "second": 6,
+          "mean": 0.6784083048502604,
+          "max": 2.44061279296875
+        },
+        {
+          "second": 7,
+          "mean": 1.3431930541992188,
+          "max": 2.512939453125
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 2.1692798353909466
+    },
+    {
+      "code": "auditory-solo-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.7248933211616848,
+          "max": 2.35595703125
+        },
+        {
+          "second": 1,
+          "mean": 1.470898946126302,
+          "max": 1.93316650390625
+        },
+        {
+          "second": 2,
+          "mean": 1.6829198201497395,
+          "max": 2.29876708984375
+        },
+        {
+          "second": 3,
+          "mean": 1.5656077067057292,
+          "max": 2.302734375
+        },
+        {
+          "second": 4,
+          "mean": 1.2451426188151042,
+          "max": 1.81597900390625
+        },
+        {
+          "second": 5,
+          "mean": 1.8063735961914062,
+          "max": 2.61822509765625
+        },
+        {
+          "second": 6,
+          "mean": 1.780133565266927,
+          "max": 2.5574951171875
+        },
+        {
+          "second": 7,
+          "mean": 1.5040969848632812,
+          "max": 2.2249755859375
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.4540843621399178
+    },
+    {
+      "code": "auditory-team-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.09034529976222826,
+          "max": 0.23150634765625
+        },
+        {
+          "second": 1,
+          "mean": 1.2429300944010417,
+          "max": 3.3345947265625
+        },
+        {
+          "second": 2,
+          "mean": 0.19823710123697916,
+          "max": 0.465087890625
+        },
+        {
+          "second": 3,
+          "mean": 1.2830352783203125,
+          "max": 3.3646240234375
+        },
+        {
+          "second": 4,
+          "mean": 0.3218739827473958,
+          "max": 1.22216796875
+        },
+        {
+          "second": 5,
+          "mean": 0.5722935994466146,
+          "max": 3.08978271484375
+        },
+        {
+          "second": 6,
+          "mean": 1.6032511393229167,
+          "max": 3.51849365234375
+        },
+        {
+          "second": 7,
+          "mean": 1.1388651529947917,
+          "max": 4.01513671875
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.714125514403292
+    },
+    {
+      "code": "auditory-team-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.09535548997961957,
+          "max": 0.234130859375
+        },
+        {
+          "second": 1,
+          "mean": 3.1637115478515625,
+          "max": 7.73443603515625
+        },
+        {
+          "second": 2,
+          "mean": 0.46864064534505206,
+          "max": 1.4205322265625
+        },
+        {
+          "second": 3,
+          "mean": 1.4797261555989583,
+          "max": 3.49725341796875
+        },
+        {
+          "second": 4,
+          "mean": 0.4718373616536458,
+          "max": 1.54931640625
+        },
+        {
+          "second": 5,
+          "mean": 0.7566655476888021,
+          "max": 3.84649658203125
+        },
+        {
+          "second": 6,
+          "mean": 1.3624496459960938,
+          "max": 3.6094970703125
+        },
+        {
+          "second": 7,
+          "mean": 2.5761693318684897,
+          "max": 6.71551513671875
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.6543004115226339
+    },
+    {
+      "code": "tactile-solo-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.0857888926630435,
+          "max": 3.03179931640625
+        },
+        {
+          "second": 1,
+          "mean": 1.1723353068033855,
+          "max": 2.67572021484375
+        },
+        {
+          "second": 2,
+          "mean": 0.31377919514973956,
+          "max": 0.70159912109375
+        },
+        {
+          "second": 3,
+          "mean": 1.0556081136067708,
+          "max": 2.04132080078125
+        },
+        {
+          "second": 4,
+          "mean": 0.34433237711588544,
+          "max": 0.6531982421875
+        },
+        {
+          "second": 5,
+          "mean": 0.8576253255208334,
+          "max": 1.8223876953125
+        },
+        {
+          "second": 6,
+          "mean": 0.7808024088541666,
+          "max": 3.16156005859375
+        },
+        {
+          "second": 7,
+          "mean": 1.4112218221028645,
+          "max": 3.1583251953125
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.4289506172839506
+    },
+    {
+      "code": "tactile-solo-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.450553562330163,
+          "max": 3.0252685546875
+        },
+        {
+          "second": 1,
+          "mean": 1.3075180053710938,
+          "max": 3.2481689453125
+        },
+        {
+          "second": 2,
+          "mean": 1.82611083984375,
+          "max": 4.52093505859375
+        },
+        {
+          "second": 3,
+          "mean": 0.5711949666341146,
+          "max": 1.6119384765625
+        },
+        {
+          "second": 4,
+          "mean": 0.6958160400390625,
+          "max": 1.4053955078125
+        },
+        {
+          "second": 5,
+          "mean": 0.8717320760091146,
+          "max": 3.54876708984375
+        },
+        {
+          "second": 6,
+          "mean": 1.1655298868815105,
+          "max": 4.16802978515625
+        },
+        {
+          "second": 7,
+          "mean": 1.2359949747721355,
+          "max": 2.75634765625
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.5821707818930042
+    },
+    {
+      "code": "tactile-team-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.162666652513587,
+          "max": 2.006103515625
+        },
+        {
+          "second": 1,
+          "mean": 1.704559326171875,
+          "max": 4.26177978515625
+        },
+        {
+          "second": 2,
+          "mean": 0.34228515625,
+          "max": 1.15875244140625
+        },
+        {
+          "second": 3,
+          "mean": 1.8810094197591145,
+          "max": 4.7725830078125
+        },
+        {
+          "second": 4,
+          "mean": 0.2883199055989583,
+          "max": 0.669189453125
+        },
+        {
+          "second": 5,
+          "mean": 0.3767852783203125,
+          "max": 1.4713134765625
+        },
+        {
+          "second": 6,
+          "mean": 3.3221893310546875,
+          "max": 5.58154296875
+        },
+        {
+          "second": 7,
+          "mean": 1.166186014811198,
+          "max": 4.62005615234375
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 2.8157921810699587
+    },
+    {
+      "code": "tactile-team-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 1.354035750679348,
+          "max": 2.78167724609375
+        },
+        {
+          "second": 1,
+          "mean": 1.641344706217448,
+          "max": 3.59002685546875
+        },
+        {
+          "second": 2,
+          "mean": 0.25115712483723956,
+          "max": 0.94482421875
+        },
+        {
+          "second": 3,
+          "mean": 1.5836741129557292,
+          "max": 3.69732666015625
+        },
+        {
+          "second": 4,
+          "mean": 0.7485326131184896,
+          "max": 2.784423828125
+        },
+        {
+          "second": 5,
+          "mean": 1.0679041544596355,
+          "max": 3.67022705078125
+        },
+        {
+          "second": 6,
+          "mean": 1.8464253743489583,
+          "max": 4.60662841796875
+        },
+        {
+          "second": 7,
+          "mean": 1.458422342936198,
+          "max": 4.9267578125
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.2363374485596708
+    },
+    {
+      "code": "motion-solo-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.8584170134171195,
+          "max": 2.02001953125
+        },
+        {
+          "second": 1,
+          "mean": 1.560900370279948,
+          "max": 4.0164794921875
+        },
+        {
+          "second": 2,
+          "mean": 0.28336842854817706,
+          "max": 0.7325439453125
+        },
+        {
+          "second": 3,
+          "mean": 1.6575215657552083,
+          "max": 3.85089111328125
+        },
+        {
+          "second": 4,
+          "mean": 2.792414347330729,
+          "max": 4.77069091796875
+        },
+        {
+          "second": 5,
+          "mean": 1.797289530436198,
+          "max": 4.07305908203125
+        },
+        {
+          "second": 6,
+          "mean": 1.1540603637695312,
+          "max": 3.05023193359375
+        },
+        {
+          "second": 7,
+          "mean": 1.2230860392252605,
+          "max": 3.123291015625
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.455082304526749
+    },
+    {
+      "code": "motion-solo-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.20665177055027173,
+          "max": 0.32635498046875
+        },
+        {
+          "second": 1,
+          "mean": 1.4311421712239583,
+          "max": 2.78173828125
+        },
+        {
+          "second": 2,
+          "mean": 0.35623423258463544,
+          "max": 1.15728759765625
+        },
+        {
+          "second": 3,
+          "mean": 1.1708577473958333,
+          "max": 2.718017578125
+        },
+        {
+          "second": 4,
+          "mean": 0.9345906575520834,
+          "max": 2.90814208984375
+        },
+        {
+          "second": 5,
+          "mean": 0.9638188680013021,
+          "max": 2.54010009765625
+        },
+        {
+          "second": 6,
+          "mean": 1.609875996907552,
+          "max": 3.43267822265625
+        },
+        {
+          "second": 7,
+          "mean": 1.202898661295573,
+          "max": 3.886962890625
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.5418930041152263
+    },
+    {
+      "code": "motion-team-planned",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.055112092391304345,
+          "max": 0.11444091796875
+        },
+        {
+          "second": 1,
+          "mean": 2.2680765787760415,
+          "max": 5.44024658203125
+        },
+        {
+          "second": 2,
+          "mean": 1.2626597086588542,
+          "max": 3.014892578125
+        },
+        {
+          "second": 3,
+          "mean": 1.8218154907226562,
+          "max": 4.4005126953125
+        },
+        {
+          "second": 4,
+          "mean": 0.5834833780924479,
+          "max": 2.41998291015625
+        },
+        {
+          "second": 5,
+          "mean": 1.6765797932942708,
+          "max": 4.59710693359375
+        },
+        {
+          "second": 6,
+          "mean": 2.158472696940104,
+          "max": 4.5601806640625
+        },
+        {
+          "second": 7,
+          "mean": 0.9837188720703125,
+          "max": 4.821044921875
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.0623559670781892
+    },
+    {
+      "code": "motion-team-flexible",
+      "seconds": [
+        {
+          "second": 0,
+          "mean": 0.10366157863451086,
+          "max": 0.21038818359375
+        },
+        {
+          "second": 1,
+          "mean": 0.5183944702148438,
+          "max": 1.61370849609375
+        },
+        {
+          "second": 2,
+          "mean": 0.21468353271484375,
+          "max": 0.47369384765625
+        },
+        {
+          "second": 3,
+          "mean": 1.8814188639322917,
+          "max": 2.95281982421875
+        },
+        {
+          "second": 4,
+          "mean": 1.5588633219401042,
+          "max": 2.1051025390625
+        },
+        {
+          "second": 5,
+          "mean": 2.0225346883138022,
+          "max": 2.9923095703125
+        },
+        {
+          "second": 6,
+          "mean": 0.9005813598632812,
+          "max": 2.52008056640625
+        },
+        {
+          "second": 7,
+          "mean": 0.2996470133463542,
+          "max": 0.65289306640625
+        }
+      ],
+      "identicalAdjacentFrames": 0,
+      "boundaryMeanPixelDifference": 1.355493827160494
+    }
+  ],
+  "simultaneousPlaybackStressCheck": [
+    {
+      "code": "visual-solo-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 83.30000000000109
+    },
+    {
+      "code": "visual-solo-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 50
+    },
+    {
+      "code": "visual-team-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 50
+    },
+    {
+      "code": "visual-team-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.60000000000218
+    },
+    {
+      "code": "auditory-solo-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.60000000000036
+    },
+    {
+      "code": "auditory-solo-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.70000000000073
+    },
+    {
+      "code": "auditory-team-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.59999999999854
+    },
+    {
+      "code": "auditory-team-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 50
+    },
+    {
+      "code": "tactile-solo-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.60000000000036
+    },
+    {
+      "code": "tactile-solo-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.60000000000218
+    },
+    {
+      "code": "tactile-team-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.80000000000109
+    },
+    {
+      "code": "tactile-team-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 83.30000000000109
+    },
+    {
+      "code": "motion-solo-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.70000000000073
+    },
+    {
+      "code": "motion-solo-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 83.30000000000109
+    },
+    {
+      "code": "motion-team-planned",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.70000000000073
+    },
+    {
+      "code": "motion-team-flexible",
+      "loops": 2,
+      "duration": 8,
+      "paused": false,
+      "readyState": 4,
+      "maximumBoundaryDisplayGapMs": 66.80000000000109
+    }
+  ],
+  "pageErrors": [],
+  "meloViews": [
+    {
+      "viewport": "desktop",
+      "video": "/characters/motion/auditory-solo-flexible-loop-8s-v2.mp4",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "video": "/characters/motion/auditory-solo-flexible-loop-8s-v2.mp4",
+      "horizontalOverflow": false
+    }
+  ],
+  "visualChecks": {
+    "meloArms": 2,
+    "meloPaws": 2,
+    "inspectedMeloStoryboardSeconds": [0, 1, 2, 3, 4, 5, 6, 7],
+    "correctedBoundaries": [
+      "visual-solo-flexible",
+      "tactile-solo-planned",
+      "motion-solo-flexible"
+    ]
+  }
+}

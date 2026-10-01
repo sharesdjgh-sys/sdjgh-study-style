@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. This is a relaxed character portrait, with several seconds between gestures, not a compressed sequence of actions.
+
+Lumi is a calm, thoughtful owl who quietly organizes ideas into a concept map. Preserve this exact character and rendering: sage-green feathers, cream face and belly, large brown eyes, thin round gold glasses, white collared shirt, green knitted vest, gold star badge, orange pencil in the existing wing, concept-map notebook in the other wing, yellow feet and the two existing floating geometric decorations. Keep the same tactile 3D collectible-toy materials and every existing detail. The glasses stay rigidly attached to the face. The notebook diagram remains exactly unchanged. Keep the plain sage background unchanged. Do not redraw or restyle the character.
+
+Choreography — tiny, precise, unhurried movements:
+[0.0-1.5s] Begin in the exact reference pose. Calm, almost imperceptible breathing. Eyes open. Feet planted.
+[1.5-3.5s] Slowly shift the gaze toward the existing notebook, incline the head toward it by only 3 degrees, and blink once gently. Pause as though studying the connections. Keep the notebook steady and clearly visible.
+[3.5-5.5s] Raise the pencil-holding wing slightly, keeping the pencil on its original side of the body, as if quietly considering one idea. A short, thoughtful pause. The other wing holds the notebook in the same position. No drawing, writing, page turning or touching the diagram.
+[5.5-7.0s] Give one very small, satisfied nod, then slowly lower the pencil wing. Keep the same gentle expression and closed beak.
+[7.0-9.0s] Ease the head, gaze, wings and breathing back into the exact starting pose. Movement gradually slows to zero, with no abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still, with the same lighting and framing. The final frame must match Image1 and the first frame, ready to loop seamlessly.
+
+Only this choreography occurs. No talking, lip movement, music, captions, new objects, extra limbs, particle effects, diagram changes, prop morphing, color shifts, body rotation, walking, bouncing, zooms, scene cuts, dissolves or fade-in/fade-out. Keep both floating decorations fixed. Silent video. Preserve the character's identity throughout; small study-focused gestures and generous quiet pauses make the personality feel alive.

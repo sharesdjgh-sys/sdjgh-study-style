@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. Several seconds separate the small gestures; this is a relaxed collectible character portrait.
+
+The exact subject is 모아, a fox: orange fox with white cheek fur, a large bushy orange-and-white tail, green study outfit, orange pencil and the existing concept-map notebook; retain the seated pose and every existing floating diagram decoration. The character is a curious independent thinker who explores unexpected connections in a visual notebook. Keep the original soft, tactile 3D toy materials, eye shape and highlights, fur or feather details, clothing, accessories, rigid props and facial identity. Preserve the number, color and shape of every existing object. Keep the plain background exactly unchanged. Maintain the original smile and mouth shape without speech animation. Never redraw, restyle or substitute the character.
+
+Motion choreography:
+[0.0-1.5s] Hold the exact reference pose, eyes open. Almost imperceptible relaxed breathing only.
+[1.5-3.5s] The seated fox slowly looks toward the concept-map notebook and tilts the head 4 degrees in curiosity. Blink once softly. Keep the notebook completely steady.
+[3.5-6.0s] Move the pencil-holding paw in one tiny searching arc on its original side of the body, hovering as if considering a new connection, without writing or touching the page. The seated body remains still.
+[6.0-7.0s] Pause thoughtfully, then lift the gaze toward the viewer with a tiny pleased head tilt. Preserve the existing mouth shape.
+[7.0-9.0s] Slowly return every moving part, gaze and breathing to the exact reference pose. Ease to zero velocity without an abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still. The final frame must match Image1 and the first frame so repeated playback has no visible jump.
+
+Only this choreography occurs. No additional characters, text, writing, captions, speech, music, new objects, extra limbs, detached fingers, prop transformations, color shifts, camera movement, cuts, transitions, dissolves or fade-in/fade-out. All decorative objects stay fixed. Silent video. Keep the full subject inside the original frame and preserve the original pose outside the small specified gestures.

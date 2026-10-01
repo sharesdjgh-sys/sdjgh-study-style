@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. Several seconds separate the small gestures; this is a relaxed collectible character portrait.
+
+The exact subject is 토리, a beaver: brown beaver with rounded ears, cream cheeks, two front teeth, purple overalls, the existing wooden ruler, pastel paper notebook and broad patterned beaver tail; preserve paper edges, ruler marks and overalls. The character is a careful organizer who checks physical study materials and puts them in order. Keep the original soft, tactile 3D toy materials, eye shape and highlights, fur or feather details, clothing, accessories, rigid props and facial identity. Preserve the number, color and shape of every existing object. Keep the plain background exactly unchanged. Maintain the original smile and mouth shape without speech animation. Never redraw, restyle or substitute the character.
+
+Motion choreography:
+[0.0-1.5s] Hold the exact reference pose, eyes open. Almost imperceptible relaxed breathing only.
+[1.5-3.5s] Look down toward the existing ruler and paper, with one slow blink and a tiny focused head inclination. Keep the paper in the original grip.
+[3.5-6.0s] Make a tiny straightening adjustment of the paper-holding paw, no more than 3 degrees, as if aligning the paper with the ruler. The paper stays rigid with the same edges and content. Keep the ruler visible and unchanged.
+[6.0-7.0s] Pause to inspect the alignment, then give one precise small satisfied nod. Keep the mouth and two front teeth unchanged.
+[7.0-9.0s] Slowly return every moving part, gaze and breathing to the exact reference pose. Ease to zero velocity without an abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still. The final frame must match Image1 and the first frame so repeated playback has no visible jump.
+
+Only this choreography occurs. No additional characters, text, writing, captions, speech, music, new objects, extra limbs, detached fingers, prop transformations, color shifts, camera movement, cuts, transitions, dissolves or fade-in/fade-out. All decorative objects stay fixed. Silent video. Keep the full subject inside the original frame and preserve the original pose outside the small specified gestures.

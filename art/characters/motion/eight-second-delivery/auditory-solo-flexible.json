@@ -1,0 +1,109 @@
+{
+  "code": "auditory-solo-flexible",
+  "name": "멜로",
+  "source": ".artifacts/melo-video-v2/raw.mp4",
+  "video": "public/characters/motion/auditory-solo-flexible-loop-8s-v2.mp4",
+  "poster": "public/characters/motion/auditory-solo-flexible-loop-8s-v2.webp",
+  "createdAt": "2026-10-01T11:46:40.768Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "824165"
+    }
+  },
+  "newPaidRequests": 1,
+  "closingBlendFrameIntervals": 0,
+  "boundaryMeanPixelDifference": 1.4540843621399178,
+  "processing": "New corrected two-arm source; center-square crop; eight seconds at original speed.",
+  "model": "gemini-omni-1.1-flash",
+  "usage": {
+    "total_tokens": 49743,
+    "total_input_tokens": 1699,
+    "input_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1100
+      },
+      {
+        "modality": "text",
+        "tokens": 599
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 47379,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 46336
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 665,
+    "raw_prompt_token": 36411,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2385
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1050
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 665
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2385
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1050
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 665
+          }
+        ]
+      }
+    ]
+  },
+  "estimatedUSD": 0.8288005
+}

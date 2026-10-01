@@ -1,0 +1,83 @@
+{
+  "character": "auditory-solo-flexible",
+  "name": "멜로",
+  "revision": "anatomy-v2",
+  "provider": "OpenAI built-in ImageGen",
+  "createdAt": "2026-10-01T11:12:13.834Z",
+  "sourceIssue": "Original artwork contained three arm/sleeve chains; the v1 video inherited that anatomy.",
+  "correctedPose": "Exactly two arms: viewer-left paw touches the headphone earcup; viewer-right paw holds the audio player. No chin hand or pocket arm.",
+  "visuallyVerifiedArms": 2,
+  "visuallyVerifiedPaws": 2,
+  "transparentAlpha": true,
+  "sourceDimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "reference": "public/characters/auditory-solo-flexible.webp (prior artwork backed up locally)",
+  "prompt": "art/characters/melo-anatomy-v2.prompt.txt",
+  "original": ".artifacts/character-originals/auditory-solo-flexible.png",
+  "outputs": [
+    "public/characters/auditory-solo-flexible.webp",
+    "public/characters/thumbs/auditory-solo-flexible.png",
+    "public/characters/share/auditory-solo-flexible.png"
+  ],
+  "retiredVideo": "public/characters/motion/auditory-solo-flexible-loop-v1.mp4",
+  "additionalPaidVideoRequests": 0,
+  "validation": {
+    "pageErrors": [],
+    "views": [
+      {
+        "viewport": "desktop",
+        "videoCount": 0,
+        "horizontalOverflow": false,
+        "shareImageStatus": 200
+      },
+      {
+        "viewport": "mobile",
+        "videoCount": 0,
+        "horizontalOverflow": false,
+        "shareImageStatus": 200
+      }
+    ],
+    "variants": [
+      {
+        "file": "public/characters/auditory-solo-flexible.webp",
+        "width": 768,
+        "height": 768,
+        "transparentAlpha": true
+      },
+      {
+        "file": "public/characters/auditory-solo-flexible-v2.webp",
+        "width": 768,
+        "height": 768,
+        "transparentAlpha": true
+      },
+      {
+        "file": "public/characters/thumbs/auditory-solo-flexible.png",
+        "width": 192,
+        "height": 192,
+        "transparentAlpha": true
+      },
+      {
+        "file": "public/characters/thumbs/auditory-solo-flexible-v2.png",
+        "width": 192,
+        "height": 192,
+        "transparentAlpha": true
+      },
+      {
+        "file": "public/characters/share/auditory-solo-flexible.png",
+        "width": 512,
+        "height": 512,
+        "transparentAlpha": true
+      }
+    ]
+  },
+  "displayImage": "public/characters/auditory-solo-flexible-v2.webp",
+  "displayThumbnail": "public/characters/thumbs/auditory-solo-flexible-v2.png",
+  "codeValidation": {
+    "typescript": "passed",
+    "changedFileEslint": "passed",
+    "productionBuild": "passed",
+    "focusedBrowserTests": { "desktop": 2, "mobileViewportEmulation": 2, "failed": 0 }
+  }
+}

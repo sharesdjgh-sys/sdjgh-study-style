@@ -1,0 +1,30 @@
+{
+  "code": "visual-solo-planned",
+  "name": "루미",
+  "source": "public/characters/motion/lumi-loop-v2.mp4",
+  "video": "public/characters/motion/visual-solo-planned-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/visual-solo-planned-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:44:03.961Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "631244"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 0,
+  "boundaryMeanPixelDifference": 2.1233539094650205,
+  "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+}

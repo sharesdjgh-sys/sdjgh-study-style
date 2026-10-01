@@ -6,6 +6,8 @@
 
 ## 제작 기록
 
+멜로는 2026-10-01 원본의 세 팔 오류를 발견해 내장 ImageGen으로 수정했습니다. 헤드폰에 닿는 팔 하나와 플레이어를 든 팔 하나, 총 두 팔·두 손으로 만들고 원본·서비스 WebP·분석 썸네일·공유 PNG를 교체했습니다. 기존 원본은 로컬에 따로 보존했습니다. [실제 수정 프롬프트](melo-anatomy-v2.prompt.txt), [수정·검수 기록](melo-anatomy-v2.json)을 참고하세요. 수정 원본으로 새 8초 영상을 제작했고, 이전 원본을 사용한 영상은 현재 웹에서 제외했습니다. 현재 16명 모두 8초 반복 영상을 사용합니다. [현재 영상 기록](motion/collection-eight-second.json)을 참고하세요.
+
 - 도구: OpenAI 내장 ImageGen. Google Imagen 연결은 발견되지 않아, 사용자에게 대체 도구 사용을 알린 뒤 제작했습니다.
 - 원본: `.artifacts/character-originals/*.png` (16장, 투명 배경, 로컬 보관)
 - 서비스 이미지: `public/characters/*.webp` (768px 이내, 알파 보존)

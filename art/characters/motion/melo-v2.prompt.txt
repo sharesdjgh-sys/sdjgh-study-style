@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create an EXACTLY 8-second seamless, continuously moving character idle loop from Image1. Use the same reference for the first and last frame. One locked-camera shot, no cuts. The ending is a loop boundary in an ongoing motion, never a conclusion or a resting hold.
+
+Melo is the exact cream-and-orange cat in Image1, wearing the pink hoodie and round headphones, listening independently and considering an interesting explanation. Preserve the face, eye highlights, fur, proportions, pose, colors, lighting, shadows, clothing, headphone cable, orange player and two thought-cloud decorations. Keep the solid peach background completely unchanged. Do not restyle the character.
+
+ANATOMY: Exactly TWO arms and TWO paws throughout every frame. The viewer-left arm leads to the paw touching the headphone earcup. The viewer-right arm leads to the paw holding the orange audio player. Keep those two paw-to-prop contacts stable. No hand under the chin, no hand in a pocket, no extra sleeve, arm, paw or finger. Two hind feet stay planted. No disconnected limbs or floating objects.
+
+Motion: a calm, curious listening rhythm, subtle and fluid. Gentle breathing continues for the entire eight seconds, using two complete four-second cycles with only 2-3 pixels of chest movement. The fluffy curled tail tip moves in a tiny smooth periodic arc throughout the whole eight-second cycle. Start its cycle as it passes through the reference position, with nonzero velocity; return through that same position in the same direction at the loop boundary. Keep the tail curl and fur shape intact.
+[0-2s] The head slowly inclines by only 2 degrees as if concentrating on the sound, while the eyes remain open and the paws maintain their exact contacts.
+[2-4s] The head follows the same flowing listening arc back through the center; one natural soft blink at about 3 seconds, then eyes fully open again.
+[4-6s] The head continues to the opposite tiny listening inclination, then begins the return; keep the original mouth and gentle smile without speech animation.
+[6-8s] Continue the breathing and tail-tip cycle at the same pace. The head passes smoothly back to the exact reference angle at eight seconds. The final frame matches the first pose and background, but movement continues through the boundary at the same velocity. No held pose, no frozen final second, no easing all motion to zero, no fade or dissolve.
+
+No additional gesture or new pose. No walking, jumping, camera motion, zoom, speech, music, text, new objects, prop deformation or background color drift. Silent video. Maintain the exact subject scale, framing and lighting. Every second must contain visible subtle motion, including the last second. Deliver precisely eight seconds.

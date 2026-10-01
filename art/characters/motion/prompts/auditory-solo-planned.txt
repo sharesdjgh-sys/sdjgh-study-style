@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. Several seconds separate the small gestures; this is a relaxed collectible character portrait.
+
+The exact subject is 소리, a fennec fox: cream fennec fox with very large upright ears, brown eyes, headphones resting around the neck, cream collared shirt, soft green study clothes, a small green notebook and the existing orange-and-cream recorder; keep its buttons and headphones unchanged. The character is a calm independent listener who reviews an explanation in an orderly routine. Keep the original soft, tactile 3D toy materials, eye shape and highlights, fur or feather details, clothing, accessories, rigid props and facial identity. Preserve the number, color and shape of every existing object. Keep the plain background exactly unchanged. Maintain the original smile and mouth shape without speech animation. Never redraw, restyle or substitute the character.
+
+Motion choreography:
+[0.0-1.5s] Hold the exact reference pose, eyes open. Almost imperceptible relaxed breathing only.
+[1.5-3.5s] Look at the existing handheld recorder, blink slowly once, then tilt the head by 3 degrees as if listening to a remembered explanation. Keep the recorder steady.
+[3.5-6.0s] Make one small listening twitch with the ear tips and one measured head nod. Keep the headphone band rigid and in its exact position around the neck. No visible speech or button changes.
+[6.0-7.0s] Pause, return the gaze to the viewer and settle into a quiet satisfied expression identical to the reference.
+[7.0-9.0s] Slowly return every moving part, gaze and breathing to the exact reference pose. Ease to zero velocity without an abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still. The final frame must match Image1 and the first frame so repeated playback has no visible jump.
+
+Only this choreography occurs. No additional characters, text, writing, captions, speech, music, new objects, extra limbs, detached fingers, prop transformations, color shifts, camera movement, cuts, transitions, dissolves or fade-in/fade-out. All decorative objects stay fixed. Silent video. Keep the full subject inside the original frame and preserve the original pose outside the small specified gestures.

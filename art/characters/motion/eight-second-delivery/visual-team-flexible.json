@@ -1,0 +1,30 @@
+{
+  "code": "visual-team-flexible",
+  "name": "피코",
+  "source": "public/characters/motion/visual-team-flexible-loop-v1.mp4",
+  "video": "public/characters/motion/visual-team-flexible-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/visual-team-flexible-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:44:40.200Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "649445"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 0,
+  "boundaryMeanPixelDifference": 1.165380658436214,
+  "processing": "First eight seconds at original speed; removed final two seconds. No crossfade. No reversal or new generation."
+}

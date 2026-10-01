@@ -1,4 +1,4 @@
-import { mkdir, readdir } from "node:fs/promises";
+import { copyFile, mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -35,6 +35,16 @@ for (const name of files) {
     .resize(512, 512, { fit: "inside" })
     .png({ compressionLevel: 9 })
     .toFile(path.join(destination, "share", name));
+  if (name === "auditory-solo-flexible.png") {
+    await copyFile(
+      path.join(destination, "auditory-solo-flexible.webp"),
+      path.join(destination, "auditory-solo-flexible-v2.webp"),
+    );
+    await copyFile(
+      path.join(destination, "thumbs", name),
+      path.join(destination, "thumbs", "auditory-solo-flexible-v2.png"),
+    );
+  }
   console.log(`${name}: ${Math.round(output.size / 1024)} KB`);
 }
 console.log(

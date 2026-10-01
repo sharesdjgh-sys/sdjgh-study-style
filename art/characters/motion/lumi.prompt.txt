@@ -1,0 +1,13 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 4-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and the exact last frame. One continuous shot, locked camera, identical framing and scale throughout.
+
+The subject is Lumi, a calm, thoughtful owl who quietly organizes ideas into a concept map. Preserve this exact character: sage-green feathers, cream face and belly, oversized brown eyes, thin round gold glasses, white collared shirt, green knitted vest, small gold star badge, orange pencil, concept-map notebook, yellow feet, and the existing two floating geometric decorations. Keep the original soft, tactile 3D collectible-toy rendering and lighting. Preserve every prop, diagram, dot, line, finger, feather, accessory and silhouette. Keep the flat sage background exactly unchanged.
+
+Motion choreography, very small and deliberate:
+[0.0-0.5s] Hold the starting pose, eyes open, body still.
+[0.5-1.5s] Shift the gaze slightly toward the notebook, blink once slowly, and incline the head only 3 degrees toward the diagram. The glasses follow the head rigidly. Keep the notebook and its diagram steady.
+[1.5-2.5s] Give one tiny, satisfied nod as if recognizing a connection. Lift the pencil-holding wing just a little, keeping the pencil on its original side of the body. No drawing or touching the notebook.
+[2.5-3.5s] Ease the head, gaze and pencil wing back into the exact starting pose. Slow down smoothly to zero velocity.
+[3.5-4.0s] Hold that exact starting pose, eyes open. It must match the beginning without a jump, fade, cut or camera change.
+
+Only these small motions occur. Feet remain planted. No talking, lip movement, music, captions, new objects, particle effects, prop morphing, diagram changes, color shifts, rotations of the body, zooms, scene cuts, fades or transitions. Silent video. The animation should feel alive, gentle and studious, never energetic or exaggerated.

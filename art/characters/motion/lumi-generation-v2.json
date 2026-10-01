@@ -1,0 +1,107 @@
+{
+  "character": "visual-solo-planned",
+  "name": "루미",
+  "version": "v2",
+  "model": "gemini-omni-1.1-flash",
+  "generatedAt": "2026-10-01T10:09:31.179Z",
+  "paidRequests": 1,
+  "requestedSeconds": 10,
+  "sourceResolution": "1280x720",
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "240"
+      }
+    ],
+    "format": {
+      "duration": "10.000000",
+      "size": "791634"
+    }
+  },
+  "estimatedUSD": 1.0311575,
+  "usage": {
+    "total_tokens": 61280,
+    "total_input_tokens": 1691,
+    "input_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1100
+      },
+      {
+        "modality": "text",
+        "tokens": 591
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 59078,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 57920
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 511,
+    "raw_prompt_token": 36755,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2377
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1165
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 511
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2377
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1165
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 511
+          }
+        ]
+      }
+    ]
+  },
+  "boundaryMeanPixelDifference": 1.6823746141975309,
+  "processing": "Center square crop; audio removed; H.264 yuv420p and faststart; no reverse playback, crossfade, or extra generation."
+}

@@ -1,0 +1,30 @@
+{
+  "code": "motion-solo-flexible",
+  "name": "바니",
+  "source": "public/characters/motion/motion-solo-flexible-loop-v1.mp4",
+  "video": "public/characters/motion/motion-solo-flexible-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/motion-solo-flexible-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:46:03.239Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "660959"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 12,
+  "boundaryMeanPixelDifference": 1.5418930041152263,
+  "processing": "First eight seconds at original speed; removed final two seconds. Final 12 frame intervals blended toward the actual first frame; no ending hold. No reversal or new generation."
+}

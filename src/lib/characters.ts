@@ -186,8 +186,13 @@ export const CHARACTERS: Record<string, Character> = {
     tags: ["전환의 신호", "함께 재시작", "유연한 리듬"],
   },
 };
+const characterImageName = (code: string) =>
+  code === "auditory-solo-flexible" ? `${code}-v2` : code;
 export const CHARACTER_IMAGES: Record<string, string> = Object.fromEntries(
-  Object.keys(CHARACTERS).map((code) => [code, `/characters/${code}.webp`]),
+  Object.keys(CHARACTERS).map((code) => [
+    code,
+    `/characters/${characterImageName(code)}.webp`,
+  ]),
 );
 export const characterThumbnail = (code: string) =>
-  `/characters/thumbs/${code}.png`;
+  `/characters/thumbs/${characterImageName(code)}.png`;

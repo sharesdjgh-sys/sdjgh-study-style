@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. Several seconds separate the small gestures; this is a relaxed collectible character portrait.
+
+The exact subject is 피코, a chameleon: small green-and-yellow chameleon with large brown eyes, coral cap worn backward, cream hoodie, small satchel, coiled striped tail and the existing colored geometric shapes floating above the raised hand; keep every shape fixed and unchanged. The character is a playful visual collaborator who considers a different point of view and offers an idea. Keep the original soft, tactile 3D toy materials, eye shape and highlights, fur or feather details, clothing, accessories, rigid props and facial identity. Preserve the number, color and shape of every existing object. Keep the plain background exactly unchanged. Maintain the original smile and mouth shape without speech animation. Never redraw, restyle or substitute the character.
+
+Motion choreography:
+[0.0-1.5s] Hold the exact reference pose, eyes open. Almost imperceptible relaxed breathing only.
+[1.5-3.5s] Slowly tilt the head 4 degrees to look at the existing floating colored shapes from another angle; blink once softly. Keep the shapes at their exact reference positions.
+[3.5-6.0s] Rotate the already-raised wrist outward by only 3 degrees, as if sharing the visual idea with an unseen friend. Do not move, recolor or add geometric shapes. Keep the coiled tail shape intact.
+[6.0-7.0s] Return the gaze to the viewer with a small curious nod and the original gentle expression.
+[7.0-9.0s] Slowly return every moving part, gaze and breathing to the exact reference pose. Ease to zero velocity without an abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still. The final frame must match Image1 and the first frame so repeated playback has no visible jump.
+
+Only this choreography occurs. No additional characters, text, writing, captions, speech, music, new objects, extra limbs, detached fingers, prop transformations, color shifts, camera movement, cuts, transitions, dissolves or fade-in/fade-out. All decorative objects stay fixed. Silent video. Keep the full subject inside the original frame and preserve the original pose outside the small specified gestures.

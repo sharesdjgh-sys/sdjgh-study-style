@@ -3269,6 +3269,58 @@ legend {
   border: 1px solid color-mix(in srgb, var(--character-deep) 14%, transparent);
   background: #fffefa35;
 }
+.character-motion {
+  position: relative;
+  width: min(100%, 370px);
+  aspect-ratio: 1;
+}
+.character-motion-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--character-tint);
+}
+.character-motion-media img,
+.character-motion-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.character-motion-media img {
+  filter: none;
+}
+.character-card:not(.is-flipped):hover .character-motion-media img {
+  transform: none;
+}
+.character-motion-media video {
+  opacity: 0;
+  pointer-events: none;
+}
+.character-motion-media video.is-ready {
+  opacity: 1;
+}
+.character-motion-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid var(--character-line);
+  border-radius: 20px;
+  background: #fffefae8;
+  color: var(--character-deep);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.game-hero .character-motion {
+  max-width: 270px;
+}
 .character-spark {
   position: absolute;
   color: var(--character-deep);

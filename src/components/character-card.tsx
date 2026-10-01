@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { CHARACTERS } from "@/lib/characters";
+import { CHARACTER_MOTIONS } from "@/lib/character-motions";
 import { FAMILIES, type StudyType } from "@/lib/content";
 import { Icon } from "./icon";
+import { CharacterMotion } from "./character-motion";
 
 export function CharacterCard({
   type,
@@ -18,6 +20,7 @@ export function CharacterCard({
   priority?: boolean;
 }) {
   const character = CHARACTERS[type.code];
+  const motion = CHARACTER_MOTIONS[type.code];
   const [flipped, setFlipped] = useState(false);
   const previousFlipped = useRef(false);
   const frontButton = useRef<HTMLButtonElement>(null);
@@ -55,14 +58,25 @@ export function CharacterCard({
             <span className="character-spark spark-right" aria-hidden="true">
               ✦
             </span>
-            <Image
-              src={type.asset!}
-              alt={`${character.name}, ${character.species} 공부 캐릭터`}
-              width={768}
-              height={768}
-              sizes="(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 400px"
-              preload={priority}
-            />
+            {motion ? (
+              <CharacterMotion
+                key={type.code}
+                asset={motion}
+                name={character.name}
+                species={character.species}
+                active={!flipped}
+                priority={priority}
+              />
+            ) : (
+              <Image
+                src={type.asset!}
+                alt={`${character.name}, ${character.species} 공부 캐릭터`}
+                width={768}
+                height={768}
+                sizes="(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 400px"
+                preload={priority}
+              />
+            )}
           </div>
           <div className="character-front-copy">
             <span className="character-family">

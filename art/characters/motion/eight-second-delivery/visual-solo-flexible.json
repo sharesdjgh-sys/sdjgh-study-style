@@ -1,0 +1,30 @@
+{
+  "code": "visual-solo-flexible",
+  "name": "모아",
+  "source": "public/characters/motion/visual-solo-flexible-loop-v1.mp4",
+  "video": "public/characters/motion/visual-solo-flexible-loop-8s-v1.mp4",
+  "poster": "public/characters/motion/visual-solo-flexible-loop-8s-v1.webp",
+  "createdAt": "2026-10-01T11:44:27.338Z",
+  "seconds": 8,
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 720,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "792113"
+    }
+  },
+  "newPaidRequests": 0,
+  "closingBlendFrameIntervals": 6,
+  "boundaryMeanPixelDifference": 1.6033230452674898,
+  "processing": "First eight seconds at original speed; removed final two seconds. Final 6 frame intervals blended toward the actual first frame; no ending hold. No reversal or new generation."
+}

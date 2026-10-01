@@ -1,0 +1,14 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create a 10-second seamless idle-animation loop from Image1. Use Image1 as both the exact first frame and exact last frame. One continuous shot, locked camera, identical framing, character scale and lighting throughout. Several seconds separate the small gestures; this is a relaxed collectible character portrait.
+
+The exact subject is 바니, a rabbit: cream rabbit with long asymmetrical ears, brown eyes, blue hoodie, coral sneakers, carrot-decorated backpack and the existing small blank study card; preserve the raised-foot reference pose and the card's blank face. The character is an independent learner who refreshes concentration with a small comfortable posture change. Keep the original soft, tactile 3D toy materials, eye shape and highlights, fur or feather details, clothing, accessories, rigid props and facial identity. Preserve the number, color and shape of every existing object. Keep the plain background exactly unchanged. Maintain the original smile and mouth shape without speech animation. Never redraw, restyle or substitute the character.
+
+Motion choreography:
+[0.0-1.5s] Hold the exact reference pose, eyes open. Almost imperceptible relaxed breathing only.
+[1.5-3.5s] Look toward the existing study card, blink once and incline the head 3 degrees, as though returning to one question. Keep the card blank and steady.
+[3.5-6.0s] Make one tiny comfortable upper-body lean and gently rotate the already-raised sneaker by only 4 degrees, then return it. Keep the supporting foot planted and retain the original raised-leg pose; no hopping, stepping or new pose.
+[6.0-7.0s] Let the ear tips follow the small lean naturally, then give a tiny ready-to-restart nod. Do not change ear length or add a second card.
+[7.0-9.0s] Slowly return every moving part, gaze and breathing to the exact reference pose. Ease to zero velocity without an abrupt reversal.
+[9.0-10.0s] Hold the identical starting pose, eyes open and still. The final frame must match Image1 and the first frame so repeated playback has no visible jump.
+
+Only this choreography occurs. No additional characters, text, writing, captions, speech, music, new objects, extra limbs, detached fingers, prop transformations, color shifts, camera movement, cuts, transitions, dissolves or fade-in/fade-out. All decorative objects stay fixed. Silent video. Keep the full subject inside the original frame and preserve the original pose outside the small specified gestures.

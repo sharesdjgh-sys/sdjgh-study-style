@@ -1,0 +1,10 @@
+Use case: precise-object-edit.
+Asset type: full-body transparent 3D character asset for the existing Korean 공부캐 collection.
+Input image 1 is the EDIT TARGET and identity reference: Melo, the cream-and-orange cat wearing a pink hoodie and coral/cream headphones and holding a coral audio player. The reference has an anatomy error with three arms. Correct this anatomy while preserving this exact lovable character, face, large brown eyes, cream-and-orange markings, forehead tuft, tilted head, gentle closed-mouth smile, fluffy curved tail, small feet, pink hoodie with gold-tipped drawstrings, coral audio player and its headphone cable, and the same soft high-quality 3D collectible-toy render and studio lighting.
+
+Final pose MUST HAVE EXACTLY TWO ARMS AND TWO PAWS, each naturally connected to its own shoulder through exactly one sleeve:
+- The arm on the VIEWER'S RIGHT holds the existing small coral audio player near the lower chest.
+- The arm on the VIEWER'S LEFT bends upward naturally, and its paw gently touches the headphone earcup on the viewer's left.
+There is NO hand at the chin, NO arm tucked into a pocket, NO extra sleeve or bent forearm across the belly, NO third arm, NO detached paw. Restore normal hoodie chest and pocket fabric with soft natural folds wherever the old erroneous sleeves were. The two shoulder-to-elbow-to-paw paths must be easy to understand and clearly anatomically plausible. Use only the two described arm chains.
+
+Keep the same single cat, clothing, colors, accessories, body proportions, expression, full-body composition and the two small existing cream thought-cloud decorations. No new objects, words, letters, logos or watermark. Do not change the character into a different cat. Entire ears, tail, feet and cable remain in frame, centered square composition with a little transparent margin, approximately 1024x1024. Genuine transparent background with clean alpha; no colored matte, no floor, no opaque backdrop.
