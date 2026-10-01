@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { FAMILIES, MODALITIES, getType, type Modality } from "@/lib/content";
+import {
+  FAMILIES,
+  MODALITIES,
+  QUESTIONS,
+  getType,
+  type Modality,
+} from "@/lib/content";
 import { CharacterCard } from "./character-card";
 import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
@@ -32,7 +38,7 @@ export function Home() {
           <p className="hero-description">
             공부할 때 나타나는 또 다른 나.
             <br />
-            16개의 질문으로 나를 닮은 캐릭터를 만나고,
+            {QUESTIONS.length}개의 질문으로 나를 닮은 캐릭터를 만나고,
             <br className="desktop-only" />
             다양한 공부 스타일과 공부법을 구경해 보세요.
           </p>
@@ -187,7 +193,7 @@ export function Home() {
           {[
             {
               title: "평소의 나를 떠올려요",
-              text: "최근 2주를 생각하며 16개의 질문에 답하세요. 더 좋은 답은 없어요.",
+              text: `최근 2주를 생각하며 ${QUESTIONS.length}개의 질문에 답하세요. 더 좋은 답은 없어요.`,
             },
             {
               title: "나를 닮은 공부캐를 만나요",

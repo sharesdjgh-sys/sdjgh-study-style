@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
+import { answersFor } from "../answers";
 
 test("분석 도중 새로고침해도 완료 결과가 보존됨", async ({ page }) => {
   await page.goto("/quiz");
   await page.evaluate(
-    ({ version, questions }) => {
+    ({ version, answers, index }) => {
       const now = Date.now();
       localStorage.setItem(
         "study-style:session",
@@ -14,19 +15,18 @@ test("분석 도중 새로고침해도 완료 결과가 보존됨", async ({ pag
           startedAt: now,
           updatedAt: now,
           source: "direct",
-          index: 15,
+          index,
           choices: {},
           result: null,
-          answers: Object.fromEntries(
-            questions.map((q) => [
-              q.id,
-              ["visual", "solo", "planned"].includes(q.axis) ? 5 : 1,
-            ]),
-          ),
+          answers,
         }),
       );
     },
-    { version: VERSION, questions: QUESTIONS },
+    {
+      version: VERSION,
+      answers: answersFor("visual-solo-planned"),
+      index: QUESTIONS.length - 1,
+    },
   );
   await page.reload();
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
@@ -36,7 +36,9 @@ test("분석 도중 새로고침해도 완료 결과가 보존됨", async ({ pag
   await expect(
     page.getByRole("heading", { name: "차분한 지도 설계자", exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".style-reasons")).toContainText("15점 중 15점");
+  await expect(page.locator(".style-reasons")).toContainText(
+    "12가지 상황 중 12번",
+  );
 });
 
 test("동작 줄이기에서도 분석이 완료되고 결과 설명을 읽을 수 있음", async ({
@@ -45,7 +47,7 @@ test("동작 줄이기에서도 분석이 완료되고 결과 설명을 읽을 �
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/quiz");
   await page.evaluate(
-    ({ version, questions }) => {
+    ({ version, answers, index }) => {
       const now = Date.now();
       localStorage.setItem(
         "study-style:session",
@@ -55,19 +57,18 @@ test("동작 줄이기에서도 분석이 완료되고 결과 설명을 읽을 �
           startedAt: now,
           updatedAt: now,
           source: "direct",
-          index: 15,
+          index,
           choices: {},
           result: null,
-          answers: Object.fromEntries(
-            questions.map((q) => [
-              q.id,
-              ["auditory", "team", "flexible"].includes(q.axis) ? 5 : 1,
-            ]),
-          ),
+          answers,
         }),
       );
     },
-    { version: VERSION, questions: QUESTIONS },
+    {
+      version: VERSION,
+      answers: answersFor("auditory-team-flexible"),
+      index: QUESTIONS.length - 1,
+    },
   );
   await page.reload();
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   FAMILIES,
   MODALITIES,
+  SITUATIONS,
   SOCIAL_LABELS,
   PACE_LABELS,
   getType,
@@ -11,7 +12,12 @@ import {
   type StudyType,
 } from "@/lib/content";
 import { readSession, clearSession, type Session } from "@/lib/storage";
-import { scoreAnswers } from "@/lib/scoring";
+import {
+  scoreAnswers,
+  axisStrength,
+  AXIS_MAX,
+  STRENGTH_TEXT,
+} from "@/lib/scoring";
 import { CharacterCard } from "./character-card";
 import { CHARACTERS } from "@/lib/characters";
 import { Share } from "./share";
@@ -22,6 +28,20 @@ import { TypeStory } from "./type-story";
 import { MysteryCard } from "./mystery-card";
 import { useCollection } from "./collection-provider";
 import { CollectionNudge } from "./collection-manager";
+const AXES = [
+  {
+    key: "social",
+    labels: ["혼자", "함께"],
+    negative: "혼자 쪽",
+    positive: "함께 쪽",
+  },
+  {
+    key: "pace",
+    labels: ["즉흥", "계획"],
+    negative: "즉흥 쪽",
+    positive: "계획 쪽",
+  },
+] as const;
 export function TypeResult({
   type,
   session,
@@ -122,28 +142,32 @@ export function TypeResult({
           <div>
             <span className="eyebrow">내 응답 살펴보기</span>
             <h2>
-              한 가지 모습만
-              <br />
+              한 가지 모습만 <br />
               있는 건 아니니까요.
             </h2>
             <p className="muted small">
-              점수는 선호의 응답 합계예요.
-              <br />
-              능력이나 학습 효과의 확률이 아니에요.
+              같은 상황에서 어떤 방식을 골랐는지 센 횟수예요. <br />
+              능력이나 학습 효과가 아니에요.
             </p>
           </div>
           <div className="score-bars">
+            <p className="small muted">
+              {SITUATIONS.length}가지 상황 중 {FAMILIES[type.modality].label}{" "}
+              방식을 {scores.counts[type.modality]}번 골랐어요.
+            </p>
             {MODALITIES.map((m) => (
               <div className="score-row" key={m}>
                 <span>{FAMILIES[m].label}</span>
                 <div>
                   <span
                     style={{
-                      transform: `scaleX(${scores.totals[m] / 15})`,
+                      transform: `scaleX(${scores.counts[m] / SITUATIONS.length})`,
                     }}
                   />
                 </div>
-                <span className="mono">{scores.totals[m]} / 15</span>
+                <span className="mono">
+                  {scores.counts[m]} / {SITUATIONS.length}
+                </span>
               </div>
             ))}
             {scores.close.modalities.length > 1 && (
@@ -151,17 +175,31 @@ export function TypeResult({
                 {scores.close.modalities
                   .map((m) => FAMILIES[m].label)
                   .join(" · ")}
-                을 비슷하게 선호했어요.
+                을 비슷하게 골랐어요.
               </p>
             )}
-            {(scores.close.social || scores.close.pace) && (
-              <p className="small muted">
-                {scores.close.social ? "혼자/함께" : ""}
-                {scores.close.social && scores.close.pace ? ", " : ""}
-                {scores.close.pace ? "계획/즉흥" : ""} 성향도 차이가 작아요.
-                상황에 맞춰 바꿔보세요.
-              </p>
-            )}
+            {AXES.map((axis) => {
+              const value = scores[axis.key];
+              const pole = value > 0 ? axis.positive : axis.negative;
+              return (
+                <div className="axis-row" key={axis.key}>
+                  <div className="axis-labels">
+                    <span>{axis.labels[0]}</span>
+                    <span>{axis.labels[1]}</span>
+                  </div>
+                  <div className="axis-track" aria-hidden="true">
+                    <span
+                      style={{
+                        left: `${((value + AXIS_MAX) / (AXIS_MAX * 2)) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="small muted">
+                    {pole}에 {STRENGTH_TEXT[axisStrength(value)]}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}

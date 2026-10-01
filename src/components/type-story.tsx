@@ -2,13 +2,14 @@
 import { useState } from "react";
 import {
   FAMILIES,
+  SITUATIONS,
   SOCIAL_LABELS,
   PACE_LABELS,
   type StudyType,
   type Answers,
 } from "@/lib/content";
 import { getTypeStory } from "@/lib/type-stories";
-import { scoreAnswers } from "@/lib/scoring";
+import { scoreAnswers, axisStrength, STRENGTH_TEXT } from "@/lib/scoring";
 import type { Session } from "@/lib/storage";
 import { Icon } from "./icon";
 
@@ -120,7 +121,7 @@ export function TypeStory({
             </dt>
             <dd>
               {scores
-                ? `${FAMILIES[type.modality].label} 관련 응답은 15점 중 ${scores.totals[type.modality]}점이에요. ${scores.candidates.modality.length > 1 ? "가장 높은 점수가 같아, 직접 고른 방식을 대표로 삼았어요." : "네 가지 공부 방식 중 응답 합계가 가장 높았어요."}`
+                ? `${SITUATIONS.length}가지 상황 중 ${scores.counts[type.modality]}번 ${FAMILIES[type.modality].label} 방식을 골랐어요. ${scores.candidates.modality.length > 1 ? "가장 많이 고른 방식이 여럿이라, 직접 고른 방식을 대표로 삼았어요." : "네 가지 방식 중 가장 많이 골랐어요."}`
                 : FAMILIES[type.modality].summary}
             </dd>
           </div>
@@ -129,8 +130,8 @@ export function TypeStory({
               <span>02</span> {SOCIAL_LABELS[type.social]}
             </dt>
             <dd>
-              {scores && scores.candidates.social.length > 1
-                ? "혼자/함께의 응답이 같아 직접 선택한 취향이에요. "
+              {scores
+                ? `${type.social === "solo" ? "혼자" : "함께"} 쪽에 ${STRENGTH_TEXT[axisStrength(scores.social)]} `
                 : ""}
               {story.environment}
             </dd>
@@ -140,8 +141,8 @@ export function TypeStory({
               <span>03</span> {PACE_LABELS[type.pace]}
             </dt>
             <dd>
-              {scores && scores.candidates.pace.length > 1
-                ? "계획/유연함의 응답이 같아 직접 선택한 취향이에요. "
+              {scores
+                ? `${type.pace === "planned" ? "계획" : "즉흥"} 쪽에 ${STRENGTH_TEXT[axisStrength(scores.pace)]} `
                 : ""}
               {story.rhythmTip}
             </dd>

@@ -1,4 +1,14 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+import { QUESTIONS } from "../../src/lib/content";
+// 상황형은 늘 첫 선택지, 양극형은 늘 위 문장 쪽으로 답해요.
+async function answerFirst(page: Page, index: number) {
+  if (QUESTIONS[index].kind === "situation")
+    await page.locator(".situation-option input").first().check();
+  else
+    await page
+      .getByRole("radio", { name: "위 문장에 훨씬 가까워요", exact: true })
+      .check();
+}
 test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /16명 중/ })).toBeVisible();
@@ -26,28 +36,32 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
   await expect(page.locator(".error-message[role=alert]")).toContainText(
     "답을 하나",
   );
-  await page.getByRole("radio", { name: "보통이에요", exact: true }).check();
+  await expect(page.locator(".question-guide")).toContainText("하나만");
+  await answerFirst(page, 0);
   await page.getByRole("button", { name: "다음 질문" }).click();
   await page.reload();
   await expect(page.locator(".question-number")).toHaveText("질문 02");
-  for (let i = 1; i < 16; i++) {
+  const last = QUESTIONS.length - 1;
+  for (let i = 1; i <= last; i++) {
     await expect(page.locator(".question-number")).toHaveText(
       `질문 ${String(i + 1).padStart(2, "0")}`,
     );
-    await page.getByRole("radio", { name: "보통이에요", exact: true }).check();
+    if (QUESTIONS.findIndex((q) => q.kind === "pair") === i)
+      await expect(page.locator(".question-guide")).toContainText("두 문장");
+    await answerFirst(page, i);
     await page
       .getByRole("button", {
-        name: i === 15 ? "내 결과 보기" : "다음 질문",
+        name: i === last ? "내 결과 보기" : "다음 질문",
         exact: true,
       })
       .click();
   }
+  // 늘 같은 위치만 누르면 네 방식이 3:3:3:3 동점이 되어 선택 화면이 나와요.
   await expect(
-    page.getByRole("heading", { name: /지금 시도해/ }),
+    page.getByRole("heading", { name: /하나만 해 본다면/ }),
   ).toBeVisible();
+  await expect(page.locator(".tie-choice")).toHaveCount(4);
   await page.getByRole("radio", { name: "기억으로 개념 지도 그리기" }).check();
-  await page.getByRole("radio", { name: "혼자 차분히" }).check();
-  await page.getByRole("radio", { name: "순서를 정해서" }).check();
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toBeVisible();
   await expect(page.locator(".discovery-tile")).toHaveCount(16);
@@ -75,8 +89,12 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
   await expect(
     page.getByText("비슷한 후보 중 직접 선택한 대표 스타일이에요."),
   ).toBeVisible();
+  await expect(page.locator(".axis-row")).toHaveCount(2);
+  await expect(page.locator(".mission-panel")).toContainText("혼자 할 때");
+  await expect(page.locator(".mission-panel")).toContainText("다음 복습 일정");
   await page.getByRole("button", { name: "암기", exact: true }).click();
   await expect(page.getByText(/외울 용어 5개/)).toBeVisible();
+  await expect(page.locator(".level-tip")).toContainText("3개로 줄여요");
   await page.getByRole("button", { name: "지금 10분 해보기" }).click();
   await page
     .getByRole("button", { name: "해봤어요 · 도움 됐어요", exact: true })
@@ -108,9 +126,11 @@ test("저장소 차단과 공유 실패에서도 사용 가능", async ({ page }
   });
   await page.goto("/quiz");
   await expect(page.getByRole("status")).toContainText("이어하기 저장");
-  await page.getByRole("radio", { name: "그런 편이에요", exact: true }).check();
+  await answerFirst(page, 0);
   await page.getByRole("button", { name: "다음 질문" }).click();
   await expect(page.locator(".question-number")).toHaveText("질문 02");
+  // 카카오 키가 설정된 환경에서도 SDK를 못 불러온 상황을 똑같이 재현해요.
+  await page.route("**/kakao_js_sdk/**", (route) => route.abort());
   await page.goto("/share/visual-solo-planned");
   await expect(page.getByText(/내 검사 결과는 아니에요/)).toBeVisible();
   await page.getByRole("button", { name: "카카오톡 공유" }).click();

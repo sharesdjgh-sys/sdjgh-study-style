@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { VERSION, QUESTIONS, MODALITIES, getType } from "./content";
+import {
+  VERSION,
+  QUESTIONS,
+  MODALITIES,
+  getType,
+  isValidAnswer,
+  type Answers,
+} from "./content";
 import { resolveType, scoreAnswers } from "./scoring";
 const KEY = "study-style:session";
 const FIRST_KEY = "study-style:first-result";
@@ -10,8 +17,15 @@ const sessionSchema = z.object({
   startedAt: z.number(),
   updatedAt: z.number(),
   source: z.enum(["direct", "qr", "school", "share"]),
-  answers: z.record(z.string(), z.number().int().min(1).max(5)),
-  index: z.number().int().min(0).max(15),
+  answers: z.record(
+    z.string(),
+    z.union([z.enum(MODALITIES), z.number().int().min(1).max(4)]),
+  ),
+  index: z
+    .number()
+    .int()
+    .min(0)
+    .max(QUESTIONS.length - 1),
   choices: z.object({
     modality: z.enum(MODALITIES).optional(),
     social: z.enum(["solo", "team"]).optional(),
@@ -44,7 +58,10 @@ export function parseSession(raw: string, now = Date.now()): Session | null {
     )
       return null;
     if (
-      Object.keys(s.answers).some((id) => !QUESTIONS.some((q) => q.id === id))
+      Object.entries(s.answers).some(([id, answer]) => {
+        const q = QUESTIONS.find((question) => question.id === id);
+        return !q || !isValidAnswer(q, answer);
+      })
     )
       return null;
     if (
@@ -52,12 +69,7 @@ export function parseSession(raw: string, now = Date.now()): Session | null {
       (!s.completedAt ||
         s.completedAt > now ||
         !getType(s.result) ||
-        resolveType(
-          scoreAnswers(
-            s.answers as Session["answers"] & Record<string, 1 | 2 | 3 | 4 | 5>,
-          ),
-          s.choices,
-        ) !== s.result)
+        resolveType(scoreAnswers(s.answers as Answers), s.choices) !== s.result)
     )
       return null;
     return s;

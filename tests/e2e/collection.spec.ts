@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS, VERSION, STUDY_TYPES } from "../../src/lib/content";
+import { answersFor } from "../answers";
 import { readFile } from "node:fs/promises";
 import {
   EMPTY_COLLECTION,
@@ -17,13 +18,11 @@ function complete(code = base, isRetake = false) {
     startedAt: now,
     updatedAt: now,
     completedAt: now,
-    index: 15,
+    index: QUESTIONS.length - 1,
     choices: {},
     result: code,
     isRetake,
-    answers: Object.fromEntries(
-      QUESTIONS.map((q) => [q.id, code.split("-").includes(q.axis) ? 5 : 1]),
-    ),
+    answers: answersFor(code),
   };
 }
 async function seed(page: Page) {

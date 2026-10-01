@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { eventSchema } from "../../src/lib/event-schema";
-import { VERSION } from "../../src/lib/content";
+import { VERSION, QUESTIONS } from "../../src/lib/content";
 import { POST } from "../../src/app/api/events/route";
 const payload = {
   runId: "123e4567-e89b-42d3-a456-426614174000",
@@ -16,10 +16,12 @@ describe("통계의 입력 경계", () => {
       eventSchema.safeParse({ ...payload, answers: { v1: 5 } }).success,
     ).toBe(false));
   it("문항 번호와 공유 채널을 제한한다", () => {
-    expect(
-      eventSchema.safeParse({ ...payload, name: "question", detail: "17" })
-        .success,
-    ).toBe(false);
+    const question = (detail: string) =>
+      eventSchema.safeParse({ ...payload, name: "question", detail }).success;
+    expect(question("1")).toBe(true);
+    expect(question(String(QUESTIONS.length))).toBe(true);
+    for (const detail of ["0", "01", String(QUESTIONS.length + 1), "1.5"])
+      expect(question(detail)).toBe(false);
     expect(
       eventSchema.safeParse({ ...payload, name: "share", detail: "kakao" })
         .success,

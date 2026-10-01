@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { getType, FAMILIES } from "@/lib/content";
+import { getType, FAMILIES, QUESTIONS } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
 export const runtime = "nodejs";
 export async function GET(request: Request) {
@@ -55,7 +55,7 @@ export async function GET(request: Request) {
       >
         {t
           ? `${FAMILIES[t.modality].label} · ${t.subtitle}`
-          : "16개의 질문 · 16명의 캐릭터 · 다양한 공부법"}
+          : `${QUESTIONS.length}개의 질문 · 16명의 캐릭터 · 다양한 공부법`}
       </div>
       {portrait && (
         // ImageResponse renders an image buffer, not a browser next/image component.

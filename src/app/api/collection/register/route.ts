@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   } catch {
     return json({ error: "payload" }, 400);
   }
-  // Validation re-scores all 16 answers; raw answers are never persisted or logged.
+  // Validation re-scores every answer; raw answers are never persisted or logged.
   const session = parseSession(JSON.stringify(data.session));
   if (!session?.result || session.isRetake)
     return json({ error: "first_result_required" }, 400);

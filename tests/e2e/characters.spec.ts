@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
+import { answersFor } from "../answers";
 
 async function seedOwn(
   page: Page,
@@ -8,7 +9,7 @@ async function seedOwn(
 ) {
   await page.goto("/");
   await page.evaluate(
-    ({ questions, version, code, expired }) => {
+    ({ answers, index, version, code, expired }) => {
       const now = Date.now() - (expired ? 8 * 86400000 : 0);
       localStorage.removeItem("study-style:first-result");
       localStorage.setItem(
@@ -20,19 +21,20 @@ async function seedOwn(
           updatedAt: now,
           completedAt: now,
           source: "direct",
-          index: 15,
+          index,
           choices: {},
           result: code,
-          answers: Object.fromEntries(
-            questions.map((q) => [
-              q.id,
-              code.split("-").includes(q.axis) ? 5 : 1,
-            ]),
-          ),
+          answers,
         }),
       );
     },
-    { questions: QUESTIONS, version: VERSION, code, expired },
+    {
+      answers: answersFor(code),
+      index: QUESTIONS.length - 1,
+      version: VERSION,
+      code,
+      expired,
+    },
   );
 }
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { VERSION } from "./content";
+import { VERSION, QUESTIONS } from "./content";
 export const eventSchema = z
   .object({
     runId: z.uuid(),
@@ -20,7 +20,7 @@ export const eventSchema = z
   .superRefine((e, ctx) => {
     const valid =
       e.name === "question"
-        ? /^([1-9]|1[0-6])$/.test(e.detail)
+        ? /^[1-9]\d?$/.test(e.detail) && Number(e.detail) <= QUESTIONS.length
         : e.name === "share"
           ? ["copy", "kakao"].includes(e.detail)
           : e.name === "feedback"

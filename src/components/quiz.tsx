@@ -3,12 +3,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  ANSWER_LABELS,
   QUESTIONS,
+  QUESTION_GUIDES,
   FAMILIES,
-  SOCIAL_LABELS,
-  PACE_LABELS,
+  type Answer,
   type Answers,
+  type PairAnswer,
   getType,
 } from "@/lib/content";
 import { scoreAnswers, resolveType, type Choices } from "@/lib/scoring";
@@ -25,6 +25,42 @@ import { Arrow } from "./shell";
 import { useConfirm } from "./ui/confirm-dialog";
 import { TypeDiscovery } from "./type-discovery";
 import { useCollection } from "./collection-provider";
+const TOTAL = QUESTIONS.length;
+const LAST = TOTAL - 1;
+const ENCOURAGEMENTS = [
+  "첫 느낌대로 골라요. 정답은 없으니까!",
+  "취향 조각이 모이고 있어요. 조금 더 알아볼까요?",
+  "벌써 절반을 넘었어요! 나다운 공부 모습이 보이기 시작해요.",
+  "거의 다 왔어요. 어떤 카드가 나올까요?",
+  "마지막 두 조각만 남았어요!",
+];
+const PAIR_SIDES = [
+  {
+    side: "top",
+    choices: [
+      { value: 1, label: "훨씬 가까워요", name: "위 문장에 훨씬 가까워요" },
+      {
+        value: 2,
+        label: "조금 더 가까워요",
+        name: "위 문장에 조금 더 가까워요",
+      },
+    ],
+  },
+  {
+    side: "bottom",
+    choices: [
+      {
+        value: 3,
+        label: "조금 더 가까워요",
+        name: "아래 문장에 조금 더 가까워요",
+      },
+      { value: 4, label: "훨씬 가까워요", name: "아래 문장에 훨씬 가까워요" },
+    ],
+  },
+] as const satisfies readonly {
+  side: "top" | "bottom";
+  choices: readonly { value: PairAnswer; label: string; name: string }[];
+}[];
 export function Quiz() {
   const router = useRouter();
   const { data: collection, loaded: collectionLoaded } = useCollection();
@@ -88,11 +124,21 @@ export function Quiz() {
     track(completed, "complete");
     setDiscovering(true);
   }
+  function answer(id: string, value: Answer, updatedAt: number) {
+    if (!session) return;
+    setError("");
+    update({
+      ...session,
+      answers: { ...session.answers, [id]: value },
+      choices: {},
+      updatedAt,
+    });
+  }
   async function restart() {
     if (
       await confirm({
         title: "새로 시작할까요?",
-        description: "16개의 질문에 새롭게 답할 수 있어요.",
+        description: `${TOTAL}개의 질문에 새롭게 답할 수 있어요.`,
         note: "재검사에서는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 처음 만난 캐릭터와 저장된 도감은 유지되고 새 캐릭터가 추가되지는 않아요.",
         confirmLabel: "새로 시작",
         tone: "danger",
@@ -146,6 +192,9 @@ export function Quiz() {
   const q = QUESTIONS[session.index];
   const count = Object.keys(session.answers).length;
   const scores = ties ? scoreAnswers(session.answers as Answers) : null;
+  const firstOfKind =
+    QUESTIONS.findIndex((question) => question.kind === q.kind) ===
+    session.index;
   const choose = (key: keyof Choices, value: string) =>
     update({ ...session, choices: { ...session.choices, [key]: value } });
   return (
@@ -190,8 +239,8 @@ export function Quiz() {
       <div className="progress-heading">
         <span>{ties ? "마지막으로, 하나만 골라주세요" : "내 공부캐 찾기"}</span>
         <strong>
-          {ties ? "16" : String(session.index + 1).padStart(2, "0")}
-          <span> / 16</span>
+          {ties ? TOTAL : String(session.index + 1).padStart(2, "0")}
+          <span> / {TOTAL}</span>
         </strong>
       </div>
       <div
@@ -200,81 +249,108 @@ export function Quiz() {
         aria-label="응답 진행률"
         aria-valuenow={count}
         aria-valuemin={0}
-        aria-valuemax={16}
+        aria-valuemax={TOTAL}
       >
-        <span style={{ transform: `scaleX(${count / 16})` }} />
+        <span style={{ transform: `scaleX(${count / TOTAL})` }} />
       </div>
       <p
         className="quiz-encouragement"
-        key={`encourage-${Math.floor(session.index / 4)}`}
+        key={`encourage-${ties ? "ties" : Math.floor(session.index / 5)}`}
       >
         <span aria-hidden="true">✦</span>{" "}
         {ties
           ? "마지막 취향 한 조각, 직접 골라볼까요?"
-          : [
-              "첫 느낌대로 골라요. 정답은 없으니까!",
-              "취향 조각이 모이고 있어요. 조금 더 알아볼까요?",
-              "벌써 절반! 나다운 공부 모습이 보이기 시작해요.",
-              "이제 마지막 네 조각. 어떤 카드가 나올까요?",
-            ][Math.floor(session.index / 4)]}
+          : ENCOURAGEMENTS[
+              Math.min(ENCOURAGEMENTS.length - 1, Math.floor(session.index / 5))
+            ]}
       </p>
       <section
         className="question-card"
         data-direction={direction}
+        data-kind={ties ? "ties" : q.kind}
         key={ties ? "ties" : q.id}
       >
         {!ties ? (
           <>
-            <span className="question-number">
-              질문 {String(session.index + 1).padStart(2, "0")}
-            </span>
+            <div className="question-meta">
+              <span className="question-number">
+                질문 {String(session.index + 1).padStart(2, "0")}
+              </span>
+              <span className="question-kind">
+                {q.kind === "situation" ? "상황 고르기" : "두 문장 비교"}
+              </span>
+            </div>
+            {firstOfKind && (
+              <p className="question-guide">{QUESTION_GUIDES[q.kind]}</p>
+            )}
             <h1 ref={heading} tabIndex={-1}>
               {q.text}
             </h1>
             <p className="question-hint">{q.hint}</p>
-            <fieldset className="answers">
-              <legend className="sr-only">나에게 얼마나 해당하나요?</legend>
-              {ANSWER_LABELS.map((label, i) => (
-                <label
-                  className={`answer-option ${session.answers[q.id] === i + 1 ? "checked" : ""}`}
-                  key={label}
-                >
-                  <input
-                    type="radio"
-                    aria-label={label}
-                    name={q.id}
-                    value={i + 1}
-                    checked={session.answers[q.id] === i + 1}
-                    onChange={() => {
-                      setError("");
-                      update({
-                        ...session,
-                        answers: { ...session.answers, [q.id]: i + 1 },
-                        choices: {},
-                        updatedAt: Date.now(),
-                      });
-                    }}
-                  />
-                  <span className="answer-score" aria-hidden="true">
-                    {i + 1}점
-                  </span>
-                  <span className="answer-label" aria-hidden="true">
-                    {label}
-                  </span>
-                  <span className="answer-label-short" aria-hidden="true">
-                    {
-                      [
-                        "전혀\n아님",
-                        "아닌\n편",
-                        "보통",
-                        "그런\n편",
-                        "매우\n그럼",
-                      ][i]
-                    }
-                  </span>
-                </label>
-              ))}
-            </fieldset>
+            {q.kind === "situation" ? (
+              <fieldset className="situation-options">
+                <legend className="sr-only">
+                  가장 먼저 손이 가는 방법 하나를 골라 주세요
+                </legend>
+                {q.options.map((option) => (
+                  <label
+                    className={`situation-option ${session.answers[q.id] === option.modality ? "checked" : ""}`}
+                    key={option.modality}
+                  >
+                    <input
+                      type="radio"
+                      name={q.id}
+                      value={option.modality}
+                      checked={session.answers[q.id] === option.modality}
+                      onChange={() => answer(q.id, option.modality, Date.now())}
+                    />
+                    <span>{option.text}</span>
+                  </label>
+                ))}
+              </fieldset>
+            ) : (
+              <fieldset className="pair-options">
+                <legend className="sr-only">
+                  두 문장 중 요즘의 나에게 더 가까운 쪽을 골라 주세요
+                </legend>
+                {PAIR_SIDES.map(({ side, choices }, i) => (
+                  <div
+                    className={`pair-card ${choices.some((c) => c.value === session.answers[q.id]) ? "chosen" : ""}`}
+                    key={side}
+                  >
+                    {i === 1 && (
+                      <span className="pair-divider" aria-hidden="true">
+                        또는
+                      </span>
+                    )}
+                    <p className="pair-statement" id={`${q.id}-${side}`}>
+                      {q[side].text}
+                    </p>
+                    <div className="pair-choices">
+                      {choices.map((choice) => (
+                        <label
+                          className={`pair-choice ${session.answers[q.id] === choice.value ? "checked" : ""}`}
+                          key={choice.value}
+                        >
+                          <input
+                            type="radio"
+                            name={q.id}
+                            value={choice.value}
+                            aria-label={choice.name}
+                            aria-describedby={`${q.id}-${side}`}
+                            checked={session.answers[q.id] === choice.value}
+                            onChange={() =>
+                              answer(q.id, choice.value, Date.now())
+                            }
+                          />
+                          <span aria-hidden="true">{choice.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </fieldset>
+            )}
             <div className="quiz-controls">
               <button
                 className="button ghost"
@@ -299,7 +375,7 @@ export function Quiz() {
                     setError("답을 하나 골라주세요.");
                     return;
                   }
-                  if (session.index === 15) finish(session);
+                  if (session.index === LAST) finish(session);
                   else {
                     setDirection("next");
                     const s = {
@@ -312,7 +388,7 @@ export function Quiz() {
                   }
                 }}
               >
-                {session.index === 15 ? "내 결과 보기" : "다음 질문"}
+                {session.index === LAST ? "내 결과 보기" : "다음 질문"}
                 <Arrow />
               </button>
             </div>
@@ -321,76 +397,36 @@ export function Quiz() {
           scores && (
             <>
               <span className="question-number">
-                여러 방식이 비슷하게 나왔어요
+                여러 방식을 비슷하게 골랐어요
               </span>
               <h1 ref={heading} tabIndex={-1}>
-                지금 시도해 보고 싶은
+                다음 공부 시간에
                 <br />
-                방식을 골라주세요.
+                하나만 해 본다면?
               </h1>
               <p className="question-hint">
-                추가 점수는 없어요. 선택한 방식을 대표 스타일로 보여드릴게요.
+                추가 점수는 없어요. 고른 방식을 대표 스타일로 보여 드릴게요.
                 {scores.uniform &&
-                  " 모든 응답이 같아 뚜렷한 차이는 나타나지 않았어요."}
+                  " 네 방식을 고르게 골랐어요. 어떤 방법이든 시작점이 될 수 있어요."}
               </p>
-              {scores.candidates.modality.length > 1 && (
-                <fieldset className="tie-group">
-                  <legend>먼저 해보고 싶은 활동</legend>
-                  {scores.candidates.modality.map((m) => (
-                    <label
-                      className={`tie-choice ${session.choices.modality === m ? "checked" : ""}`}
-                      key={m}
-                    >
-                      <input
-                        type="radio"
-                        name="modality"
-                        checked={session.choices.modality === m}
-                        onChange={() => choose("modality", m)}
-                      />
-                      <Icon name={FAMILIES[m].icon} />
-                      {FAMILIES[m].activity}
-                    </label>
-                  ))}
-                </fieldset>
-              )}
-              {scores.candidates.social.length > 1 && (
-                <fieldset className="tie-group">
-                  <legend>누구와 해볼까요?</legend>
-                  {scores.candidates.social.map((s) => (
-                    <label
-                      className={`tie-choice ${session.choices.social === s ? "checked" : ""}`}
-                      key={s}
-                    >
-                      <input
-                        type="radio"
-                        name="social"
-                        checked={session.choices.social === s}
-                        onChange={() => choose("social", s)}
-                      />
-                      {SOCIAL_LABELS[s]}
-                    </label>
-                  ))}
-                </fieldset>
-              )}
-              {scores.candidates.pace.length > 1 && (
-                <fieldset className="tie-group">
-                  <legend>어떤 흐름이 끌리나요?</legend>
-                  {scores.candidates.pace.map((p) => (
-                    <label
-                      className={`tie-choice ${session.choices.pace === p ? "checked" : ""}`}
-                      key={p}
-                    >
-                      <input
-                        type="radio"
-                        name="pace"
-                        checked={session.choices.pace === p}
-                        onChange={() => choose("pace", p)}
-                      />
-                      {PACE_LABELS[p]}
-                    </label>
-                  ))}
-                </fieldset>
-              )}
+              <fieldset className="tie-group">
+                <legend>먼저 해보고 싶은 활동</legend>
+                {scores.candidates.modality.map((m) => (
+                  <label
+                    className={`tie-choice ${session.choices.modality === m ? "checked" : ""}`}
+                    key={m}
+                  >
+                    <input
+                      type="radio"
+                      name="modality"
+                      checked={session.choices.modality === m}
+                      onChange={() => choose("modality", m)}
+                    />
+                    <Icon name={FAMILIES[m].icon} />
+                    {FAMILIES[m].activity}
+                  </label>
+                ))}
+              </fieldset>
               <div className="quiz-controls">
                 <button
                   className="button ghost"
@@ -405,7 +441,7 @@ export function Quiz() {
                   className="button primary"
                   onClick={() => {
                     if (!resolveType(scores, session.choices)) {
-                      setError("각 항목에서 하나씩 골라주세요.");
+                      setError("활동을 하나 골라주세요.");
                       return;
                     }
                     finish(session);

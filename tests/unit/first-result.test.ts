@@ -9,6 +9,7 @@ import {
   type Session,
 } from "../../src/lib/storage";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
+import { answersFor } from "../answers";
 const values = new Map<string, string>();
 beforeEach(() => {
   vi.stubGlobal("window", { location: { search: "" } });
@@ -37,12 +38,10 @@ function complete(type = "visual-solo-planned"): Session {
     startedAt: now,
     updatedAt: now,
     completedAt: now,
-    index: 15,
+    index: QUESTIONS.length - 1,
     choices: {},
     result: type,
-    answers: Object.fromEntries(
-      QUESTIONS.map((q) => [q.id, type.split("-").includes(q.axis) ? 5 : 1]),
-    ),
+    answers: answersFor(type),
   };
 }
 it("첫 결과를 보존하고 재검사의 최근 결과와 분리한다", () => {

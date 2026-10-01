@@ -11,6 +11,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { readFile } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { QUESTIONS, VERSION, STUDY_TYPES } from "../../src/lib/content";
+import { answersFor } from "../answers";
 const mocks = vi.hoisted(() => ({
   query: vi.fn(),
   jar: new Map<string, string>(),
@@ -73,15 +74,10 @@ function session() {
     startedAt: now,
     updatedAt: now,
     completedAt: now,
-    index: 15,
+    index: QUESTIONS.length - 1,
     choices: {},
     result: "visual-solo-planned",
-    answers: Object.fromEntries(
-      QUESTIONS.map((q) => [
-        q.id,
-        ["visual", "solo", "planned"].includes(q.axis) ? 5 : 1,
-      ]),
-    ),
+    answers: answersFor("visual-solo-planned"),
   };
 }
 beforeAll(async () => {
@@ -195,7 +191,7 @@ it("로그인 없이 등록하거나 다른 사이트에서 요청할 수 없다
 });
 it("미완료·결과 조작·재검사는 서버 검증을 통과하지 못한다", async () => {
   const s = session();
-  delete (s.answers as Record<string, number>).v1;
+  delete s.answers.A01;
   for (const input of [
     s,
     { ...session(), result: "motion-team-flexible" },

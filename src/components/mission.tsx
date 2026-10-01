@@ -1,14 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  FAMILIES,
-  TASKS,
-  stepsFor,
-  type Modality,
-  type Task,
-  type StudyType,
-} from "@/lib/content";
+import { type Modality, type Task, type StudyType } from "@/lib/content";
+import { TASKS, ROUTINES, methodFor } from "@/lib/methods";
 import { readSession, saveSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
@@ -24,6 +18,7 @@ export function Mission({
   const [started, setStarted] = useState(false);
   const [feedback, setFeedback] = useState<string>();
   const [message, setMessage] = useState("");
+  const method = methodFor(modality, task);
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const m = readSession()?.mission;
@@ -89,9 +84,16 @@ export function Mission({
           10분
         </span>
       </div>
-      <h2>{FAMILIES[modality].activity}</h2>
+      <h2>{method.name}</h2>
+      <p className="method-strategies">
+        <span>바탕 전략</span>
+        {method.strategies.map((strategy) => (
+          <strong key={strategy}>{strategy}</strong>
+        ))}
+      </p>
       <p className="muted">
-        완벽하게 하려 하지 말고, 한 가지 내용으로 가볍게 시작해 보세요.
+        {TASKS[task].when} 써요. 완벽하게 하려 하지 말고, 한 가지 내용으로
+        가볍게 시작해 보세요.
       </p>
       <div className="task-tabs" aria-label="공부 과제 선택">
         {(Object.keys(TASKS) as Task[]).map((t) => (
@@ -106,24 +108,29 @@ export function Mission({
         ))}
       </div>
       <ol className="mission-steps">
-        {stepsFor(modality, task).map((step, i) => (
+        {method.steps.map((step, i) => (
           <li key={step}>
             <span>{i + 1}</span>
             <p>{step}</p>
           </li>
         ))}
       </ol>
+      <div className="level-tip">
+        <strong>내 수준에 맞추기</strong>
+        <p>{method.level}</p>
+      </div>
       {type && (
         <div className="personal-tip">
           <Icon name="stars-linear" />
-          <p>
-            {type.social === "team"
-              ? "각자 먼저 떠올린 다음, 서로 빠뜨린 내용을 질문해 보세요."
-              : "혼자 먼저 떠올려 보고, 헷갈린 부분만 표시해 두세요."}{" "}
-            {type.pace === "planned"
-              ? "오늘 할 시간과 내일 확인할 시간을 미리 정해두세요."
-              : "지금 가능한 내용 하나로 시작하고, 다음에 확인할 때도 짧게 해보세요."}
-          </p>
+          <div>
+            {[ROUTINES.social[type.social], ROUTINES.pace[type.pace]].map(
+              (routine) => (
+                <p key={routine.title}>
+                  <strong>{routine.title}</strong> {routine.text}
+                </p>
+              ),
+            )}
+          </div>
         </div>
       )}
       <div className="button-row">
