@@ -72,6 +72,8 @@ export function Quiz() {
   const [error, setError] = useState("");
   const [confirm, dialog] = useConfirm();
   const heading = useRef<HTMLHeadingElement>(null);
+  const progressHeading = useRef<HTMLDivElement>(null);
+  const scrollToNextQuestion = useRef(false);
   useEffect(() => {
     router.prefetch("/result");
   }, [router]);
@@ -91,7 +93,18 @@ export function Quiz() {
     return () => cancelAnimationFrame(id);
   }, []);
   useEffect(() => {
-    heading.current?.focus();
+    if (scrollToNextQuestion.current) {
+      scrollToNextQuestion.current = false;
+      heading.current?.focus({ preventScroll: true });
+      progressHeading.current?.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+    } else {
+      heading.current?.focus();
+    }
   }, [session?.index, ties]);
   function update(s: Session) {
     setSession(s);
@@ -236,7 +249,7 @@ export function Quiz() {
           </p>
         </aside>
       )}
-      <div className="progress-heading">
+      <div ref={progressHeading} className="progress-heading">
         <span>{ties ? "마지막으로, 하나만 골라주세요" : "내 공부캐 찾기"}</span>
         <strong>
           {ties ? TOTAL : String(session.index + 1).padStart(2, "0")}
@@ -377,6 +390,7 @@ export function Quiz() {
                   }
                   if (session.index === LAST) finish(session);
                   else {
+                    scrollToNextQuestion.current = true;
                     setDirection("next");
                     const s = {
                       ...session,

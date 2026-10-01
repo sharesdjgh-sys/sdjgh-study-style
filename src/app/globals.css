@@ -988,6 +988,7 @@ legend {
   align-items: center;
 }
 .progress-heading {
+  scroll-margin-top: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
