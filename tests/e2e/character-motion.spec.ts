@@ -4,6 +4,24 @@ import { CHARACTERS } from "../../src/lib/characters";
 import { CHARACTER_MOTIONS } from "../../src/lib/character-motions";
 import { EMPTY_COLLECTION } from "../../src/lib/collection-contract";
 
+test("동시 공유 페이지 요청이 JSON 오류 없이 응답함", async ({ request }) => {
+  await Promise.all(
+    [
+      "motion-team-flexible",
+      "tactile-team-flexible",
+      "auditory-solo-flexible",
+    ].map(async (code) => {
+      const response = await request.get(`/share/${code}`);
+      expect(response.status()).toBe(200);
+      const html = await response.text();
+      expect(html).toContain(CHARACTERS[code].name);
+      expect(html).not.toContain("Unexpected end of JSON input");
+    }),
+  );
+  expect((await request.get("/share/unknown-character")).status()).toBe(404);
+  expect((await request.get("/types/unknown-character")).status()).toBe(404);
+});
+
 test("루미는 같은 파일을 무음 반복 재생하고 정지·재개·뒤집기를 지원함", async ({
   page,
 }) => {
@@ -136,13 +154,22 @@ for (const type of STUDY_TYPES) {
     page,
   }) => {
     const errors: string[] = [];
+    const imageWarnings: string[] = [];
     const requestedVideos: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
+    page.on("console", (message) => {
+      if (
+        message.type() === "warning" &&
+        /Image with src.*\/characters\/motion\//.test(message.text())
+      )
+        imageWarnings.push(message.text());
+    });
     page.on("request", (request) => {
       if (/\/characters\/motion\/.*\.mp4$/.test(request.url()))
         requestedVideos.push(new URL(request.url()).pathname);
     });
-    await page.goto(`/share/${type.code}`);
+    const response = await page.goto(`/share/${type.code}`);
+    expect(response?.status()).toBe(200);
     const video = page.locator(".character-motion video");
     await video.scrollIntoViewIfNeeded();
     await expect
@@ -154,6 +181,16 @@ for (const type of STUDY_TYPES) {
     await expect(video).toHaveAttribute("src", asset.video);
     await expect(video).toHaveAttribute("poster", asset.poster);
     await expect(video).toHaveClass("is-ready");
+    const posterBounds = await page
+      .locator(".character-motion img")
+      .boundingBox();
+    const videoBounds = await video.boundingBox();
+    expect(posterBounds).not.toBeNull();
+    expect(videoBounds).not.toBeNull();
+    expect(posterBounds!.width).toBeGreaterThan(0);
+    expect(posterBounds!.width).toBeCloseTo(posterBounds!.height, 1);
+    expect(posterBounds!.width).toBeCloseTo(videoBounds!.width, 1);
+    expect(posterBounds!.height).toBeCloseTo(videoBounds!.height, 1);
     expect(
       await video.evaluate((v: HTMLVideoElement) => ({
         duration: v.duration,
@@ -199,6 +236,7 @@ for (const type of STUDY_TYPES) {
       ),
     ).toBe(true);
     expect(errors).toEqual([]);
+    expect(imageWarnings).toEqual([]);
   });
 }
 

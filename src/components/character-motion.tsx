@@ -83,8 +83,7 @@ export function CharacterMotion({
         <Image
           src={asset.poster}
           alt={`${name}, ${species} 공부 캐릭터`}
-          width={720}
-          height={720}
+          fill
           sizes="(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 370px"
           preload={priority}
         />

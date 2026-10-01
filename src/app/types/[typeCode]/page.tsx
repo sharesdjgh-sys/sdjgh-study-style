@@ -1,10 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { STUDY_TYPES, getType } from "@/lib/content";
+import { getType } from "@/lib/content";
 import { TypeAccess } from "@/components/type-access";
-export function generateStaticParams() {
-  return STUDY_TYPES.map((t) => ({ typeCode: t.code }));
-}
 export async function generateMetadata({
   params,
 }: {

@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { STUDY_TYPES, getType } from "@/lib/content";
+import { getType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
 import { SharedCharacter } from "@/components/shared-character";
 
-export function generateStaticParams() {
-  return STUDY_TYPES.map((type) => ({ typeCode: type.code }));
-}
+// This page reads searchParams and renders per request. Listing static params
+// needlessly triggers Next's concurrent dev prerender-manifest read/write path.
 export async function generateMetadata({
   params,
 }: {
