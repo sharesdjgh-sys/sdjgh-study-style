@@ -16,6 +16,12 @@ export async function GET(request: Request) {
   try {
     const sql = database();
     await sql`SELECT study_rollup()`;
+    await sql.transaction([
+      sql`DELETE FROM collection_sessions WHERE expires_at<now()`,
+      sql`DELETE FROM collection_oauth_states WHERE expires_at<now()`,
+      sql`DELETE FROM collection_invites WHERE expires_at<now()`,
+      sql`DELETE FROM collection_limits WHERE expires_at<now()`,
+    ]);
     return Response.json({ ok: true });
   } catch {
     return Response.json({ error: "unavailable" }, { status: 503 });

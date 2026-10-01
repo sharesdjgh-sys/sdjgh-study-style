@@ -29,13 +29,19 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ typeCode: string }>;
-  searchParams: Promise<{ from?: string }>;
+  searchParams: Promise<{ from?: string; ref?: string | string[] }>;
 }) {
   const { typeCode } = await params;
   const type = getType(typeCode);
   if (!type) notFound();
   // Preserve previously copied links without opening the public catalog.
-  if ((await searchParams).from === "share")
-    redirect(`/share/${type.code}?from=share`);
+  const query = await searchParams;
+  if (query.from === "share") {
+    const ref =
+      typeof query.ref === "string" && /^[A-Fa-f0-9]{10}$/.test(query.ref)
+        ? `&ref=${query.ref.toUpperCase()}`
+        : "";
+    redirect(`/share/${type.code}?from=share${ref}`);
+  }
   return <TypeAccess type={type} />;
 }

@@ -19,4 +19,7 @@ await sql.transaction(
 await sql.query(
   await readFile(new URL("../db/002_retention.sql", import.meta.url), "utf8"),
 );
-console.log("공부결 이용 통계 테이블 준비 완료");
+await sql.query(
+  await readFile(new URL("../db/003_collections.sql", import.meta.url), "utf8"),
+);
+console.log("공부결 이용 통계·계정·캐릭터 도감 테이블 준비 완료");

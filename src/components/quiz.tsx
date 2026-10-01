@@ -16,6 +16,7 @@ import {
   readSession,
   newSession,
   saveSession,
+  rememberFirstSession,
   type Session,
 } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
@@ -23,8 +24,10 @@ import { Icon } from "./icon";
 import { Arrow } from "./shell";
 import { useConfirm } from "./ui/confirm-dialog";
 import { TypeDiscovery } from "./type-discovery";
+import { useCollection } from "./collection-provider";
 export function Quiz() {
   const router = useRouter();
+  const { data: collection, loaded: collectionLoaded } = useCollection();
   const [session, setSession] = useState<Session | null>(null);
   const [ties, setTies] = useState(false);
   const [discovering, setDiscovering] = useState(false);
@@ -78,8 +81,10 @@ export function Quiz() {
       result: code,
       completedAt: Date.now(),
       updatedAt: Date.now(),
+      isRetake: Boolean(s.isRetake || collection.firstType),
     };
     update(completed);
+    rememberFirstSession(completed);
     track(completed, "complete");
     setDiscovering(true);
   }
@@ -88,7 +93,7 @@ export function Quiz() {
       await confirm({
         title: "새로 시작할까요?",
         description: "16개의 질문에 새롭게 답할 수 있어요.",
-        note: "이 기기에 저장된 이전 검사와 활동 기록은 새 기록으로 바뀌어요.",
+        note: "재검사에서는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 처음 만난 캐릭터와 저장된 도감은 유지되고 새 캐릭터가 추가되지는 않아요.",
         confirmLabel: "새로 시작",
         tone: "danger",
       })
@@ -100,7 +105,7 @@ export function Quiz() {
       track(s, "question", "1");
     }
   }
-  if (!session)
+  if (!session || !collectionLoaded)
     return (
       <main id="main" className="quiz-shell">
         <div className="loading-state" role="status">
@@ -115,6 +120,7 @@ export function Quiz() {
       return (
         <TypeDiscovery
           type={type}
+          revealCharacter={!session.isRetake}
           onComplete={() => router.replace("/result")}
         />
       );
@@ -150,9 +156,26 @@ export function Quiz() {
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />
-          답변은 이 기기에만 저장해요
+          답변 원문은 서버에 저장하지 않아요
         </span>
       </div>
+      {session.index === 0 && !ties && (
+        <aside className="quiz-collection-notice">
+          <strong>
+            {session.isRetake || collection.firstType
+              ? "다시 알아보는 나의 공부 취향"
+              : "시작 전에, 캐릭터 도감 안내"}
+          </strong>
+          <p>
+            첫 검사에서는 로그인 없이 나만의 캐릭터를 만나요. 도감에 저장하고
+            친구를 모으려면 카카오 로그인이 필요해요.
+          </p>
+          <p>
+            재검사는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 새
+            캐릭터는 추가되지 않아요.
+          </p>
+        </aside>
+      )}
       <div className="progress-heading">
         <span>
           {ties ? "마지막으로, 하나만 골라주세요" : "내 공부 취향 알아보기"}

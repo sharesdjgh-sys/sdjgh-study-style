@@ -10,6 +10,7 @@ async function seedOwn(
   await page.evaluate(
     ({ questions, version, code, expired }) => {
       const now = Date.now() - (expired ? 8 * 86400000 : 0);
+      localStorage.removeItem("study-style:first-result");
       localStorage.setItem(
         "study-style:session",
         JSON.stringify({

@@ -6,9 +6,18 @@ import { CharacterCard } from "./character-card";
 import { Share } from "./share";
 import { useSavedSession } from "./use-saved-session";
 
-export function SharedCharacter({ type }: { type: StudyType }) {
+export function SharedCharacter({
+  type,
+  referralCode,
+}: {
+  type: StudyType;
+  referralCode?: string;
+}) {
   const { session } = useSavedSession();
   const character = CHARACTERS[type.code];
+  const quizHref = referralCode
+    ? `/quiz?from=share&ref=${referralCode}`
+    : "/quiz?from=share";
   return (
     <main id="main" className="secret-character-page shared-character-page">
       <div className="secret-character-copy">
@@ -28,7 +37,7 @@ export function SharedCharacter({ type }: { type: StudyType }) {
         </p>
         <Link
           className="button primary"
-          href={session?.result ? "/result#share-style" : "/quiz?from=share"}
+          href={session?.result ? "/collection" : quizHref}
         >
           {session?.result ? "내 캐릭터도 보여주기" : "나도 내 캐릭터 만나기"} →
         </Link>

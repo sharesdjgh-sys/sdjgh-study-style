@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Header, Footer } from "@/components/shell";
 import { siteUrl } from "@/lib/site";
 import { SourceCapture } from "@/components/source-capture";
+import { CollectionProvider } from "@/components/collection-provider";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
@@ -27,15 +28,17 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <SourceCapture />
-        <a className="skip-link" href="#main">
-          본문으로 바로가기
-        </a>
-        <div className="site-shell">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <CollectionProvider>
+          <SourceCapture />
+          <a className="skip-link" href="#main">
+            본문으로 바로가기
+          </a>
+          <div className="site-shell">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </CollectionProvider>
       </body>
     </html>
   );

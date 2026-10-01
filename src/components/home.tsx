@@ -7,10 +7,13 @@ import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
+import { useCollection } from "./collection-provider";
 export function Home() {
   const [active, setActive] = useState<Modality>("visual");
-  const { session: saved } = useSavedSession();
-  const ownType = saved?.result ? getType(saved.result) : null;
+  const { session: saved, first } = useSavedSession();
+  const { data, loaded: accountLoaded } = useCollection();
+  const ownCode = data.signedIn ? data.firstType : first?.result;
+  const ownType = accountLoaded && ownCode ? getType(ownCode) : null;
   return (
     <main id="main">
       <section className="hero">
@@ -57,6 +60,9 @@ export function Home() {
               <strong>나를 알아가면 시작이 달라져요.</strong>
             </p>
           </div>
+          <Link className="text-link home-collection-link" href="/collection">
+            내 도감 · 로그인 →
+          </Link>
         </div>
         <div className="hero-visual hero-character-visual">
           <div className="hero-grid" />

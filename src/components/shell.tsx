@@ -32,6 +32,7 @@ export function Footer() {
         <p>공부에도, 나만의 결이 있으니까.</p>
       </div>
       <nav aria-label="서비스 안내">
+        <Link href="/collection">내 도감 · 로그인</Link>
         <Link href="/about">검사와 학교 활용 안내</Link>
         <Link href="/privacy">저장 및 개인정보 안내</Link>
       </nav>

@@ -19,12 +19,17 @@ import { Mission } from "./mission";
 import { Icon } from "./icon";
 import { useConfirm } from "./ui/confirm-dialog";
 import { TypeStory } from "./type-story";
+import { MysteryCard } from "./mystery-card";
+import { useCollection } from "./collection-provider";
+import { CollectionNudge } from "./collection-manager";
 export function TypeResult({
   type,
   session,
+  hideCharacter = false,
 }: {
   type: StudyType;
   session?: Session;
+  hideCharacter?: boolean;
 }) {
   const f = FAMILIES[type.modality];
   const scores = session ? scoreAnswers(session.answers as Answers) : null;
@@ -44,10 +49,18 @@ export function TypeResult({
               : "스타일 도감 · 대표 스타일 소개"}
           </span>
           <h1>{type.name}</h1>
-          <p className="result-character-intro">
-            나와 같은 공부 취향을 가진 친구,{" "}
-            <strong>{CHARACTERS[type.code].name}</strong>
-          </p>
+          {!hideCharacter && (
+            <p className="result-character-intro">
+              나와 같은 공부 취향을 가진 친구,{" "}
+              <strong>{CHARACTERS[type.code].name}</strong>
+            </p>
+          )}
+          {hideCharacter && (
+            <p className="notice">
+              재검사에서는 유형과 설명만 확인할 수 있어요. 첫 캐릭터와 수집한
+              도감은 그대로 유지돼요.
+            </p>
+          )}
           <p className="result-subtitle">{type.subtitle}</p>
           <div className="tag-row">
             <span>{f.label}</span>
@@ -91,9 +104,14 @@ export function TypeResult({
           )}
         </div>
         <div className="result-character">
-          <CharacterCard type={type} priority />
+          {hideCharacter ? (
+            <MysteryCard type={type} priority />
+          ) : (
+            <CharacterCard type={type} priority />
+          )}
         </div>
       </section>
+      {session && <CollectionNudge />}
       <TypeStory key={type.code} type={type} session={session} />
       {scores && (
         <section className="score-section">
@@ -175,15 +193,17 @@ export function TypeResult({
         <span className="eyebrow">친구의 공부 취향도 궁금하다면</span>
         <h2>“넌 어떤 캐릭터 나왔어?”</h2>
         <p>
-          내 캐릭터 한 명만 친구에게 보여줘요. 답변과 상세 점수는 링크에 담지
-          않아요.
+          {hideCharacter
+            ? "테스트를 소개하거나 도감에서 처음 만난 캐릭터를 공유해 보세요."
+            : "내 캐릭터 한 명만 친구에게 보여줘요. 답변과 상세 점수는 링크에 담지 않아요."}
         </p>
-        <Share type={type} />
+        <Share type={hideCharacter ? undefined : type} />
       </section>
     </main>
   );
 }
 export function PersonalResult() {
+  const { data: collection, loaded: accountLoaded } = useCollection();
   const [session, setSession] = useState<Session | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [confirm, dialog] = useConfirm();
@@ -194,7 +214,7 @@ export function PersonalResult() {
     });
     return () => cancelAnimationFrame(id);
   }, []);
-  if (!loaded)
+  if (!loaded || !accountLoaded)
     return (
       <main id="main" className="empty-state" role="status">
         내 결과를 불러오고 있어요.
@@ -209,17 +229,28 @@ export function PersonalResult() {
         <p>
           검사를 완료하면 나만의 스타일과 공부법을 볼 수 있어요.
           <br />
-          저장 기간이 지났거나 다른 브라우저에서는 다시 검사해 주세요.
+          답변·점수는 이 기기에만 남아요. 저장한 도감은 로그인하면 불러올 수
+          있어요.
         </p>
         <Link className="button primary" href="/quiz">
           내 스타일 찾기
           <Icon name="arrow-right-linear" />
         </Link>
+        <Link className="text-link" href="/collection">
+          내 도감 불러오기 →
+        </Link>
       </main>
     );
   return (
     <>
-      <TypeResult type={type} session={session} />
+      <TypeResult
+        type={type}
+        session={session}
+        hideCharacter={Boolean(
+          session.isRetake ||
+          (collection.firstRunId && collection.firstRunId !== session.runId),
+        )}
+      />
       <div className="result-reset">
         <Link href="/quiz" className="text-link">
           다시 검사하기
@@ -231,7 +262,8 @@ export function PersonalResult() {
             if (
               await confirm({
                 title: "이 기기의 기록을 지울까요?",
-                description: "저장된 검사 1회와 선택한 활동 기록을 지워요.",
+                description:
+                  "이 기기의 최초·최근 검사와 활동 기록을 지워요. 계정에 저장한 도감은 유지돼요.",
                 note: "삭제한 기기 기록은 복구할 수 없어요. 이미 전송된 이용 통계는 정해진 보관 기간에 따라 처리돼요.",
                 confirmLabel: "기록 지우기",
                 tone: "danger",

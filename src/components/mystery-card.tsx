@@ -37,7 +37,7 @@ export function MysteryCard({
         <span>이름도, 취향도 아직은 비밀이에요.</span>
       </div>
       <div className="mystery-card-bottom">
-        나와 닮은 한 친구만 모습을 드러내요
+        첫 검사와 친구 초대로 하나씩 만나요
       </div>
     </article>
   );

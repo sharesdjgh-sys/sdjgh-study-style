@@ -5,6 +5,7 @@ import type { StudyType } from "@/lib/content";
 import { readSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
+import { useCollection } from "./collection-provider";
 declare global {
   interface Window {
     Kakao?: {
@@ -15,18 +16,22 @@ declare global {
   }
 }
 export function Share({ type }: { type?: StudyType }) {
+  const { data } = useCollection();
   const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
   const [ready, setReady] = useState(false);
   const [message, setMessage] = useState("");
   const [manual, setManual] = useState("");
-  const url = () =>
-    `${window.location.origin}${type ? `/share/${type.code}` : "/"}?from=share`;
+  const url = (home = false) => {
+    const params = new URLSearchParams({ from: "share" });
+    if (data.inviteCode) params.set("ref", data.inviteCode);
+    return `${window.location.origin}${!home && type ? `/share/${type.code}` : "/"}?${params}`;
+  };
   function event(channel: string) {
     const s = readSession();
     if (s?.result) track(s, "share", channel);
   }
   async function copy(home = false) {
-    const link = home ? `${window.location.origin}/?from=share` : url();
+    const link = url(home);
     event("copy");
     try {
       await navigator.clipboard.writeText(link);
@@ -63,8 +68,8 @@ export function Share({ type }: { type?: StudyType }) {
           {
             title: "나도 테스트하기",
             link: {
-              mobileWebUrl: `${window.location.origin}/?from=share`,
-              webUrl: `${window.location.origin}/?from=share`,
+              mobileWebUrl: url(true),
+              webUrl: url(true),
             },
           },
         ],

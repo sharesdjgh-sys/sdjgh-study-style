@@ -27,10 +27,17 @@ export async function generateMetadata({
 }
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ typeCode: string }>;
+  searchParams: Promise<{ ref?: string | string[] }>;
 }) {
   const type = getType((await params).typeCode);
   if (!type) notFound();
-  return <SharedCharacter type={type} />;
+  const ref = (await searchParams).ref;
+  const referralCode =
+    typeof ref === "string" && /^[A-Fa-f0-9]{10}$/.test(ref)
+      ? ref.toUpperCase()
+      : undefined;
+  return <SharedCharacter type={type} referralCode={referralCode} />;
 }

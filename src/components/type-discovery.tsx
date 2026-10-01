@@ -13,9 +13,11 @@ import { CHARACTERS, characterThumbnail } from "@/lib/characters";
 export function TypeDiscovery({
   type,
   onComplete,
+  revealCharacter = true,
 }: {
   type: StudyType;
   onComplete: () => void;
+  revealCharacter?: boolean;
 }) {
   const [stage, setStage] = useState(0);
   const complete = useRef(onComplete);
@@ -67,14 +69,14 @@ export function TypeDiscovery({
                 width={80}
                 height={80}
                 className={
-                  stage === 3 && active
+                  stage === 3 && active && revealCharacter
                     ? "discovery-revealed"
                     : "discovery-silhouette"
                 }
                 unoptimized
               />
               <span>
-                {stage === 3 && active
+                {stage === 3 && active && revealCharacter
                   ? CHARACTERS[candidate.code].name
                   : "???"}
               </span>
@@ -98,7 +100,9 @@ export function TypeDiscovery({
       </div>
       <p className="discovery-note">
         {stage === 3
-          ? "잠시 후, 나만의 취향 카드가 펼쳐져요"
+          ? revealCharacter
+            ? "잠시 후, 나만의 취향 카드가 펼쳐져요"
+            : "잠시 후, 지금의 유형과 공부법 설명을 보여드릴게요"
           : "공부 방식 · 집중 환경 · 공부 리듬을 살펴보고 있어요"}
       </p>
     </main>

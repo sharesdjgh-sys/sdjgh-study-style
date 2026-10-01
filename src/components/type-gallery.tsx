@@ -10,34 +10,49 @@ import { CharacterCard } from "./character-card";
 import Link from "next/link";
 import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
+import { useCollection } from "./collection-provider";
 export function TypeGallery({
   initial = "all",
 }: {
   initial?: Modality | "all";
 }) {
   const [filter, setFilter] = useState<Modality | "all">(initial);
-  const { session } = useSavedSession();
-  const ownCode = session?.result;
+  const { first } = useSavedSession();
+  const { data, loaded } = useCollection();
+  const ownCode = data.signedIn ? data.firstType : first?.result;
+  const visibleCodes = new Set(
+    loaded
+      ? data.signedIn
+        ? data.cards.map((card) => card.code)
+        : ownCode
+          ? [ownCode]
+          : []
+      : [],
+  );
   return (
     <>
       <div className="catalog-discovery-note">
         <div>
           <span className="eyebrow">
             {ownCode
-              ? "나의 친구, 발견 완료"
+              ? data.signedIn
+                ? `발견한 친구 ${data.cards.length} / 16`
+                : "나의 첫 친구, 아직 저장 전"
               : "16개의 실루엣, 나의 친구는 단 한 명"}
           </span>
           <p>
             {ownCode
-              ? "내 캐릭터만 공개됐어요. 다른 친구의 정체는 서로 물어봐요."
-              : "검사를 마치면 나와 닮은 캐릭터의 이름과 이야기가 열려요."}
+              ? "첫 친구는 검사로, 새로운 친구는 초대로 만나요."
+              : "첫 검사를 마치고 나만의 친구를 만나보세요. 수집은 로그인 후 시작해요."}
           </p>
         </div>
         <Link
           className="button primary"
-          href={ownCode ? "/result#share-style" : "/quiz"}
+          href={ownCode || data.signedIn ? "/collection" : "/quiz"}
         >
-          {ownCode ? "내 캐릭터 공유하기 ↗" : "내 캐릭터 만나기 →"}
+          {ownCode || data.signedIn
+            ? "내 도감 저장·초대하기 ↗"
+            : "내 캐릭터 만나기 →"}
         </Link>
       </div>
       <div className="filter-tabs" aria-label="유형 필터">
@@ -61,7 +76,7 @@ export function TypeGallery({
       </div>
       <p className="character-gallery-hint">
         {ownCode
-          ? "공개된 내 카드는 뒤집어서 소개를 읽을 수 있어요. “넌 어떤 캐릭터 나왔어?”"
+          ? "만난 친구의 카드를 뒤집어 소개를 읽어보세요. “넌 어떤 캐릭터 나왔어?”"
           : "실루엣을 보고 상상해 보세요. 누가 내 친구가 될까요?"}
       </p>
       <div className="type-grid character-gallery">
@@ -69,9 +84,13 @@ export function TypeGallery({
           (t) => filter === "all" || t.modality === filter,
         ).map((t) => (
           <div className="type-tile character-tile" key={t.code}>
-            {t.code === ownCode ? (
+            {visibleCodes.has(t.code) ? (
               <div className="own-character-slot">
-                <span className="own-character-badge">✦ 나의 캐릭터</span>
+                <span className="own-character-badge">
+                  {t.code === ownCode
+                    ? "✦ 나의 첫 캐릭터"
+                    : "✦ 초대로 만난 친구"}
+                </span>
                 <CharacterCard type={t} detailLink />
               </div>
             ) : (
