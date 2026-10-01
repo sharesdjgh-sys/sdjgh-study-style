@@ -1,0 +1,121 @@
+{
+  "family": "motion",
+  "model": "gemini-omni-1.1-flash",
+  "source": "art/characters/special/families/motion.png",
+  "prompt": "art/characters/special/families/motion/motion.prompt.txt",
+  "requestedSeconds": 8,
+  "resolution": "720p",
+  "requests": 1,
+  "startedAt": "2026-10-01T14:51:41.681Z",
+  "status": "completed",
+  "httpStatus": 200,
+  "finishedAt": "2026-10-01T14:52:19.500Z",
+  "bytes": 2643446,
+  "usage": {
+    "total_tokens": 49237,
+    "total_input_tokens": 1595,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 495
+      },
+      {
+        "modality": "image",
+        "tokens": 1100
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 47266,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 46336
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 376,
+    "raw_prompt_token": 35460,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2281
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 936
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 376
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2281
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 936
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 376
+          }
+        ]
+      }
+    ]
+  },
+  "output": "art/characters/special/families/motion-loop-8s-v1.mp4",
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "1775433"
+    }
+  },
+  "estimatedUSD": 0.8250265000000001,
+  "boundaryMeanPixelDifference": 1.4337731481481482,
+  "meanFrameDifferencePerSecond": [
+    0.45224235104669885,
+    0.947260466988728,
+    0.5407880434782609,
+    0.6387761674718196,
+    0.6895450885668276,
+    0.6158907004830918,
+    0.8308192431561999,
+    0.20901066827697257
+  ]
+}

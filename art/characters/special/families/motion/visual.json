@@ -1,0 +1,121 @@
+{
+  "family": "visual",
+  "model": "gemini-omni-1.1-flash",
+  "source": "art/characters/special/families/visual.png",
+  "prompt": "art/characters/special/families/motion/visual.prompt.txt",
+  "requestedSeconds": 8,
+  "resolution": "720p",
+  "requests": 1,
+  "startedAt": "2026-10-01T14:45:21.463Z",
+  "status": "completed",
+  "httpStatus": 200,
+  "finishedAt": "2026-10-01T14:45:59.060Z",
+  "bytes": 2959804,
+  "usage": {
+    "total_tokens": 49354,
+    "total_input_tokens": 1587,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 487
+      },
+      {
+        "modality": "image",
+        "tokens": 1100
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 47363,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 46336
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 404,
+    "raw_prompt_token": 35691,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2273
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1033
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 404
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2273
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1033
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 404
+          }
+        ]
+      }
+    ]
+  },
+  "output": "art/characters/special/families/visual-loop-8s-v1.mp4",
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "1967123"
+    }
+  },
+  "estimatedUSD": 0.8261395,
+  "boundaryMeanPixelDifference": 1.7887037037037037,
+  "meanFrameDifferencePerSecond": [
+    0.28272946859903375,
+    2.137332930756843,
+    0.47706723027375203,
+    1.3144293478260867,
+    0.7473500402576488,
+    0.468197463768116,
+    1.0151258051529788,
+    1.294742351046699
+  ]
+}

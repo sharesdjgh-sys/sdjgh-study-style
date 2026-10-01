@@ -5199,3 +5199,101 @@ body {
     transform: translateX(-50%);
   }
 }
+
+.family-collection-card {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #f0f5ed;
+}
+.family-collection-card[data-family="auditory"] {
+  background: #fff1e9;
+}
+.family-collection-card[data-family="tactile"] {
+  background: #f4eef9;
+}
+.family-collection-card[data-family="motion"] {
+  background: #edf5f7;
+}
+.family-collection-card .special-card-copy h2 {
+  font-size: 24px;
+}
+.family-collection-card .special-photo-frame,
+.family-collection-card .special-card-sealed {
+  margin-top: auto;
+}
+.family-collection-card .button-row {
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .family-collection-card {
+    grid-column: 1 / -1;
+    padding: 22px 18px;
+  }
+}
+.character-motion.is-landscape {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.character-motion.is-landscape .character-motion-media {
+  border-radius: 6px;
+}
+.character-motion.is-landscape .character-motion-toggle {
+  bottom: 8px;
+}
+.special-photo-dialog-footer {
+  flex-wrap: wrap;
+}
+
+.special-card-sealed.has-silhouettes {
+  padding: 20px 14px;
+  gap: 8px;
+  background: radial-gradient(ellipse at 50% 45%, #fff7da, #ede3c5);
+}
+.group-photo-silhouette {
+  display: grid;
+  width: 100%;
+  align-items: end;
+  gap: 4px;
+  margin: auto 0 8px;
+}
+.group-photo-silhouette.is-family {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.group-photo-silhouette.is-full {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.group-photo-silhouette > div {
+  position: relative;
+  min-width: 0;
+}
+.group-photo-silhouette img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(0);
+  opacity: 0.68;
+}
+.group-photo-silhouette span {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  color: #f5dc95;
+  font-size: clamp(16px, 3vw, 32px);
+  font-weight: 800;
+}
+.group-photo-silhouette.is-full span {
+  font-size: 14px;
+}
+@media (max-width: 767px) {
+  .group-photo-silhouette.is-full {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 240px;
+  }
+}

@@ -1,0 +1,13 @@
+[# Sources <FIRST_FRAME>@Image1 <LAST_FRAME>@Image1]
+Create an EXACTLY 8-second seamless living group-photograph loop from Image1, using Image1 as both exact first and last frame. Preserve all FOUR characters, their identities, species, faces, markings, clothing and original positions. Locked camera, no crop, zoom, pan or scene change. Keep the exact 16:9 composition, warm light and background. Soft plush 3D character material remains unchanged.
+
+Penguin, rabbit, husky and quokka taking a study break. Tiny buoyant torso breathing and very slight wrist movement in the already raised paws; staggered blinks. Hold the rabbits lifted leg and the quokkas seated legs in their original pose. No walking, jumping or changing foot contact. Timer, cards, clothing and bench remain unchanged.
+
+All four friends have subtle fluid breathing throughout the entire eight seconds: two complete four-second cycles with tiny 2-3 pixel torso displacement, staggered in phase so they feel alive rather than synchronized. Small head motions complete one smooth eight-second cycle with a maximum angle of 2 degrees and return to the exact original angle. One natural brief blink per open-eyed character, staggered between 1.5 and 5.5 seconds; all eyes return to their reference state. Preserve smiles without talking or lip motion. Keep decorative foliage almost still.
+
+[0-2 seconds] Gentle continuous breathing, first tiny head inclination begins.
+[2-4 seconds] First pair of characters softly blink at different times; head gesture passes smoothly through reference angle.
+[4-6 seconds] Other pair softly blink at different times; subtle breathing and tiny gesture continue.
+[6-8 seconds] Complete the periodic motion back through the exact starting pose with continuous velocity. Motion continues through the final second and loop boundary. Do NOT freeze, hold the ending, ease all motion to zero or create an outro.
+
+Anatomy: exactly two arms/wings/flippers and two legs per character at all times, no extra paws or detached fingers. Keep every prop shape and hand-to-prop contact stable. Never swap, merge or duplicate the four characters. No new objects, speech, text, music, color drift, dramatic movement, cuts, transitions, fades or dissolves. Silent video. Every second includes gentle visible movement. Deliver precisely eight seconds.

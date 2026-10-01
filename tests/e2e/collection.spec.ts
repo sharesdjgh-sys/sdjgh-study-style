@@ -65,7 +65,8 @@ test("첫 공부캐 1명과 초대 15명으로 완성하고 도착한 선물은 
     "1 / 16",
   );
   await expect(special).toContainText("15명의 친구를 더 초대하면 완성!");
-  await expect(special.locator("img")).toHaveCount(0);
+  await expect(special.locator(".group-photo-silhouette img")).toHaveCount(16);
+  await expect(special.locator(".special-photo-frame")).toHaveCount(0);
   await page.goto("/collection");
   await expect(page.locator(".collection-count")).toHaveText("1 / 16");
   state.data = { ...state.data, signedIn: true };
@@ -98,7 +99,8 @@ test("첫 공부캐 1명과 초대 15명으로 완성하고 도착한 선물은 
     "필요한 초대는 모두 완료했어요. 선물 15개만 개봉하면 완성",
   );
   await expect(special).toContainText("초대 완료! 선물 15개만 열면 완성!");
-  await expect(special.locator("img")).toHaveCount(0);
+  await expect(special.locator(".group-photo-silhouette img")).toHaveCount(16);
+  await expect(special.locator(".special-photo-frame")).toHaveCount(0);
   state.data = {
     ...state.data,
     cards: STUDY_TYPES.map((type, index) => ({
@@ -133,6 +135,12 @@ test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저�
   });
   let photographRequests = 0;
   await page.route("**/api/collection/special-card*", async (route) => {
+    const family = new URL(route.request().url()).searchParams.get("family");
+    if (family && ["visual", "auditory", "tactile", "motion"].includes(family))
+      return route.fulfill({
+        body: await readFile(`art/characters/special/families/${family}.webp`),
+        contentType: "image/webp",
+      });
     photographRequests++;
     if (photographRequests === 1)
       return route.fulfill({ status: 503, json: { error: "unavailable" } });
@@ -163,7 +171,8 @@ test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저�
   const card = page.getByRole("region", { name: "도감 완성 스페셜 카드" });
   await card.scrollIntoViewIfNeeded();
   await expect(card).toContainText("초대 완료! 선물 1개만 열면 완성!");
-  await expect(card.locator("img")).toHaveCount(0);
+  await expect(card.locator(".group-photo-silhouette img")).toHaveCount(16);
+  await expect(card.locator(".special-photo-frame")).toHaveCount(0);
   expect(photographRequests).toBe(0);
   expect(
     await page.evaluate(

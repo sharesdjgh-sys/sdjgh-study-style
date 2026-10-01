@@ -1,0 +1,121 @@
+{
+  "family": "auditory",
+  "model": "gemini-omni-1.1-flash",
+  "source": "art/characters/special/families/auditory.png",
+  "prompt": "art/characters/special/families/motion/auditory.prompt.txt",
+  "requestedSeconds": 8,
+  "resolution": "720p",
+  "requests": 1,
+  "startedAt": "2026-10-01T14:49:29.621Z",
+  "status": "completed",
+  "httpStatus": 200,
+  "finishedAt": "2026-10-01T14:50:08.826Z",
+  "bytes": 2958069,
+  "usage": {
+    "total_tokens": 49564,
+    "total_input_tokens": 1611,
+    "input_tokens_by_modality": [
+      {
+        "modality": "image",
+        "tokens": 1100
+      },
+      {
+        "modality": "text",
+        "tokens": 511
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 47383,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 46336
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 570,
+    "raw_prompt_token": 35895,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2297
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1053
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 570
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2297
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 1053
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 570
+          }
+        ]
+      }
+    ]
+  },
+  "output": "art/characters/special/families/auditory-loop-8s-v1.mp4",
+  "delivery": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "24/1",
+        "nb_frames": "192"
+      }
+    ],
+    "format": {
+      "duration": "8.000000",
+      "size": "1980540"
+    }
+  },
+  "estimatedUSD": 0.8278495000000001,
+  "boundaryMeanPixelDifference": 1.7226388888888888,
+  "meanFrameDifferencePerSecond": [
+    1.586682769726248,
+    1.193397745571659,
+    1.4179347826086959,
+    0.9105374396135266,
+    1.0236735104669887,
+    0.33665760869565214,
+    1.0348580917874397,
+    0.7556692834138488
+  ]
+}

@@ -1,14 +1,18 @@
-import { STUDY_TYPES } from "./content";
+import { STUDY_TYPES, type Modality } from "./content";
 import type { CollectionData } from "./collection-contract";
 
 export function specialCardProgress(
   collection: Pick<CollectionData, "signedIn" | "cards">,
+  modality?: Modality,
 ) {
+  const required = STUDY_TYPES.filter(
+    (type) => !modality || type.modality === modality,
+  );
   const owned = new Set(collection.cards.map((card) => card.code));
-  const collected = STUDY_TYPES.filter((type) => owned.has(type.code)).length;
+  const collected = required.filter((type) => owned.has(type.code)).length;
   return {
     collected,
-    total: STUDY_TYPES.length,
-    unlocked: collection.signedIn && collected === STUDY_TYPES.length,
+    total: required.length,
+    unlocked: collection.signedIn && collected === required.length,
   };
 }

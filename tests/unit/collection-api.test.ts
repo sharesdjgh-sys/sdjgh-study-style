@@ -159,6 +159,127 @@ it("스페셜 사진은 16종 선물을 모두 개봉한 계정만 보고 PNG로
   await logout(request("/api/auth/logout"));
   expect((await photograph()).status).toBe(401);
 });
+it.each(["visual", "auditory", "tactile", "motion"])(
+  "%s 사진은 해당 유형 네 종을 개봉해야 열리고 다른 유형은 잠긴다",
+  async (family) => {
+    const url = `${origin}/api/collection/special-card?family=${family}`;
+    mocks.jar.clear();
+    expect((await specialCard(new Request(url))).status).toBe(401);
+    expect((await specialCard(new Request(url + "&format=mp4"))).status).toBe(
+      401,
+    );
+    mocks.jar.set("study-collection", "session");
+    const members = STUDY_TYPES.filter((type) => type.modality === family);
+    for (const [index, type] of members.entries()) {
+      await db.query(
+        "INSERT INTO collection_cards(account_id,type_code,source,opened_at) VALUES($1,$2,'referral',$3)",
+        [owner, type.code, index === 3 ? null : new Date()],
+      );
+    }
+    expect((await specialCard(new Request(url))).status).toBe(403);
+    expect((await specialCard(new Request(url + "&format=mp4"))).status).toBe(
+      403,
+    );
+    await db.query(
+      "UPDATE collection_cards SET opened_at=now() WHERE account_id=$1",
+      [owner],
+    );
+    const response = await specialCard(new Request(url));
+    expect(response.status).toBe(200);
+    expect(response.headers.get("cache-control")).toBe("private, no-store");
+    expect(response.headers.get("vary")).toBe("Cookie");
+    expect(digest(new Uint8Array(await response.arrayBuffer()))).toBe(
+      digest(await readFile(`art/characters/special/families/${family}.webp`)),
+    );
+    const download = await specialCard(new Request(url + "&download=1"));
+    expect(download.headers.get("content-type")).toBe("image/png");
+    expect(download.headers.get("content-disposition")).toBe(
+      `attachment; filename="gongbucae-${family}.png"`,
+    );
+    expect(digest(new Uint8Array(await download.arrayBuffer()))).toBe(
+      digest(await readFile(`art/characters/special/families/${family}.png`)),
+    );
+    const videoBytes = await readFile(
+      `art/characters/special/families/${family}-loop-8s-v1.mp4`,
+    );
+    const video = await specialCard(
+      new Request(url + "&format=mp4&download=1"),
+    );
+    expect(video.status).toBe(200);
+    expect(video.headers.get("content-type")).toBe("video/mp4");
+    expect(video.headers.get("content-disposition")).toBe(
+      `attachment; filename="gongbucae-${family}.mp4"`,
+    );
+    expect(digest(new Uint8Array(await video.arrayBuffer()))).toBe(
+      digest(videoBytes),
+    );
+    const partial = await specialCard(
+      new Request(url + "&format=mp4", { headers: { Range: "bytes=0-31" } }),
+    );
+    expect(partial.status).toBe(206);
+    expect(partial.headers.get("content-range")).toBe(
+      `bytes 0-31/${videoBytes.length}`,
+    );
+    expect(Buffer.from(await partial.arrayBuffer())).toEqual(
+      videoBytes.subarray(0, 32),
+    );
+    const suffix = await specialCard(
+      new Request(url + "&format=mp4", { headers: { Range: "bytes=-16" } }),
+    );
+    expect(suffix.status).toBe(206);
+    expect(Buffer.from(await suffix.arrayBuffer())).toEqual(
+      videoBytes.subarray(-16),
+    );
+    const invalid = await specialCard(
+      new Request(url + "&format=mp4", {
+        headers: { Range: `bytes=${videoBytes.length}-` },
+      }),
+    );
+    expect(invalid.status).toBe(416);
+    expect(
+      (
+        await specialCard(
+          new Request(
+            `${origin}/api/collection/special-card?family=${family === "visual" ? "auditory" : "visual"}`,
+          ),
+        )
+      ).status,
+    ).toBe(403);
+    expect(
+      (await specialCard(new Request(`${origin}/api/collection/special-card`)))
+        .status,
+    ).toBe(403);
+  },
+);
+it("알 수 없는 유형과 파일 경로는 사진 요청으로 허용하지 않는다", async () => {
+  expect(
+    (
+      await specialCard(
+        new Request(`${origin}/api/collection/special-card?format=mp4`),
+      )
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await specialCard(
+        new Request(
+          `${origin}/api/collection/special-card?family=visual&format=unknown`,
+        ),
+      )
+    ).status,
+  ).toBe(400);
+  for (const family of ["", "all", "../group-photo", "visual/../../secret"]) {
+    expect(
+      (
+        await specialCard(
+          new Request(
+            `${origin}/api/collection/special-card?family=${encodeURIComponent(family)}`,
+          ),
+        )
+      ).status,
+    ).toBe(400);
+  }
+});
 it("도감 조회에 실패하면 스페셜 사진을 제공하지 않는다", async () => {
   mocks.query.mockRejectedValueOnce(new Error("offline"));
   const response = await specialCard(

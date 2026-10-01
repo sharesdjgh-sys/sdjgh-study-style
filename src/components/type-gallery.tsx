@@ -12,6 +12,7 @@ import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
 import { useCollection } from "./collection-provider";
 import { SpecialCollectionCard } from "./special-collection-card";
+import { FamilyCollectionCard } from "./family-collection-card";
 import { collectionProgress } from "@/lib/collection-progress";
 export function TypeGallery({
   initial = "all",
@@ -92,6 +93,9 @@ export function TypeGallery({
           </div>
         ))}
         {filter === "all" && <SpecialCollectionCard />}
+        {filter !== "all" && (
+          <FamilyCollectionCard key={filter} modality={filter} />
+        )}
       </div>
     </>
   );

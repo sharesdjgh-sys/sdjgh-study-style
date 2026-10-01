@@ -6,6 +6,9 @@ const config: NextConfig = {
     "/api/collection/special-card": [
       "./art/characters/special/group-photo.webp",
       "./art/characters/special/group-photo.png",
+      "./art/characters/special/families/*.webp",
+      "./art/characters/special/families/*.png",
+      "./art/characters/special/families/*.mp4",
     ],
     "/api/og": [
       "./public/fonts/Pretendard-Bold.woff",

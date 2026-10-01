@@ -5,12 +5,50 @@ import { collectionProgress } from "@/lib/collection-progress";
 import { useCollection } from "./collection-provider";
 import { Icon } from "./icon";
 import { useSavedSession } from "./use-saved-session";
+import { CharacterMotion } from "./character-motion";
+import { GroupPhotoSilhouette } from "./group-photo-silhouette";
 
 const photograph = "/api/collection/special-card";
+export type CollectionPhoto = {
+  url: string;
+  alt: string;
+  title: string;
+  caption: string;
+  filename: string;
+  videoUrl?: string;
+};
+const fullPhoto: CollectionPhoto = {
+  url: photograph,
+  alt: "열여섯 공부캐가 학교 정원에서 함께 찍은 스페셜 단체사진",
+  title: "우리, 드디어 다 모였다!",
+  caption: "열여섯 가지 공부 스타일, 함께 남긴 한 장의 추억.",
+  filename: "공부캐-스페셜-단체사진.png",
+};
+export function photoUrl(photo: CollectionPhoto, query: string) {
+  return `${photo.url}${photo.url.includes("?") ? "&" : "?"}${query}`;
+}
 
-function SpecialPhoto() {
+export function SpecialPhoto({
+  photo = fullPhoto,
+  active = true,
+}: {
+  photo?: CollectionPhoto;
+  active?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  if (photo.videoUrl)
+    return (
+      <CharacterMotion
+        asset={{ video: photo.videoUrl, poster: photo.url }}
+        name={photo.title}
+        species=""
+        imageAlt={photo.alt}
+        active={active}
+        priority={false}
+        landscape
+      />
+    );
   if (failed)
     return (
       <div className="special-photo-error" role="status">
@@ -28,8 +66,8 @@ function SpecialPhoto() {
     );
   return (
     <Image
-      src={`${photograph}?attempt=${attempt}`}
-      alt="열여섯 공부캐가 학교 정원에서 함께 찍은 스페셜 단체사진"
+      src={photoUrl(photo, `attempt=${attempt}`)}
+      alt={photo.alt}
       width={1664}
       height={936}
       unoptimized
@@ -38,7 +76,13 @@ function SpecialPhoto() {
   );
 }
 
-function SpecialPhotoDialog({ close }: { close: () => void }) {
+export function SpecialPhotoDialog({
+  close,
+  photo = fullPhoto,
+}: {
+  close: () => void;
+  photo?: CollectionPhoto;
+}) {
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   useEffect(() => {
@@ -63,24 +107,33 @@ function SpecialPhotoDialog({ close }: { close: () => void }) {
       <div className="special-photo-dialog-heading">
         <div>
           <span className="eyebrow">도감 완성 기념 · 스페셜 카드</span>
-          <h2 id={titleId}>우리, 드디어 다 모였다!</h2>
+          <h2 id={titleId}>{photo.title}</h2>
         </div>
         <button className="button secondary" onClick={close}>
           닫기
         </button>
       </div>
       <div className="special-photo-frame">
-        <SpecialPhoto />
+        <SpecialPhoto photo={photo} />
       </div>
       <div className="special-photo-dialog-footer">
-        <p>열여섯 가지 공부 스타일, 함께 남긴 한 장의 추억.</p>
+        <p>{photo.caption}</p>
         <a
           className="button primary"
-          href={`${photograph}?download=1`}
-          download="공부캐-스페셜-단체사진.png"
+          href={photoUrl(photo, "download=1")}
+          download={photo.filename}
         >
           단체사진 저장하기
         </a>
+        {photo.videoUrl && (
+          <a
+            className="button secondary"
+            href={`${photo.videoUrl}&download=1`}
+            download={photo.filename.replace(/\.png$/, ".mp4")}
+          >
+            8초 영상 저장하기
+          </a>
+        )}
       </div>
     </dialog>
   );
@@ -170,12 +223,10 @@ export function SpecialCollectionCard() {
         </div>
       ) : (
         <div
-          className="special-card-sealed"
+          className="special-card-sealed has-silhouettes"
           aria-label="아직 열리지 않은 단체사진"
         >
-          <span className="special-card-seal" aria-hidden="true">
-            ✦
-          </span>
+          <GroupPhotoSilhouette />
           <strong>아직은 비밀이에요</strong>
           <p>16 / 16에서 공개되는 단체사진</p>
         </div>

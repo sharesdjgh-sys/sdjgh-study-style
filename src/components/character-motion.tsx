@@ -24,12 +24,16 @@ export function CharacterMotion({
   species,
   active,
   priority,
+  landscape = false,
+  imageAlt,
 }: {
   asset: CharacterMotionAsset;
   name: string;
   species: string;
   active: boolean;
   priority: boolean;
+  landscape?: boolean;
+  imageAlt?: string;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -78,20 +82,28 @@ export function CharacterMotion({
   }, [loadVideo, shouldPlay]);
 
   return (
-    <div ref={container} className="character-motion">
+    <div
+      ref={container}
+      className={`character-motion${landscape ? " is-landscape" : ""}`}
+    >
       <div className="character-motion-media">
         <Image
           src={asset.poster}
-          alt={`${name}, ${species} 공부 캐릭터`}
+          alt={imageAlt ?? `${name}, ${species} 공부 캐릭터`}
           fill
-          sizes="(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 370px"
+          sizes={
+            landscape
+              ? "(max-width: 767px) 90vw, 1100px"
+              : "(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 370px"
+          }
           preload={priority}
+          unoptimized={landscape}
         />
         <video
           ref={video}
           src={loadVideo && !failed ? asset.video : undefined}
           poster={asset.poster}
-          width={720}
+          width={landscape ? 1280 : 720}
           height={720}
           preload="none"
           loop
