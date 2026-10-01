@@ -152,13 +152,24 @@ export function Quiz() {
     <main id="main" className="quiz-shell">
       <div className="quiz-top">
         <Link href="/" className="muted small">
-          공부결 홈
+          공부캐 홈
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />
           답변 원문은 서버에 저장하지 않아요
         </span>
       </div>
+      {session.index === 0 && !ties && (
+        <aside className="test-purpose quiz-purpose">
+          <Icon name="stars-linear" size={20} />
+          <p>
+            <strong>재미로 고르고, 다양한 공부법을 발견해요.</strong>
+            <br />
+            성격·능력을 진단하는 검사가 아니에요. 결과가 나의 공부 방식을 정하지
+            않으니, 가볍게 즐겨주세요.
+          </p>
+        </aside>
+      )}
       {session.index === 0 && !ties && (
         <aside className="quiz-collection-notice">
           <strong>
@@ -177,9 +188,7 @@ export function Quiz() {
         </aside>
       )}
       <div className="progress-heading">
-        <span>
-          {ties ? "마지막으로, 하나만 골라주세요" : "내 공부 취향 알아보기"}
-        </span>
+        <span>{ties ? "마지막으로, 하나만 골라주세요" : "내 공부캐 찾기"}</span>
         <strong>
           {ties ? "16" : String(session.index + 1).padStart(2, "0")}
           <span> / 16</span>

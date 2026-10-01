@@ -1,6 +1,6 @@
-# 공부결 — 나다운 공부의 시작
+# 공부캐 — 너의 공부캐는 누구?
 
-`plan.md`를 바탕으로 만든 고등학생용 공부 스타일 웹앱입니다. Next.js App Router, React, TypeScript, Vercel, Neon PostgreSQL을 사용합니다. 로그인 없이 검사·결과·공부법 활동을 이용할 수 있습니다.
+고등학생이 재미로 공부 캐릭터를 만나고 다양한 공부 스타일과 공부법을 탐색하는 웹앱입니다. 성격·능력·성적을 진단하거나 결과에 따라 공부 방법을 제한하지 않습니다. Next.js App Router, React, TypeScript, Vercel, Neon PostgreSQL을 사용합니다. 로그인 없이 테스트·결과·공부법 활동을 이용할 수 있습니다.
 
 ## 실행
 
@@ -91,9 +91,13 @@ ImageGen으로 제작한 투명 배경 캐릭터 16장을 `public/characters/`�
 
 ## 디자인 기준
 
+16종을 모두 수집하고 마지막 선물을 개봉하면 도감에 스페셜 단체사진 카드가 열립니다. 기존 캐릭터 모습을 참조해 제작한 16:9 사진이며 확대 보기와 PNG 저장을 지원합니다. 사진은 공개 정적 경로에 두지 않고 로그인한 계정의 개봉 완료 여부를 API에서 검증합니다. [단체사진 제작 기록과 프롬프트](art/characters/special/README.md)를 함께 보관합니다.
+
 [Supanova taste-skill](https://github.com/uxjoseph/supanova-design-skill/blob/main/taste-skill/SKILL.md)과 [soft-skill](https://github.com/uxjoseph/supanova-design-skill/blob/main/soft-skill/SKILL.md)의 한국어 타이포그래피, 비대칭 구성, 카드의 깊이, 반응형 원칙을 적용했습니다. 사용자의 웹앱 요구에 맞춰 단일 HTML 출력 규칙은 Next.js 컴포넌트로 대체했습니다. 실제 자료가 없는 후기·사용자 수·긴급성 문구는 만들지 않았습니다.
 
-크림색 종이·코랄 포인트·잉크색 글자·학습 카드의 시각 언어를 사용합니다. 아이콘은 Solar, 글꼴은 Pretendard를 자체 호스팅합니다. 글꼴 라이선스는 `public/fonts/LICENSE.txt`에 포함했습니다. Solar 아이콘은 CC BY 4.0 라이선스이며 [Solar Icons](https://github.com/480-Design/Solar-Icon-Set)에서 제공됩니다. `node scripts/assets.mjs`로 npm 패키지의 선별 아이콘과 글꼴 파일을 다시 준비할 수 있습니다.
+크림색 배경·초록색 포인트·노란색 카드 표시를 사용하며, 겹쳐진 카드와 눌리는 버튼으로 캐릭터 카드 게임의 느낌을 담았습니다. 기존의 긴 소개 문구, 큰 빈 공간, 흐릿한 보조 문구를 줄이고 캐릭터 발견과 테스트 시작을 중심에 두었습니다. 홈·첫 질문·결과·공유 화면에서 재미로 다양한 공부 스타일과 공부법을 탐색하는 목적을 안내합니다. 모바일에서도 목적 안내를 숨기지 않습니다.
+
+아이콘은 Solar, 글꼴은 Pretendard를 자체 호스팅합니다. 글꼴 라이선스는 `public/fonts/LICENSE.txt`에 포함했습니다. Solar 아이콘은 CC BY 4.0 라이선스이며 [Solar Icons](https://github.com/480-Design/Solar-Icon-Set)에서 제공됩니다. `node scripts/assets.mjs`로 npm 패키지의 선별 아이콘과 글꼴 파일을 다시 준비할 수 있습니다. 카카오 로그인은 [카카오 공식 디자인 리소스](https://developers.kakao.com/tool/resource/login)의 버튼 SVG를 `public/kakao-login.svg`로 저장해 사용합니다.
 
 ## 검증
 

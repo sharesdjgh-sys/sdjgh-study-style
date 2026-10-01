@@ -14,7 +14,7 @@ export default function Page() {
           <span className="accent-text">내 가능성이 아까우니까.</span>
         </h1>
         <p>
-          검사 없이도 모든 공부법을 시도할 수 있어요.
+          내 공부캐와 상관없이 모든 공부법을 시도할 수 있어요.
           <br />
           하나를 고르고, 떠올리고, 확인해 보세요.
         </p>

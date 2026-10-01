@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { getType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
@@ -193,8 +194,15 @@ export function CollectionManager() {
               <button
                 className="button kakao-login"
                 disabled={!data.configured}
+                aria-label="카카오 로그인"
               >
-                카카오로 도감 시작하기
+                <Image
+                  src="/kakao-login.svg"
+                  alt=""
+                  width={224}
+                  height={46}
+                  unoptimized
+                />
               </button>
             </form>
             <p className="small muted">

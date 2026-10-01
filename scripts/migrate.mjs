@@ -32,4 +32,4 @@ await sql.transaction(
     .filter(Boolean)
     .map((statement) => sql.query(statement)),
 );
-console.log("공부결 이용 통계·계정·캐릭터 도감 테이블 준비 완료");
+console.log("공부캐 이용 통계·계정·캐릭터 도감 테이블 준비 완료");

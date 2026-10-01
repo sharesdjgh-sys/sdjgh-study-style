@@ -6,15 +6,15 @@
   font-display: swap;
 }
 :root {
-  --paper: #f7f6f2;
-  --white: #fffefa;
-  --ink: #292a26;
-  --muted: #74766c;
-  --accent: #ce533b;
-  --coral: #ee846a;
-  --pale: #f6e6df;
-  --line: #e3e3d9;
-  --sage: #e7e9e1;
+  --paper: #f7f8f2;
+  --white: #ffffff;
+  --ink: #243d35;
+  --muted: #61746c;
+  --accent: #27785d;
+  --coral: #edd579;
+  --pale: #e7f0e8;
+  --line: #d9e2d9;
+  --sage: #e6eee3;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --text-body: 1rem;
   --text-secondary: 0.9375rem;
@@ -3757,7 +3757,17 @@ legend {
   background: #fee500;
   color: #191919;
   border-color: #fee500;
-  font-weight: 700;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  min-height: 46px;
+  overflow: hidden;
+}
+.kakao-login img {
+  display: block;
+  width: 224px;
+  max-width: 100%;
+  height: auto;
 }
 .collection-panel button:disabled {
   opacity: 0.5;
@@ -3981,4 +3991,908 @@ legend {
   max-width: 100%;
   white-space: normal;
   text-align: center;
+}
+
+/* 공부캐: a playful card table, with the original character artwork. */
+body {
+  background-image: radial-gradient(#738f7218 0.8px, transparent 0.8px);
+  background-size: 20px 20px;
+}
+.site-shell {
+  max-width: 1320px;
+  padding-inline: 48px;
+}
+.header {
+  height: 94px;
+  border-bottom: 0;
+}
+.brand {
+  font-size: 30px;
+  letter-spacing: -0.065em;
+}
+.brand-mark {
+  width: 33px;
+  height: 36px;
+  position: relative;
+  display: block;
+  transform: rotate(-8deg);
+}
+.brand-mark span {
+  position: absolute;
+  inset: 3px 5px;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+  background: #edd579;
+  transform: rotate(-12deg);
+}
+.brand-mark span:nth-child(2) {
+  background: var(--accent);
+  transform: rotate(10deg) translate(5px, 0);
+}
+.brand-mark span:nth-child(3) {
+  inset: 13px 7px 11px 16px;
+  border: 0;
+  background: #fff;
+  transform: rotate(10deg);
+}
+.brand-mark span:last-child {
+  display: none;
+}
+.brand-caption {
+  border: 0;
+  margin-left: 4px;
+  padding-left: 8px;
+}
+.header nav {
+  gap: 28px;
+}
+.nav-start {
+  border-radius: 12px;
+  background: var(--accent);
+  box-shadow: 0 3px 0 #1e5745;
+  padding: 10px 18px;
+}
+.button {
+  border-radius: 14px;
+  font-weight: 700;
+}
+.button.primary {
+  background: var(--accent);
+  border: 1px solid #1e5b46;
+  box-shadow: 0 4px 0 #1e5745;
+}
+.button.primary:hover:not(:disabled) {
+  background: #21684f;
+  box-shadow: 0 6px 0 #1e5745;
+}
+.button.secondary {
+  background: #fff;
+  border-color: var(--line);
+  box-shadow: 0 2px 0 #d9e2d9;
+}
+.button.large {
+  min-height: 60px;
+  padding-inline: 26px 16px;
+  font-size: 18px;
+}
+.button-arrow {
+  border-radius: 8px;
+}
+.eyebrow {
+  letter-spacing: -0.01em;
+}
+.game-hero {
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr);
+  gap: 56px;
+  padding: 62px 0 50px;
+  min-height: 740px;
+}
+.game-hero .hero-copy > .eyebrow {
+  display: inline-flex;
+  padding: 8px 13px;
+  border: 1px solid #d4dfce;
+  background: #ecf2df;
+  border-radius: 9px;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+.live-dot {
+  box-shadow: none;
+}
+.game-hero h1 {
+  font-size: clamp(46px, 4.6vw, 65px);
+  line-height: 1.22;
+  letter-spacing: -0.065em;
+  font-weight: 850;
+}
+.game-hero .accent-text {
+  position: relative;
+  white-space: nowrap;
+  isolation: isolate;
+}
+.game-hero .accent-text::after {
+  content: "";
+  position: absolute;
+  inset: 74% -3px 0;
+  background: #edd579;
+  z-index: -1;
+  transform: rotate(-2deg);
+}
+.hero-description {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.9;
+  margin-top: 23px;
+}
+.hero-actions {
+  margin-top: 28px;
+  gap: 16px;
+}
+.test-purpose {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 18px;
+  margin-top: 28px;
+  border: 1px solid #d8e3d5;
+  border-radius: 12px;
+  background: #edf3e8;
+  color: #53685c;
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 510px;
+}
+.test-purpose svg {
+  color: var(--accent);
+  margin-top: 3px;
+}
+.test-purpose strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.test-purpose p {
+  font-size: inherit;
+  margin: 0;
+}
+.home-collection-link {
+  margin-top: 17px;
+}
+.game-hero .hero-character-visual {
+  isolation: isolate;
+  min-height: 620px;
+  padding: 36px 12px 68px;
+  max-width: 520px;
+  width: 100%;
+}
+.game-hero .hero-character-visual::before {
+  content: "";
+  position: absolute;
+  inset: 24px -8px 60px;
+  background: #e7eee0;
+  border: 1px solid #d8e3d0;
+  border-radius: 50% 43% 47% 38%;
+  transform: rotate(8deg);
+  z-index: -2;
+}
+.hero-card-counter {
+  position: absolute;
+  top: 12px;
+  left: -10px;
+  display: flex;
+  flex-direction: column;
+  padding: 11px 18px;
+  background: #edd579;
+  border: 1px solid #c9b460;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 #c9b46035;
+  transform: rotate(-7deg);
+  z-index: 4;
+  font-size: 12px;
+}
+.hero-card-counter strong {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.hero-card-back {
+  position: absolute;
+  inset: 52px 38px 87px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #416757;
+  border-radius: 22px;
+  background: #86b19a;
+  box-shadow: 4px 5px 0 #243d3512;
+  z-index: -1;
+  transform: rotate(9deg);
+}
+.hero-card-back span {
+  font-size: 140px;
+  color: #eaf1e0;
+}
+.hero-card-back-two {
+  transform: rotate(-9deg);
+  background: #f1d888;
+  border-color: #b5a052;
+}
+.game-hero .hero-character-card {
+  width: 90%;
+  max-width: 350px;
+  transform: rotate(-2deg);
+  animation: none;
+}
+.game-hero .mystery-card,
+.game-hero .character-face {
+  min-height: 500px;
+}
+.game-hero .mystery-card {
+  padding: 20px;
+}
+.game-hero .mystery-portrait,
+.game-hero .character-portrait {
+  min-height: 210px;
+}
+.game-hero .mystery-portrait img,
+.game-hero .character-portrait img {
+  max-height: 270px;
+}
+.game-hero .mystery-copy {
+  margin-bottom: 17px;
+}
+.game-hero .mystery-copy h2 {
+  margin-bottom: 7px;
+  font-size: 34px;
+}
+.game-hero .mystery-copy p {
+  font-size: 15px;
+}
+.game-hero .mystery-copy > span {
+  font-size: 13px;
+}
+.game-hero .mystery-card-bottom {
+  font-size: 12px;
+  padding-top: 12px;
+}
+.game-hero .floating-label {
+  top: 18px;
+  right: -5px;
+  background: #fff;
+  color: var(--accent);
+  border-color: var(--line);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 12px;
+  transform: rotate(4deg);
+}
+.game-hero .deck-selector {
+  bottom: 0;
+  background: #fff;
+  border-color: var(--line);
+  border-radius: 12px;
+  box-shadow: 0 3px 0 #d9e2d9;
+}
+.deck-selector button {
+  border-radius: 8px;
+}
+.deck-selector button.selected {
+  background: var(--accent);
+  color: #fff;
+}
+.mystery-card {
+  border: 2px solid #bccfbe;
+  background: #f0f4e9;
+  box-shadow: 5px 6px 0 #b7c6b638;
+}
+.mystery-card-top,
+.mystery-copy h2,
+.mystery-copy p {
+  color: #385345;
+}
+.mystery-copy > span,
+.mystery-card-bottom {
+  color: #627668;
+}
+.mystery-card-bottom {
+  border-color: #c9d7c4;
+}
+.mystery-orbit {
+  background: #fff9df;
+  border-color: #b8c9ae;
+}
+.mystery-question {
+  text-shadow: none;
+  color: #f3df95;
+}
+.character-face {
+  border-width: 2px;
+  box-shadow: 5px 6px 0 #b7c6b638;
+}
+.character-front,
+.character-back {
+  background: var(--character-tint);
+}
+.character-halo {
+  background: #ffffff70;
+}
+.fact-strip {
+  padding: 25px 32px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 4px 0 #dce4d933;
+}
+.fact-strip strong {
+  color: var(--accent);
+  font-weight: 800;
+}
+.fact-strip strong span {
+  color: var(--ink);
+}
+.discover-section {
+  padding-block: 92px 76px;
+}
+.family-grid {
+  gap: 18px;
+}
+.family-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 4px 0 #dce4d955;
+  padding: 24px;
+}
+.family-card:nth-child(even) {
+  margin-top: 24px;
+  background: #eef3e9;
+}
+.family-card:hover {
+  transform: translateY(-5px);
+  border-color: #8eae96;
+}
+.family-card > svg {
+  color: var(--accent);
+}
+.family-label {
+  background: #e9f1e3;
+  color: var(--accent);
+  border-radius: 7px;
+}
+.journey-section {
+  border-top: 1px solid var(--line);
+  padding-block: 58px;
+  gap: 64px;
+}
+.journey-list {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 5px 28px;
+}
+.journey-list li {
+  padding-block: 24px;
+}
+.journey-list li > span {
+  color: var(--accent);
+  font-weight: 800;
+}
+.closing-cta {
+  border-radius: 22px;
+  background: #f2e7b6;
+  border: 1px solid #ded09b;
+}
+.closing-symbol {
+  color: var(--accent);
+}
+.closing-note {
+  color: #62654c;
+}
+.page-intro {
+  margin-bottom: 36px;
+}
+.page-intro h1 {
+  font-weight: 800;
+}
+.quiz-purpose {
+  max-width: none;
+  margin: 0 0 18px;
+}
+.quiz-collection-notice {
+  background: #fff;
+  border-color: var(--line);
+  border-radius: 12px;
+}
+.question-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 5px 0 #dce4d955;
+}
+.answer-option.checked {
+  border-color: var(--accent);
+  background: #eaf2e4;
+}
+.filter-tabs button,
+.task-tabs button {
+  background: #fff;
+  border-radius: 10px;
+}
+.filter-tabs button.active,
+.task-tabs button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.collection-panel,
+.catalog-discovery-note {
+  background: #edf2e5;
+  border-color: var(--line);
+  border-radius: 18px;
+}
+.result-caveat {
+  max-width: none;
+  font-size: 14px;
+}
+.result-shortcuts a {
+  border-radius: 10px;
+}
+.shared-character-page .test-purpose {
+  margin-bottom: 24px;
+}
+.footer {
+  margin-top: 72px;
+  padding-block: 32px;
+}
+.footer p {
+  max-width: 32ch;
+}
+
+@media (max-width: 1100px) {
+  .site-shell {
+    padding-inline: 32px;
+  }
+  .game-hero {
+    gap: 30px;
+    padding-top: 46px;
+  }
+  .game-hero h1 {
+    font-size: 52px;
+  }
+  .game-hero .hero-character-visual::before {
+    inset-inline: 8px;
+    transform: rotate(3deg);
+  }
+  .game-hero .hero-character-card {
+    width: 94%;
+  }
+  .hero-card-counter {
+    left: -4px;
+    top: 5px;
+    padding: 8px 12px;
+  }
+  .game-hero .floating-label {
+    top: 26px;
+    right: -8px;
+    font-size: 11px;
+  }
+  .family-card {
+    padding: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .site-shell {
+    padding-inline: 20px;
+  }
+  .header {
+    height: 78px;
+    gap: 12px;
+  }
+  .brand {
+    font-size: 25px;
+    gap: 9px;
+  }
+  .brand-mark {
+    width: 28px;
+    height: 32px;
+  }
+  .header nav {
+    gap: 14px;
+    font-size: 13px;
+  }
+  .nav-start {
+    padding: 8px 12px;
+    gap: 5px;
+  }
+  .game-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    min-height: 0;
+    padding: 32px 0 36px;
+  }
+  .game-hero h1 {
+    font-size: clamp(39px, 10.8vw, 55px);
+    line-height: 1.2;
+  }
+  .game-hero .hero-copy > .eyebrow {
+    margin-bottom: 20px;
+    font-size: 12px;
+  }
+  .hero-description {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-top: 20px;
+  }
+  .hero-actions {
+    margin-top: 24px;
+  }
+  .hero-actions .button {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .micro-copy {
+    padding-left: 0;
+    font-size: 12px;
+  }
+  .test-purpose {
+    padding: 13px 14px;
+    font-size: 13px;
+    margin-top: 24px;
+  }
+  .quiz-purpose {
+    margin-top: 0;
+  }
+  .home-collection-link {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+  .game-hero .hero-character-visual {
+    min-height: 613px;
+    max-width: 370px;
+    padding: 37px 12px 70px;
+  }
+  .game-hero .hero-character-visual::before {
+    inset: 35px 8px 85px;
+  }
+  .game-hero .hero-character-card {
+    width: 92%;
+    transform: rotate(-2deg);
+  }
+  .hero-card-back {
+    inset: 52px 28px 87px;
+  }
+  .hero-card-counter {
+    left: 0;
+    top: 0;
+  }
+  .hero-card-counter strong {
+    font-size: 18px;
+  }
+  .game-hero .floating-label {
+    top: 20px;
+    right: 0;
+    max-width: 58%;
+  }
+  .game-hero .deck-selector {
+    gap: 1px;
+    max-width: 100%;
+  }
+  .deck-selector button {
+    padding: 9px 8px;
+    font-size: 12px;
+    gap: 4px;
+  }
+  .deck-selector button svg {
+    width: 16px;
+    height: 16px;
+  }
+  .fact-strip {
+    gap: 20px;
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+  .fact-strip strong {
+    font-size: 28px;
+  }
+  .fact-strip p {
+    font-size: 12px;
+  }
+  .discover-section {
+    padding-block: 52px 40px;
+  }
+  .section-heading {
+    gap: 18px;
+  }
+  .family-grid {
+    gap: 12px;
+  }
+  .family-card {
+    padding: 18px 15px;
+    border-radius: 13px;
+  }
+  .family-card:nth-child(even) {
+    margin-top: 0;
+  }
+  .family-card p {
+    font-size: 13px;
+  }
+  .family-card h3 {
+    font-size: 17px;
+  }
+  .family-label {
+    font-size: 12px;
+  }
+  .journey-section {
+    padding-block: 36px;
+    gap: 28px;
+  }
+  .journey-list {
+    padding-inline: 18px;
+  }
+  .closing-cta {
+    border-radius: 18px;
+    padding: 28px 24px;
+  }
+  .closing-cta h2 {
+    font-size: 30px;
+  }
+  .footer {
+    margin-top: 48px;
+    gap: 22px;
+  }
+  .footer nav {
+    font-size: 13px;
+    gap: 14px;
+  }
+}
+@media (max-width: 360px) {
+  .game-hero .hero-character-visual::before {
+    transform: none;
+  }
+  .game-hero .hero-card-back {
+    inset-inline: 40px;
+    transform: rotate(5deg);
+  }
+  .game-hero .hero-card-back-two {
+    transform: rotate(-5deg);
+  }
+}
+
+.collection-entry-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #efd600;
+  border-radius: 10px;
+  background: #fee500;
+  color: #191919;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.collection-entry-link img {
+  flex-shrink: 0;
+}
+.collection-entry-link:hover,
+.footer nav .collection-entry-link:hover {
+  color: #191919;
+  box-shadow: 0 3px 0 #ccb700;
+  transform: translateY(-1px);
+}
+.collection-entry-link.is-signed-in {
+  border-color: var(--line);
+  background: #fff;
+  color: var(--accent);
+}
+.collection-entry-link.is-signed-in:hover,
+.footer nav .collection-entry-link.is-signed-in:hover {
+  color: var(--accent);
+  box-shadow: 0 3px 0 var(--line);
+}
+.footer nav {
+  align-items: center;
+}
+
+/* The collection's final reward is a landscape keepsake. */
+.special-collection-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 32px;
+  margin: 28px 0 48px;
+  padding: 32px;
+  border: 1px solid #d9c688;
+  border-radius: 20px;
+  background: #fff9e9;
+  box-shadow: 0 5px 0 #eee3bf;
+}
+.special-collection-card.is-unlocked {
+  grid-template-columns: minmax(0, 1fr);
+}
+.special-card-copy,
+.special-photo-open {
+  min-width: 0;
+}
+.special-card-copy .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #77612b;
+}
+.special-card-copy h2 {
+  margin: 12px 0;
+  font-size: clamp(24px, 3vw, 34px);
+}
+.special-card-copy > p {
+  max-width: 660px;
+  color: var(--muted);
+}
+.special-card-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 18px;
+}
+.special-card-progress strong {
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+.special-card-progress strong span {
+  color: #8d855f;
+  font-size: 18px;
+  font-weight: 500;
+}
+.special-card-progress > span {
+  color: #77612b;
+  font-size: 14px;
+}
+.special-card-actions {
+  margin-top: 20px;
+}
+.special-card-sealed {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  padding: 24px;
+  border: 1px dashed #ccba7b;
+  border-radius: 12px;
+  background: #f5ebcf;
+  text-align: center;
+  color: #78642f;
+}
+.special-card-seal {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 14px;
+  border: 1px solid #c7ac59;
+  border-radius: 50%;
+  background: #e5cd85;
+  font-size: 32px;
+  box-shadow: 0 3px 0 #c6b16e;
+}
+.special-card-sealed strong {
+  font-size: 20px;
+}
+.special-card-sealed p {
+  margin-top: 6px;
+  font-size: 13px;
+}
+.special-photo-open {
+  padding: 10px 10px 0;
+  border: 1px solid #ded2b1;
+  border-radius: 12px;
+  background: #fffef9;
+  box-shadow: 0 3px 10px #6a562714;
+}
+.special-photo-frame {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  background: #f1ead7;
+}
+.special-photo-frame > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.special-photo-open > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 8px;
+  border: 0;
+  background: transparent;
+  color: #77612b;
+  font-size: 13px;
+  text-align: left;
+}
+.special-photo-error {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+.special-photo-dialog {
+  width: min(1200px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid #ddc98d;
+  border-radius: 16px;
+  background: #fffaf0;
+  color: var(--ink);
+  box-shadow: 0 20px 100px #142e3566;
+}
+.special-photo-dialog::backdrop {
+  background: #182f29c9;
+}
+.special-photo-dialog .special-photo-frame {
+  width: min(100%, calc((100dvh - 260px) * 16 / 9));
+  margin-inline: auto;
+}
+.special-photo-dialog-heading,
+.special-photo-dialog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.special-photo-dialog-heading {
+  margin-bottom: 20px;
+}
+.special-photo-dialog-heading h2 {
+  margin-top: 6px;
+  font-size: 28px;
+}
+.special-photo-dialog-heading > button {
+  flex-shrink: 0;
+}
+.special-photo-dialog-footer {
+  margin-top: 20px;
+}
+.special-photo-dialog-footer p {
+  color: var(--muted);
+  font-size: 14px;
+}
+@media (max-width: 700px) {
+  .special-collection-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 22px 18px;
+    margin-bottom: 36px;
+  }
+  .special-card-actions {
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .special-card-sealed {
+    min-height: 190px;
+  }
+  .special-photo-dialog {
+    padding: 18px 14px;
+  }
+  .special-photo-dialog-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .special-photo-dialog-heading h2 {
+    font-size: 22px;
+  }
+  .special-photo-dialog-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
 }

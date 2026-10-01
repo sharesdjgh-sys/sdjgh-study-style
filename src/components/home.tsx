@@ -8,6 +8,7 @@ import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
 import { useCollection } from "./collection-provider";
+import { CollectionLink } from "./collection-link";
 export function Home() {
   const [active, setActive] = useState<Modality>("visual");
   const { session: saved, first } = useSavedSession();
@@ -16,24 +17,23 @@ export function Home() {
   const ownType = accountLoaded && ownCode ? getType(ownCode) : null;
   return (
     <main id="main">
-      <section className="hero">
+      <section className="hero game-hero">
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="live-dot" />
-            나를 알아가는 작은 실험
+            재미로 만나는 나의 공부 캐릭터
           </div>
           <h1>
-            남들 말고,
+            16명 중,
             <br />
-            <span className="accent-text">나답게</span> 공부
-            <span className="hero-period">.</span>
+            너의 <span className="accent-text">공부캐</span>는?
           </h1>
           <p className="hero-description">
-            어떻게 공부할 때 가장 나다울까요?
+            공부할 때 나타나는 또 다른 나.
             <br />
-            16개의 질문으로 내 공부 취향을 발견하고,
+            16개의 질문으로 나를 닮은 캐릭터를 만나고,
             <br className="desktop-only" />
-            오늘 시도할 새로운 방법을 찾아보세요.
+            다양한 공부 스타일과 공부법을 구경해 보세요.
           </p>
           <div className="hero-actions">
             <Link
@@ -41,10 +41,10 @@ export function Home() {
               href={saved?.result ? "/result" : "/quiz"}
             >
               {saved?.result
-                ? "내 공부 스타일 다시 보기"
+                ? "내 공부캐 다시 보기"
                 : saved
                   ? "하던 테스트 이어하기"
-                  : "내 공부 스타일 찾기"}
+                  : "내 공부캐 찾기"}
               <Arrow />
             </Link>
             <span className="micro-copy">
@@ -52,27 +52,34 @@ export function Home() {
               <span>·</span> 가입 없이 바로 시작
             </span>
           </div>
-          <div className="hero-bottom">
-            <span className="small-stars">✳</span>
+          <aside className="test-purpose">
+            <Icon name="stars-linear" size={20} />
             <p>
-              잘하는 방법도, 좋아하는 방법도.
+              <strong>재미로 하는 테스트, 공부법은 다양하게!</strong>
               <br />
-              <strong>나를 알아가면 시작이 달라져요.</strong>
+              성격·능력을 진단하지 않아요. 어떤 캐릭터가 나와도 모든 공부법을
+              자유롭게 시도해 보세요.
             </p>
-          </div>
-          <Link className="text-link home-collection-link" href="/collection">
-            내 도감 · 로그인 →
-          </Link>
+          </aside>
+          <CollectionLink className="home-collection-link" />
         </div>
         <div className="hero-visual hero-character-visual">
-          <div className="hero-grid" />
+          <div className="hero-card-counter" aria-hidden="true">
+            <span>나의 첫 캐릭터</span>
+            <strong>{ownType ? "발견 완료!" : "??? / 16"}</strong>
+          </div>
+          <div className="hero-card-back hero-card-back-one" aria-hidden="true">
+            <span>✦</span>
+          </div>
+          <div className="hero-card-back hero-card-back-two" aria-hidden="true">
+            <span>✦</span>
+          </div>
           <span className="floating-label">
             <Icon name="stars-linear" size={18} />
             {ownType
-              ? "나만의 공부 친구를 만났어요"
-              : "16명 중, 내 친구는 누구?"}
+              ? "나의 첫 공부캐를 만났어요"
+              : "아직은 비밀! 어떤 캐가 나올까?"}
           </span>
-          <div className="deck-back" />
           <div className="hero-character-card">
             {ownType ? (
               <CharacterCard type={ownType} detailLink priority />
@@ -101,7 +108,7 @@ export function Home() {
           )}
         </div>
       </section>
-      <section className="fact-strip" aria-label="검사 안내">
+      <section className="fact-strip" aria-label="테스트 안내">
         <div>
           <strong>
             16<span>개의 질문</span>
@@ -111,9 +118,9 @@ export function Home() {
         <span className="strip-cross">+</span>
         <div>
           <strong>
-            16<span>가지 스타일</span>
+            16<span>명의 공부캐</span>
           </strong>
-          <p>나의 공부 취향을 발견해요</p>
+          <p>서로 다른 공부 스타일을 만나요</p>
         </div>
         <span className="strip-cross">→</span>
         <div>
@@ -123,7 +130,7 @@ export function Home() {
           <p>결과를 오늘의 공부로 연결해요</p>
         </div>
         <Link href="/about">
-          어떤 검사인가요?
+          어떤 테스트인가요?
           <Icon name="arrow-right-up-linear" size={18} />
         </Link>
       </section>
@@ -182,12 +189,12 @@ export function Home() {
               text: "최근 2주를 생각하며 16개의 질문에 답하세요. 더 좋은 답은 없어요.",
             },
             {
-              title: "내 공부 취향을 발견해요",
-              text: "나의 대표 스타일과 추천 이유를 확인하세요. 여러 방식이 비슷하게 나올 수도 있어요.",
+              title: "나를 닮은 공부캐를 만나요",
+              text: "캐릭터의 이야기에 공감해 보고 친구와 비교해요. 딱 맞지 않는 부분이 있어도 괜찮아요.",
             },
             {
               title: "오늘, 딱 10분만 해봐요",
-              text: "추천 활동 하나를 골라 직접 시도하고, 내게 어땠는지 확인해 보세요.",
+              text: "내 캐릭터의 방법도, 다른 캐릭터의 방법도! 하나를 골라 시도하고 내게 어땠는지 살펴봐요.",
             },
           ].map((item, i) => (
             <li key={item.title}>
@@ -203,21 +210,21 @@ export function Home() {
       <section className="closing-cta">
         <span className="closing-symbol">✳</span>
         <div>
-          <p className="eyebrow">어떤 스타일이든, 시작은 가볍게</p>
+          <p className="eyebrow">친구에게도 물어봐요. 너 무슨 캐 나왔어?</p>
           <h2>
-            나에게 맞는 한 가지를
+            공부할 때의 나,
             <br />
-            찾아볼까요?
+            어떤 캐릭터일까?
           </h2>
         </div>
         <Link className="button primary large" href="/quiz">
-          내 스타일 발견하기
+          내 공부캐 찾기
           <Arrow />
         </Link>
         <p className="closing-note">
-          결과는 지금의 선호를 바탕으로 한 공부법 후보예요.
+          재미로 만나고, 새로운 공부법도 발견해요.
           <br />
-          과목과 상황에 따라 다른 방법도 시도해 보세요.
+          캐릭터 하나가 나의 공부 가능성을 정하지 않아요.
         </p>
       </section>
     </main>

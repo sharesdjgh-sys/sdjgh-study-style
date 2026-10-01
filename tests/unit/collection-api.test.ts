@@ -10,7 +10,7 @@
 import { PGlite } from "@electric-sql/pglite";
 import { readFile } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
-import { QUESTIONS, VERSION } from "../../src/lib/content";
+import { QUESTIONS, VERSION, STUDY_TYPES } from "../../src/lib/content";
 const mocks = vi.hoisted(() => ({
   query: vi.fn(),
   jar: new Map<string, string>(),
@@ -47,10 +47,12 @@ import { GET as callback } from "../../src/app/api/auth/kakao/callback/route";
 import { POST as logout } from "../../src/app/api/auth/logout/route";
 import { DELETE as remove } from "../../src/app/api/collection/account/route";
 import { POST as open } from "../../src/app/api/collection/rewards/open/route";
+import { GET as specialCard } from "../../src/app/api/collection/special-card/route";
 let db: PGlite;
 let owner: string;
 const origin = "https://study.example";
-const digest = (s: string) => createHash("sha256").update(s).digest("hex");
+const digest = (s: string | Uint8Array) =>
+  createHash("sha256").update(s).digest("hex");
 const request = (
   path: string,
   data: unknown = {},
@@ -116,6 +118,58 @@ afterEach(() => {
 });
 afterAll(async () => {
   await db.close();
+});
+it("스페셜 사진은 16종 선물을 모두 개봉한 계정만 보고 PNG로 저장한다", async () => {
+  const photograph = () =>
+    specialCard(new Request(origin + "/api/collection/special-card"));
+  mocks.jar.clear();
+  expect((await photograph()).status).toBe(401);
+  mocks.jar.set("study-collection", "session");
+  for (const [index, type] of STUDY_TYPES.entries()) {
+    await db.query(
+      "INSERT INTO collection_cards(account_id,type_code,source,opened_at) VALUES($1,$2,'referral',$3)",
+      [owner, type.code, index === 15 ? null : new Date()],
+    );
+  }
+  expect((await photograph()).status).toBe(403);
+  const reward = (
+    await db.query<{ reward_id: string }>(
+      "SELECT reward_id FROM collection_cards WHERE account_id=$1 AND opened_at IS NULL",
+      [owner],
+    )
+  ).rows[0].reward_id;
+  expect(
+    (await open(request("/api/collection/rewards/open", { id: reward })))
+      .status,
+  ).toBe(200);
+  const preview = await photograph();
+  expect(preview.status).toBe(200);
+  expect(preview.headers.get("content-type")).toBe("image/webp");
+  expect(preview.headers.get("cache-control")).toBe("private, no-store");
+  expect(preview.headers.get("vary")).toBe("Cookie");
+  expect(digest(new Uint8Array(await preview.arrayBuffer()))).toBe(
+    digest(await readFile("art/characters/special/group-photo.webp")),
+  );
+  const saved = await specialCard(
+    new Request(origin + "/api/collection/special-card?download=1"),
+  );
+  expect(saved.headers.get("content-type")).toBe("image/png");
+  expect(saved.headers.get("content-disposition")).toBe(
+    'attachment; filename="gongbucae-special-16.png"',
+  );
+  expect(digest(new Uint8Array(await saved.arrayBuffer()))).toBe(
+    digest(await readFile("art/characters/special/group-photo.png")),
+  );
+  await logout(request("/api/auth/logout"));
+  expect((await photograph()).status).toBe(401);
+});
+it("도감 조회에 실패하면 스페셜 사진을 제공하지 않는다", async () => {
+  mocks.query.mockRejectedValueOnce(new Error("offline"));
+  const response = await specialCard(
+    new Request(origin + "/api/collection/special-card"),
+  );
+  expect(response.status).toBe(503);
+  expect(await response.json()).toEqual({ error: "unavailable" });
 });
 it("로그인 없이 등록하거나 다른 사이트에서 요청할 수 없다", async () => {
   expect(

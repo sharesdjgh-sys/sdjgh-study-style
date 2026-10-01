@@ -38,7 +38,7 @@ export function TypeGallery({
               ? data.signedIn
                 ? `발견한 친구 ${data.cards.length} / 16`
                 : "나의 첫 친구, 아직 저장 전"
-              : "16개의 실루엣, 나의 친구는 단 한 명"}
+              : "16명의 공부캐, 먼저 만날 친구는 누구?"}
           </span>
           <p>
             {ownCode
@@ -76,7 +76,7 @@ export function TypeGallery({
       </div>
       <p className="character-gallery-hint">
         {ownCode
-          ? "만난 친구의 카드를 뒤집어 소개를 읽어보세요. “넌 어떤 캐릭터 나왔어?”"
+          ? "카드를 뒤집어 공부 이야기를 읽어보세요. “너 무슨 공부캐 나왔어?”"
           : "실루엣을 보고 상상해 보세요. 누가 내 친구가 될까요?"}
       </p>
       <div className="type-grid character-gallery">

@@ -15,12 +15,14 @@ export async function generateMetadata({
   const type = getType((await params).typeCode);
   if (!type) return {};
   return {
-    title: `${CHARACTERS[type.code].name} · 친구의 공부 캐릭터`,
-    description: "넌 어떤 캐릭터 나왔어? 나와 닮은 공부 친구를 만나보세요.",
+    title: `${CHARACTERS[type.code].name} · 친구의 공부캐`,
+    description:
+      "너 무슨 공부캐 나왔어? 재미로 즐기고 다양한 공부법을 발견해요.",
     robots: { index: false, follow: false },
     openGraph: {
-      title: `내 공부 친구는 ${CHARACTERS[type.code].name}! 넌 누구야?`,
-      description: type.subtitle,
+      title: `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`,
+      description:
+        "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요.",
       images: [{ url: `/api/og?type=${type.code}`, width: 1200, height: 630 }],
     },
   };

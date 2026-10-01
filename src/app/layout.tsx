@@ -6,16 +6,16 @@ import { CollectionProvider } from "@/components/collection-provider";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: "공부결 — 나다운 공부의 시작", template: "%s | 공부결" },
+  title: { default: "공부캐 — 너의 공부캐는 누구?", template: "%s | 공부캐" },
   description:
-    "16개의 질문으로 발견하는 나의 공부 스타일. 가입 없이 시작하고, 오늘 해볼 10분 공부법을 찾아보세요.",
+    "재미로 만나는 나의 공부캐! 16개의 질문으로 캐릭터를 만나고, 다양한 공부 스타일과 공부법을 탐색해 보세요. 성격·능력을 진단하는 검사가 아니에요.",
   openGraph: {
     locale: "ko_KR",
     type: "website",
-    siteName: "공부결",
-    title: "공부결 — 나다운 공부의 시작",
+    siteName: "공부캐",
+    title: "공부캐 — 너의 공부캐는 누구?",
     description:
-      "남들 말고, 나답게 공부. 나의 공부 취향을 발견하는 16개의 질문.",
+      "16명 중, 너의 공부캐는 누구? 재미로 즐기고 다양한 공부 스타일과 공부법을 발견해요.",
     images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },

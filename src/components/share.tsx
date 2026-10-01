@@ -2,6 +2,7 @@
 import Script from "next/script";
 import { useState } from "react";
 import type { StudyType } from "@/lib/content";
+import { CHARACTERS } from "@/lib/characters";
 import { readSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
@@ -53,16 +54,16 @@ export function Share({ type }: { type?: StudyType }) {
         objectType: "feed",
         content: {
           title: type
-            ? `나의 공부 스타일은 ${type.name}`
-            : "공부결 — 나다운 공부의 시작",
+            ? `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`
+            : "공부캐 — 16명 중, 너의 공부캐는 누구?",
           description:
-            type?.subtitle ?? "16개의 질문으로 나의 공부 취향을 발견해 보세요.",
+            "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요.",
           imageUrl: `${window.location.origin}/api/og${type ? `?type=${type.code}` : ""}`,
           link: { mobileWebUrl: url(), webUrl: url() },
         },
         buttons: [
           {
-            title: "스타일 보기",
+            title: "공부캐 보기",
             link: { mobileWebUrl: url(), webUrl: url() },
           },
           {
@@ -101,7 +102,7 @@ export function Share({ type }: { type?: StudyType }) {
       <div className="button-row">
         <button className="button secondary" onClick={() => copy()}>
           <Icon name="copy-linear" size={18} />
-          {type ? "내 스타일 링크 복사" : "테스트 링크 복사"}
+          {type ? "내 공부캐 링크 복사" : "테스트 링크 복사"}
         </button>
         <button className="button secondary" onClick={kakao}>
           <Icon name="chat-round-dots-linear" size={18} />

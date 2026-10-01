@@ -20,18 +20,18 @@ export async function GET(request: Request) {
         display: "flex",
         width: "100%",
         height: "100%",
-        background: "#f7f6f2",
+        background: "#f7f8f2",
         padding: "64px 76px",
         fontFamily: "Pretendard",
-        color: "#292a26",
+        color: "#243d35",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", fontSize: 32, color: "#ce533b" }}>
+      <div style={{ display: "flex", fontSize: 32, color: "#27785d" }}>
         {character
-          ? `공부결 · ${character.name}와 같은 공부 취향`
-          : "공부결 · 나다운 공부의 시작"}
+          ? "공부캐 · 너는 무슨 캐 나왔어?"
+          : "공부캐 · 공부할 때, 또 다른 나"}
       </div>
       <div
         style={{
@@ -41,7 +41,9 @@ export async function GET(request: Request) {
           maxWidth: t ? 680 : 1000,
         }}
       >
-        {t ? t.name : "남들 말고, 나답게 공부."}
+        {character
+          ? `내 공부캐는 ${character.name}!`
+          : "16명 중, 너의 공부캐는 누구?"}
       </div>
       <div
         style={{
@@ -53,7 +55,7 @@ export async function GET(request: Request) {
       >
         {t
           ? `${FAMILIES[t.modality].label} · ${t.subtitle}`
-          : "16개의 질문 · 16가지 공부 스타일 · 오늘의 10분 실험"}
+          : "16개의 질문 · 16명의 캐릭터 · 다양한 공부법"}
       </div>
       {portrait && (
         // ImageResponse renders an image buffer, not a browser next/image component.
@@ -79,7 +81,7 @@ export async function GET(request: Request) {
           paddingTop: 24,
         }}
       >
-        가입 없이 내 공부 취향을 발견해 보세요.
+        재미로 즐기는 테스트 · 성격·능력 진단 없이 다양한 공부법을 탐색해요
       </div>
     </div>,
     {

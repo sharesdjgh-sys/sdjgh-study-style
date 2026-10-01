@@ -1,5 +1,6 @@
-﻿import { test, expect, type Page } from "@playwright/test";
-import { QUESTIONS, VERSION } from "../../src/lib/content";
+import { test, expect, type Page } from "@playwright/test";
+import { QUESTIONS, VERSION, STUDY_TYPES } from "../../src/lib/content";
+import { readFile } from "node:fs/promises";
 import {
   EMPTY_COLLECTION,
   type CollectionData,
@@ -45,6 +46,129 @@ async function server(page: Page, initial: CollectionData) {
   return state;
 }
 
+test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저장·복원이 된다", async ({
+  page,
+}, testInfo) => {
+  const last = STUDY_TYPES.at(-1)!.code;
+  const state = await server(page, {
+    ...EMPTY_COLLECTION,
+    configured: true,
+    signedIn: true,
+    firstType: base,
+    firstRunId: crypto.randomUUID(),
+    inviteCode: "ABCDEF1234",
+    cards: STUDY_TYPES.slice(0, -1).map((type) => ({
+      code: type.code,
+      source: "referral",
+    })),
+    pending: [{ id: crypto.randomUUID() }],
+    referralCount: 15,
+  });
+  let photographRequests = 0;
+  await page.route("**/api/collection/special-card*", async (route) => {
+    photographRequests++;
+    if (photographRequests === 1)
+      return route.fulfill({ status: 503, json: { error: "unavailable" } });
+    const download =
+      new URL(route.request().url()).searchParams.get("download") === "1";
+    return route.fulfill({
+      body: await readFile(
+        `art/characters/special/group-photo.${download ? "png" : "webp"}`,
+      ),
+      contentType: download ? "image/png" : "image/webp",
+      headers: download
+        ? {
+            "Content-Disposition":
+              'attachment; filename="gongbucae-special-16.png"',
+          }
+        : {},
+    });
+  });
+  await page.route("**/api/collection/rewards/open", (route) => {
+    state.data = {
+      ...state.data,
+      cards: [...state.data.cards, { code: last, source: "referral" }],
+      pending: [],
+    };
+    return route.fulfill({ json: { code: last } });
+  });
+  await page.goto("/collection");
+  const card = page.getByRole("region", { name: "도감 완성 스페셜 카드" });
+  await card.scrollIntoViewIfNeeded();
+  await expect(card).toContainText("1명의 친구를 더 만나면 완성!");
+  await expect(card.locator("img")).toHaveCount(0);
+  expect(photographRequests).toBe(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await card.screenshot({
+    path: `.artifacts/special-locked-${testInfo.project.name}.png`,
+  });
+  await page.getByRole("button", { name: "두근두근, 열어보기" }).click();
+  await page.getByRole("button", { name: "도감에서 만나기" }).click();
+  await card.scrollIntoViewIfNeeded();
+  await expect(card).toContainText("스페셜 카드 획득 완료");
+  await expect(card.getByRole("status")).toContainText(
+    "도감 완성 기록은 그대로예요",
+  );
+  await card.getByRole("button", { name: "다시 불러오기" }).click();
+  await expect
+    .poll(() =>
+      card.locator("img").evaluate((img: HTMLImageElement) => img.naturalWidth),
+    )
+    .toBe(1664);
+  await card.screenshot({
+    path: `.artifacts/special-complete-${testInfo.project.name}.png`,
+  });
+  const enlarge = card.getByRole("button", {
+    name: "단체사진 크게 보기",
+    exact: true,
+  });
+  await enlarge.click();
+  const dialog = page.getByRole("dialog", { name: "우리, 드디어 다 모였다!" });
+  await expect(dialog).toBeVisible();
+  await expect
+    .poll(() =>
+      dialog
+        .locator("img")
+        .evaluate((img: HTMLImageElement) => img.naturalWidth),
+    )
+    .toBe(1664);
+  await page.screenshot({
+    path: `.artifacts/special-dialog-${testInfo.project.name}.png`,
+  });
+  const downloaded = page.waitForEvent("download");
+  await dialog.getByRole("link", { name: "단체사진 저장하기" }).click();
+  expect((await downloaded).suggestedFilename()).toBe(
+    "공부캐-스페셜-단체사진.png",
+  );
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(enlarge).toBeFocused();
+  await page.reload();
+  await expect(card).toContainText("스페셜 카드 획득 완료");
+  if (testInfo.project.name === "mobile")
+    await page.setViewportSize({ width: 320, height: 700 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  state.data = { ...EMPTY_COLLECTION, configured: true };
+  await page.reload();
+  await expect(card.locator("img")).toHaveCount(0);
+  await expect(
+    card.getByRole("link", { name: "이미지 저장하기 ↓" }),
+  ).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+});
+
 test("첫 캐릭터는 비로그인 공개, 재검사는 분석부터 결과까지 실루엣이고 최초 결과를 보존", async ({
   page,
 }) => {
@@ -89,7 +213,7 @@ test("첫 캐릭터는 비로그인 공개, 재검사는 분석부터 결과까�
   await expect(page.locator(".result-character .mystery-card")).toHaveCount(1);
   await expect(page.locator(".character-card")).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: "내 스타일 링크 복사" }),
+    page.getByRole("button", { name: "내 공부캐 링크 복사" }),
   ).toHaveCount(0);
   expect(
     await page.evaluate(
@@ -154,7 +278,7 @@ test("계정 도감 복원과 선물 개봉, 수집한 캐릭터만 공개하고
       value: { writeText: () => Promise.reject(new Error("blocked")) },
     }),
   );
-  await page.getByRole("button", { name: "내 스타일 링크 복사" }).click();
+  await page.getByRole("button", { name: "내 공부캐 링크 복사" }).click();
   await expect(page.getByRole("textbox", { name: "복사할 주소" })).toHaveValue(
     /\/share\/visual-solo-planned\?from=share&ref=ABCDEF1234$/,
   );
@@ -223,7 +347,7 @@ test("공유 링크 추천 정보를 검사로 전달하며 클릭만으로 보�
       awards++;
   });
   await page.goto("/share/motion-team-flexible?from=share&ref=ABCDEF1234");
-  await page.getByRole("link", { name: "나도 내 캐릭터 만나기 →" }).click();
+  await page.getByRole("link", { name: "나도 내 공부캐 찾기 →" }).click();
   await expect(page).toHaveURL(/\/quiz\?from=share&ref=ABCDEF1234$/);
   await expect(page.locator(".quiz-collection-notice")).toBeVisible();
   expect(captures).toBeGreaterThan(0);
@@ -262,7 +386,7 @@ test("로그인 취소와 서버 장애에도 검사 가능, 계정 삭제는 �
     .getByRole("button", { name: "계정·도감 삭제", exact: true })
     .click();
   await expect(
-    page.getByRole("button", { name: "카카오로 도감 시작하기" }),
+    page.getByRole("button", { name: "카카오 로그인" }),
   ).toBeVisible();
   await page.goto("/collection?auth=cancelled");
   await expect(

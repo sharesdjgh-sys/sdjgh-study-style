@@ -1,4 +1,4 @@
-﻿import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
 
 async function seedOwn(
@@ -169,7 +169,7 @@ test("결과 링크 복사는 전용 공유 주소를 사용함", async ({ page 
       },
     });
   });
-  await page.getByRole("button", { name: "내 스타일 링크 복사" }).click();
+  await page.getByRole("button", { name: "내 공부캐 링크 복사" }).click();
   await expect(page.getByRole("textbox", { name: "복사할 주소" })).toHaveValue(
     /\/share\/visual-solo-planned\?from=share$/,
   );

@@ -1,21 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
-export const metadata = { title: "검사와 학교 활용 안내" };
+export const metadata = { title: "테스트와 학교 활용 안내" };
 export default function Page() {
   return (
     <main id="main" className="prose-shell">
-      <span className="eyebrow">공부결을 소개해요</span>
+      <span className="eyebrow">공부캐를 소개해요</span>
       <h1>
-        결과보다 중요한 건,
+        캐릭터는 재미로,
         <br />
-        그다음의 작은 시도.
+        공부법은 다양하게.
       </h1>
       <p className="prose-lead">
-        공부결은 고등학생이 공부 취향을 돌아보고, 새로운 공부법을 시도하도록
-        돕는 짧은 자기 탐색 도구예요.
+        공부캐는 재미로 즐기는 공부 캐릭터 테스트예요. 다양한 공부 스타일과
+        공부법이 있다는 것을 알아보고, 새로운 방법을 가볍게 시도하도록
+        만들었어요. 캐릭터 하나로 나를 정의하거나 공부 방법을 정할 필요는
+        없어요.
       </p>
       <section className="prose-section">
-        <h2>어떤 검사인가요?</h2>
+        <h2>어떤 테스트인가요?</h2>
         <p>
           16문항으로 시각·청각·촉각·운동 선호와 혼자/함께, 계획/즉흥의 조합을
           살펴봐요. 큰 유형은 각 3문항, 나머지 두 축은 각 2문항으로 구성돼요.
@@ -29,8 +31,9 @@ export default function Page() {
           기준은 아니에요.
         </p>
         <p>
-          이 검사는 학습 능력·성적·성격을 진단하지 않아요. 자체 제작한 문항이며,
-          VARK 공식 검사를 사용하지 않아요. 문항 버전: 2026-09-v1.
+          재미로 하는 테스트이며 학습 능력·성적·성격을 진단하지 않아요. 자체
+          제작한 문항이며, VARK 공식 검사를 사용하지 않아요. 문항 버전:
+          2026-09-v1.
         </p>
       </section>
       <section id="evidence" className="prose-section">
@@ -73,8 +76,8 @@ export default function Page() {
         <h2>학교에서는 이렇게 활용하세요.</h2>
         <ol>
           <li>
-            검사 목적과 한계를 먼저 안내하고, 참여를 자율적으로 선택하게
-            해주세요.
+            재미로 다양한 공부 스타일과 공부법을 알아보는 활동임을 먼저
+            안내하고, 참여를 자율적으로 선택하게 해주세요.
           </li>
           <li>QR이나 링크로 접속해 약 3~5분 동안 검사해요.</li>
           <li>공부법 하나를 선택해 10분 동안 직접 시도해요.</li>
@@ -97,7 +100,7 @@ export default function Page() {
           src="/api/qr"
           width="144"
           height="144"
-          alt="공부결 시작 화면으로 이동하는 QR 코드"
+          alt="공부캐 시작 화면으로 이동하는 QR 코드"
         />
         <div>
           <h2>포스터에 붙여보세요.</h2>
@@ -105,7 +108,7 @@ export default function Page() {
             운영 주소로 연결되는 QR이에요. 배포 시 사이트 주소를 설정한 뒤
             내려받아 사용하세요.
           </p>
-          <a className="text-link" href="/api/qr" download="공부결-QR.png">
+          <a className="text-link" href="/api/qr" download="공부캐-QR.png">
             QR 이미지 내려받기 →
           </a>
         </div>

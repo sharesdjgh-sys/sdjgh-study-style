@@ -3,6 +3,10 @@ const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   outputFileTracingIncludes: {
+    "/api/collection/special-card": [
+      "./art/characters/special/group-photo.webp",
+      "./art/characters/special/group-photo.png",
+    ],
     "/api/og": [
       "./public/fonts/Pretendard-Bold.woff",
       "./public/characters/share/*.png",

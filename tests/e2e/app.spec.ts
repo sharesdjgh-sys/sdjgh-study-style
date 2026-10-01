@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /남들 말고/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /16명 중/ })).toBeVisible();
   await page.getByRole("button", { name: "말해서", exact: true }).click();
   await expect(
     page.getByRole("article", { name: "미공개 캐릭터 05" }),
@@ -13,7 +13,7 @@ test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async 
     ),
   ).toBe(true);
   await page
-    .getByRole("link", { name: "스타일 도감", exact: true })
+    .getByRole("link", { name: "공부캐 도감", exact: true })
     .first()
     .click();
   await expect(page.locator(".type-tile")).toHaveCount(16);

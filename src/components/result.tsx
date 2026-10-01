@@ -39,20 +39,19 @@ export function TypeResult({
     <main id="main" className="result-shell">
       <Link href={session ? "/" : "/types"} className="text-link small">
         <Icon name="arrow-left-linear" size={16} />
-        {session ? "공부결 홈" : "스타일 도감"}
+        {session ? "공부캐 홈" : "공부캐 도감"}
       </Link>
       <section className="result-hero">
         <div className="result-copy">
           <span className="eyebrow">
             {session
-              ? "발견했어요, 나의 공부 취향"
-              : "스타일 도감 · 대표 스타일 소개"}
+              ? "발견 완료! 이번에 만난 나의 공부 스타일"
+              : "공부캐 도감 · 캐릭터의 공부 스타일"}
           </span>
           <h1>{type.name}</h1>
           {!hideCharacter && (
             <p className="result-character-intro">
-              나와 같은 공부 취향을 가진 친구,{" "}
-              <strong>{CHARACTERS[type.code].name}</strong>
+              나를 닮은 공부캐는 <strong>{CHARACTERS[type.code].name}</strong>
             </p>
           )}
           {hideCharacter && (
@@ -69,7 +68,7 @@ export function TypeResult({
           </div>
           <nav className="result-shortcuts" aria-label="결과 자세히 보기">
             <a href="#my-story">
-              나 사용설명서 <span>↓</span>
+              공부 스타일 이야기 <span>↓</span>
             </a>
             <a href="#share-style">
               친구에게 보여주기 <span>↗</span>
@@ -90,15 +89,20 @@ export function TypeResult({
               비슷한 후보 중 직접 선택한 대표 스타일이에요.
             </p>
           )}
-          <p className="result-caveat">
-            {session
-              ? "이번 응답을 바탕으로 고른 공부법 후보예요."
-              : "이 페이지는 공개된 유형 소개예요. 개인 검사 결과는 아니에요."}{" "}
-            과목과 상황에 따라 다른 방법도 시도해 보세요.
-          </p>
+          <aside className="test-purpose result-caveat">
+            <Icon name="stars-linear" size={20} />
+            <p>
+              <strong>재미로 만난 캐릭터, 나의 가능성은 더 넓어요.</strong>
+              <br />
+              {session
+                ? "다양한 공부 스타일과 공부법을 알아보는 테스트예요. 성격·능력을 진단하지 않아요."
+                : "이 페이지는 캐릭터의 공부 스타일 소개예요. 개인 검사 결과는 아니에요."}{" "}
+              결과와 상관없이 다른 공부법도 자유롭게 시도해 보세요.
+            </p>
+          </aside>
           {!session && (
             <Link href="/quiz" className="button primary">
-              내 스타일도 알아보기
+              내 공부캐 찾기
               <Icon name="arrow-right-linear" />
             </Link>
           )}
@@ -191,7 +195,7 @@ export function TypeResult({
       </section>
       <section className="share-section" id="share-style">
         <span className="eyebrow">친구의 공부 취향도 궁금하다면</span>
-        <h2>“넌 어떤 캐릭터 나왔어?”</h2>
+        <h2>“너 무슨 공부캐 나왔어?”</h2>
         <p>
           {hideCharacter
             ? "테스트를 소개하거나 도감에서 처음 만난 캐릭터를 공유해 보세요."

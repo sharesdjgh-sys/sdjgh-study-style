@@ -44,7 +44,7 @@ export function CharacterCard({
           inert={flipped}
         >
           <div className="character-card-top">
-            <span>공부결 친구들</span>
+            <span>공부캐 도감</span>
             <span className="character-edition">{character.number} / 16</span>
           </div>
           <div className="character-portrait">
@@ -91,7 +91,7 @@ export function CharacterCard({
           inert={!flipped}
         >
           <div className="character-card-top">
-            <span>나 사용설명서</span>
+            <span>이 캐릭터의 공부 이야기</span>
             <span className="character-edition">{character.number} / 16</span>
           </div>
           <span className="character-back-symbol" aria-hidden="true">

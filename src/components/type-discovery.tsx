@@ -34,17 +34,20 @@ export function TypeDiscovery({
     return () => timers.forEach(clearTimeout);
   }, []);
   const messages = [
-    "16개 응답에서 공부 패턴을 읽고 있어요",
-    "생각을 정리하는 방식과 16가지 유형을 비교 중",
-    "집중 환경과 공부 리듬을 연결하고 있어요",
-    "분석 완료! 나만의 공부 유형을 찾았어요",
+    "16개의 답변에서 취향 조각을 모으고 있어요",
+    "그림으로, 말로, 손으로, 움직이며! 어떤 방식이 끌렸나요?",
+    "혼자 또는 함께, 계획대로 또는 자유롭게!",
+    revealCharacter
+      ? "발견 완료! 나를 닮은 공부캐를 만났어요"
+      : "발견 완료! 지금의 공부 취향을 살펴봐요",
   ];
   return (
     <main id="main" className="discovery-shell" data-stage={stage}>
       <span className="eyebrow">16개의 답변, 하나의 발견</span>
       <h1 ref={heading} tabIndex={-1}>
-        답변 속에 숨은
-        <br />내 공부 스타일 분석 중
+        취향 조각을 모아,
+        <br />
+        {revealCharacter ? "나의 공부캐 찾는 중" : "지금의 공부 스타일 찾는 중"}
       </h1>
       <p className="discovery-status" role="status" aria-live="polite">
         {messages[stage]}
