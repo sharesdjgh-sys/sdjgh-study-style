@@ -2,6 +2,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { database } from "./db";
 import { siteUrl } from "./site";
+export { sameOrigin } from "./site";
 import { EMPTY_COLLECTION, type CollectionData } from "./collection-contract";
 
 export const AUTH_COOKIE = "study-collection";
@@ -76,9 +77,6 @@ export function json(data: unknown, status = 200) {
     status,
     headers: { "Cache-Control": "no-store", Vary: "Cookie" },
   });
-}
-export function sameOrigin(request: Request) {
-  return request.headers.get("origin") === new URL(request.url).origin;
 }
 export async function body(request: Request): Promise<unknown> {
   if (!request.headers.get("content-type")?.startsWith("application/json"))

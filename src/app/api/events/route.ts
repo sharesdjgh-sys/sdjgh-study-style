@@ -1,11 +1,11 @@
 import { eventSchema } from "@/lib/event-schema";
 import { database } from "@/lib/db";
+import { sameOrigin } from "@/lib/site";
 export const runtime = "nodejs";
 // 짧은 요청 횟수만 메모리에 보관하며 IP와 답변은 기록하지 않습니다.
 const windows = new Map<string, { count: number; until: number }>();
 export async function POST(request: Request) {
-  const origin = request.headers.get("origin");
-  if (!origin || origin !== new URL(request.url).origin)
+  if (!sameOrigin(request))
     return Response.json({ error: "origin" }, { status: 403 });
   if (!request.headers.get("content-type")?.startsWith("application/json"))
     return Response.json({ error: "content_type" }, { status: 415 });
