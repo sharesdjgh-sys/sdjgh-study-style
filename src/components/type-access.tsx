@@ -5,6 +5,7 @@ import { MysteryCard } from "./mystery-card";
 import { TypeResult } from "./result";
 import { useSavedSession } from "./use-saved-session";
 import { useCollection } from "./collection-provider";
+import { collectionProgress } from "@/lib/collection-progress";
 
 export function TypeAccess({ type }: { type: StudyType }) {
   const { session, first, loaded } = useSavedSession();
@@ -15,9 +16,9 @@ export function TypeAccess({ type }: { type: StudyType }) {
         내 캐릭터를 확인하고 있어요.
       </main>
     );
-  const canView = data.signedIn
-    ? data.cards.some((card) => card.code === type.code)
-    : first?.result === type.code;
+  const canView = collectionProgress(data, first?.result).visibleCodes.has(
+    type.code,
+  );
   if (canView) return <TypeResult type={type} />;
   return (
     <main id="main" className="secret-character-page">

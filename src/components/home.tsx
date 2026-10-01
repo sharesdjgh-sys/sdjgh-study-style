@@ -9,11 +9,12 @@ import { Icon } from "./icon";
 import { Arrow } from "./shell";
 import { useCollection } from "./collection-provider";
 import { CollectionLink } from "./collection-link";
+import { collectionProgress } from "@/lib/collection-progress";
 export function Home() {
   const [active, setActive] = useState<Modality>("visual");
   const { session: saved, first } = useSavedSession();
   const { data, loaded: accountLoaded } = useCollection();
-  const ownCode = data.signedIn ? data.firstType : first?.result;
+  const ownCode = collectionProgress(data, first?.result).firstCode;
   const ownType = accountLoaded && ownCode ? getType(ownCode) : null;
   return (
     <main id="main">

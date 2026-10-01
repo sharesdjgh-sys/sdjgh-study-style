@@ -11,6 +11,8 @@ import Link from "next/link";
 import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
 import { useCollection } from "./collection-provider";
+import { SpecialCollectionCard } from "./special-collection-card";
+import { collectionProgress } from "@/lib/collection-progress";
 export function TypeGallery({
   initial = "all",
 }: {
@@ -19,30 +21,21 @@ export function TypeGallery({
   const [filter, setFilter] = useState<Modality | "all">(initial);
   const { first } = useSavedSession();
   const { data, loaded } = useCollection();
-  const ownCode = data.signedIn ? data.firstType : first?.result;
-  const visibleCodes = new Set(
-    loaded
-      ? data.signedIn
-        ? data.cards.map((card) => card.code)
-        : ownCode
-          ? [ownCode]
-          : []
-      : [],
-  );
+  const progress = collectionProgress(data, first?.result);
+  const ownCode = progress.firstCode;
+  const visibleCodes = loaded ? progress.visibleCodes : new Set<string>();
   return (
     <>
       <div className="catalog-discovery-note">
         <div>
           <span className="eyebrow">
             {ownCode
-              ? data.signedIn
-                ? `발견한 친구 ${data.cards.length} / 16`
-                : "나의 첫 친구, 아직 저장 전"
+              ? `발견한 친구 ${progress.collected} / ${progress.total}${progress.previewOnly ? " · 아직 저장 전" : ""}`
               : "16명의 공부캐, 먼저 만날 친구는 누구?"}
           </span>
           <p>
             {ownCode
-              ? "첫 친구는 검사로, 새로운 친구는 초대로 만나요."
+              ? `내 공부캐 1명 + 친구 초대로 ${progress.inviteGoal}명, 모두 ${progress.total}명이에요.`
               : "첫 검사를 마치고 나만의 친구를 만나보세요. 수집은 로그인 후 시작해요."}
           </p>
         </div>
@@ -98,6 +91,7 @@ export function TypeGallery({
             )}
           </div>
         ))}
+        {filter === "all" && <SpecialCollectionCard />}
       </div>
     </>
   );

@@ -46,6 +46,74 @@ async function server(page: Page, initial: CollectionData) {
   return state;
 }
 
+test("첫 공부캐 1명과 초대 15명으로 완성하고 도착한 선물은 남은 초대에 포함하지 않는다", async ({
+  page,
+}) => {
+  const state = await server(page, { ...EMPTY_COLLECTION, configured: true });
+  const first = await seed(page);
+  await page.route("**/api/collection/special-card*", async (route) =>
+    route.fulfill({
+      contentType: "image/webp",
+      body: await readFile("art/characters/special/group-photo.webp"),
+    }),
+  );
+  await page.goto("/types");
+  const special = page.getByRole("region", { name: "도감 완성 스페셜 카드" });
+  await expect(page.locator(".character-gallery .character-card")).toHaveCount(
+    1,
+  );
+  await expect(special.locator(".special-card-progress strong")).toHaveText(
+    "1 / 16",
+  );
+  await expect(special).toContainText("15명의 친구를 더 초대하면 완성!");
+  await expect(special.locator("img")).toHaveCount(0);
+  await page.goto("/collection");
+  await expect(page.locator(".collection-count")).toHaveText("1 / 16");
+  state.data = { ...state.data, signedIn: true };
+  await page.reload();
+  await expect(page.locator(".character-gallery .character-card")).toHaveCount(
+    1,
+  );
+  await expect(special).toContainText("15명의 친구를 더 초대하면 완성!");
+  await page.goto(`/types/${base}`);
+  await expect(page.locator(".character-name")).toHaveText("루미");
+  state.data = {
+    ...state.data,
+    firstType: base,
+    firstRunId: first.runId,
+    inviteCode: "ABCDEF1234",
+    cards: [{ code: base, source: "first" }],
+    pending: Array.from({ length: 14 }, () => ({ id: crypto.randomUUID() })),
+    referralCount: 14,
+  };
+  await page.goto("/collection");
+  await expect(special).toContainText("1명의 친구를 더 초대하면 완성!");
+  state.data = {
+    ...state.data,
+    pending: [...state.data.pending, { id: crypto.randomUUID() }],
+    referralCount: 15,
+  };
+  await page.reload();
+  await expect(page.locator(".collection-count")).toHaveText("1 / 16");
+  await expect(page.locator(".collection-invite-progress")).toContainText(
+    "필요한 초대는 모두 완료했어요. 선물 15개만 개봉하면 완성",
+  );
+  await expect(special).toContainText("초대 완료! 선물 15개만 열면 완성!");
+  await expect(special.locator("img")).toHaveCount(0);
+  state.data = {
+    ...state.data,
+    cards: STUDY_TYPES.map((type, index) => ({
+      code: type.code,
+      source: index === 0 ? "first" : "referral",
+    })),
+    pending: [],
+  };
+  await page.reload();
+  await expect(page.locator(".collection-count")).toHaveText("16 / 16");
+  await expect(special).toContainText("스페셜 카드 획득 완료");
+  await expect(special.locator("img")).toHaveCount(1);
+});
+
 test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저장·복원이 된다", async ({
   page,
 }, testInfo) => {
@@ -95,7 +163,7 @@ test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저�
   await page.goto("/collection");
   const card = page.getByRole("region", { name: "도감 완성 스페셜 카드" });
   await card.scrollIntoViewIfNeeded();
-  await expect(card).toContainText("1명의 친구를 더 만나면 완성!");
+  await expect(card).toContainText("초대 완료! 선물 1개만 열면 완성!");
   await expect(card.locator("img")).toHaveCount(0);
   expect(photographRequests).toBe(0);
   expect(

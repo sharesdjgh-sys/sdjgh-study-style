@@ -11,6 +11,7 @@ import { CharacterCard } from "./character-card";
 import { MysteryCard } from "./mystery-card";
 import { Share } from "./share";
 import { useConfirm } from "./ui/confirm-dialog";
+import { collectionProgress } from "@/lib/collection-progress";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -157,18 +158,19 @@ export function CollectionManager() {
     }
   }
   const ownType = data.firstType ? getType(data.firstType) : null;
+  const progress = collectionProgress(data, first?.result);
   return (
     <>
       <section className="collection-panel" aria-label="내 도감 관리">
         <div className="collection-panel-heading">
           <span className="eyebrow">공부 친구 수집 노트</span>
           <span className="collection-count">
-            {data.cards.length}
-            <small> / 16</small>
+            {progress.collected}
+            <small> / {progress.total}</small>
           </span>
         </div>
         <h2>
-          {data.cards.length === 16
+          {progress.unlocked
             ? "열여섯 친구, 모두 만났어요!"
             : data.firstType
               ? "친구의 발견이, 나의 새 친구로."
@@ -176,8 +178,8 @@ export function CollectionManager() {
         </h2>
         <p>
           검사는 자유롭게, 도감은 내 계정에 안전하게.
-          <br />
-          친구가 첫 검사 결과를 저장하면 미보유 캐릭터 한 명이 찾아와요.
+          <br />내 공부캐 1명에 친구 초대로 {progress.inviteGoal}명을 더하면,
+          모두 {progress.total}명이에요.
         </p>
         {!loaded ? (
           <p role="status">내 도감을 불러오고 있어요.</p>
@@ -299,6 +301,13 @@ export function CollectionManager() {
                 도착한 선물 <strong>{data.pending.length}개</strong>
               </span>
             </div>
+            <p className="collection-invite-progress">
+              {progress.unlocked
+                ? "내 공부캐와 초대로 만난 15명, 도감을 모두 완성했어요!"
+                : progress.remainingInvites === 0
+                  ? `필요한 초대는 모두 완료했어요. 선물 ${progress.pending}개만 개봉하면 완성이에요!`
+                  : `${progress.remainingInvites}명의 친구가 첫 결과를 저장하면 초대가 완료돼요. 도착한 선물은 추가 초대 없이 개봉하면 돼요.`}
+            </p>
             {data.pending.length > 0 && (
               <div className="reward-inbox">
                 <span aria-hidden="true">✦</span>

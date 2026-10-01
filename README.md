@@ -91,7 +91,7 @@ ImageGen으로 제작한 투명 배경 캐릭터 16장을 `public/characters/`�
 
 ## 디자인 기준
 
-16종을 모두 수집하고 마지막 선물을 개봉하면 도감에 스페셜 단체사진 카드가 열립니다. 기존 캐릭터 모습을 참조해 제작한 16:9 사진이며 확대 보기와 PNG 저장을 지원합니다. 사진은 공개 정적 경로에 두지 않고 로그인한 계정의 개봉 완료 여부를 API에서 검증합니다. [단체사진 제작 기록과 프롬프트](art/characters/special/README.md)를 함께 보관합니다.
+내 공부캐 1명에 친구 초대로 15명을 더해 총 16종을 모으면 완성입니다. 화면 수집 수는 저장 전 첫 캐릭터 미리보기도 포함하며, 남은 초대 수에서는 이미 도착한 미개봉 선물을 제외합니다. 추가 초대 없이 선물을 모두 개봉하면 도감 마지막 행의 스페셜 단체사진 카드가 열립니다. 기존 캐릭터 모습을 참조해 제작한 16:9 사진이며 확대 보기와 PNG 저장을 지원합니다. 사진은 공개 정적 경로에 두지 않고 로그인한 계정의 개봉 완료 여부를 API에서 검증합니다. 기기 미리보기만으로 사진을 해금할 수는 없습니다. [단체사진 제작 기록과 프롬프트](art/characters/special/README.md)를 함께 보관합니다.
 
 [Supanova taste-skill](https://github.com/uxjoseph/supanova-design-skill/blob/main/taste-skill/SKILL.md)과 [soft-skill](https://github.com/uxjoseph/supanova-design-skill/blob/main/soft-skill/SKILL.md)의 한국어 타이포그래피, 비대칭 구성, 카드의 깊이, 반응형 원칙을 적용했습니다. 사용자의 웹앱 요구에 맞춰 단일 HTML 출력 규칙은 Next.js 컴포넌트로 대체했습니다. 실제 자료가 없는 후기·사용자 수·긴급성 문구는 만들지 않았습니다.
 

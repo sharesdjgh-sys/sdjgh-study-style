@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
-import { specialCardProgress } from "@/lib/special-card";
+import { collectionProgress } from "@/lib/collection-progress";
 import { useCollection } from "./collection-provider";
 import { Icon } from "./icon";
+import { useSavedSession } from "./use-saved-session";
 
 const photograph = "/api/collection/special-card";
 
@@ -87,8 +88,18 @@ function SpecialPhotoDialog({ close }: { close: () => void }) {
 
 export function SpecialCollectionCard() {
   const { data, loaded, error } = useCollection();
+  const { first } = useSavedSession();
   const [expanded, setExpanded] = useState(false);
-  const { collected, total, unlocked } = specialCardProgress(data);
+  const {
+    collected,
+    total,
+    unlocked,
+    pending,
+    inviteGoal,
+    remainingInvites,
+    needsFirst,
+    previewOnly,
+  } = collectionProgress(data, first?.result);
   if (!loaded || error) return null;
   return (
     <section
@@ -108,7 +119,9 @@ export function SpecialCollectionCard() {
         <p>
           {unlocked
             ? "열여섯 공부캐를 모두 만났어요. 함께 찍은 단체사진을 선물로 드려요!"
-            : "열여섯 캐릭터를 모두 모으고 선물을 개봉하면, 모두 함께 찍은 단체사진이 열려요."}
+            : previewOnly
+              ? `내 공부캐를 계정에 저장하고, 친구 초대로 ${inviteGoal}명을 더 모아보세요. 모두 만나고 선물을 개봉하면 단체사진이 열려요.`
+              : `내 공부캐 1명 + 친구 초대 ${inviteGoal}명! 모두 만나고 선물을 개봉하면 단체사진이 열려요.`}
         </p>
         <div className="special-card-progress">
           <strong>
@@ -118,7 +131,11 @@ export function SpecialCollectionCard() {
           <span>
             {unlocked
               ? "스페셜 카드 획득 완료"
-              : `${total - collected}명의 친구를 더 만나면 완성!`}
+              : needsFirst
+                ? `첫 공부캐를 만나고, 친구 ${inviteGoal}명을 초대해요!`
+                : remainingInvites > 0
+                  ? `${remainingInvites}명의 친구를 더 초대하면 완성!`
+                  : `초대 완료! 선물 ${pending}개만 열면 완성!`}
           </span>
         </div>
         {unlocked && (

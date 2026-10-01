@@ -100,12 +100,20 @@ it("여러 추천 요청 후 중복 없이 16장을 완성하고 이후 보상�
     Array.from({ length: 20 }, () => createAccount()),
   );
   await Promise.all(
-    friends.map((b) => register(b.id, STUDY_TYPES[0].code, a.code)),
+    friends
+      .slice(0, 14)
+      .map((b) => register(b.id, STUDY_TYPES[0].code, a.code)),
   );
+  expect(await cards(a.id)).toHaveLength(15);
+  await register(friends[14].id, STUDY_TYPES[0].code, a.code);
   const result = await cards(a.id);
   expect(result).toHaveLength(16);
   expect(new Set(result.map((c) => c.type_code)).size).toBe(16);
   expect(result.filter((c) => c.source === "referral")).toHaveLength(15);
+  await Promise.all(
+    friends.slice(15).map((b) => register(b.id, STUDY_TYPES[0].code, a.code)),
+  );
+  expect(await cards(a.id)).toHaveLength(16);
   await Promise.all(
     friends.map((b) => register(b.id, STUDY_TYPES[1].code, a.code)),
   );

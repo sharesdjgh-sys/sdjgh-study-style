@@ -1,6 +1,5 @@
 import { CollectionManager } from "@/components/collection-manager";
 import { TypeGallery } from "@/components/type-gallery";
-import { SpecialCollectionCard } from "@/components/special-collection-card";
 export const metadata = {
   title: "나의 캐릭터 도감",
   robots: { index: false, follow: false },
@@ -22,7 +21,6 @@ export default function Page() {
         </p>
       </div>
       <CollectionManager />
-      <SpecialCollectionCard />
       <TypeGallery />
     </main>
   );
