@@ -62,7 +62,7 @@ export function Home() {
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="live-dot" />
-            재미로 만나는 나의 공부 캐릭터
+            재미로 만나는 귀여운 공부 캐릭터
           </div>
           <h1>
             16명 중,
@@ -74,7 +74,7 @@ export function Home() {
             <br />
             평소의 내 모습을 편하게 고르다 보면,
             <br className="desktop-only" />
-            나를 닮은 공부 친구를 만날 수 있어요.
+            나를 꼭 닮은 동물 친구를 만날 수 있어요.
           </p>
           <div className="hero-actions">
             <Link
@@ -119,7 +119,7 @@ export function Home() {
             <Icon name="stars-linear" size={18} />
             {ownType
               ? "나의 첫 공부캐를 만났어요"
-              : "아직은 비밀! 어떤 캐가 나올까?"}
+              : "아직은 비밀! 어떤 귀요미가 나올까?"}
           </span>
           {ownType ? (
             <div className="hero-character-card">
@@ -233,9 +233,9 @@ export function Home() {
         <div>
           <p className="eyebrow">친구에게도 물어봐요. 너 무슨 캐 나왔어?</p>
           <h2>
-            공부할 때의 나,
+            공부할 때의 나는,
             <br />
-            어떤 캐릭터일까?
+            어떤 귀여운 친구일까?
           </h2>
         </div>
         <Link className="button primary large" href="/quiz">

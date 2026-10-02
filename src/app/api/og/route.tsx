@@ -55,7 +55,7 @@ export async function GET(request: Request) {
       >
         {t
           ? `${FAMILIES[t.modality].label} · ${t.subtitle}`
-          : `${QUESTIONS.length}개의 질문 · 16명의 캐릭터 · 다양한 공부법`}
+          : `${QUESTIONS.length}개의 질문 · 16명의 귀여운 캐릭터 · 다양한 공부법`}
       </div>
       {portrait && (
         // ImageResponse renders an image buffer, not a browser next/image component.

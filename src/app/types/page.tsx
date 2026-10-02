@@ -10,7 +10,9 @@ export default async function Page({
   return (
     <main id="main" className="catalog-shell">
       <div className="page-intro">
-        <span className="eyebrow">16명의 캐릭터, 서로 다른 공부 스타일</span>
+        <span className="eyebrow">
+          귀여운 공부캐 16명, 서로 다른 공부 스타일
+        </span>
         <h1>
           나와 닮은 친구,
           <br />

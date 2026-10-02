@@ -33,7 +33,7 @@ export function MysteryCard({
       </div>
       <div className="mystery-copy">
         <h2>???</h2>
-        <p>어떤 공부 친구가 숨어 있을까?</p>
+        <p>어떤 귀여운 친구가 숨어 있을까?</p>
         <span>이름도, 취향도 아직은 비밀이에요.</span>
       </div>
       <div className="mystery-card-bottom">
