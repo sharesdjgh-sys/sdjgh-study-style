@@ -1,0 +1,92 @@
+{
+  "model": "gemini-omni-1.1-flash",
+  "part": "2",
+  "requestedSeconds": 8,
+  "source": "public/characters/teacher-tori.webp",
+  "dialogue": "네 이야기를 들려줘! 너를 꼭 닮은, 나만의 공부 캐릭터를 만들어 보자!",
+  "prompt": "art/characters/motion/teacher/part-2.prompt.txt",
+  "resolution": "720p",
+  "status": "completed",
+  "requests": 1,
+  "startedAt": "2026-10-02T07:18:00.681Z",
+  "httpStatus": 200,
+  "finishedAt": "2026-10-02T07:18:35.558Z",
+  "bytes": 1426666,
+  "usage": {
+    "total_tokens": 48889,
+    "total_input_tokens": 1589,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 489
+      },
+      {
+        "modality": "image",
+        "tokens": 1100
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 47265,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 46336
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 35,
+    "raw_prompt_token": 39774,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2275
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 935
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 35
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2275
+          },
+          {
+            "modality": "image",
+            "tokens": 1100
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 935
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 35
+          }
+        ]
+      }
+    ]
+  }
+}

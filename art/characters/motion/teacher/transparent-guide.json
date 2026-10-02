@@ -1,0 +1,12 @@
+{
+  "source": "public\\characters\\motion\\teacher-tori-guide-8s-v1.mp4",
+  "inputFrames": 128,
+  "frames": 127,
+  "width": 192,
+  "height": 192,
+  "durationMs": 8000,
+  "loop": 0,
+  "alpha": true,
+  "bytes": 716274,
+  "processing": "Border-connected flat background removal, antialiased alpha; local processing, no generation API."
+}

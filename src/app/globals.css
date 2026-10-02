@@ -4789,6 +4789,67 @@ body {
   padding: 62px 0 50px;
   min-height: 740px;
 }
+.hero-teacher-guide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-title-prefix {
+  color: var(--accent);
+  white-space: nowrap;
+}
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .hero-title-prefix {
+    background: linear-gradient(
+      105deg,
+      #27785d 0%,
+      #287d99 28%,
+      #7955a6 55%,
+      #b64f76 78%,
+      #ac671f 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .hero-title-prefix {
+    background: none;
+    color: CanvasText;
+  }
+}
+.hero-teacher-avatar {
+  flex: 0 0 112px;
+  width: 112px;
+}
+.hero-teacher-avatar img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hero-teacher-guide > div > span {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hero-teacher-guide p {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+@media (max-width: 600px) {
+  .hero-teacher-guide {
+    gap: 8px;
+  }
+  .hero-teacher-avatar {
+    flex-basis: 76px;
+    width: 76px;
+  }
+  .hero-teacher-guide p {
+    font-size: 13px;
+  }
+}
 .game-hero .hero-copy > .eyebrow {
   display: inline-flex;
   padding: 8px 13px;

@@ -1,6 +1,7 @@
 "use client";
 import { Fragment } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   FAMILIES,
   MODALITIES,
@@ -65,17 +66,36 @@ export function Home() {
             재미로 만나는 귀여운 공부 캐릭터
           </div>
           <h1>
-            16명 중,
+            <span className="hero-title-prefix">개성 만점</span> 16명 중,
             <br />
             너의 <span className="accent-text">공부캐</span>는?
           </h1>
-          <p className="hero-description">
-            공부할 때 나타나는 또 다른 나.
-            <br />
-            평소의 내 모습을 편하게 고르다 보면,
-            <br className="desktop-only" />
-            나를 꼭 닮은 동물 친구를 만날 수 있어요.
-          </p>
+          <div className="hero-description hero-teacher-guide">
+            <div className="hero-teacher-avatar">
+              <picture>
+                <source
+                  media="(prefers-reduced-motion: reduce)"
+                  srcSet="/characters/motion/teacher-tori-guide-transparent-poster.webp"
+                />
+                <Image
+                  src="/characters/motion/teacher-tori-guide-transparent.webp"
+                  alt="손을 흔들며 공부캐 찾기를 안내하는 토리 선생님"
+                  width={112}
+                  height={112}
+                  unoptimized
+                  loading="eager"
+                />
+              </picture>
+            </div>
+            <div>
+              <span>토리 선생님</span>
+              <p>
+                어떤 공부캐가 너와 닮았을까?
+                <br />
+                평소의 네 모습을 골라 함께 찾아보자!
+              </p>
+            </div>
+          </div>
           <div className="hero-actions">
             <Link
               className="button primary large"
