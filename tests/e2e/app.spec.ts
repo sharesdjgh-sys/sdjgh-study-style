@@ -12,9 +12,13 @@ async function answerFirst(page: Page, index: number) {
 test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /16명 중/ })).toBeVisible();
-  await page.getByRole("button", { name: "말해서", exact: true }).click();
+  await expect(page.locator(".mystery-carousel")).toHaveAttribute(
+    "data-ready",
+    "true",
+  );
+  await page.getByRole("button", { name: "다음 실루엣 보기" }).click();
   await expect(
-    page.getByRole("article", { name: "미공개 캐릭터 05" }),
+    page.getByRole("article", { name: /미공개 캐릭터/ }),
   ).toBeVisible();
   await expect(page.locator(".character-card")).toHaveCount(0);
   expect(

@@ -3624,6 +3624,119 @@ legend {
   color: #fff7df;
   text-shadow: 0 4px 20px #15132255;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mystery-carousel .mystery-portrait img {
+    animation: mystery-arrive 450ms ease-out both;
+  }
+  .mystery-carousel .mystery-card::after {
+    animation: mystery-shine 3s ease-in-out both;
+  }
+  .mystery-sparkles span {
+    animation: mystery-twinkle 3s ease-in-out infinite;
+    animation-delay: var(--sparkle-delay);
+  }
+}
+
+.mystery-carousel .mystery-card {
+  position: relative;
+  box-shadow:
+    0 0 0 1px #fff7d5,
+    0 0 28px #eec76c35,
+    0 18px 36px -24px #76632970;
+}
+.mystery-carousel .mystery-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 25%,
+    #fff8d51a 38%,
+    #ffffff85 47%,
+    #ffe6a54a 52%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+}
+.mystery-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.mystery-sparkles span {
+  position: absolute;
+  color: #fff8d8;
+  text-shadow:
+    0 0 5px #d8a843,
+    0 0 15px #e9be60;
+  font-size: 28px;
+  opacity: 0.75;
+}
+.mystery-sparkles span:nth-child(1) {
+  top: 17%;
+  left: -9px;
+  --sparkle-delay: 0s;
+}
+.mystery-sparkles span:nth-child(2) {
+  top: 36%;
+  right: 8px;
+  font-size: 20px;
+  --sparkle-delay: -1.4s;
+}
+.mystery-sparkles span:nth-child(3) {
+  bottom: 19%;
+  right: -9px;
+  --sparkle-delay: -0.7s;
+}
+.mystery-sparkles span:nth-child(4) {
+  top: 55%;
+  left: 17px;
+  font-size: 16px;
+  --sparkle-delay: -2.1s;
+}
+.mystery-carousel[data-paused="true"] .mystery-sparkles span,
+.mystery-carousel[data-paused="true"] .mystery-card::after {
+  animation-play-state: paused;
+}
+@keyframes mystery-shine {
+  0%,
+  10% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  22% {
+    opacity: 0.8;
+  }
+  62%,
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+@keyframes mystery-twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.75) rotate(-10deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(10deg);
+  }
+}
+
+@keyframes mystery-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 0.76;
+    transform: translateY(0) scale(1);
+  }
+}
 .mystery-copy {
   text-align: center;
   margin: 12px 0 25px;

@@ -1,15 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import {
-  FAMILIES,
-  MODALITIES,
-  QUESTIONS,
-  getType,
-  type Modality,
-} from "@/lib/content";
+import { FAMILIES, MODALITIES, getType } from "@/lib/content";
 import { CharacterCard } from "./character-card";
-import { MysteryCard } from "./mystery-card";
+import { MysteryCarousel } from "./mystery-carousel";
 import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
@@ -17,7 +10,6 @@ import { useCollection } from "./collection-provider";
 import { CollectionLink } from "./collection-link";
 import { collectionProgress } from "@/lib/collection-progress";
 export function Home() {
-  const [active, setActive] = useState<Modality>("visual");
   const { session: saved, first } = useSavedSession();
   const { data, loaded: accountLoaded } = useCollection();
   const ownCode = collectionProgress(data, first?.result).firstCode;
@@ -38,9 +30,9 @@ export function Home() {
           <p className="hero-description">
             공부할 때 나타나는 또 다른 나.
             <br />
-            {QUESTIONS.length}개의 질문으로 나를 닮은 캐릭터를 만나고,
+            평소의 내 모습을 편하게 고르다 보면,
             <br className="desktop-only" />
-            다양한 공부 스타일과 공부법을 구경해 보세요.
+            나를 닮은 공부 친구를 만날 수 있어요.
           </p>
           <div className="hero-actions">
             <Link
@@ -87,39 +79,20 @@ export function Home() {
               ? "나의 첫 공부캐를 만났어요"
               : "아직은 비밀! 어떤 캐가 나올까?"}
           </span>
-          <div className="hero-character-card">
-            {ownType ? (
+          {ownType ? (
+            <div className="hero-character-card">
               <CharacterCard type={ownType} detailLink priority />
-            ) : (
-              <MysteryCard
-                key={active}
-                type={getType(`${active}-solo-planned`)!}
-                priority
-              />
-            )}
-          </div>
-          {!ownType && (
-            <div className="deck-selector" aria-label="실루엣 미리보기">
-              {MODALITIES.map((m) => (
-                <button
-                  key={m}
-                  aria-pressed={active === m}
-                  className={active === m ? "selected" : ""}
-                  onClick={() => setActive(m)}
-                >
-                  <Icon name={FAMILIES[m].icon} size={18} />
-                  {FAMILIES[m].verb}
-                </button>
-              ))}
             </div>
+          ) : (
+            <MysteryCarousel />
           )}
         </div>
       </section>
       <section className="fact-strip" aria-label="테스트 안내">
         <div>
           <strong>
-            {QUESTIONS.length}
-            <span>개의 질문</span>
+            가볍게
+            <span>시작해요</span>
           </strong>
           <p>정답 없이, 평소의 나답게</p>
         </div>
@@ -194,7 +167,7 @@ export function Home() {
           {[
             {
               title: "평소의 나를 떠올려요",
-              text: `최근 2주를 생각하며 ${QUESTIONS.length}개의 질문에 답하세요. 더 좋은 답은 없어요.`,
+              text: "최근 2주의 공부 모습을 떠올리며 내 속도로 골라 보세요. 더 좋은 답은 없어요.",
             },
             {
               title: "나를 닮은 공부캐를 만나요",
