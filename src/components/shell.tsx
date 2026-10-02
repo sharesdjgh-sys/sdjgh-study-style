@@ -15,7 +15,7 @@ export function Header() {
       </Link>
       <nav aria-label="주요 메뉴">
         <Link href="/types">공부캐 도감</Link>
-        <Link href="/methods">공부법 실험실</Link>
+        <Link href="/methods">공부법 도감</Link>
         <Link href="/quiz" className="nav-start">
           내 캐 찾기 <Icon name="arrow-right-up-linear" size={17} />
         </Link>

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { useState } from "react";
 import type { StudyType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
+import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { readSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
@@ -62,7 +63,7 @@ export function Share({ type }: { type?: StudyType }) {
             ? `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`
             : "공부 스타일을 캐릭터로 만나는 테스트",
           description: type
-            ? "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요."
+            ? `시그니처 공부법은 ${getMethod(SIGNATURE_METHODS[type.code]).name}! 재미로 만나는 공부 캐릭터와 다양한 공부법을 발견해요.`
             : "평소 공부하는 모습을 골라 나만의 캐릭터를 찾고, 다양한 공부법을 탐색해 보세요.",
           imageUrl: `${window.location.origin}${shareImagePath(type?.code)}`,
           imageWidth: SHARE_IMAGE_WIDTH,

@@ -8,7 +8,7 @@ test("홈에서 고른 과제로 공부법이 열리고 10분 타이머를 멈�
   await page.getByRole("button", { name: "용어 암기", exact: true }).click();
   await page.locator('.method-preview-card[data-family="visual"]').click();
   await expect(page).toHaveURL(/\/methods\/visual\?task=memory$/);
-  await expect(page.locator(".mission-panel h2")).toHaveText("가림 비교표");
+  await expect(page.locator(".mission-panel h2")).toHaveText("코넬 노트");
   await expect(
     page.getByRole("button", { name: "용어 암기", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");

@@ -5815,3 +5815,449 @@ body {
     max-width: 240px;
   }
 }
+/* 이름 있는 공부법: 근거·원리 표시, 공부법 도구함, 공부법 도감 */
+.method-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.evidence-badge,
+.principle-chip {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.evidence-badge {
+  border: 1px solid #dcdfd5;
+  background: #f1f2ec;
+  color: #5f665c;
+  font-weight: 750;
+}
+.evidence-badge[data-level="strong"] {
+  border-color: #bcdcc8;
+  background: #e2f0e6;
+  color: #1f6b4f;
+}
+.evidence-badge[data-level="moderate"] {
+  border-color: #ecdca0;
+  background: #fbf3d6;
+  color: #74601d;
+}
+.principle-chip {
+  /* 화면 읽기용 숨은 글자(.sr-only)가 옆으로 넘기는 줄 밖으로 빠져 페이지를 넓히지 않게 */
+  position: relative;
+  background: #f3f6ef;
+  color: #66786d;
+}
+.principle-chip[data-basic] {
+  background: #e8f1ec;
+  color: var(--accent);
+}
+.method-preview-card .method-meta {
+  margin: 14px 0 18px;
+}
+.mission-panel .method-aka {
+  margin: -6px 0 12px;
+  font-size: var(--text-label);
+  color: var(--muted);
+}
+.mission-panel .mission-lead {
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+.mission-panel > .method-meta {
+  margin-bottom: 14px;
+}
+.basics-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0 0 30px;
+  padding: 18px 20px;
+  border: 1px solid #d6e5d6;
+  border-radius: 14px;
+  background: #eef4ea;
+  color: #3f5a4c;
+}
+.basics-mark {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 16px;
+}
+.basics-note p {
+  font-size: var(--text-secondary);
+  line-height: 1.85;
+}
+.basics-note strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--text-body);
+  color: var(--ink);
+}
+.basics-note a,
+.shared-signature a {
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.method-owner {
+  width: fit-content;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f6f1e7;
+  font-size: var(--text-secondary);
+  font-weight: 600;
+  color: #6d5c3f;
+}
+.method-toolkit {
+  --family-tint: #e3e9d7;
+  --family-deep: #53654a;
+  --family-line: #c7d1b8;
+  margin-bottom: 22px;
+  padding: 36px 38px 30px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #f1f3ea;
+  scroll-margin-top: 28px;
+}
+.method-toolkit[data-family="auditory"] {
+  --family-tint: #f6e3d0;
+  --family-deep: #9c5b3a;
+  --family-line: #e5c3a7;
+}
+.method-toolkit[data-family="tactile"] {
+  --family-tint: #ece2f2;
+  --family-deep: #79618b;
+  --family-line: #d4bfdf;
+}
+.method-toolkit[data-family="motion"] {
+  --family-tint: #deebee;
+  --family-deep: #477782;
+  --family-line: #b5d1d8;
+}
+.toolkit-head {
+  max-width: 660px;
+  margin-bottom: 24px;
+}
+.toolkit-head .eyebrow {
+  margin-bottom: 10px;
+}
+.toolkit-head h2 {
+  font-size: 28px;
+  line-height: 1.4;
+}
+.toolkit-head p {
+  margin-top: 10px;
+  font-size: var(--text-secondary);
+  line-height: 1.85;
+  color: var(--muted);
+}
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.toolkit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 18px 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: 0 4px 0 #dce4d955;
+  text-align: left;
+}
+.toolkit-card.is-signature {
+  grid-column: 1 / -1;
+  padding: 22px 24px 18px;
+  border-color: var(--family-line);
+  background: var(--family-tint);
+}
+.toolkit-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--family-line);
+}
+.toolkit-card[aria-pressed="true"] {
+  border-color: var(--family-deep);
+  box-shadow: 0 0 0 2px var(--family-deep);
+}
+.toolkit-kind {
+  font-size: var(--text-caption);
+  font-weight: 750;
+  color: var(--family-deep);
+}
+.toolkit-name {
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+.toolkit-card.is-signature .toolkit-name {
+  font-size: 24px;
+}
+.toolkit-line {
+  font-size: var(--text-label);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.toolkit-card.is-signature .toolkit-line {
+  font-size: var(--text-secondary);
+  color: var(--ink);
+}
+.toolkit-go {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: var(--text-label);
+  font-weight: 650;
+  color: var(--family-deep);
+}
+.toolkit-card[aria-pressed="true"] .toolkit-go::before {
+  content: "✓ ";
+}
+.toolkit-tips {
+  margin: 18px 0 20px;
+  font-size: var(--text-secondary);
+  line-height: 1.8;
+  color: #5d4c33;
+}
+.toolkit-tips strong {
+  margin-right: 8px;
+  color: var(--family-deep);
+}
+.toolkit-tips span {
+  color: var(--muted);
+}
+.method-toolkit .basics-note {
+  margin: 0;
+  background: var(--white);
+}
+.toolkit-mission {
+  scroll-margin-top: 20px;
+}
+.filter-tabs + .catalog-group {
+  margin-top: 0;
+}
+.catalog-group {
+  margin-top: 46px;
+}
+.catalog-group > h2,
+.catalog-group-head h2 {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+.catalog-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.catalog-group-head h2 span {
+  margin-left: 4px;
+  font-size: var(--text-secondary);
+  font-weight: 650;
+  color: var(--muted);
+}
+.catalog-swipe-hint {
+  display: none;
+  font-size: var(--text-caption);
+  color: var(--muted);
+}
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 16px;
+}
+.catalog-card h3 {
+  margin-top: 16px;
+}
+.catalog-aka {
+  margin-top: 2px;
+  font-size: var(--text-caption);
+  color: #85918a;
+}
+.catalog-card[data-signature] .method-preview-family {
+  background: var(--family-deep);
+  color: var(--white);
+}
+.secret-character-copy .shared-signature {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f6f1e7;
+  font-size: 15px;
+  color: #6d5c3f;
+}
+@media (max-width: 767px) {
+  .basics-note {
+    gap: 10px;
+    padding: 14px;
+  }
+  .basics-note p {
+    font-size: var(--text-label);
+  }
+  .mission-panel .mission-lead {
+    font-size: var(--text-secondary);
+  }
+  .method-toolkit {
+    padding: 24px 18px 20px;
+    border-radius: 16px;
+  }
+  .toolkit-head h2 {
+    font-size: 24px;
+  }
+  .toolkit-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .toolkit-card.is-signature {
+    padding: 18px 18px 16px;
+  }
+  .toolkit-card.is-signature .toolkit-name {
+    font-size: 21px;
+  }
+  .toolkit-card:hover {
+    transform: none;
+  }
+  .catalog-group {
+    margin-top: 36px;
+  }
+  .catalog-group > h2,
+  .catalog-group-head h2 {
+    margin-bottom: 12px;
+    font-size: 21px;
+  }
+  /* 28개를 세로로 쌓지 않고, 과제마다 한 줄로 옆으로 넘겨 본다(홈 미리보기와 같은 방식). */
+  .catalog-swipe-hint {
+    display: block;
+  }
+  .catalog-filter,
+  .catalog-grid,
+  .result-shortcuts {
+    flex-wrap: nowrap;
+    margin-inline: -20px;
+    padding-inline: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .catalog-filter::-webkit-scrollbar,
+  .catalog-grid::-webkit-scrollbar,
+  .result-shortcuts::-webkit-scrollbar {
+    display: none;
+  }
+  .catalog-filter button,
+  .result-shortcuts a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .catalog-filter {
+    padding-block: 2px 4px;
+  }
+  .catalog-grid {
+    display: flex;
+    gap: 10px;
+    padding-block: 4px 10px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+  }
+  .catalog-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+  .result-shortcuts {
+    padding-block: 2px 4px;
+  }
+  /* 옆으로 넘기는 바로가기 줄이 결과 첫 화면의 칸 너비를 늘리지 않게 */
+  .result-copy {
+    min-width: 0;
+  }
+  .result-shortcuts a {
+    gap: 8px;
+  }
+  /* 방식별 페이지 링크는 그림 없이 두 칸으로 짧게 */
+  .family-links .method-catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .family-links .method-feature {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+  .family-links .method-feature .study-art,
+  .family-links .method-feature p {
+    display: none;
+  }
+  .family-links .method-feature h2 {
+    font-size: 17px;
+  }
+  .family-links .method-feature .text-link {
+    margin-top: 10px;
+  }
+  /* 도구함: 시그니처만 크게, 과제별 공부법 3개는 한 줄짜리 목록으로 */
+  .toolkit-head {
+    margin-bottom: 18px;
+  }
+  .toolkit-grid {
+    gap: 8px;
+  }
+  .toolkit-card:not(.is-signature) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 12px;
+    padding: 13px 14px 13px 16px;
+    box-shadow: none;
+  }
+  .toolkit-card:not(.is-signature) .toolkit-kind,
+  .toolkit-card:not(.is-signature) .toolkit-name {
+    grid-column: 1;
+  }
+  .toolkit-card:not(.is-signature) .toolkit-name {
+    font-size: 17px;
+  }
+  .toolkit-card:not(.is-signature) .method-meta {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .toolkit-card:not(.is-signature) .toolkit-line,
+  .toolkit-card:not(.is-signature) .toolkit-go,
+  .toolkit-card:not(.is-signature) .principle-chip {
+    display: none;
+  }
+  .toolkit-card:not(.is-signature)[aria-pressed="true"] {
+    background: var(--family-tint);
+  }
+  .toolkit-tips {
+    margin: 14px 0 16px;
+    font-size: var(--text-label);
+  }
+  .basics-mark {
+    width: 26px;
+    height: 26px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 360px) {
+  .catalog-filter,
+  .catalog-grid,
+  .result-shortcuts {
+    margin-inline: -17px;
+    padding-inline: 17px;
+  }
+  .catalog-grid {
+    scroll-padding-inline: 17px;
+  }
+  .catalog-card {
+    flex-basis: 86%;
+  }
+}

@@ -91,7 +91,7 @@ test("검사 후 내 카드 한 장만 공개되고 키보드로 뒤집기와 �
   await expect(card.locator(".character-front")).toHaveAttribute("inert", "");
   const back = card.getByRole("button", { name: "루미 캐릭터 앞면 보기" });
   await expect(back).toBeFocused();
-  await expect(card.getByText("오늘 나랑 해볼 일")).toBeVisible();
+  await expect(card.getByText("시그니처 공부법 · 목차 공부법")).toBeVisible();
   await back.press("Space");
   await expect(front).toBeFocused();
   await front.click();

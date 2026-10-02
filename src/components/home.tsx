@@ -219,7 +219,7 @@ export function Home() {
             한번 해보는 거예요.
           </h2>
           <Link href="/methods" className="text-link">
-            공부법 실험실 둘러보기
+            공부법 도감 둘러보기
             <Icon name="arrow-right-linear" size={20} />
           </Link>
         </div>

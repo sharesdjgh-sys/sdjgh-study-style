@@ -94,9 +94,19 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
     page.getByText("비슷한 후보 중 직접 선택한 대표 스타일이에요."),
   ).toBeVisible();
   await expect(page.locator(".axis-row")).toHaveCount(2);
-  await expect(page.locator(".mission-panel")).toContainText("혼자 할 때");
-  await expect(page.locator(".mission-panel")).toContainText("다음 복습 일정");
-  await page.getByRole("button", { name: "용어 암기", exact: true }).click();
+  // 시그니처 공부법이 먼저 열리고, 공부법 카드로 다른 공부법을 골라요.
+  await expect(page.locator(".toolkit-card")).toHaveCount(4);
+  // 옆으로 넘기는 바로가기 줄이 작은 화면의 결과 페이지를 넓히지 않아야 해요.
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await expect(page.locator(".mission-panel h2")).toHaveText("목차 공부법");
+  await expect(page.locator(".mission-panel")).toContainText("러버덕 설명법");
+  await expect(page.locator(".mission-panel")).toContainText("간격 반복 일정");
+  await page.locator(".toolkit-card", { hasText: "코넬 노트" }).click();
+  await expect(page.locator(".mission-panel h2")).toHaveText("코넬 노트");
   await expect(page.getByText(/외울 용어 5개/)).toBeVisible();
   await expect(page.locator(".level-tip")).toContainText("3개로 줄여요");
   await page.getByRole("button", { name: "지금 10분 해보기" }).click();
@@ -104,6 +114,7 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
     .getByRole("button", { name: "해봤어요 · 도움 됐어요", exact: true })
     .click();
   await page.reload();
+  await expect(page.locator(".mission-panel h2")).toHaveText("코넬 노트");
   await expect(
     page.getByRole("button", { name: "해봤어요 · 도움 됐어요", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");

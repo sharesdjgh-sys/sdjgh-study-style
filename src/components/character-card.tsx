@@ -5,6 +5,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { CHARACTERS } from "@/lib/characters";
 import { CHARACTER_MOTIONS } from "@/lib/character-motions";
 import { FAMILIES, type StudyType } from "@/lib/content";
+import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { Icon } from "./icon";
 import { CharacterMotion } from "./character-motion";
 
@@ -126,7 +127,9 @@ export function CharacterCard({
               <dd>{character.habit}</dd>
             </div>
             <div>
-              <dt>오늘 나랑 해볼 일</dt>
+              <dt>
+                시그니처 공부법 · {getMethod(SIGNATURE_METHODS[type.code]).name}
+              </dt>
               <dd>{character.action}</dd>
             </div>
           </dl>

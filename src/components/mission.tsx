@@ -1,33 +1,41 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { type Modality, type Task, type StudyType } from "@/lib/content";
-import { TASKS, ROUTINES, methodFor } from "@/lib/methods";
+import { useEffect, useState, type ReactNode } from "react";
+import type { StudyType } from "@/lib/content";
+import {
+  ROUTINES,
+  getMethod,
+  missionMethod,
+  type MethodId,
+} from "@/lib/methods";
 import { readSession, saveSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
-import { TASK_KEYS, TaskTabs } from "./task-tabs";
+import { MethodMeta } from "./method-meta";
 const TIMER_MS = 10 * 60 * 1000;
 type Timer =
   | { state: "running"; endsAt: number }
   | { state: "paused"; left: number }
   | { state: "done" };
 const pad = (n: number) => String(n).padStart(2, "0");
+/** 공부법 하나를 10분 동안 해 보는 패널. 공부법을 바꿀 때는 key로 새로 그려요. */
 export function Mission({
-  modality,
+  methodId,
   type,
+  tabs,
 }: {
-  modality: Modality;
+  methodId: MethodId;
   type?: StudyType;
+  /** 공부법을 고르는 탭(방식별 공부법 페이지의 과제 탭) */
+  tabs?: ReactNode;
 }) {
-  const [task, setTask] = useState<Task>("concept");
   const [selected, setSelected] = useState(false);
   const [started, setStarted] = useState(false);
   const [feedback, setFeedback] = useState<string>();
   const [message, setMessage] = useState("");
   const [timer, setTimer] = useState<Timer | null>(null);
   const [now, setNow] = useState(0);
-  const method = methodFor(modality, task);
+  const method = getMethod(methodId);
   useEffect(() => {
     if (timer?.state !== "running") return;
     // 백그라운드 탭에서 interval이 늦어져도 끝나는 시각 기준으로 계산해요.
@@ -49,18 +57,14 @@ export function Mission({
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const m = readSession()?.mission;
-      // 홈에서 과제를 골라 들어오면(?task=memory) 그 과제를 먼저 보여 줘요.
-      const param = new URLSearchParams(window.location.search).get("task");
-      const linked = TASK_KEYS.find((t) => t === param);
-      if (m?.modality === modality && (!linked || linked === m.task)) {
-        setTask(m.task);
+      if (m && missionMethod(m) === methodId) {
         setSelected(true);
         setStarted(m.started);
         setFeedback(m.feedback);
-      } else if (linked) setTask(linked);
+      }
     });
     return () => cancelAnimationFrame(id);
-  }, [modality]);
+  }, [methodId]);
   function persist(
     action: "select" | "start" | "feedback",
     value?: "helpful" | "mixed" | "not-yet",
@@ -81,8 +85,7 @@ export function Mission({
     const next = {
       ...s,
       mission: {
-        modality,
-        task,
+        method: methodId,
         started: action === "start" || started,
         feedback:
           value ?? (feedback as "helpful" | "mixed" | "not-yet" | undefined),
@@ -112,13 +115,6 @@ export function Mission({
     if (timer?.state !== "running") return;
     setTimer({ state: "paused", left: Math.max(0, timer.endsAt - Date.now()) });
   }
-  function changeTask(t: Task) {
-    setTask(t);
-    setFeedback(undefined);
-    setStarted(false);
-    setSelected(false);
-    setTimer(null);
-  }
   return (
     <section className="mission-panel">
       <div className="mission-header">
@@ -129,17 +125,13 @@ export function Mission({
         </span>
       </div>
       <h2>{method.name}</h2>
-      <p className="method-strategies">
-        <span>바탕 전략</span>
-        {method.strategies.map((strategy) => (
-          <strong key={strategy}>{strategy}</strong>
-        ))}
-      </p>
+      <p className="method-aka">{method.aka.join(" · ")}</p>
+      <p className="mission-lead">{method.oneLine}</p>
+      <MethodMeta method={method} />
       <p className="muted">
-        {TASKS[task].when} 써요. 완벽하게 하려 하지 말고, 한 가지 내용으로
-        가볍게 시작해 보세요.
+        완벽하게 하려 하지 말고, 한 가지 내용으로 가볍게 시작해 보세요.
       </p>
-      <TaskTabs value={task} onChange={changeTask} label="공부 과제 선택" />
+      {tabs}
       <ol className="mission-steps">
         {method.steps.map((step, i) => (
           <li key={step}>
@@ -152,6 +144,18 @@ export function Mission({
         <strong>내 수준에 맞추기</strong>
         <p>{method.level}</p>
       </div>
+      {method.alone && (
+        <div className="level-tip">
+          <strong>혼자 할 때</strong>
+          <p>{method.alone}</p>
+        </div>
+      )}
+      {method.tip && (
+        <div className="level-tip">
+          <strong>{method.tip.name}</strong>
+          <p>{method.tip.text}</p>
+        </div>
+      )}
       {type && (
         <div className="personal-tip">
           <Icon name="stars-linear" />
@@ -230,7 +234,7 @@ export function Mission({
             disabled={selected}
             onClick={() => persist("select")}
           >
-            {selected ? "이 활동을 골랐어요" : "나중에 해볼게요"}
+            {selected ? "이 공부법을 골랐어요" : "나중에 해볼게요"}
           </button>
         </div>
       )}
@@ -273,7 +277,7 @@ export function Mission({
         </p>
       )}
       <Link className="text-link small" href="/about#evidence">
-        이 활동의 근거와 한계
+        이 공부법의 근거와 한계
         <Icon name="arrow-right-up-linear" size={16} />
       </Link>
     </section>

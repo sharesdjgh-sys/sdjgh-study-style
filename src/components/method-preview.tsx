@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FAMILIES, MODALITIES, type Task } from "@/lib/content";
-import { METHODS, TASKS } from "@/lib/methods";
+import { FAMILY_METHODS, TASKS, getMethod } from "@/lib/methods";
 import { Icon } from "./icon";
 import { TASK_KEYS, TaskTabs } from "./task-tabs";
+import { MethodMeta } from "./method-meta";
 export function MethodPreview() {
   const [task, setTask] = useState<Task>(TASK_KEYS[0]);
   return (
@@ -22,9 +23,10 @@ export function MethodPreview() {
           </h2>
         </div>
         <p>
-          오늘 할 공부를 고르면 방식마다 10분 안에 해 볼 방법을 보여 줘요.
+          오늘 할 공부를 고르면 방식마다 10분 안에 해 볼 이름 있는 공부법을 보여
+          줘요.
           <br className="desktop-only" />
-          익숙한 방법도, 처음 보는 방법도 좋아요.
+          익숙한 공부법도, 처음 보는 공부법도 좋아요.
         </p>
       </div>
       <div className="method-preview-bar">
@@ -33,7 +35,7 @@ export function MethodPreview() {
       </div>
       <div className="method-preview-grid">
         {MODALITIES.map((m) => {
-          const method = METHODS[m][task];
+          const method = getMethod(FAMILY_METHODS[m][task]);
           return (
             <Link
               className="method-preview-card"
@@ -46,12 +48,8 @@ export function MethodPreview() {
                 {FAMILIES[m].verb} · {FAMILIES[m].label}
               </span>
               <h3>{method.name}</h3>
-              <p>{method.steps[1]}</p>
-              <ul aria-label="바탕 전략">
-                {method.strategies.map((strategy) => (
-                  <li key={strategy}>{strategy}</li>
-                ))}
-              </ul>
+              <p>{method.oneLine}</p>
+              <MethodMeta method={method} />
               <span className="method-preview-go">
                 <Icon name="clock-circle-linear" size={16} />
                 10분 해보기

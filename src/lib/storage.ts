@@ -8,6 +8,7 @@ import {
   type Answers,
 } from "./content";
 import { resolveType, scoreAnswers } from "./scoring";
+import { METHOD_IDS, type MethodId } from "./methods";
 const KEY = "study-style:session";
 const FIRST_KEY = "study-style:first-result";
 export const DAY = 86_400_000;
@@ -36,8 +37,10 @@ const sessionSchema = z.object({
   isRetake: z.boolean().optional(),
   mission: z
     .object({
-      modality: z.enum(MODALITIES),
-      task: z.enum(["concept", "memory", "problem"]),
+      method: z.enum(METHOD_IDS as [MethodId, ...MethodId[]]).optional(),
+      // 공부법 ID가 생기기 전 기록은 방식·과제로 저장돼 있어요.
+      modality: z.enum(MODALITIES).optional(),
+      task: z.enum(["concept", "memory", "problem"]).optional(),
       started: z.boolean(),
       feedback: z.enum(["helpful", "mixed", "not-yet"]).optional(),
     })

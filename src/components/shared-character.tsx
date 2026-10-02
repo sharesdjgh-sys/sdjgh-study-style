@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { CHARACTERS } from "@/lib/characters";
 import { FAMILIES, type StudyType } from "@/lib/content";
+import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { CharacterCard } from "./character-card";
 import { Share } from "./share";
 import { useSavedSession } from "./use-saved-session";
@@ -15,6 +16,7 @@ export function SharedCharacter({
 }) {
   const { session } = useSavedSession();
   const character = CHARACTERS[type.code];
+  const signature = SIGNATURE_METHODS[type.code];
   const quizHref = referralCode
     ? `/quiz?from=share&ref=${referralCode}`
     : "/quiz?from=share";
@@ -32,6 +34,14 @@ export function SharedCharacter({
           {FAMILIES[type.modality].summary}
           <br />
           카드를 뒤집으면 이 친구의 이야기를 읽을 수 있어요.
+        </p>
+        <p className="shared-signature">
+          {character.name}의 시그니처 공부법은{" "}
+          <Link href={`/methods/${signature}`}>
+            {getMethod(signature).name}
+          </Link>
+          !<br />
+          {getMethod(signature).oneLine}
         </p>
         <p className="small muted">
           친구가 공유한 캐릭터예요. 내 검사 결과는 아니에요.

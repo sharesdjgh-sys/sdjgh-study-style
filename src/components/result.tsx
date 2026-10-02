@@ -21,8 +21,9 @@ import {
 import { CharacterCard } from "./character-card";
 import { CHARACTERS } from "@/lib/characters";
 import { Share } from "./share";
-import { Mission } from "./mission";
+import { MethodToolkit } from "./method-toolkit";
 import { Icon } from "./icon";
+import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { useConfirm } from "./ui/confirm-dialog";
 import { TypeStory } from "./type-story";
 import { MysteryCard } from "./mystery-card";
@@ -89,6 +90,9 @@ export function TypeResult({
           <nav className="result-shortcuts" aria-label="결과 자세히 보기">
             <a href="#my-story">
               공부 스타일 이야기 <span>↓</span>
+            </a>
+            <a href="#study-methods">
+              공부법 도구함 <span>↓</span>
             </a>
             <a href="#share-style">
               친구에게 보여주기 <span>↗</span>
@@ -203,7 +207,7 @@ export function TypeResult({
           </div>
         </section>
       )}
-      <Mission modality={type.modality} type={type} />
+      <MethodToolkit type={type} hideCharacter={hideCharacter} />
       <section className="next-review">
         <Icon name="calendar-linear" size={32} />
         <div>
@@ -217,19 +221,30 @@ export function TypeResult({
       </section>
       <section className="alternatives">
         <span className="eyebrow">다른 방법도 내 것이 될 수 있어요</span>
-        <h2>이런 공부법도 있어요.</h2>
+        <h2>다른 공부캐는 이렇게 공부해요.</h2>
         <div className="method-links">
-          {MODALITIES.filter((m) => m !== type.modality).map((m) => (
-            <Link href={`/methods/${m}`} key={m}>
-              <Icon name={FAMILIES[m].icon} />
-              <span>
-                <strong>{FAMILIES[m].activity}</strong>
-                <small>{FAMILIES[m].detail}</small>
-              </span>
-              <Icon name="arrow-right-up-linear" />
-            </Link>
-          ))}
+          {MODALITIES.filter((m) => m !== type.modality).map((m) => {
+            // 나와 같은 혼자/함께·계획/즉흥 조합인 다른 방식 공부캐의 시그니처
+            const id = SIGNATURE_METHODS[`${m}-${type.social}-${type.pace}`];
+            const method = getMethod(id);
+            return (
+              <Link href={`/methods/${id}`} key={m}>
+                <Icon name={FAMILIES[m].icon} />
+                <span>
+                  <strong>{method.name}</strong>
+                  <small>
+                    {FAMILIES[m].label} 공부캐의 시그니처 · {method.oneLine}
+                  </small>
+                </span>
+                <Icon name="arrow-right-up-linear" />
+              </Link>
+            );
+          })}
         </div>
+        <Link className="text-link" href="/methods">
+          공부법 도감에서 모두 보기
+          <Icon name="arrow-right-linear" size={18} />
+        </Link>
       </section>
       <section className="share-section" id="share-style">
         <span className="eyebrow">친구의 공부 취향도 궁금하다면</span>
