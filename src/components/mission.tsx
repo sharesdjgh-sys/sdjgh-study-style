@@ -6,6 +6,7 @@ import { TASKS, ROUTINES, methodFor } from "@/lib/methods";
 import { readSession, saveSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
+import { TASK_KEYS, TaskTabs } from "./task-tabs";
 export function Mission({
   modality,
   type,
@@ -24,7 +25,7 @@ export function Mission({
       const m = readSession()?.mission;
       // 홈에서 과제를 골라 들어오면(?task=memory) 그 과제를 먼저 보여 줘요.
       const param = new URLSearchParams(window.location.search).get("task");
-      const linked = (Object.keys(TASKS) as Task[]).find((t) => t === param);
+      const linked = TASK_KEYS.find((t) => t === param);
       if (m?.modality === modality && (!linked || linked === m.task)) {
         setTask(m.task);
         setSelected(true);
@@ -98,18 +99,7 @@ export function Mission({
         {TASKS[task].when} 써요. 완벽하게 하려 하지 말고, 한 가지 내용으로
         가볍게 시작해 보세요.
       </p>
-      <div className="task-tabs" aria-label="공부 과제 선택">
-        {(Object.keys(TASKS) as Task[]).map((t) => (
-          <button
-            key={t}
-            aria-pressed={task === t}
-            className={task === t ? "active" : ""}
-            onClick={() => changeTask(t)}
-          >
-            {TASKS[t].label}
-          </button>
-        ))}
-      </div>
+      <TaskTabs value={task} onChange={changeTask} label="공부 과제 선택" />
       <ol className="mission-steps">
         {method.steps.map((step, i) => (
           <li key={step}>

@@ -96,7 +96,7 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
   await expect(page.locator(".axis-row")).toHaveCount(2);
   await expect(page.locator(".mission-panel")).toContainText("혼자 할 때");
   await expect(page.locator(".mission-panel")).toContainText("다음 복습 일정");
-  await page.getByRole("button", { name: "암기", exact: true }).click();
+  await page.getByRole("button", { name: "용어 암기", exact: true }).click();
   await expect(page.getByText(/외울 용어 5개/)).toBeVisible();
   await expect(page.locator(".level-tip")).toContainText("3개로 줄여요");
   await page.getByRole("button", { name: "지금 10분 해보기" }).click();

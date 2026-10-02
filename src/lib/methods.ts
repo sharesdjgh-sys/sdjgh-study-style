@@ -3,7 +3,7 @@ import type { Modality, Pace, Social, Task } from "./content";
 // 학생이 끌리는 방식으로 실행하도록 짰어요. 근거와 한계는 /about#evidence에 있어요.
 export const TASKS: Record<Task, { label: string; when: string }> = {
   concept: { label: "개념 이해", when: "원리와 연결을 내 것으로 만들 때" },
-  memory: { label: "암기", when: "용어·공식·단어를 정확히 외울 때" },
+  memory: { label: "용어 암기", when: "용어·공식·단어를 정확히 외울 때" },
   problem: {
     label: "문제 풀이",
     when: "풀었던 문제를 다시 풀 수 있게 만들 때",

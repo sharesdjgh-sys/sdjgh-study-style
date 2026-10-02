@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FAMILIES, MODALITIES, type Task } from "@/lib/content";
 import { METHODS, TASKS } from "@/lib/methods";
 import { Icon } from "./icon";
-const TASK_KEYS = Object.keys(TASKS) as Task[];
+import { TASK_KEYS, TaskTabs } from "./task-tabs";
 export function MethodPreview() {
   const [task, setTask] = useState<Task>(TASK_KEYS[0]);
   return (
@@ -28,22 +28,7 @@ export function MethodPreview() {
         </p>
       </div>
       <div className="method-preview-bar">
-        <div
-          className="method-preview-tabs"
-          role="group"
-          aria-label="오늘 할 공부 고르기"
-        >
-          {TASK_KEYS.map((t) => (
-            <button
-              key={t}
-              type="button"
-              aria-pressed={task === t}
-              onClick={() => setTask(t)}
-            >
-              {TASKS[t].label}
-            </button>
-          ))}
-        </div>
+        <TaskTabs value={task} onChange={setTask} label="오늘 할 공부 고르기" />
         <p>{TASKS[task].when}</p>
       </div>
       <div className="method-preview-grid">
