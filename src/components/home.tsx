@@ -1,6 +1,15 @@
 "use client";
+import { Fragment } from "react";
 import Link from "next/link";
-import { FAMILIES, MODALITIES, getType } from "@/lib/content";
+import {
+  FAMILIES,
+  MODALITIES,
+  PACE_LABELS,
+  QUESTIONS,
+  SOCIAL_LABELS,
+  STUDY_TYPES,
+  getType,
+} from "@/lib/content";
 import { CharacterCard } from "./character-card";
 import { MysteryCarousel } from "./mystery-carousel";
 import { useSavedSession } from "./use-saved-session";
@@ -9,6 +18,38 @@ import { Arrow } from "./shell";
 import { useCollection } from "./collection-provider";
 import { CollectionLink } from "./collection-link";
 import { collectionProgress } from "@/lib/collection-progress";
+type FormulaChip = { label: string; icon: string; family?: string };
+const FORMULA_FACTORS: {
+  key: string;
+  title: string;
+  chips: FormulaChip[];
+}[] = [
+  {
+    key: "modality",
+    title: "어떻게 정리해요?",
+    chips: MODALITIES.map((m) => ({
+      label: FAMILIES[m].verb,
+      icon: FAMILIES[m].icon,
+      family: m,
+    })),
+  },
+  {
+    key: "social",
+    title: "누구와 해요?",
+    chips: [
+      { label: SOCIAL_LABELS.solo, icon: "user-rounded-linear" },
+      { label: SOCIAL_LABELS.team, icon: "users-group-rounded-linear" },
+    ],
+  },
+  {
+    key: "pace",
+    title: "어떻게 계획해요?",
+    chips: [
+      { label: PACE_LABELS.planned, icon: "checklist-minimalistic-linear" },
+      { label: PACE_LABELS.flexible, icon: "stars-linear" },
+    ],
+  },
+];
 export function Home() {
   const { session: saved, first } = useSavedSession();
   const { data, loaded: accountLoaded } = useCollection();
@@ -88,32 +129,64 @@ export function Home() {
           )}
         </div>
       </section>
-      <section className="fact-strip" aria-label="테스트 안내">
-        <div>
-          <strong>
-            가볍게
-            <span>시작해요</span>
-          </strong>
-          <p>정답 없이, 평소의 나답게</p>
+      <section className="type-formula" aria-labelledby="type-formula-title">
+        <div className="type-formula-head">
+          <div>
+            <h2 id="type-formula-title">
+              {STUDY_TYPES.length}명의 공부캐는 이렇게 나뉘어요
+            </h2>
+            <p>
+              {QUESTIONS.length}문항으로 세 가지를 살펴봐요. 정답은 없으니
+              요즘의 나와 가까운 쪽을 고르면 돼요.
+            </p>
+          </div>
+          <Link href="/about" className="text-link">
+            테스트 방식 자세히 보기
+            <Icon name="arrow-right-up-linear" size={18} />
+          </Link>
         </div>
-        <span className="strip-cross">+</span>
-        <div>
-          <strong>
-            16<span>명의 공부캐</span>
-          </strong>
-          <p>서로 다른 공부 스타일을 만나요</p>
+        <div className="type-formula-grid">
+          {FORMULA_FACTORS.map((factor, i) => (
+            <Fragment key={factor.key}>
+              {i > 0 && (
+                <span className="formula-op" aria-hidden="true">
+                  ×
+                </span>
+              )}
+              <div className={`formula-factor formula-${factor.key}`}>
+                <h3>
+                  <span className="mono">0{i + 1}</span>
+                  {factor.title}
+                </h3>
+                <strong className="formula-count">
+                  {factor.chips.length}
+                  <span>가지</span>
+                </strong>
+                <ul>
+                  {factor.chips.map((chip) => (
+                    <li key={chip.label} data-family={chip.family}>
+                      <Icon name={chip.icon} size={16} />
+                      {chip.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Fragment>
+          ))}
+          <span className="formula-op" aria-hidden="true">
+            =
+          </span>
+          <div className="formula-result">
+            <span className="formula-spark" aria-hidden="true">
+              ✦
+            </span>
+            <strong className="formula-count">
+              {STUDY_TYPES.length}
+              <span>가지 조합</span>
+            </strong>
+            <p>조합마다 공부캐가 한 명씩 있어요</p>
+          </div>
         </div>
-        <span className="strip-cross">→</span>
-        <div>
-          <strong>
-            10<span>분의 작은 시도</span>
-          </strong>
-          <p>결과를 오늘의 공부로 연결해요</p>
-        </div>
-        <Link href="/about">
-          어떤 테스트인가요?
-          <Icon name="arrow-right-up-linear" size={18} />
-        </Link>
       </section>
       <section className="discover-section">
         <div className="section-heading">
