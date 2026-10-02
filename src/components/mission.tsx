@@ -7,6 +7,12 @@ import { readSession, saveSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
 import { TASK_KEYS, TaskTabs } from "./task-tabs";
+const TIMER_MS = 10 * 60 * 1000;
+type Timer =
+  | { state: "running"; endsAt: number }
+  | { state: "paused"; left: number }
+  | { state: "done" };
+const pad = (n: number) => String(n).padStart(2, "0");
 export function Mission({
   modality,
   type,
@@ -19,7 +25,27 @@ export function Mission({
   const [started, setStarted] = useState(false);
   const [feedback, setFeedback] = useState<string>();
   const [message, setMessage] = useState("");
+  const [timer, setTimer] = useState<Timer | null>(null);
+  const [now, setNow] = useState(0);
   const method = methodFor(modality, task);
+  useEffect(() => {
+    if (timer?.state !== "running") return;
+    // 백그라운드 탭에서 interval이 늦어져도 끝나는 시각 기준으로 계산해요.
+    const id = setInterval(() => {
+      const t = Date.now();
+      setNow(t);
+      if (t >= timer.endsAt) setTimer({ state: "done" });
+    }, 250);
+    return () => clearInterval(id);
+  }, [timer]);
+  const left =
+    timer?.state === "running"
+      ? Math.max(0, timer.endsAt - now)
+      : timer?.state === "paused"
+        ? timer.left
+        : 0;
+  const seconds = Math.ceil(left / 1000);
+  const clock = `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const m = readSession()?.mission;
@@ -73,11 +99,25 @@ export function Mission({
       value ?? "",
     );
   }
+  function runTimer(ms: number) {
+    const t = Date.now();
+    setNow(t);
+    setTimer({ state: "running", endsAt: t + ms });
+  }
+  function startTimer() {
+    if (!started) persist("start");
+    runTimer(TIMER_MS);
+  }
+  function pauseTimer() {
+    if (timer?.state !== "running") return;
+    setTimer({ state: "paused", left: Math.max(0, timer.endsAt - Date.now()) });
+  }
   function changeTask(t: Task) {
     setTask(t);
     setFeedback(undefined);
     setStarted(false);
     setSelected(false);
+    setTimer(null);
   }
   return (
     <section className="mission-panel">
@@ -126,23 +166,74 @@ export function Mission({
           </div>
         </div>
       )}
-      <div className="button-row">
-        <button
-          className="button primary"
-          onClick={() => persist("start")}
-          disabled={started}
-        >
-          <Icon name={started ? "check-circle-linear" : "play-linear"} />
-          {started ? "시작했어요 · 끝나면 아래에 기록" : "지금 10분 해보기"}
-        </button>
-        <button
-          className="button secondary"
-          disabled={selected}
-          onClick={() => persist("select")}
-        >
-          {selected ? "이 활동을 골랐어요" : "나중에 해볼게요"}
-        </button>
-      </div>
+      {timer ? (
+        <div className="mission-timer" data-state={timer.state}>
+          <p className="mission-timer-clock" role="timer">
+            <span className="sr-only">남은 시간 </span>
+            {clock}
+          </p>
+          <div className="mission-timer-copy" role="status">
+            <strong>
+              {timer.state === "done"
+                ? "10분 끝! 잘했어요."
+                : timer.state === "paused"
+                  ? "잠시 멈췄어요"
+                  : "타이머가 돌아가고 있어요"}
+            </strong>
+            <span>
+              {timer.state === "done"
+                ? "해 보니 어땠는지 아래에 남겨 주세요."
+                : "1번부터 차근차근 해 보세요."}
+            </span>
+          </div>
+          <div className="mission-timer-actions">
+            {timer.state === "running" && (
+              <button className="button secondary" onClick={pauseTimer}>
+                <Icon name="pause-linear" size={18} />
+                잠시 멈추기
+              </button>
+            )}
+            {timer.state === "paused" && (
+              <button
+                className="button primary"
+                onClick={() => runTimer(timer.left)}
+              >
+                <Icon name="play-linear" size={18} />
+                이어서 하기
+              </button>
+            )}
+            {timer.state === "done" && (
+              <button
+                className="button secondary"
+                onClick={() => runTimer(TIMER_MS)}
+              >
+                <Icon name="restart-linear" size={18} />
+                10분 더 하기
+              </button>
+            )}
+            <button className="button ghost" onClick={() => setTimer(null)}>
+              {timer.state === "done" ? "타이머 닫기" : "그만하기"}
+            </button>
+          </div>
+          <div className="mission-timer-bar" aria-hidden="true">
+            <span style={{ width: `${(1 - left / TIMER_MS) * 100}%` }} />
+          </div>
+        </div>
+      ) : (
+        <div className="button-row">
+          <button className="button primary" onClick={startTimer}>
+            <Icon name="play-linear" />
+            {started ? "다시 10분 해보기" : "지금 10분 해보기"}
+          </button>
+          <button
+            className="button secondary"
+            disabled={selected}
+            onClick={() => persist("select")}
+          >
+            {selected ? "이 활동을 골랐어요" : "나중에 해볼게요"}
+          </button>
+        </div>
+      )}
       <div className="feedback-block">
         <h3>직접 해보니 어땠나요?</h3>
         <p className="small muted">

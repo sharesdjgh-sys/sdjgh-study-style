@@ -20,6 +20,7 @@ const names = [
   "alt-arrow-down-linear",
   "add-circle-linear",
   "play-linear",
+  "pause-linear",
   "checklist-minimalistic-linear",
   "users-group-rounded-linear",
   "user-rounded-linear",
