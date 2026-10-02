@@ -22,12 +22,15 @@ export function Mission({
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const m = readSession()?.mission;
-      if (m?.modality === modality) {
+      // 홈에서 과제를 골라 들어오면(?task=memory) 그 과제를 먼저 보여 줘요.
+      const param = new URLSearchParams(window.location.search).get("task");
+      const linked = (Object.keys(TASKS) as Task[]).find((t) => t === param);
+      if (m?.modality === modality && (!linked || linked === m.task)) {
         setTask(m.task);
         setSelected(true);
         setStarted(m.started);
         setFeedback(m.feedback);
-      }
+      } else if (linked) setTask(linked);
     });
     return () => cancelAnimationFrame(id);
   }, [modality]);

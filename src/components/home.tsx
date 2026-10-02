@@ -12,6 +12,7 @@ import {
 } from "@/lib/content";
 import { CharacterCard } from "./character-card";
 import { MysteryCarousel } from "./mystery-carousel";
+import { MethodPreview } from "./method-preview";
 import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
@@ -188,41 +189,7 @@ export function Home() {
           </div>
         </div>
       </section>
-      <section className="discover-section">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">취향은 다르게, 가능성은 넓게</span>
-            <h2>
-              공부하는 모습도
-              <br />
-              이렇게 다양해요.
-            </h2>
-          </div>
-          <p>
-            그림으로, 말로, 손끝으로, 움직임으로.
-            <br />
-            내게 익숙한 방법부터 새로운 방법까지 만나보세요.
-          </p>
-        </div>
-        <div className="family-grid">
-          {MODALITIES.map((m, i) => (
-            <Link
-              className={`family-card family-${i}`}
-              href={`/types?style=${m}`}
-              key={m}
-            >
-              <div className="family-top">
-                <span className="mono">0{i + 1}</span>
-                <Icon name="arrow-right-up-linear" size={20} />
-              </div>
-              <Icon name={FAMILIES[m].icon} size={40} />
-              <h3>{FAMILIES[m].verb} 정리해요</h3>
-              <p>{FAMILIES[m].summary}</p>
-              <span className="family-label">{FAMILIES[m].label}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <MethodPreview />
       <section className="journey-section">
         <div className="journey-title">
           <span className="eyebrow">발견에서 시도까지</span>

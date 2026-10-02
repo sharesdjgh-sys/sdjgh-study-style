@@ -998,61 +998,183 @@ legend {
 .journey-title .eyebrow {
   margin-bottom: 15px;
 }
-.family-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr 1.05fr;
-  gap: 15px;
+.method-preview-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-bottom: 22px;
 }
-.family-card {
-  padding: 22px;
-  border: 1px solid #dfdfd3;
-  border-radius: 12px;
-  position: relative;
-  min-height: 245px;
-  background: #f1f1e9;
-}
-.family-card:nth-child(even) {
-  margin-top: 20px;
-  margin-bottom: -20px;
-  background: #f5eee5;
-}
-.family-card:hover {
-  transform: translateY(-7px);
+.method-preview-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
   background: var(--white);
+}
+.method-preview-tabs button {
+  min-height: 40px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font-size: var(--text-secondary);
+  font-weight: 600;
+  color: var(--muted);
+}
+.method-preview-tabs button:hover {
+  background: var(--pale);
+  color: var(--ink);
+}
+.method-preview-tabs button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--white);
+}
+.method-preview-bar p {
+  font-size: var(--text-label);
+  color: var(--muted);
+}
+.method-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.method-preview-card {
+  --family-tint: #e3e9d7;
+  --family-deep: #53654a;
+  --family-line: #c7d1b8;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px 22px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 4px 0 #dce4d955;
+}
+.method-preview-card[data-family="auditory"] {
+  --family-tint: #f6e3d0;
+  --family-deep: #9c5b3a;
+  --family-line: #e5c3a7;
+}
+.method-preview-card[data-family="tactile"] {
+  --family-tint: #ece2f2;
+  --family-deep: #79618b;
+  --family-line: #d4bfdf;
+}
+.method-preview-card[data-family="motion"] {
+  --family-tint: #deebee;
+  --family-deep: #477782;
+  --family-line: #b5d1d8;
+}
+.method-preview-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--family-line);
   box-shadow: 0 14px 24px -14px #656c3a30;
 }
-.family-top {
-  display: flex;
-  justify-content: space-between;
+.method-preview-family {
+  align-self: flex-start;
+  display: inline-flex;
   align-items: center;
-  color: #838775;
-  margin-bottom: 29px;
+  gap: 6px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 8px;
+  background: var(--family-tint);
+  color: var(--family-deep);
+  font-size: var(--text-caption);
+  font-weight: 650;
+}
+.method-preview-card h3 {
+  margin-top: 18px;
+  font-size: 19px;
+}
+.method-preview-card p {
+  margin-top: 8px;
+  font-size: var(--text-label);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.method-preview-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 14px 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.method-preview-card li {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #f3f6ef;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7d72;
+}
+.method-preview-go {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  font-size: var(--text-label);
+  font-weight: 650;
+  color: var(--family-deep);
+}
+.method-preview-go svg:last-child {
+  margin-left: auto;
+  transition: transform 0.3s var(--ease);
+}
+.method-preview-card:hover .method-preview-go svg:last-child {
+  transform: translateX(4px);
+}
+@media (max-width: 1100px) {
+  .method-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .method-preview-bar {
+    display: grid;
+    margin-bottom: 16px;
+  }
+  .method-preview-tabs button {
+    flex: 1;
+    padding: 8px 6px;
+    font-size: var(--text-label);
+  }
+  /* 카드를 옆으로 넘겨 보도록 .site-shell의 모바일 좌우 여백(20px)까지 펼친다. */
+  .method-preview-grid {
+    display: flex;
+    gap: 10px;
+    margin-inline: -20px;
+    padding: 4px 20px 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+  }
+  .method-preview-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .method-preview-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    padding: 18px 18px 16px;
+  }
+  .method-preview-card:hover {
+    transform: none;
+  }
+  .method-preview-card h3 {
+    margin-top: 14px;
+    font-size: 17px;
+  }
 }
 .mono {
   font-variant-numeric: tabular-nums;
   font-size: var(--text-label);
   letter-spacing: 0.04em;
-}
-.family-card > svg {
-  color: #8a9275;
-  margin-bottom: 16px;
-}
-.family-card h3 {
-  font-size: 18px;
-}
-.family-card p {
-  font-size: var(--text-label);
-  color: var(--muted);
-  line-height: 1.7;
-  margin-top: 9px;
-}
-.family-label {
-  display: inline-block;
-  margin-top: 19px;
-  font-size: var(--text-caption);
-  color: #808670;
-  border-top: 1px solid #d7dacb;
-  padding-top: 9px;
 }
 .journey-section {
   display: grid;
@@ -2247,15 +2369,6 @@ legend {
     padding: 8px 9px;
     font-size: var(--text-caption);
   }
-  .family-grid {
-    gap: 11px;
-  }
-  .family-card {
-    padding: 18px;
-  }
-  .family-card h3 {
-    font-size: 16px;
-  }
   .type-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2399,34 +2512,6 @@ legend {
   }
   .eyebrow {
     font-size: var(--text-caption);
-  }
-  .family-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .family-card:nth-child(even) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  .family-card {
-    padding: 18px;
-    min-height: 235px;
-  }
-  .family-top {
-    margin-bottom: 20px;
-  }
-  .family-card > svg {
-    width: 33px;
-    height: 33px;
-  }
-  .family-card p {
-    font-size: var(--text-label);
-  }
-  .family-card h3 {
-    font-size: 17px;
-  }
-  .family-label {
-    margin-top: 17px;
   }
   .journey-section {
     grid-template-columns: 1fr;
@@ -2833,12 +2918,6 @@ legend {
   }
   .hero h1 {
     font-size: 51px;
-  }
-  .family-card {
-    padding: 15px;
-  }
-  .family-card h3 {
-    font-size: var(--text-body);
   }
   .deck-selector button {
     padding: 8px 7px;
@@ -4793,32 +4872,6 @@ body {
 .discover-section {
   padding-block: 92px 76px;
 }
-.family-grid {
-  gap: 18px;
-}
-.family-card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: 0 4px 0 #dce4d955;
-  padding: 24px;
-}
-.family-card:nth-child(even) {
-  margin-top: 24px;
-  background: #eef3e9;
-}
-.family-card:hover {
-  transform: translateY(-5px);
-  border-color: #8eae96;
-}
-.family-card > svg {
-  color: var(--accent);
-}
-.family-label {
-  background: #e9f1e3;
-  color: var(--accent);
-  border-radius: 7px;
-}
 .journey-section {
   border-top: 1px solid var(--line);
   padding-block: 58px;
@@ -4929,9 +4982,6 @@ body {
     top: 26px;
     right: -8px;
     font-size: 11px;
-  }
-  .family-card {
-    padding: 20px;
   }
 }
 @media (max-width: 767px) {
@@ -5045,25 +5095,6 @@ body {
   }
   .section-heading {
     gap: 18px;
-  }
-  .family-grid {
-    gap: 12px;
-  }
-  .family-card {
-    padding: 18px 15px;
-    border-radius: 13px;
-  }
-  .family-card:nth-child(even) {
-    margin-top: 0;
-  }
-  .family-card p {
-    font-size: 13px;
-  }
-  .family-card h3 {
-    font-size: 17px;
-  }
-  .family-label {
-    font-size: 12px;
   }
   .journey-section {
     padding-block: 36px;
