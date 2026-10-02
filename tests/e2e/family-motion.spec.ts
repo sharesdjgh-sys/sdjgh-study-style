@@ -38,7 +38,7 @@ async function setup(page: Page, failVideo = false) {
   });
 }
 
-test("네 유형 단체영상은 8초 반복 재생되고 멈춤·확대·저장을 지원한다", async ({
+test("네 유형 단체영상은 8초 반복 재생되고 확대·저장을 지원한다", async ({
   page,
 }) => {
   test.setTimeout(150000);
@@ -92,10 +92,7 @@ test("네 유형 단체영상은 8초 반복 재생되고 멈춤·확대·저장
         }),
     );
     expect(looped).toBe(true);
-    await card.getByRole("button", { name: /움직임 멈추기/ }).click();
-    await expect
-      .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused))
-      .toBe(true);
+    await expect(card.locator(".character-motion button")).toHaveCount(0);
   }
   const card = page.locator(".family-collection-card");
   await card.getByRole("button", { name: "단체사진 크게 보기" }).click();
@@ -115,7 +112,7 @@ test("네 유형 단체영상은 8초 반복 재생되고 멈춤·확대·저장
   ).toBe(true);
 });
 
-test("단체영상은 동작 줄이기에서 수동 재생하고 실패 시 사진을 유지한다", async ({
+test("단체영상은 동작 줄이기에서 사진을 표시하고 영상 실패 시에도 유지한다", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -130,7 +127,8 @@ test("단체영상은 동작 줄이기에서 수동 재생하고 실패 시 사�
   await card.scrollIntoViewIfNeeded();
   await expect(card.locator("video")).not.toHaveAttribute("src");
   expect(requests).toEqual([]);
-  await card.getByRole("button", { name: /움직임 재생/ }).click();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect.poll(() => requests.length).toBeGreaterThan(0);
   await expect(card.locator(".character-motion-toggle")).toHaveCount(0);
   await expect(card.locator("img")).toBeVisible();
   await expect(card.locator("video")).not.toHaveAttribute("src");

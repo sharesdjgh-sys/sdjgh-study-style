@@ -49,13 +49,9 @@ export function CharacterMotion({
   );
   const [inView, setInView] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
-  const [explicitStart, setExplicitStart] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
-  const allowMotion = (!reduce || explicitStart) && !paused;
-  const shouldPlay = allowMotion && inView && tabVisible && active && !failed;
+  const shouldPlay = !reduce && inView && tabVisible && active && !failed;
 
   useEffect(() => {
     const element = container.current;
@@ -75,7 +71,7 @@ export function CharacterMotion({
     const element = video.current;
     if (!element) return;
     if (shouldPlay && loadVideo) {
-      void element.play().catch(() => setPlaying(false));
+      void element.play().catch(() => setReady(false));
     } else {
       element.pause();
     }
@@ -110,43 +106,11 @@ export function CharacterMotion({
           muted
           playsInline
           aria-hidden="true"
-          className={
-            ready && (!reduce || explicitStart) && !failed ? "is-ready" : ""
-          }
-          onPlaying={() => {
-            setReady(true);
-            setPlaying(true);
-          }}
-          onPause={() => setPlaying(false)}
-          onError={() => {
-            setFailed(true);
-            setPlaying(false);
-          }}
+          className={ready && !reduce && !failed ? "is-ready" : ""}
+          onPlaying={() => setReady(true)}
+          onError={() => setFailed(true)}
         />
       </div>
-      {!failed && (
-        <button
-          type="button"
-          className="character-motion-toggle"
-          aria-label={`${name} 움직임 ${playing ? "멈추기" : "재생"}`}
-          onClick={() => {
-            if (playing) {
-              video.current?.pause();
-              setPaused(true);
-            } else {
-              setLoadVideo(true);
-              setExplicitStart(true);
-              setPaused(false);
-              if (video.current?.getAttribute("src")) {
-                void video.current.play().catch(() => setPlaying(false));
-              }
-            }
-          }}
-        >
-          <span aria-hidden="true">{playing ? "Ⅱ" : "▶"}</span>
-          {playing ? "잠깐 멈춤" : "움직임 재생"}
-        </button>
-      )}
     </div>
   );
 }

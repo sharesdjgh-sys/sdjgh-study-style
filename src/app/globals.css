@@ -3741,22 +3741,6 @@ legend {
 .character-motion-media video.is-ready {
   opacity: 1;
 }
-.character-motion-toggle {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 10px;
-  border: 1px solid var(--character-line);
-  border-radius: 20px;
-  background: #fffefae8;
-  color: var(--character-deep);
-  font-size: 12px;
-  line-height: 1.5;
-}
 .game-hero .character-motion {
   max-width: 270px;
 }
@@ -5779,9 +5763,6 @@ body {
 }
 .character-motion.is-landscape .character-motion-media {
   border-radius: 6px;
-}
-.character-motion.is-landscape .character-motion-toggle {
-  bottom: 8px;
 }
 .special-photo-dialog-footer {
   flex-wrap: wrap;

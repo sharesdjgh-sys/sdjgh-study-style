@@ -22,7 +22,7 @@ test("동시 공유 페이지 요청이 JSON 오류 없이 응답함", async ({ 
   expect((await request.get("/types/unknown-character")).status()).toBe(404);
 });
 
-test("루미는 같은 파일을 무음 반복 재생하고 정지·재개·뒤집기를 지원함", async ({
+test("루미는 버튼 없이 무음 반복 재생하고 뒤집기를 지원함", async ({
   page,
 }) => {
   const apiCalls: string[] = [];
@@ -71,15 +71,7 @@ test("루미는 같은 파일을 무음 반복 재생하고 정지·재개·뒤�
     samples.filter((time, index) => index > 0 && time < samples[index - 1] - 1)
       .length,
   ).toBeGreaterThanOrEqual(2);
-  await page.getByRole("button", { name: "루미 움직임 멈추기" }).click();
-  await expect
-    .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused))
-    .toBe(true);
-  await expect(page.locator(".character-card")).not.toHaveClass(/is-flipped/);
-  await page.getByRole("button", { name: "루미 움직임 재생" }).click();
-  await expect
-    .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused))
-    .toBe(false);
+  await expect(page.locator(".character-motion button")).toHaveCount(0);
   await page
     .getByRole("button", { name: "루미 카드 뒤집어 소개 보기" })
     .click();
@@ -93,7 +85,7 @@ test("루미는 같은 파일을 무음 반복 재생하고 정지·재개·뒤�
   expect(apiCalls).toEqual([]);
 });
 
-test("동작 줄이기에서는 영상을 요청하지 않고 사용자가 눌렀을 때만 재생함", async ({
+test("동작 줄이기에서는 재생 버튼 없이 정적 이미지를 표시함", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -109,14 +101,7 @@ test("동작 줄이기에서는 영상을 요청하지 않고 사용자가 눌�
   await expect(video).not.toHaveAttribute("src");
   await expect(video).toHaveCSS("opacity", "0");
   expect(requests).toEqual([]);
-  await page.getByRole("button", { name: "루미 움직임 재생" }).click();
-  await expect
-    .poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused))
-    .toBe(true);
-  await page.getByRole("button", { name: "루미 움직임 멈추기" }).click();
-  await expect
-    .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused))
-    .toBe(true);
+  await expect(page.locator(".character-motion button")).toHaveCount(0);
 });
 
 test("영상 로딩 실패 시 이미지가 남고 다른 캐릭터의 영상은 정상 재생함", async ({
@@ -222,14 +207,7 @@ for (const type of STUDY_TYPES) {
       );
       expect(loops).toBeGreaterThanOrEqual(2);
     }
-    await page
-      .getByRole("button", {
-        name: `${CHARACTERS[type.code].name} 움직임 멈추기`,
-      })
-      .click();
-    await expect
-      .poll(() => video.evaluate((v: HTMLVideoElement) => v.paused))
-      .toBe(true);
+    await expect(page.locator(".character-motion button")).toHaveCount(0);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
