@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
 import { SharedCharacter } from "@/components/shared-character";
+import { shareImagePath } from "@/lib/share-image";
 
 // This page reads searchParams and renders per request. Listing static params
 // needlessly triggers Next's concurrent dev prerender-manifest read/write path.
@@ -22,7 +23,7 @@ export async function generateMetadata({
       title: `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`,
       description:
         "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요.",
-      images: [{ url: `/api/og?type=${type.code}`, width: 1200, height: 630 }],
+      images: [{ url: shareImagePath(type.code), width: 1200, height: 630 }],
     },
   };
 }

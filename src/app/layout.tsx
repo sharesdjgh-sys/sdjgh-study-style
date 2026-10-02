@@ -4,6 +4,7 @@ import { siteUrl } from "@/lib/site";
 import { SourceCapture } from "@/components/source-capture";
 import { CollectionProvider } from "@/components/collection-provider";
 import { QUESTIONS } from "@/lib/content";
+import { shareImagePath } from "@/lib/share-image";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
@@ -13,10 +14,10 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     type: "website",
     siteName: "공부캐",
-    title: "공부캐 — 너의 공부캐는 누구?",
+    title: "공부 스타일을 캐릭터로 만나는 테스트",
     description:
-      "16명 중, 너의 공부캐는 누구? 귀여운 공부 친구를 만나고 다양한 공부 스타일과 공부법을 발견해요.",
-    images: [{ url: "/api/og", width: 1200, height: 630 }],
+      "평소 공부하는 모습을 골라 나만의 캐릭터를 찾고, 다양한 공부법을 탐색해 보세요.",
+    images: [{ url: shareImagePath(), width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
 };

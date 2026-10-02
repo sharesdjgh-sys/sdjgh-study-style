@@ -7,6 +7,11 @@ import { readSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
 import { useCollection } from "./collection-provider";
+import {
+  shareImagePath,
+  SHARE_IMAGE_WIDTH,
+  SHARE_IMAGE_HEIGHT,
+} from "@/lib/share-image";
 declare global {
   interface Window {
     Kakao?: {
@@ -55,10 +60,13 @@ export function Share({ type }: { type?: StudyType }) {
         content: {
           title: type
             ? `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`
-            : "공부캐 — 16명 중, 너의 공부캐는 누구?",
-          description:
-            "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요.",
-          imageUrl: `${window.location.origin}/api/og${type ? `?type=${type.code}` : ""}`,
+            : "공부 스타일을 캐릭터로 만나는 테스트",
+          description: type
+            ? "재미로 만나는 공부 캐릭터! 다양한 공부 스타일과 공부법을 발견해요."
+            : "평소 공부하는 모습을 골라 나만의 캐릭터를 찾고, 다양한 공부법을 탐색해 보세요.",
+          imageUrl: `${window.location.origin}${shareImagePath(type?.code)}`,
+          imageWidth: SHARE_IMAGE_WIDTH,
+          imageHeight: SHARE_IMAGE_HEIGHT,
           link: { mobileWebUrl: url(), webUrl: url() },
         },
         buttons: [

@@ -13,6 +13,7 @@ const config: NextConfig = {
     "/api/og": [
       "./public/fonts/Pretendard-Bold.woff",
       "./public/characters/share/*.png",
+      "./public/characters/teacher-tori-share.png",
     ],
   },
   async headers() {

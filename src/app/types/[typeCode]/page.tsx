@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getType } from "@/lib/content";
 import { TypeAccess } from "@/components/type-access";
+import { shareImagePath } from "@/lib/share-image";
 export async function generateMetadata({
   params,
 }: {
@@ -17,7 +18,7 @@ export async function generateMetadata({
     openGraph: {
       title: "내 공부 친구는 누구일까요?",
       description: "검사를 마치면 나만의 캐릭터가 모습을 드러내요.",
-      images: [{ url: "/api/og", width: 1200, height: 630 }],
+      images: [{ url: shareImagePath(), width: 1200, height: 630 }],
     },
   };
 }
