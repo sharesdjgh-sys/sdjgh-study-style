@@ -1,0 +1,69 @@
+﻿.container {
+  position: relative;
+  flex-shrink: 0;
+}
+.container .account {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+.wordmark {
+  display: block;
+  width: 100%;
+  height: 30px;
+  object-fit: contain;
+  transition: transform 150ms;
+}
+.account:hover .wordmark {
+  transform: translateY(-1px);
+}
+.account:focus-visible {
+  outline: 2px solid #27785d;
+  outline-offset: 3px;
+}
+.account:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.notice {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 220px;
+  padding: 10px;
+  background: #fffaf0;
+  color: #743d2b;
+  border: 1px solid #dfcdb2;
+  border-radius: 8px;
+  font-size: 13px;
+  z-index: 10;
+}
+@media (max-width: 480px) {
+  .container .account {
+    width: 62px;
+    min-height: 44px;
+  }
+  .wordmark {
+    height: 24px;
+  }
+}
+@media (max-width: 360px) {
+  .container .account {
+    width: 58px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark {
+    transition: none;
+  }
+  .account:hover .wordmark {
+    transform: none;
+  }
+}
