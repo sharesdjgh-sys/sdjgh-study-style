@@ -159,22 +159,55 @@ legend {
   flex-shrink: 0;
 }
 @media (max-width: 480px) {
+  .site-shell .header {
+    gap: 6px;
+    margin-inline: -6px;
+  }
   .header .brand {
-    gap: 7px;
+    gap: 4px;
   }
   .brand-card-mark {
-    width: 40px;
-    height: 40px;
+    width: 68px;
+    height: 68px;
   }
   .brand-wordmark {
-    width: 120px;
+    width: 176px;
   }
   .header nav > a:first-child {
     display: none;
   }
   .header nav .nav-start {
     white-space: nowrap;
-    padding-inline: 10px;
+    padding-inline: 8px;
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .header .nav-start svg {
+    display: none;
+  }
+}
+@media (max-width: 380px) {
+  .brand-card-mark {
+    width: 60px;
+    height: 60px;
+  }
+  .brand-wordmark {
+    width: 160px;
+  }
+}
+@media (max-width: 360px) {
+  .site-shell .header {
+    gap: 6px;
+  }
+  .header .brand {
+    gap: 4px;
+  }
+  .brand-card-mark {
+    width: 52px;
+    height: 52px;
+  }
+  .brand-wordmark {
+    width: 144px;
   }
 }
 .header nav {

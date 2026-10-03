@@ -12,7 +12,7 @@ export function Header() {
           alt=""
           width={192}
           height={192}
-          sizes="(max-width: 480px) 40px, 64px"
+          sizes="(max-width: 360px) 52px, (max-width: 380px) 60px, (max-width: 480px) 68px, 64px"
           priority
         />
         <Image
@@ -21,7 +21,7 @@ export function Header() {
           alt="StudyCrew"
           width={900}
           height={245}
-          sizes="(max-width: 480px) 120px, 176px"
+          sizes="(max-width: 360px) 144px, (max-width: 380px) 160px, 176px"
           priority
         />
         <span className="brand-caption">공부할 때, 또 다른 나</span>
