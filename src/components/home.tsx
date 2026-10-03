@@ -219,9 +219,20 @@ export function Home() {
             <br />
             스킬은 <span className="quest-skill-accent">하나씩.</span>
           </h2>
-          <Link href="/methods" className="text-link">
-            공부 스킬북 펼치기
-            <Icon name="arrow-right-linear" size={20} />
+          <Link href="/methods" className="text-link skillbook-button">
+            <Image
+              src="/ui-icons/nav-skills.webp"
+              alt=""
+              width={48}
+              height={48}
+              className="skillbook-button-icon"
+            />
+            <span>공부 스킬북 펼치기</span>
+            <Icon
+              name="arrow-right-linear"
+              size={20}
+              className="skillbook-button-arrow"
+            />
           </Link>
         </div>
         <ol className="journey-list">

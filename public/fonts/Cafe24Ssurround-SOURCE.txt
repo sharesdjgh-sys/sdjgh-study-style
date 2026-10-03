@@ -1,0 +1,7 @@
+Cafe24 Ssurround v2.0
+Copyright: Cafe24 Corp.
+Official website: https://fonts.cafe24.com/
+Original distribution: https://img.cafe24.com/csdstatic/freefonts/download/kr/Cafe24Ssurround-v2.0.zip
+
+Cafe24Ssurround-v2.0.woff2 and License-Ssurround.pdf are copied unchanged
+from the official distribution. See License-Ssurround.pdf for the license.

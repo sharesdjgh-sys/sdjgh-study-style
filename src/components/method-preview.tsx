@@ -20,13 +20,13 @@ export function MethodPreview() {
           <h2 id="method-preview-title">
             같은 공부도,
             <br />
-            스킬은 네 가지예요.
+            스킬은 <span className="skill-spectrum">네 가지</span>예요.
           </h2>
         </div>
         <p>
           오늘 할 공부를 고르고, 마음에 드는 공부 스킬을 만나 보세요.
-          <br className="desktop-only" />
-          내 공부캐와 함께 새로운 스킬도 10분씩 익혀 봐요.
+          <br className="desktop-only" />내 공부캐와 함께 새로운 스킬도 10분씩
+          익혀 봐요.
         </p>
       </div>
       <div className="method-preview-bar">
