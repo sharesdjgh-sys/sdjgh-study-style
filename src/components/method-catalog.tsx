@@ -53,6 +53,7 @@ export function MethodCatalog() {
       {CATEGORY_KEYS.map((category) => (
         <section
           className="catalog-group"
+          data-category={category}
           key={category}
           aria-labelledby={`catalog-${category}`}
         >
@@ -91,8 +92,12 @@ export function MethodCatalog() {
                           : "lazy"
                       }
                     />
-                    {owner.signature && <span>★</span>}
                   </span>
+                  {owner.signature && (
+                    <span className="catalog-signature" aria-hidden="true">
+                      ★
+                    </span>
+                  )}
                   <span className="method-preview-family">
                     {owner.signature && <span aria-hidden="true">★</span>}
                     {owner.short}

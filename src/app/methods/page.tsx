@@ -1,14 +1,15 @@
 import Link from "next/link";
-import Image from "next/image";
+import { CharacterMotion } from "@/components/character-motion";
 import { FAMILIES, MODALITIES } from "@/lib/content";
 import { StudyArt } from "@/components/study-art";
 import { Icon } from "@/components/icon";
 import { BasicsNote } from "@/components/method-meta";
 import { MethodCatalog } from "@/components/method-catalog";
+import styles from "./skillbook.module.css";
 export const metadata = { title: "공부 스킬북" };
 export default function Page() {
   return (
-    <main id="main" className="catalog-shell">
+    <main id="main" className={`catalog-shell ${styles.page}`}>
       <section
         className="page-intro methods-intro"
         aria-labelledby="methods-title"
@@ -18,7 +19,9 @@ export default function Page() {
             <Icon name="book-bookmark-linear" size={26} />
           </span>
           <div>
-            <h1 id="methods-title">공부 스킬북</h1>
+            <h1 id="methods-title">
+              공부 <span className="skill-spectrum">스킬북</span>
+            </h1>
             <p className="methods-page-description">
               나에게 맞는 공부 스킬, 하나씩 익혀 볼까요?
             </p>
@@ -31,20 +34,20 @@ export default function Page() {
             <span className="accent-text">방법을 바꿔 볼까?</span>
           </h2>
           <div className="methods-teacher-scene">
-            <picture className="methods-teacher-portrait">
-              <source
-                media="(prefers-reduced-motion: reduce)"
-                srcSet="/characters/motion/teacher-tori-guide-transparent-poster.webp"
+            <div className="methods-teacher-portrait">
+              <CharacterMotion
+                asset={{
+                  video: "/characters/motion/teacher-tori-part-2-8s-v1.mp4",
+                  poster: "/characters/motion/teacher-tori-welcome-poster.webp",
+                  background: "#e3ecdb",
+                }}
+                name="토리 선생님"
+                species="곰"
+                imageAlt="손을 흔들며 공부법을 안내하는 토리 선생님"
+                active
+                priority
               />
-              <Image
-                src="/characters/motion/teacher-tori-guide-transparent.webp"
-                alt="손을 흔들며 공부법을 안내하는 토리 선생님"
-                width={320}
-                height={320}
-                unoptimized
-                loading="eager"
-              />
-            </picture>
+            </div>
           </div>
           <p className="methods-teacher-label">토리 선생님</p>
           <p className="methods-intro-message">
@@ -61,7 +64,12 @@ export default function Page() {
         <h2 id="family-methods">방식별로 10분 실험하기</h2>
         <div className="method-catalog">
           {MODALITIES.map((m, i) => (
-            <Link className="method-feature" href={`/methods/${m}`} key={m}>
+            <Link
+              className="method-feature"
+              data-family={m}
+              href={`/methods/${m}`}
+              key={m}
+            >
               <StudyArt modality={m} compact />
               <div>
                 <span className="eyebrow">

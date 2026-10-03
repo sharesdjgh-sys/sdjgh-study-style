@@ -1,0 +1,171 @@
+.page {
+  --skill-purple: #73518c;
+  --skill-green: #32644f;
+}
+
+.page :global(.methods-heading-icon) {
+  color: var(--skill-purple);
+  background: #eee4f5;
+  border-color: #d8c5e5;
+}
+
+.page :global(.methods-intro-invitation) {
+  color: #53634f;
+}
+
+.page :global(.methods-intro-invitation .accent-text) {
+  color: var(--skill-purple);
+  background: linear-gradient(
+    transparent 73%,
+    #f0dfa0 73%,
+    #f0dfa0 94%,
+    transparent 94%
+  );
+}
+
+.page :global(.methods-teacher-scene) {
+  margin-block: 18px 12px;
+}
+
+.page :global(.methods-teacher-portrait) {
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 6px #eef3e6,
+    0 0 0 7px #d2dec8;
+}
+
+.page :global(.methods-teacher-portrait .character-motion) {
+  width: 100%;
+}
+
+.page :global(.methods-teacher-portrait .character-motion-media img) {
+  height: 100%;
+}
+
+.page :global(.methods-teacher-label) {
+  padding: 5px 13px;
+  border-radius: 20px;
+  color: var(--skill-green);
+  background: #e7efdd;
+}
+
+.page :global(.methods-intro-message strong) {
+  color: #965020;
+  font-weight: 750;
+  background: linear-gradient(transparent 58%, #fae5b0 58%);
+}
+
+.page :global(.basics-note) {
+  background: #edf3e7;
+  border-color: #cbdcc2;
+}
+
+.page :global(.basics-note strong) {
+  color: var(--skill-green);
+}
+
+.page :global([data-category="concept"]) {
+  --category-color: #32644f;
+  --category-tint: #e7efdf;
+}
+.page :global([data-category="memory"]) {
+  --category-color: #975126;
+  --category-tint: #fae9d7;
+}
+.page :global([data-category="problem"]) {
+  --category-color: #316a7a;
+  --category-tint: #e0eff2;
+}
+.page :global([data-category="review"]) {
+  --category-color: #73518c;
+  --category-tint: #eee4f5;
+}
+
+.page :global(.catalog-group-head h2) {
+  color: var(--category-color);
+}
+
+.page :global(.catalog-group-head h2 > span) {
+  padding: 3px 9px;
+  border-radius: 20px;
+  color: var(--category-color);
+  background: var(--category-tint);
+}
+
+.page :global(.catalog-card) {
+  position: relative;
+  border-color: var(--family-line);
+  background: linear-gradient(155deg, #fffefa 40%, var(--family-tint));
+}
+
+.page :global(.catalog-signature) {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #725018;
+  background: #f4dc8a;
+  font-size: 12px;
+}
+
+.page :global(.catalog-card h3) {
+  color: var(--family-deep);
+  line-height: 1.4;
+}
+
+.page :global(.catalog-card p) {
+  color: #4e6158;
+}
+
+.page :global(.catalog-aka) {
+  color: #66766d;
+}
+
+.page :global(.catalog-card .method-preview-go) {
+  align-self: flex-start;
+  padding: 7px 11px;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--family-deep);
+}
+
+.page :global(.family-links > h2),
+.page :global(.environment-note h2) {
+  color: var(--skill-purple);
+}
+
+.page :global(.method-feature[data-family="visual"]) {
+  --feature-color: #53654a;
+}
+.page :global(.method-feature[data-family="auditory"]) {
+  --feature-color: #9c5b3a;
+}
+.page :global(.method-feature[data-family="tactile"]) {
+  --feature-color: #79618b;
+}
+.page :global(.method-feature[data-family="motion"]) {
+  --feature-color: #477782;
+}
+
+.page :global(.method-feature h2),
+.page :global(.method-feature .eyebrow),
+.page :global(.method-feature .text-link) {
+  color: var(--feature-color);
+}
+
+.page :global(.method-sheet h2) {
+  color: var(--skill-purple);
+}
+
+@media (max-width: 767px) {
+  .page :global(.catalog-card) {
+    padding-top: 32px;
+  }
+  .page :global(.catalog-card h3) {
+    font-size: 14px;
+  }
+}
