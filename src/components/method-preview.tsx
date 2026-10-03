@@ -59,6 +59,10 @@ export function MethodPreview() {
           );
         })}
       </div>
+      <Link className="text-link more-methods" href="/methods">
+        더 많은 공부법 알아보기
+        <Icon name="arrow-right-linear" size={18} />
+      </Link>
     </section>
   );
 }

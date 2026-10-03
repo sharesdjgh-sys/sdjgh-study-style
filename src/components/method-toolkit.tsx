@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { StudyType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
@@ -10,6 +11,7 @@ import {
   type MethodId,
 } from "@/lib/methods";
 import { readSession } from "@/lib/storage";
+import { Icon } from "./icon";
 import { Mission } from "./mission";
 import { BasicsNote, MethodMeta } from "./method-meta";
 
@@ -113,6 +115,10 @@ export function MethodToolkit({
           <span> — 아래 10분 실험 안에 있어요.</span>
         </p>
         <BasicsNote />
+        <Link className="text-link more-methods" href="/methods">
+          더 많은 공부법 알아보기
+          <Icon name="arrow-right-linear" size={18} />
+        </Link>
       </section>
       <div className="toolkit-mission" ref={mission}>
         <Mission key={selected} methodId={selected} type={type} />

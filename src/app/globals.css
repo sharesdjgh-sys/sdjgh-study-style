@@ -2704,9 +2704,14 @@ legend {
     gap: 20px;
   }
   .footer nav {
-    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
     margin-left: 0;
     font-size: var(--text-caption);
+  }
+  .footer nav > * {
+    white-space: nowrap;
   }
   .footer-year {
     font-size: var(--text-caption);
@@ -6047,6 +6052,166 @@ body {
 .toolkit-mission {
   scroll-margin-top: 20px;
 }
+.catalog-icon {
+  position: relative;
+  display: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--family-tint);
+  color: var(--family-deep);
+}
+.catalog-icon > span {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--ink);
+  font-size: 11px;
+}
+.method-sheet {
+  --family-tint: #e3e9d7;
+  --family-deep: #53654a;
+  margin: auto auto 0;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  padding: 0;
+  border: 0;
+  border-radius: 22px 22px 0 0;
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 -12px 40px #2d4a3a33;
+}
+.method-sheet[data-family="auditory"] {
+  --family-tint: #f6e3d0;
+  --family-deep: #9c5b3a;
+}
+.method-sheet[data-family="tactile"] {
+  --family-tint: #ece2f2;
+  --family-deep: #79618b;
+}
+.method-sheet[data-family="motion"] {
+  --family-tint: #deebee;
+  --family-deep: #477782;
+}
+.method-sheet::backdrop {
+  background: #333a2866;
+}
+.method-sheet[open] {
+  animation: sheet-up 0.32s var(--ease);
+}
+@keyframes sheet-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .method-sheet[open] {
+    animation: none;
+  }
+}
+.method-sheet-body {
+  display: grid;
+  gap: 10px;
+  padding: 12px 22px calc(22px + env(safe-area-inset-bottom));
+}
+.method-sheet-handle {
+  justify-self: center;
+  width: 40px;
+  height: 5px;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  background: var(--line);
+}
+.method-sheet-owner {
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 8px;
+  background: var(--family-tint);
+  font-size: var(--text-caption);
+  font-weight: 650;
+  color: var(--family-deep);
+}
+.method-sheet h2 {
+  font-size: 23px;
+}
+.method-sheet .method-aka {
+  margin-top: -6px;
+  font-size: var(--text-label);
+  color: var(--muted);
+}
+.method-sheet-line {
+  font-size: var(--text-secondary);
+  line-height: 1.75;
+}
+.method-sheet-steps {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  font-size: var(--text-label);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.method-sheet-steps li + li {
+  margin-top: 4px;
+}
+.method-sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 8px;
+}
+.quick-menu {
+  display: none;
+}
+@media (max-width: 767px) {
+  /* 모바일 하단 퀵메뉴 */
+  .quick-menu {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: #fbfcf8f2;
+    backdrop-filter: blur(8px);
+  }
+  .quick-menu a {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding: 6px 0 4px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 650;
+    color: var(--muted);
+  }
+  .quick-menu a[aria-current="page"] {
+    color: var(--accent);
+  }
+  .quick-menu a[aria-current="page"] svg {
+    stroke-width: 2;
+  }
+  body:has(.quick-menu) {
+    padding-bottom: calc(68px + env(safe-area-inset-bottom));
+  }
+  body:has(.quick-menu) .mission-timer {
+    bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
+.text-link.more-methods {
+  margin-top: 18px;
+  font-weight: 650;
+  color: var(--accent);
+}
 .filter-tabs + .catalog-group {
   margin-top: 0;
 }
@@ -6068,11 +6233,6 @@ body {
   margin-left: 4px;
   font-size: var(--text-secondary);
   font-weight: 650;
-  color: var(--muted);
-}
-.catalog-swipe-hint {
-  display: none;
-  font-size: var(--text-caption);
   color: var(--muted);
 }
 .catalog-grid {
@@ -6137,52 +6297,37 @@ body {
     margin-bottom: 12px;
     font-size: 21px;
   }
-  /* 28개를 세로로 쌓지 않고, 과제마다 한 줄로 옆으로 넘겨 본다(홈 미리보기와 같은 방식). */
-  .catalog-swipe-hint {
-    display: block;
-  }
-  .catalog-filter,
-  .catalog-grid,
-  .result-shortcuts {
-    flex-wrap: nowrap;
-    margin-inline: -20px;
-    padding-inline: 20px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .catalog-filter::-webkit-scrollbar,
-  .catalog-grid::-webkit-scrollbar,
-  .result-shortcuts::-webkit-scrollbar {
-    display: none;
-  }
-  .catalog-filter button,
-  .result-shortcuts a {
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-  .catalog-filter {
-    padding-block: 2px 4px;
-  }
+  /* 모바일 도감: 아이콘 타일 3칸, 누르면 아래에서 설명 팝업 */
   .catalog-grid {
-    display: flex;
-    gap: 10px;
-    padding-block: 4px 10px;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
   .catalog-card {
-    flex: 0 0 80%;
-    scroll-snap-align: start;
-  }
-  .result-shortcuts {
-    padding-block: 2px 4px;
-  }
-  /* 옆으로 넘기는 바로가기 줄이 결과 첫 화면의 칸 너비를 늘리지 않게 */
-  .result-copy {
-    min-width: 0;
-  }
-  .result-shortcuts a {
+    align-items: center;
     gap: 8px;
+    padding: 14px 6px 12px;
+    border-radius: 14px;
+    box-shadow: none;
+    text-align: center;
+  }
+  .catalog-card:hover {
+    transform: none;
+  }
+  .catalog-icon {
+    display: grid;
+  }
+  .catalog-card h3 {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.35;
+    word-break: keep-all;
+  }
+  .catalog-card .method-preview-family,
+  .catalog-card .catalog-aka,
+  .catalog-card p,
+  .catalog-card .method-meta,
+  .catalog-card .method-preview-go {
+    display: none;
   }
   /* 방식별 페이지 링크는 그림 없이 두 칸으로 짧게 */
   .family-links .method-catalog {
@@ -6245,19 +6390,5 @@ body {
     width: 26px;
     height: 26px;
     font-size: 13px;
-  }
-}
-@media (max-width: 360px) {
-  .catalog-filter,
-  .catalog-grid,
-  .result-shortcuts {
-    margin-inline: -17px;
-    padding-inline: 17px;
-  }
-  .catalog-grid {
-    scroll-padding-inline: 17px;
-  }
-  .catalog-card {
-    flex-basis: 86%;
   }
 }

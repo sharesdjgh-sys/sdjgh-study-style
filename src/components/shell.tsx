@@ -34,6 +34,7 @@ export function Footer() {
       </div>
       <nav aria-label="서비스 안내">
         <CollectionLink />
+        <Link href="/methods">공부법 도감</Link>
         <Link href="/about">테스트와 학교 활용 안내</Link>
         <Link href="/privacy">저장 및 개인정보 안내</Link>
       </nav>

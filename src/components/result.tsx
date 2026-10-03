@@ -242,7 +242,7 @@ export function TypeResult({
           })}
         </div>
         <Link className="text-link" href="/methods">
-          공부법 도감에서 모두 보기
+          더 많은 공부법 알아보기
           <Icon name="arrow-right-linear" size={18} />
         </Link>
       </section>

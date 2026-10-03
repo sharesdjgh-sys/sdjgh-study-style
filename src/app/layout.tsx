@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Header, Footer } from "@/components/shell";
+import { QuickMenu } from "@/components/quick-menu";
 import { siteUrl } from "@/lib/site";
 import { SourceCapture } from "@/components/source-capture";
 import { CollectionProvider } from "@/components/collection-provider";
@@ -39,6 +40,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </div>
+          <QuickMenu />
         </CollectionProvider>
       </body>
     </html>

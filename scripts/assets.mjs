@@ -26,6 +26,7 @@ const names = [
   "user-rounded-linear",
   "calendar-linear",
   "chat-round-dots-linear",
+  "home-smile-linear",
 ];
 const all = JSON.parse(
   await readFile("node_modules/@iconify-json/solar/icons.json", "utf8"),
