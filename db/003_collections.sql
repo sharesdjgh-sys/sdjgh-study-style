@@ -55,15 +55,38 @@ CREATE TABLE IF NOT EXISTS collection_limits (
 );
 
 -- statement-breakpoint
+-- Grants one random card the account does not own yet. Callers hold the
+-- account's row lock, so concurrent grants never pick the same card twice.
+CREATE OR REPLACE FUNCTION grant_random_card(p_account uuid, p_open boolean)
+RETURNS text LANGUAGE plpgsql AS $$
+DECLARE
+  picked text;
+BEGIN
+  SELECT m || '-' || s || '-' || p INTO picked
+    FROM unnest(ARRAY['visual','auditory','tactile','motion']) m
+    CROSS JOIN unnest(ARRAY['solo','team']) s
+    CROSS JOIN unnest(ARRAY['planned','flexible']) p
+    WHERE NOT EXISTS(SELECT 1 FROM collection_cards c
+      WHERE c.account_id=p_account AND c.type_code=m || '-' || s || '-' || p)
+    ORDER BY random() LIMIT 1;
+  IF picked IS NOT NULL THEN
+    INSERT INTO collection_cards(account_id,type_code,source,opened_at)
+      VALUES(p_account,picked,'referral',CASE WHEN p_open THEN now() END);
+  END IF;
+  RETURN picked;
+END;
+$$;
+-- statement-breakpoint
 -- A single SQL statement invokes this transaction. Locking the inviter serializes
 -- simultaneous referrals; the browser never chooses a card or awards a reward.
+-- A referred newcomer opens their own card plus one random bonus card; the
+-- inviter receives one random gift to open.
 CREATE OR REPLACE FUNCTION register_collection(
   p_account uuid, p_run uuid, p_type text, p_invite text DEFAULT NULL
 ) RETURNS text LANGUAGE plpgsql AS $$
 DECLARE
   owner collection_accounts%ROWTYPE;
   inviter uuid;
-  picked text;
 BEGIN
   IF p_type !~ '^(visual|auditory|tactile|motion)-(solo|team)-(planned|flexible)$' THEN
     RAISE EXCEPTION 'invalid_type';
@@ -89,17 +112,8 @@ BEGIN
     VALUES(p_account,p_type,'first',now());
   IF inviter IS NOT NULL THEN
     INSERT INTO collection_referrals(invitee_id,inviter_id) VALUES(p_account,inviter);
-    SELECT m || '-' || s || '-' || p INTO picked
-      FROM unnest(ARRAY['visual','auditory','tactile','motion']) m
-      CROSS JOIN unnest(ARRAY['solo','team']) s
-      CROSS JOIN unnest(ARRAY['planned','flexible']) p
-      WHERE NOT EXISTS(SELECT 1 FROM collection_cards c
-        WHERE c.account_id=inviter AND c.type_code=m || '-' || s || '-' || p)
-      ORDER BY random() LIMIT 1;
-    IF picked IS NOT NULL THEN
-      INSERT INTO collection_cards(account_id,type_code,source)
-        VALUES(inviter,picked,'referral');
-    END IF;
+    PERFORM grant_random_card(p_account,true);
+    PERFORM grant_random_card(inviter,false);
   END IF;
   RETURN CASE WHEN inviter IS NULL THEN 'registered' ELSE 'referred' END;
 END;

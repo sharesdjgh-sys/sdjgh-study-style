@@ -76,7 +76,10 @@ it("친구 첫 등록만 보상하고 같은 친구를 다른 추천인으로 �
     "already_registered",
   );
   expect(await cards(c.id)).toHaveLength(1);
-  expect(await cards(b.id)).toHaveLength(1);
+  const bCards = await cards(b.id);
+  expect(bCards).toHaveLength(2);
+  expect(bCards.every((card) => card.opened_at)).toBe(true);
+  expect(new Set(bCards.map((card) => card.type_code)).size).toBe(2);
 });
 it("존재하지 않는 추천과 같은 검사 결과의 타 계정 재사용을 거부한다", async () => {
   const a = await createAccount(),
@@ -136,6 +139,7 @@ it("기존 7일 통계 정리가 도감을 지우지 않고 계정 삭제는 관
   );
   await db.exec("SELECT study_rollup()");
   expect(await cards(a.id)).toHaveLength(2);
+  expect(await cards(b.id)).toHaveLength(2);
   await db.query(
     "INSERT INTO collection_sessions VALUES('token',$1,now()+interval '30 days')",
     [b.id],
