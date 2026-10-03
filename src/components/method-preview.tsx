@@ -6,6 +6,7 @@ import { FAMILY_METHODS, TASKS, getMethod } from "@/lib/methods";
 import { Icon } from "./icon";
 import { TASK_KEYS, TaskTabs } from "./task-tabs";
 import { MethodMeta } from "./method-meta";
+import { MethodIcon } from "./method-icon";
 export function MethodPreview() {
   const [task, setTask] = useState<Task>(TASK_KEYS[0]);
   return (
@@ -15,18 +16,17 @@ export function MethodPreview() {
     >
       <div className="section-heading">
         <div>
-          <span className="eyebrow">내 공부캐와 상관없이</span>
+          <span className="eyebrow">어떤 공부캐든, 스킬은 자유롭게</span>
           <h2 id="method-preview-title">
             같은 공부도,
             <br />
-            방법은 네 가지예요.
+            스킬은 네 가지예요.
           </h2>
         </div>
         <p>
-          오늘 할 공부를 고르면 방식마다 10분 안에 해 볼 이름 있는 공부법을 보여
-          줘요.
+          오늘 할 공부를 고르고, 마음에 드는 공부 스킬을 만나 보세요.
           <br className="desktop-only" />
-          익숙한 공부법도, 처음 보는 공부법도 좋아요.
+          내 공부캐와 함께 새로운 스킬도 10분씩 익혀 봐요.
         </p>
       </div>
       <div className="method-preview-bar">
@@ -35,14 +35,21 @@ export function MethodPreview() {
       </div>
       <div className="method-preview-grid">
         {MODALITIES.map((m) => {
-          const method = getMethod(FAMILY_METHODS[m][task]);
+          const methodId = FAMILY_METHODS[m][task];
+          const method = getMethod(methodId);
           return (
             <Link
-              className="method-preview-card"
+              className="method-preview-card home-method-card"
               data-family={m}
               href={`/methods/${m}?task=${task}`}
               key={m}
             >
+              <MethodIcon
+                id={methodId}
+                size={88}
+                sizes="(max-width: 767px) 72px, 88px"
+                className="home-method-icon"
+              />
               <span className="method-preview-family">
                 <Icon name={FAMILIES[m].icon} size={18} />
                 {FAMILIES[m].verb} · {FAMILIES[m].label}
@@ -52,7 +59,7 @@ export function MethodPreview() {
               <MethodMeta method={method} />
               <span className="method-preview-go">
                 <Icon name="clock-circle-linear" size={16} />
-                10분 해보기
+                10분 스킬 연습
                 <Icon name="arrow-right-linear" size={18} />
               </span>
             </Link>
@@ -60,7 +67,7 @@ export function MethodPreview() {
         })}
       </div>
       <Link className="text-link more-methods" href="/methods">
-        더 많은 공부법 알아보기
+        더 많은 공부 스킬 알아보기
         <Icon name="arrow-right-linear" size={18} />
       </Link>
     </section>

@@ -1067,6 +1067,10 @@ legend {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
 }
+.home-method-icon {
+  object-fit: contain;
+  margin-bottom: 14px;
+}
 .method-preview-card {
   --family-tint: #e3e9d7;
   --family-deep: #53654a;
@@ -1174,19 +1178,10 @@ legend {
     padding: 8px 6px;
     font-size: var(--text-label);
   }
-  /* 카드를 옆으로 넘겨 보도록 .site-shell의 모바일 좌우 여백(20px)까지 펼친다. */
+  /* 홈에서도 스킬 도감처럼 네 가지 공부법을 아이콘으로 한눈에 보여 준다. */
   .method-preview-grid {
-    display: flex;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
-    margin-inline: -20px;
-    padding: 4px 20px 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 20px;
-    scrollbar-width: none;
-  }
-  .method-preview-grid::-webkit-scrollbar {
-    display: none;
   }
   .method-preview-card {
     flex: 0 0 82%;
@@ -1199,6 +1194,39 @@ legend {
   .method-preview-card h3 {
     margin-top: 14px;
     font-size: 17px;
+  }
+  .home-method-card {
+    align-items: center;
+    gap: 8px;
+    padding: 16px 10px;
+    border-radius: 14px;
+    box-shadow: none;
+    text-align: center;
+  }
+  .home-method-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0;
+  }
+  .home-method-card .method-preview-family {
+    align-self: center;
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+  .home-method-card .method-preview-family svg {
+    display: none;
+  }
+  .home-method-card h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .home-method-card p,
+  .home-method-card .method-meta,
+  .home-method-card .method-preview-go {
+    display: none;
   }
 }
 .mono {
