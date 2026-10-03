@@ -35,6 +35,10 @@ export async function POST(request: Request) {
       redirect_uri: callbackUrl(),
       state,
     }).toString();
+    // Kakao Talk's in-app browser does not support forced reauthentication.
+    if (!/KAKAOTALK/i.test(request.headers.get("user-agent") ?? "")) {
+      url.searchParams.set("prompt", "login");
+    }
     return NextResponse.redirect(url, 303);
   } catch {
     return NextResponse.redirect(

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCollection } from "./collection-provider";
 import styles from "./header-account.module.css";
 
@@ -10,6 +10,14 @@ export function HeaderAccount() {
   const { data, loaded, error, refresh } = useCollection();
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  useEffect(() => {
+    const reset = () => {
+      setBusy(false);
+      setNotice("");
+    };
+    window.addEventListener("pageshow", reset);
+    return () => window.removeEventListener("pageshow", reset);
+  }, []);
   const label = data.signedIn ? "로그아웃" : "카카오 로그인";
   const content = (
     <Image
@@ -38,7 +46,17 @@ export function HeaderAccount() {
 
   return (
     <div className={styles.container}>
-      {data.signedIn ? (
+      {!loaded ? (
+        <button
+          className={styles.account}
+          type="button"
+          disabled
+          aria-label="로그인 상태 확인 중"
+          aria-busy="true"
+        >
+          {content}
+        </button>
+      ) : data.signedIn ? (
         <button
           className={styles.account}
           type="button"
@@ -51,12 +69,21 @@ export function HeaderAccount() {
           {content}
         </button>
       ) : loaded && !error && data.configured ? (
-        <form action="/api/auth/kakao/start" method="post">
+        <form
+          action="/api/auth/kakao/start"
+          method="post"
+          onSubmit={() => {
+            setBusy(true);
+            setNotice("카카오 로그인 화면으로 이동하고 있어요…");
+          }}
+        >
           <button
             className={styles.account}
             type="submit"
             aria-label={label}
             title={label}
+            disabled={busy}
+            aria-busy={busy}
           >
             {content}
           </button>
@@ -72,7 +99,7 @@ export function HeaderAccount() {
         </Link>
       )}
       {notice && (
-        <span className={styles.notice} role="alert">
+        <span className={styles.notice} role="status">
           {notice}
         </span>
       )}

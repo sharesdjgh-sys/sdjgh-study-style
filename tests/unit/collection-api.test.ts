@@ -428,6 +428,9 @@ it("카카오 OAuth는 상태와 브라우저를 검증하고 취소 시 계정�
     "kauth.kakao.com",
   );
   expect(
+    new URL(response.headers.get("location")!).searchParams.get("prompt"),
+  ).toBe("login");
+  expect(
     (
       await callback(
         new Request(
@@ -438,6 +441,15 @@ it("카카오 OAuth는 상태와 브라우저를 검증하고 취소 시 계정�
     ).headers.get("location"),
   ).toContain("auth=cancelled");
   expect(fetcher).not.toHaveBeenCalled();
+});
+it("카카오톡 내부 브라우저에서는 지원하지 않는 재인증 옵션을 보내지 않는다", async () => {
+  const input = request("/api/auth/kakao/start");
+  input.headers.set("user-agent", "Mozilla/5.0 KAKAOTALK 26.1.0");
+  const response = await start(input);
+  const redirect = new URL(response.headers.get("location")!);
+  expect(redirect.hostname).toBe("kauth.kakao.com");
+  expect(redirect.searchParams.has("prompt")).toBe(false);
+  expect(redirect.searchParams.get("state")).toBeTruthy();
 });
 it("카카오 성공 응답으로 서버 세션을 만들고 같은 콜백을 재사용하지 않는다", async () => {
   const fetcher = vi

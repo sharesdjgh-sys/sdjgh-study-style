@@ -7,6 +7,8 @@ import { resultCardData } from "@/lib/result-card";
 export function ResultCardDownload({ session }: { session: Session }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
+  const card = useCardImage(session);
+  const data = resultCardData(session);
   return (
     <section className="keepsake-section" aria-label="내 공부캐 이미지 저장">
       <div>
@@ -16,7 +18,35 @@ export function ResultCardDownload({ session }: { session: Session }) {
           {CHARACTERS[session.result!].name}의 공간에 내 점수와 시그니처
           공부법을 담았어요.
         </p>
-        <p className="small muted">9:16 세로 이미지 · 1080 × 1920 PNG</p>
+      </div>
+      <div className="keepsake-inline">
+        {card.image ? (
+          <button
+            className="keepsake-inline-open"
+            onClick={() => setOpen(true)}
+            aria-label="내 공부캐 카드 크게 보기"
+          >
+            {/* This is the same generated PNG used by the download. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={card.image.url}
+              width={1080}
+              height={1920}
+              alt={`${data.character.name}. ${data.rows.map((r) => `${r.label} ${r.percent}%`).join(", ")}. 시그니처 ${data.method.name}`}
+            />
+          </button>
+        ) : card.error ? (
+          <div role="alert">
+            <p>{card.error}</p>
+            <button className="button secondary" onClick={card.retry}>
+              다시 만들기
+            </button>
+          </div>
+        ) : (
+          <div className="keepsake-placeholder" role="status">
+            내 점수를 담아 카드를 만들고 있어요…
+          </div>
+        )}
       </div>
       <button
         ref={trigger}
@@ -28,6 +58,7 @@ export function ResultCardDownload({ session }: { session: Session }) {
       {open && (
         <CardPreview
           session={session}
+          card={card}
           close={() => {
             setOpen(false);
             requestAnimationFrame(() => trigger.current?.focus());
@@ -37,24 +68,10 @@ export function ResultCardDownload({ session }: { session: Session }) {
     </section>
   );
 }
-function CardPreview({
-  session,
-  close,
-}: {
-  session: Session;
-  close: () => void;
-}) {
-  const dialog = useRef<HTMLDialogElement>(null);
-  const id = useId();
+function useCardImage(session: Session) {
   const [image, setImage] = useState<{ url: string; blob: Blob } | null>(null);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
-  const [sharing, setSharing] = useState(false);
-  const data = resultCardData(session);
-  const filename = `StudyCrew-${data.character.name}-내공부캐.png`;
-  useEffect(() => {
-    dialog.current?.showModal();
-  }, []);
   useEffect(() => {
     let active = true;
     let url = "";
@@ -76,6 +93,35 @@ function CardPreview({
       if (url) URL.revokeObjectURL(url);
     };
   }, [session, attempt]);
+  return {
+    image,
+    error,
+    retry: () => {
+      setError("");
+      setAttempt((n) => n + 1);
+    },
+  };
+}
+function CardPreview({
+  session,
+  close,
+  card,
+}: {
+  session: Session;
+  close: () => void;
+  card: ReturnType<typeof useCardImage>;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const id = useId();
+  const { image } = card;
+  const [shareError, setShareError] = useState("");
+  const error = card.error || shareError;
+  const [sharing, setSharing] = useState(false);
+  const data = resultCardData(session);
+  const filename = `StudyCrew-${data.character.name}-내공부캐.png`;
+  useEffect(() => {
+    dialog.current?.showModal();
+  }, []);
   async function share() {
     if (!image) return;
     const file = new File([image.blob], filename, { type: "image/png" });
@@ -88,7 +134,7 @@ function CardPreview({
       });
     } catch (e) {
       if (!(e instanceof Error && e.name === "AbortError"))
-        setError("공유를 마치지 못했어요. PNG 저장으로 간직할 수 있어요.");
+        setShareError("공유를 마치지 못했어요. PNG 저장으로 간직할 수 있어요.");
     } finally {
       setSharing(false);
     }
@@ -160,8 +206,8 @@ function CardPreview({
             <button
               className="button secondary"
               onClick={() => {
-                setError("");
-                setAttempt((n) => n + 1);
+                setShareError("");
+                card.retry();
               }}
             >
               다시 만들기

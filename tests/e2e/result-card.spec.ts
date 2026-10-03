@@ -26,6 +26,16 @@ test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진�
       localStorage.setItem("study-style:first-result", JSON.stringify(s));
     }, s);
     await page.goto("/result");
+    const inline = page.locator(".keepsake-inline-open img");
+    await expect(inline).toBeVisible();
+    await expect(inline).toHaveAttribute("src", /^blob:/);
+    const inlineSource = await inline.getAttribute("src");
+    await page
+      .locator(".keepsake-section")
+      .screenshot({ path: test.info().outputPath("inline-card.png") });
+    await expect(
+      page.getByText("9:16 세로 이미지 · 1080 × 1920 PNG", { exact: true }),
+    ).toHaveCount(0);
     await page
       .getByRole("button", { name: "내 공부캐 이미지로 저장", exact: true })
       .click();
@@ -35,6 +45,11 @@ test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진�
         ? /시각형 100%, 청각형 0%, 촉각형 0%, 운동형 0%/
         : /시각형 50%, 청각형 25%, 촉각형 17%, 운동형 8%/,
     );
+    await expect(page.locator(".keepsake-preview")).toHaveAttribute(
+      "src",
+      inlineSource!,
+    );
+    await page.screenshot({ path: test.info().outputPath("card-dialog.png") });
     const pending = page.waitForEvent("download");
     await page.getByRole("link", { name: "PNG 저장", exact: true }).click();
     images.push(await readFile((await (await pending).path())!));
@@ -196,7 +211,10 @@ test("원화 로딩 실패는 재시도할 수 있고 재검사는 잠긴 캐릭
     "카드 그림을 불러오지 못했어요",
   );
   fail = false;
-  await page.getByRole("button", { name: "다시 만들기" }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "다시 만들기" })
+    .click();
   await expect(page.locator(".keepsake-preview")).toBeVisible();
   await page.getByRole("button", { name: "카드 미리보기 닫기" }).click();
   await page.evaluate(

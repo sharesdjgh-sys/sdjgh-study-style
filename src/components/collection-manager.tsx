@@ -133,8 +133,12 @@ export function CollectionManager() {
     };
     void check();
     window.addEventListener("study:invite", check);
+    const resetBusy = () => setBusy(false);
+    window.addEventListener("pageshow", resetBusy);
     const auth = new URLSearchParams(location.search).get("auth");
     const messages: Record<string, string> = {
+      success:
+        "카카오 로그인이 완료됐어요. 검사 결과와 캐릭터 카드를 계정에 보관할 수 있어요.",
       cancelled: "로그인을 취소했어요. 검사 결과는 그대로예요.",
       expired: "로그인 시간이 지났어요. 다시 시도해 주세요.",
       failed: "로그인을 마치지 못했어요. 다시 시도해 주세요.",
@@ -146,6 +150,7 @@ export function CollectionManager() {
     return () => {
       controller.abort();
       window.removeEventListener("study:invite", check);
+      window.removeEventListener("pageshow", resetBusy);
     };
   }, []);
   async function action(path: string, payload?: unknown, method = "POST") {
@@ -211,10 +216,18 @@ export function CollectionManager() {
           </div>
         ) : !data.signedIn ? (
           <>
-            <form action="/api/auth/kakao/start" method="post">
+            <form
+              action="/api/auth/kakao/start"
+              method="post"
+              onSubmit={() => {
+                setBusy(true);
+                setNotice("카카오 로그인 화면으로 이동하고 있어요…");
+              }}
+            >
               <button
                 className="button kakao-login"
-                disabled={!data.configured}
+                disabled={!data.configured || busy}
+                aria-busy={busy}
                 aria-label="카카오 로그인"
               >
                 <Image
