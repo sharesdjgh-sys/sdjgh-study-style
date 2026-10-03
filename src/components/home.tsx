@@ -18,7 +18,6 @@ import { useSavedSession } from "./use-saved-session";
 import { Icon } from "./icon";
 import { Arrow } from "./shell";
 import { useCollection } from "./collection-provider";
-import { CollectionLink } from "./collection-link";
 import { collectionProgress } from "@/lib/collection-progress";
 type FormulaChip = { label: string; icon: string; family?: string };
 const FORMULA_FACTORS: {
@@ -122,7 +121,6 @@ export function Home() {
               자유롭게 시도해 보세요.
             </p>
           </aside>
-          <CollectionLink className="home-collection-link" />
         </div>
         <div className="hero-visual hero-character-visual">
           <div className="hero-card-counter" aria-hidden="true">

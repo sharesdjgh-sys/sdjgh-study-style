@@ -6195,16 +6195,20 @@ body {
 }
 
 .special-card-sealed.has-silhouettes {
+  aspect-ratio: auto;
   padding: 20px 14px;
   gap: 8px;
   background: radial-gradient(ellipse at 50% 45%, #fff7da, #ede3c5);
+}
+.special-card-sealed.has-silhouettes > * {
+  flex-shrink: 0;
 }
 .group-photo-silhouette {
   display: grid;
   width: 100%;
   align-items: end;
   gap: 4px;
-  margin: auto 0 8px;
+  margin: 0 0 8px;
 }
 .group-photo-silhouette.is-family {
   grid-template-columns: repeat(4, minmax(0, 1fr));
