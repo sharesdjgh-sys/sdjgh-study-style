@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { FAMILIES, getType, type Modality } from "@/lib/content";
+import { getType, type Modality } from "@/lib/content";
 import {
   CATEGORIES,
   METHOD_IDS,
@@ -12,6 +12,7 @@ import {
 } from "@/lib/methods";
 import { Icon } from "./icon";
 import { MethodMeta } from "./method-meta";
+import { MethodIcon } from "./method-icon";
 import { ownerLabel, useVisibleCodes } from "./method-owner";
 
 const CATEGORY_KEYS = Object.keys(CATEGORIES) as MethodCategory[];
@@ -30,11 +31,9 @@ const MOBILE = "(max-width: 767px)";
  * 데스크톱은 카드, 모바일은 아이콘 타일이고 누르면 아래에서 설명 팝업이 올라와요.
  */
 export function MethodCatalog() {
-  const [filter, setFilter] = useState<MethodCategory | "all">("all");
   const [open, setOpen] = useState<MethodId | null>(null);
   const sheet = useRef<HTMLDialogElement>(null);
   const visible = useVisibleCodes();
-  const shown = CATEGORY_KEYS.filter((c) => filter === "all" || filter === c);
   useEffect(() => {
     if (open && !sheet.current?.open) sheet.current?.showModal();
   }, [open]);
@@ -51,26 +50,7 @@ export function MethodCatalog() {
   const label = open ? ownerLabel(open, visible) : null;
   return (
     <>
-      <div className="filter-tabs" role="group" aria-label="공부법 과제 필터">
-        <button
-          className={filter === "all" ? "active" : ""}
-          aria-pressed={filter === "all"}
-          onClick={() => setFilter("all")}
-        >
-          전체 {METHOD_IDS.length}
-        </button>
-        {CATEGORY_KEYS.map((c) => (
-          <button
-            key={c}
-            className={filter === c ? "active" : ""}
-            aria-pressed={filter === c}
-            onClick={() => setFilter(c)}
-          >
-            {CATEGORIES[c].label} {idsOf(c).length}
-          </button>
-        ))}
-      </div>
-      {shown.map((category) => (
+      {CATEGORY_KEYS.map((category) => (
         <section
           className="catalog-group"
           key={category}
@@ -78,11 +58,16 @@ export function MethodCatalog() {
         >
           <div className="catalog-group-head">
             <h2 id={`catalog-${category}`}>
+              <MethodIcon
+                id={category}
+                size={44}
+                sizes="(max-width: 767px) 36px, 44px"
+              />
               {CATEGORIES[category].label} <span>{idsOf(category).length}</span>
             </h2>
           </div>
           <div className="catalog-grid">
-            {idsOf(category).map((id) => {
+            {idsOf(category).map((id, index) => {
               const m = getMethod(id);
               const owner = ownerLabel(id, visible);
               const family = familyOf(id);
@@ -96,7 +81,16 @@ export function MethodCatalog() {
                   onClick={(event) => preview(event, id)}
                 >
                   <span className="catalog-icon" aria-hidden="true">
-                    <Icon name={FAMILIES[family].icon} size={24} />
+                    <MethodIcon
+                      id={id}
+                      size={88}
+                      sizes="(max-width: 767px) 64px, 88px"
+                      loading={
+                        category === CATEGORY_KEYS[0] && index === 0
+                          ? "eager"
+                          : "lazy"
+                      }
+                    />
                     {owner.signature && <span>★</span>}
                   </span>
                   <span className="method-preview-family">
@@ -135,6 +129,7 @@ export function MethodCatalog() {
         {open && method && label && (
           <div className="method-sheet-body">
             <span className="method-sheet-handle" aria-hidden="true" />
+            <MethodIcon id={open} size={80} className="method-sheet-icon" />
             <p className="method-sheet-owner">
               {label.signature && <span aria-hidden="true">★ </span>}
               {label.short}

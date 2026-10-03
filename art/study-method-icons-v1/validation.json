@@ -1,0 +1,230 @@
+{
+  "catalogCount": 28,
+  "totalCount": 32,
+  "files": [
+    {
+      "id": "concept",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 726790
+    },
+    {
+      "id": "memory",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1215916
+    },
+    {
+      "id": "problem",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1210974
+    },
+    {
+      "id": "review",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1211627
+    },
+    {
+      "id": "blank-page",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1248191
+    },
+    {
+      "id": "cornell",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1227403
+    },
+    {
+      "id": "flowchart",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 823345
+    },
+    {
+      "id": "feynman",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1114594
+    },
+    {
+      "id": "self-quiz",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1254170
+    },
+    {
+      "id": "self-explanation",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1079191
+    },
+    {
+      "id": "card-sort",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1010139
+    },
+    {
+      "id": "leitner",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1115235
+    },
+    {
+      "id": "interleaving",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1076963
+    },
+    {
+      "id": "gesture",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1059201
+    },
+    {
+      "id": "memory-palace",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1315604
+    },
+    {
+      "id": "spaced-retry",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1287788
+    },
+    {
+      "id": "outline",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1510495
+    },
+    {
+      "id": "dual-coding",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 946202
+    },
+    {
+      "id": "timeline",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 783440
+    },
+    {
+      "id": "compare",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1102308
+    },
+    {
+      "id": "sq3r",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1540730
+    },
+    {
+      "id": "elaborative",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1294254
+    },
+    {
+      "id": "teach-back",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1057024
+    },
+    {
+      "id": "socratic",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1058506
+    },
+    {
+      "id": "error-note",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1402293
+    },
+    {
+      "id": "variation",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1339264
+    },
+    {
+      "id": "jigsaw",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1541600
+    },
+    {
+      "id": "problem-posing",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1018129
+    },
+    {
+      "id": "distributed",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1445052
+    },
+    {
+      "id": "mini-quiz",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1072223
+    },
+    {
+      "id": "peer-instruction",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1157104
+    },
+    {
+      "id": "gallery-walk",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "bytes": 1330125
+    }
+  ]
+}

@@ -3,12 +3,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "./icon";
 import { useSavedSession } from "./use-saved-session";
+import { MethodQuickMenu } from "./method-quick-menu";
 
 /** 모바일 하단 퀵메뉴. 검사 중에는 문항에 집중하도록 숨겨요. */
 export function QuickMenu() {
   const path = usePathname();
   const { session } = useSavedSession();
   if (path.startsWith("/quiz")) return null;
+  if (path === "/methods") return <MethodQuickMenu />;
   const mine = session?.result
     ? { href: "/result", label: "내 결과" }
     : { href: "/quiz", label: "내 캐 찾기" };
@@ -22,7 +24,7 @@ export function QuickMenu() {
     },
     {
       href: "/methods",
-      label: "공부법 도감",
+      label: "공부 스킬북",
       icon: "book-bookmark-linear",
       active: path.startsWith("/methods"),
     },

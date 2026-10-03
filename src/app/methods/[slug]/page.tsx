@@ -31,7 +31,7 @@ export default async function Page({
   return (
     <main id="main" className="method-detail">
       <Link href="/methods" className="text-link">
-        ← 공부법 도감
+        ← 공부 스킬북
       </Link>
       {isModality(slug) ? (
         <FamilyMission modality={slug} />

@@ -1,14 +1,39 @@
 import { test, expect } from "@playwright/test";
 
-test("공부법 도감에서 과제로 거르고, 아직 만나지 않은 캐릭터의 시그니처도 해 볼 수 있음", async ({
+test("공부 스킬북 퀵메뉴로 분류를 이동하고, 아직 만나지 않은 캐릭터의 시그니처도 해 볼 수 있음", async ({
   page,
   isMobile,
 }) => {
   await page.goto("/methods");
   await expect(page.locator(".catalog-card")).toHaveCount(28);
   await expect(page.locator(".basics-note")).toContainText("인출 연습");
-  await page.getByRole("button", { name: "복습·리듬 4", exact: true }).click();
-  await expect(page.locator(".catalog-card")).toHaveCount(4);
+  await expect(
+    page.getByRole("group", { name: "공부법 과제 필터" }),
+  ).toHaveCount(0);
+  const categories = page.getByRole("navigation", {
+    name: "공부법 분류 빠른 메뉴",
+  });
+  await expect(categories.getByRole("link")).toHaveCount(4);
+  const review = categories.getByRole("link", {
+    name: "복습·리듬",
+    exact: true,
+  });
+  await review.click();
+  await expect(page).toHaveURL(/\/methods#catalog-review$/);
+  await expect(page.locator("#catalog-review")).toBeInViewport();
+  await expect(review).toHaveAttribute("aria-current", "location");
+  await expect(page.locator(".catalog-card")).toHaveCount(28);
+  // 직접 스크롤해도 현재 분류가 퀵메뉴에 반영돼요.
+  await page
+    .locator("#catalog-memory")
+    .evaluate((heading) =>
+      heading.scrollIntoView({ block: "start", behavior: "instant" }),
+    );
+  await expect(
+    categories.getByRole("link", { name: "용어 암기" }),
+  ).toHaveAttribute("aria-current", "location");
+  await review.click();
+  await expect(review).toHaveAttribute("aria-current", "location");
   // 만나지 않은 캐릭터의 이름은 감추고 방식만 알려 줘요.
   await expect(
     page.locator(".catalog-card", { hasText: "미니 퀴즈" }),
@@ -43,18 +68,20 @@ test("모바일 하단 퀵메뉴로 이동하고, 검사 중에는 숨김", asyn
   isMobile,
 }) => {
   await page.goto("/");
-  const menu = page.getByRole("navigation", { name: "빠른 메뉴" });
+  const menu = page.getByRole("navigation", { name: "빠른 메뉴", exact: true });
   if (!isMobile) {
     await expect(menu).toBeHidden();
     return;
   }
   await expect(menu).toBeVisible();
-  await menu.getByRole("link", { name: "공부법 도감" }).click();
+  await menu.getByRole("link", { name: "공부 스킬북" }).click();
   await expect(page).toHaveURL(/\/methods$/);
-  await expect(menu.getByRole("link", { name: "공부법 도감" })).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  await expect(menu).toHaveCount(0);
+  await expect(
+    page.getByRole("navigation", { name: "공부법 분류 빠른 메뉴" }),
+  ).toBeVisible();
+  await page.goto("/methods/mini-quiz");
+  await expect(menu).toBeVisible();
   await page.goto("/quiz");
   await expect(menu).toHaveCount(0);
 });

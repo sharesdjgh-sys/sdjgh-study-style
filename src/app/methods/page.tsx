@@ -1,28 +1,57 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FAMILIES, MODALITIES } from "@/lib/content";
-import { METHOD_IDS } from "@/lib/methods";
 import { StudyArt } from "@/components/study-art";
 import { Icon } from "@/components/icon";
 import { BasicsNote } from "@/components/method-meta";
 import { MethodCatalog } from "@/components/method-catalog";
-export const metadata = { title: "공부법 도감" };
+export const metadata = { title: "공부 스킬북" };
 export default function Page() {
   return (
     <main id="main" className="catalog-shell">
-      <div className="page-intro">
-        <span className="eyebrow">공부법 도감 · {METHOD_IDS.length}가지</span>
-        <h1>
-          이름 있는 공부법,
-          <br />
-          <span className="accent-text">모두 모아 봤어요.</span>
-        </h1>
-        <p>
-          공부캐마다 즐겨 쓰는 공부법이 달라요. 내 공부캐와 상관없이 모두 시도할
-          수 있어요.
-          <br />
-          하나를 고르고, 떠올리고, 확인해 보세요.
-        </p>
-      </div>
+      <section
+        className="page-intro methods-intro"
+        aria-labelledby="methods-title"
+      >
+        <header className="methods-page-heading">
+          <span className="methods-heading-icon" aria-hidden="true">
+            <Icon name="book-bookmark-linear" size={26} />
+          </span>
+          <div>
+            <h1 id="methods-title">공부 스킬북</h1>
+            <p className="methods-page-description">
+              나에게 맞는 공부 스킬, 하나씩 익혀 볼까요?
+            </p>
+          </div>
+        </header>
+        <div className="methods-welcome">
+          <h2 className="methods-intro-invitation">
+            공부가 막힐 땐,
+            <br className="methods-invitation-break" />{" "}
+            <span className="accent-text">방법을 바꿔 볼까?</span>
+          </h2>
+          <div className="methods-teacher-scene">
+            <picture className="methods-teacher-portrait">
+              <source
+                media="(prefers-reduced-motion: reduce)"
+                srcSet="/characters/motion/teacher-tori-guide-transparent-poster.webp"
+              />
+              <Image
+                src="/characters/motion/teacher-tori-guide-transparent.webp"
+                alt="손을 흔들며 공부법을 안내하는 토리 선생님"
+                width={320}
+                height={320}
+                unoptimized
+                loading="eager"
+              />
+            </picture>
+          </div>
+          <p className="methods-teacher-label">토리 선생님</p>
+          <p className="methods-intro-message">
+            마음에 드는 방법 하나, <strong>오늘 10분만 해 보자.</strong>
+          </p>
+        </div>
+      </section>
       <BasicsNote />
       <MethodCatalog />
       <section

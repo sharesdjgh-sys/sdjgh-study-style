@@ -15,7 +15,7 @@ export function Header() {
       </Link>
       <nav aria-label="주요 메뉴">
         <Link href="/types">공부캐 도감</Link>
-        <Link href="/methods">공부법 도감</Link>
+        <Link href="/methods">공부 스킬북</Link>
         <Link href="/quiz" className="nav-start">
           내 캐 찾기 <Icon name="arrow-right-up-linear" size={17} />
         </Link>
@@ -34,7 +34,7 @@ export function Footer() {
       </div>
       <nav aria-label="서비스 안내">
         <CollectionLink />
-        <Link href="/methods">공부법 도감</Link>
+        <Link href="/methods">공부 스킬북</Link>
         <Link href="/about">테스트와 학교 활용 안내</Link>
         <Link href="/privacy">저장 및 개인정보 안내</Link>
       </nav>

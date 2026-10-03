@@ -1,0 +1,223 @@
+{
+  "mode": "built-in image_gen",
+  "representatives": [
+    {
+      "id": "concept",
+      "name": "개념 이해",
+      "file": "concept.png"
+    },
+    {
+      "id": "memory",
+      "name": "용어 암기",
+      "file": "memory.png"
+    },
+    {
+      "id": "problem",
+      "name": "문제 풀이",
+      "file": "problem.png"
+    },
+    {
+      "id": "review",
+      "name": "복습·리듬",
+      "file": "review.png"
+    }
+  ],
+  "methods": [
+    {
+      "id": "blank-page",
+      "name": "백지 복습법",
+      "category": "concept",
+      "file": "methods/blank-page.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-714b4ded-cf4f-46de-b154-e79402077674.png"
+    },
+    {
+      "id": "cornell",
+      "name": "코넬 노트",
+      "category": "memory",
+      "file": "methods/cornell.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-98d533db-78d7-4ddd-951e-fc2b7fd1e6e0.png"
+    },
+    {
+      "id": "flowchart",
+      "name": "플로차트 풀이",
+      "category": "problem",
+      "file": "methods/flowchart.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-b81fc3bb-0a72-41d7-9a26-2584764677b4.png"
+    },
+    {
+      "id": "feynman",
+      "name": "파인만 학습법",
+      "category": "concept",
+      "file": "methods/feynman.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-6a2092bb-95da-4572-927e-b6d1ecfd153a.png"
+    },
+    {
+      "id": "self-quiz",
+      "name": "셀프 퀴즈",
+      "category": "memory",
+      "file": "methods/self-quiz.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-ed518f80-bc8d-45ee-ae58-3d99b034265b.png"
+    },
+    {
+      "id": "self-explanation",
+      "name": "자기 설명법",
+      "category": "problem",
+      "file": "methods/self-explanation.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-6a987eb0-3a08-4aa1-b112-e98f937643e4.png"
+    },
+    {
+      "id": "card-sort",
+      "name": "카드 분류법",
+      "category": "concept",
+      "file": "methods/card-sort.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-62f18e65-a25f-4764-9515-35c6821011f7.png"
+    },
+    {
+      "id": "leitner",
+      "name": "라이트너 시스템",
+      "category": "memory",
+      "file": "methods/leitner.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-2ea661b5-9fac-4fac-8366-6da65a7c91aa.png"
+    },
+    {
+      "id": "interleaving",
+      "name": "인터리빙",
+      "category": "problem",
+      "file": "methods/interleaving.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-a893bd7c-1ae0-4115-a375-4a152e5fb81a.png"
+    },
+    {
+      "id": "gesture",
+      "name": "제스처 학습",
+      "category": "concept",
+      "file": "methods/gesture.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-92e28e8e-5662-4e28-95a1-e539cffdc11e.png"
+    },
+    {
+      "id": "memory-palace",
+      "name": "기억의 궁전",
+      "category": "memory",
+      "file": "methods/memory-palace.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-4a312087-6df7-440e-97f5-0b3c250b8d12.png"
+    },
+    {
+      "id": "spaced-retry",
+      "name": "간격 두고 다시 풀기",
+      "category": "problem",
+      "file": "methods/spaced-retry.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-9d1d51c0-24d9-4e95-9dda-14839fd1440e.png"
+    },
+    {
+      "id": "outline",
+      "name": "목차 공부법",
+      "category": "concept",
+      "file": "methods/outline.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-608a5d8c-eb6d-4dea-b52d-e95797558ea1.png"
+    },
+    {
+      "id": "dual-coding",
+      "name": "듀얼 코딩",
+      "category": "concept",
+      "file": "methods/dual-coding.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-8af47be1-bfe6-40ab-8d57-9e23f8463ddc.png"
+    },
+    {
+      "id": "timeline",
+      "name": "타임라인 학습법",
+      "category": "concept",
+      "file": "methods/timeline.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-2cafc702-f28d-4b4d-b577-88ac919fc3fa.png"
+    },
+    {
+      "id": "compare",
+      "name": "비교·대조 학습",
+      "category": "memory",
+      "file": "methods/compare.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-6da5cbe9-9c94-4a8b-9127-4444ed9da66e.png"
+    },
+    {
+      "id": "sq3r",
+      "name": "SQ3R 독서법",
+      "category": "concept",
+      "file": "methods/sq3r.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-90804e13-d3c4-42e3-9645-f98cc2c5aa3b.png"
+    },
+    {
+      "id": "elaborative",
+      "name": "정교화 질문법",
+      "category": "concept",
+      "file": "methods/elaborative.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-aabce8f1-1d5b-4c2c-a554-935ae17b3b2b.png"
+    },
+    {
+      "id": "teach-back",
+      "name": "티치백",
+      "category": "concept",
+      "file": "methods/teach-back.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-6b267932-7f1c-424f-b5bc-ca56dde78063.png"
+    },
+    {
+      "id": "socratic",
+      "name": "소크라테스식 질문법",
+      "category": "concept",
+      "file": "methods/socratic.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-e1c4a067-7444-4caa-8192-6b4396fce658.png"
+    },
+    {
+      "id": "error-note",
+      "name": "오답노트",
+      "category": "problem",
+      "file": "methods/error-note.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-bc1e1f4c-f7f2-45af-ac6a-9c9d94fa3afb.png"
+    },
+    {
+      "id": "variation",
+      "name": "문제 변형 학습",
+      "category": "problem",
+      "file": "methods/variation.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-c4a0a156-f276-49e1-a1da-ce06bca97533.png"
+    },
+    {
+      "id": "jigsaw",
+      "name": "직소 학습법",
+      "category": "concept",
+      "file": "methods/jigsaw.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-80ef67e0-9dfc-420f-8725-31564c8c9e4a.png"
+    },
+    {
+      "id": "problem-posing",
+      "name": "문제 만들기",
+      "category": "review",
+      "file": "methods/problem-posing.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-1241fc1a-5f75-4a2b-b6e9-bd8f29d2b25c.png"
+    },
+    {
+      "id": "distributed",
+      "name": "분산 학습",
+      "category": "review",
+      "file": "methods/distributed.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-7620117a-593e-4757-8c91-63f8465e05ef.png"
+    },
+    {
+      "id": "mini-quiz",
+      "name": "미니 퀴즈",
+      "category": "review",
+      "file": "methods/mini-quiz.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-ae614a90-9c43-4542-8683-5bf2d23b5b61.png"
+    },
+    {
+      "id": "peer-instruction",
+      "name": "피어 인스트럭션",
+      "category": "problem",
+      "file": "methods/peer-instruction.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-b1894c22-6a02-4ec9-9cfb-7f0ce1d3c58c.png"
+    },
+    {
+      "id": "gallery-walk",
+      "name": "갤러리 워크",
+      "category": "review",
+      "file": "methods/gallery-walk.png",
+      "source": "C:\\Users\\LifeProfessor\\.codex\\generated_images\\01a0ff44-11b6-7c72-aad2-c82158a2d6b9\\exec-14cdb486-fc1f-45ca-b805-e016f0f76811.png"
+    }
+  ]
+}
