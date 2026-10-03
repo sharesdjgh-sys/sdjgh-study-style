@@ -82,7 +82,10 @@ export function CharacterMotion({
       ref={container}
       className={`character-motion${landscape ? " is-landscape" : ""}`}
     >
-      <div className="character-motion-media">
+      <div
+        className="character-motion-media"
+        style={{ backgroundColor: asset.background }}
+      >
         <Image
           src={asset.poster}
           alt={imageAlt ?? `${name}, ${species} 공부 캐릭터`}

@@ -6,14 +6,14 @@ import {
   STUDY_TYPES,
   type Modality,
 } from "@/lib/content";
-import { CharacterCard } from "./character-card";
+import { CatalogCard } from "./catalog-card";
 import Link from "next/link";
-import { MysteryCard } from "./mystery-card";
 import { useSavedSession } from "./use-saved-session";
 import { useCollection } from "./collection-provider";
 import { SpecialCollectionCard } from "./special-collection-card";
 import { FamilyCollectionCard } from "./family-collection-card";
 import { collectionProgress } from "@/lib/collection-progress";
+import { Icon } from "./icon";
 export function TypeGallery({
   initial = "all",
 }: {
@@ -25,19 +25,57 @@ export function TypeGallery({
   const progress = collectionProgress(data, first?.result);
   const ownCode = progress.firstCode;
   const visibleCodes = loaded ? progress.visibleCodes : new Set<string>();
+  const filteredTypes = STUDY_TYPES.filter(
+    (type) => filter === "all" || type.modality === filter,
+  );
   return (
     <>
       <div className="catalog-discovery-note">
-        <div>
-          <span className="eyebrow">
-            {ownCode
-              ? `발견한 친구 ${progress.collected} / ${progress.total}${progress.previewOnly ? " · 아직 저장 전" : ""}`
-              : "16명의 공부캐, 먼저 만날 친구는 누구?"}
-          </span>
+        <div className="catalog-progress-copy">
+          <div className="catalog-progress-heading">
+            <h2>
+              {ownCode
+                ? "한 장씩, 내 도감이 자라요!"
+                : "첫 친구를 만나면, 수집 시작!"}
+            </h2>
+            <span
+              className="catalog-progress-count"
+              aria-label={
+                loaded
+                  ? `발견한 친구 ${progress.collected}명, 전체 ${progress.total}명`
+                  : "도감 불러오는 중"
+              }
+            >
+              {loaded ? progress.collected : "—"}
+              <small> / {progress.total}</small>
+            </span>
+          </div>
+          <div className="catalog-progress-slots" aria-hidden="true">
+            {STUDY_TYPES.map((type) => (
+              <span
+                key={type.code}
+                data-family={type.modality}
+                className={visibleCodes.has(type.code) ? "is-found" : ""}
+              />
+            ))}
+          </div>
+          {progress.previewOnly && (
+            <span className="catalog-preview-label">
+              첫 친구 미리보기 · 아직 저장 전
+            </span>
+          )}
           <p>
-            {ownCode
-              ? `내 공부캐 1명 + 친구 초대로 ${progress.inviteGoal}명, 모두 ${progress.total}명이에요.`
-              : "첫 검사를 마치고 나만의 친구를 만나보세요. 수집은 로그인 후 시작해요."}
+            {ownCode ? (
+              <>
+                내 공부캐 <strong>1명</strong> + 친구 초대로{" "}
+                <strong>{progress.inviteGoal}명</strong>
+              </>
+            ) : (
+              <>
+                첫 만남은 <strong>검사로</strong>, 도감 저장은{" "}
+                <strong>로그인 후</strong>.
+              </>
+            )}
           </p>
         </div>
         <Link
@@ -49,35 +87,51 @@ export function TypeGallery({
             : "내 캐릭터 만나기 →"}
         </Link>
       </div>
-      <div className="filter-tabs" aria-label="유형 필터">
+      <div className="filter-tabs catalog-family-tabs" aria-label="유형 필터">
         <button
           className={filter === "all" ? "active" : ""}
           aria-pressed={filter === "all"}
           onClick={() => setFilter("all")}
         >
-          전체 16
+          <Icon name="stars-linear" size={23} />
+          <span>모든 친구</span>
         </button>
         {MODALITIES.map((m) => (
           <button
             key={m}
             className={filter === m ? "active" : ""}
             aria-pressed={filter === m}
+            aria-label={FAMILIES[m].label}
+            data-family={m}
             onClick={() => setFilter(m)}
           >
-            {FAMILIES[m].label}
+            <Icon name={FAMILIES[m].icon} size={23} />
+            <span>
+              {FAMILIES[m].label}
+              <small>{FAMILIES[m].verb} 공부해요</small>
+            </span>
           </button>
         ))}
       </div>
-      <p className="character-gallery-hint">
-        {ownCode
-          ? "카드를 뒤집어 공부 이야기를 읽어보세요. “너 무슨 공부캐 나왔어?”"
-          : "실루엣을 보고 상상해 보세요. 누가 내 친구가 될까요?"}
-      </p>
+      <div className="catalog-gallery-heading">
+        <h2>
+          {filter === "all"
+            ? "저마다 다른 매력의 친구들"
+            : `${FAMILIES[filter].label} 친구들을 만나봐요`}
+        </h2>
+        <p className="character-gallery-hint">
+          {ownCode
+            ? "만난 친구의 카드를 뒤집어 공부 이야기를 읽어보세요."
+            : "이름과 실루엣으로 먼저 만나요. 발견하면 모습과 이야기가 열려요."}
+        </p>
+      </div>
       <div className="type-grid character-gallery">
-        {STUDY_TYPES.filter(
-          (t) => filter === "all" || t.modality === filter,
-        ).map((t) => (
-          <div className="type-tile character-tile" key={t.code}>
+        {filteredTypes.map((t) => (
+          <div
+            className="type-tile character-tile"
+            key={t.code}
+            data-family={t.modality}
+          >
             {visibleCodes.has(t.code) ? (
               <div className="own-character-slot">
                 <span className="own-character-badge">
@@ -85,10 +139,10 @@ export function TypeGallery({
                     ? "✦ 나의 첫 캐릭터"
                     : "✦ 초대로 만난 친구"}
                 </span>
-                <CharacterCard type={t} detailLink />
+                <CatalogCard type={t} discovered />
               </div>
             ) : (
-              <MysteryCard type={t} />
+              <CatalogCard type={t} discovered={false} />
             )}
           </div>
         ))}

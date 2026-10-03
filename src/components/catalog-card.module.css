@@ -1,0 +1,28 @@
+.palette {
+  min-width: 0;
+}
+.palette :global(.character-card[data-family]) {
+  --character-deep: var(--card-ink);
+  --character-tint: var(--card-tint);
+  --character-line: color-mix(in srgb, var(--card-line) 35%, white);
+}
+.palette :global(.mystery-card) {
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    #fffefa 0%,
+    var(--card-tint) 62%,
+    #fffefa 100%
+  );
+  border-color: color-mix(in srgb, var(--card-line) 35%, white);
+}
+.palette :global(.mystery-copy h2) {
+  color: var(--card-ink);
+  letter-spacing: -0.025em;
+}
+.palette :global(.mystery-orbit) {
+  background: #ffffff50;
+  border-color: color-mix(in srgb, var(--card-line) 40%, white);
+}
+.palette :global(.mystery-card-top) {
+  color: var(--card-ink);
+}

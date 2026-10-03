@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>공부캐 카드 · 실루엣과 동영상 비교</title>
+<style>
+@font-face{font-family:Pretendard;src:url('../public/fonts/PretendardVariable.woff2') format('woff2');font-weight:45 920;font-display:swap}
+@font-face{font-family:Ssurround;src:url('../public/fonts/Cafe24Ssurround-v2.0.woff2') format('woff2');font-weight:700;font-display:swap}
+*{box-sizing:border-box}body{margin:0;background:#f7f8f2;color:#243d35;font-family:Pretendard,system-ui,sans-serif}button,select,input{font:inherit}button,select{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #79618b;outline-offset:3px}header{max-width:1600px;margin:auto;padding:32px 24px 18px}h1{font-family:Ssurround,sans-serif;font-size:30px;margin:0 0 10px}header p{font-size:14px;line-height:1.7;color:#61746c;margin:0}.controls{position:sticky;top:0;z-index:10;background:#f7f8f2f5;border-block:1px solid #d9e2d9;backdrop-filter:blur(12px)}.toolbar{max-width:1600px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.modes{display:flex;gap:6px}.modes button,select,#playback{border:1px solid #cdd8ca;border-radius:10px;padding:9px 12px;background:#fff;color:#365549}.modes button[aria-pressed=true]{background:#27785d;color:#fff;border-color:#27785d}.size-label{display:flex;gap:8px;align-items:center;font-size:13px}.size-label input{width:90px;accent-color:#27785d}#status{font-size:12px;color:#61746c}.grid{--pair-width:330px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--pair-width)),1fr));gap:24px 18px;max-width:1600px;margin:0 auto;padding:24px}.pair-title{font-size:18px;font-family:Ssurround,sans-serif;color:var(--ink);margin:0 0 10px;display:flex;align-items:center;gap:8px}.pair-title>span{font:12px Pretendard,sans-serif;opacity:.7}.pair-title small{font:12px Pretendard,sans-serif;margin-left:auto}.pair-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.state{display:flex;flex-direction:column;min-width:0}.state-label{font-size:11px;color:#61746c;margin-bottom:7px}.card{display:flex;flex-direction:column;flex:1;min-width:0;padding:14px 10px 12px;border:1px solid color-mix(in srgb,var(--line) 35%,white);border-radius:19px;background:radial-gradient(ellipse at 50% 35%,#fffefa 0%,var(--tint) 62%,#fffefa 100%);box-shadow:0 10px 20px -17px #26352670;text-align:center}.card-top{display:flex;justify-content:space-between;gap:6px;font-size:9px;color:var(--ink)}.portrait{position:relative;display:grid;place-items:center;aspect-ratio:1;margin:8px -3px 10px}.portrait>img{width:100%;height:100%;object-fit:contain;position:relative}.silhouette>img{filter:brightness(0);opacity:.76}.orbit{position:absolute;width:89%;aspect-ratio:1;border:1px dashed color-mix(in srgb,var(--line) 40%,white);border-radius:50%;background:#ffffff50}.question{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%) rotate(-8deg);font:700 46px Ssurround,sans-serif;color:#fff7df;text-shadow:0 4px 20px #15132255}.motion{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:var(--motion-background)}video{display:block;width:100%;height:100%;object-fit:contain}.family{font-size:10px;color:var(--ink);margin-bottom:3px}h3{font:700 clamp(25px,2.3vw,36px)/1.2 Ssurround,sans-serif;color:var(--ink);margin:5px 0 10px;letter-spacing:-.025em}.copy{font-size:12px;line-height:1.65;margin:0 0 7px;word-break:keep-all}.muted{font-size:10px;line-height:1.7;color:#61746c;margin:0 0 12px}.card-bottom{margin-top:auto;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--line) 25%,white);font-size:10px;color:#61746c;line-height:1.6;word-break:keep-all}.pair[hidden]{display:none}.grid[data-view=silhouette] .motion-state,.grid[data-view=motion] .silhouette-state{display:none}.grid:not([data-view=compare]) .pair-cards{grid-template-columns:1fr}.grid:not([data-view=compare]){grid-template-columns:repeat(auto-fit,minmax(min(100%,calc(var(--pair-width) * .62)),1fr))}.grid:not([data-view=compare]) .portrait{max-height:300px;width:100%;margin-inline:auto}.grid:not([data-view=compare]) .card{padding:18px}.play-error{position:absolute;bottom:5px;font-size:10px;background:#fff8;padding:4px;border-radius:5px}footer{padding:0 24px 32px;color:#61746c;text-align:center;font-size:12px;line-height:1.8}@media(max-width:600px){header{padding:22px 16px 14px}h1{font-size:24px}.toolbar{padding:10px 16px;gap:8px}.modes button,select,#playback{padding:8px;font-size:12px}.size-label{display:none}.grid{padding:18px 16px;gap:24px}.grid:not([data-view=compare]){grid-template-columns:repeat(2,minmax(0,1fr))}.grid:not([data-view=compare]) .card{padding:12px 8px}h3{font-size:29px}}@media(prefers-reduced-motion:reduce){.controls{backdrop-filter:none}}
+</style></head><body>
+<header><h1>공부캐 카드, 한눈에 비교하기</h1><p>기존 카드 모양 그대로. 한글 이름과 배경만 캐릭터별 색상으로 맞췄어요.<br>왼쪽은 실루엣과 ?, 오른쪽은 움직이는 카드예요.</p></header>
+<div class="controls"><div class="toolbar"><div class="modes" aria-label="카드 보기 방식"><button data-view="compare" aria-pressed="true">나란히 비교</button><button data-view="silhouette" aria-pressed="false">실루엣만</button><button data-view="motion" aria-pressed="false">동영상만</button></div><select id="family" aria-label="공부 유형"><option value="all">전체 16명</option value="visual">시각형</option><option value="auditory">청각형</option><option value="tactile">촉각형</option><option value="motion">운동형</option></select><button id="playback" aria-pressed="false">영상 일시정지</button><label class="size-label">카드 크기 <input id="size" type="range" min="280" max="650" value="330"></label><span id="status" role="status"></span></div></div>
+<main class="grid" data-view="compare"><section class="pair" data-family="visual" style="--ink:#284731;--tint:#e8eddb;--line:#526d45;--motion-background:#dde6d6">
+    <h2 class="pair-title"><span>01</span> 루미 <small>시각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 01</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/visual-solo-planned.webp" alt="루미 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>루미</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 01</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/visual-solo-planned-loop-8s-v1.mp4" poster="../public/characters/motion/visual-solo-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="루미 움직이는 카드"></video></div></div>
+          <span class="family">시각형 · 부엉이</span><h3>루미</h3><p class="copy">복잡한 생각도, 한 장의 지도로.</p><div class="card-bottom">생각의 지도 · 차분한 집중 · 작은 계획</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="visual" style="--ink:#35533c;--tint:#f4e4ce;--line:#687747;--motion-background:#dfe8d4">
+    <h2 class="pair-title"><span>02</span> 모아 <small>시각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 02</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/visual-solo-flexible.webp" alt="모아 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>모아</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 02</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/visual-solo-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/visual-solo-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="모아 움직이는 카드"></video></div></div>
+          <span class="family">시각형 · 여우</span><h3>모아</h3><p class="copy">이 생각, 저 생각. 이어보면 발견!</p><div class="card-bottom">자유로운 연결 · 혼자 탐색 · 낙서의 발견</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="visual" style="--ink:#25564c;--tint:#e4eee4;--line:#385c4e;--motion-background:#dde7d4">
+    <h2 class="pair-title"><span>03</span> 루트 <small>시각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 03</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/visual-team-planned.webp" alt="루트 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>루트</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 03</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/visual-team-planned-loop-8s-v1.mp4" poster="../public/characters/motion/visual-team-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="루트 움직이는 카드"></video></div></div>
+          <span class="family">시각형 · 사슴</span><h3>루트</h3><p class="copy">우리 생각을 한눈에 펼쳐볼까?</p><div class="card-bottom">함께 그리기 · 연결의 안내자 · 순서 있는 대화</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="visual" style="--ink:#28665d;--tint:#e1f0e9;--line:#498d7e;--motion-background:#dee8d4">
+    <h2 class="pair-title"><span>04</span> 피코 <small>시각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 04</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/visual-team-flexible.webp" alt="피코 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>피코</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 04</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/visual-team-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/visual-team-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="피코 움직이는 카드"></video></div></div>
+          <span class="family">시각형 · 카멜레온</span><h3>피코</h3><p class="copy">다르게 보면, 새롭게 연결돼!</p><div class="card-bottom">관점 바꾸기 · 아이디어 교환 · 즉흥 스케치</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="auditory" style="--ink:#984b2b;--tint:#f9e6d4;--line:#a76638;--motion-background:#f2e1cb">
+    <h2 class="pair-title"><span>05</span> 소리 <small>청각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 05</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/auditory-solo-planned.webp" alt="소리 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>소리</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 05</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/auditory-solo-planned-loop-8s-v1.mp4" poster="../public/characters/motion/auditory-solo-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="소리 움직이는 카드"></video></div></div>
+          <span class="family">청각형 · 사막여우</span><h3>소리</h3><p class="copy">내 목소리로 차근차근 풀어볼게.</p><div class="card-bottom">1분 설명 · 차분한 목소리 · 복습 루틴</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="auditory" style="--ink:#8b4255;--tint:#f6e0e4;--line:#9b5867;--motion-background:#f2e1cd">
+    <h2 class="pair-title"><span>06</span> 멜로 <small>청각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 06</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/auditory-solo-flexible-v2.webp" alt="멜로 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>멜로</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 06</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/auditory-solo-flexible-loop-8s-v2.mp4" poster="../public/characters/motion/auditory-solo-flexible-loop-8s-v2.webp" muted autoplay loop playsinline preload="metadata" aria-label="멜로 움직이는 카드"></video></div></div>
+          <span class="family">청각형 · 고양이</span><h3>멜로</h3><p class="copy">혼잣말인 줄 알았지? 생각 정리 중!</p><div class="card-bottom">생각의 혼잣말 · 질문 수집 · 내 말로 정리</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="auditory" style="--ink:#285268;--tint:#e3edf0;--line:#365e70;--motion-background:#f2e1cd">
+    <h2 class="pair-title"><span>07</span> 토크 <small>청각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 07</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/auditory-team-planned.webp" alt="토크 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>토크</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 07</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/auditory-team-planned-loop-8s-v1.mp4" poster="../public/characters/motion/auditory-team-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="토크 움직이는 카드"></video></div></div>
+          <span class="family">청각형 · 리트리버</span><h3>토크</h3><p class="copy">오늘의 설명 담당, 돌아가면서!</p><div class="card-bottom">설명 메이트 · 질문 릴레이 · 함께하는 순서</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="auditory" style="--ink:#416638;--tint:#f1f0d4;--line:#6a854b;--motion-background:#f2e1cd">
+    <h2 class="pair-title"><span>08</span> 리프 <small>청각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 08</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/auditory-team-flexible.webp" alt="리프 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>리프</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 08</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/auditory-team-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/auditory-team-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="리프 움직이는 카드"></video></div></div>
+          <span class="family">청각형 · 왕관앵무</span><h3>리프</h3><p class="copy">잠깐, 그 얘기 들으니까 궁금한 게 있어!</p><div class="card-bottom">대화의 불씨 · 즉석 질문 · 예시 수집가</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="tactile" style="--ink:#764f32;--tint:#f1e5d3;--line:#92683e;--motion-background:#e7e1ec">
+    <h2 class="pair-title"><span>09</span> 토리 <small>촉각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 09</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/tactile-solo-planned.webp" alt="토리 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>토리</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 09</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/tactile-solo-planned-loop-8s-v1.mp4" poster="../public/characters/motion/tactile-solo-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="토리 움직이는 카드"></video></div></div>
+          <span class="family">촉각형 · 비버</span><h3>토리</h3><p class="copy">하나씩 꺼내서, 차곡차곡 이해하기.</p><div class="card-bottom">분류의 취향 · 차곡차곡 · 손으로 확인</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="tactile" style="--ink:#634679;--tint:#eee4f5;--line:#7a6091;--motion-background:#e7e1ee">
+    <h2 class="pair-title"><span>10</span> 몽 <small>촉각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 10</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/tactile-solo-flexible.webp" alt="몽 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>몽</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 10</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/tactile-solo-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/tactile-solo-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="몽 움직이는 카드"></video></div></div>
+          <span class="family">촉각형 · 라쿤</span><h3>몽</h3><p class="copy">직접 바꿔보면 뭔가 떠오를걸?</p><div class="card-bottom">작은 실험 · 손끝의 발상 · 자유로운 조합</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="tactile" style="--ink:#2f5a76;--tint:#e4edf4;--line:#527690;--motion-background:#e7e1ee">
+    <h2 class="pair-title"><span>11</span> 블록 <small>촉각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 11</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/tactile-team-planned.webp" alt="블록 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>블록</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 11</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/tactile-team-planned-loop-8s-v1.mp4" poster="../public/characters/motion/tactile-team-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="블록 움직이는 카드"></video></div></div>
+          <span class="family">촉각형 · 곰</span><h3>블록</h3><p class="copy">네 조각과 내 조각, 함께 완성하자.</p><div class="card-bottom">함께 조립 · 역할 나누기 · 꾸준한 손길</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="tactile" style="--ink:#2d6d63;--tint:#e0f1eb;--line:#548f87;--motion-background:#e7e1ec">
+    <h2 class="pair-title"><span>12</span> 조이 <small>촉각형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 12</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/tactile-team-flexible.webp" alt="조이 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>조이</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 12</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/tactile-team-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/tactile-team-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="조이 움직이는 카드"></video></div></div>
+          <span class="family">촉각형 · 수달</span><h3>조이</h3><p class="copy">그 조각, 여기 붙이면 어때?</p><div class="card-bottom">조합 놀이 · 아이디어 핑퐁 · 함께 실험</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="motion" style="--ink:#2e5976;--tint:#e1eff7;--line:#416e8c;--motion-background:#d8e9e8">
+    <h2 class="pair-title"><span>13</span> 페이스 <small>운동형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 13</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/motion-solo-planned.webp" alt="페이스 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>페이스</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 13</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/motion-solo-planned-loop-8s-v1.mp4" poster="../public/characters/motion/motion-solo-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="페이스 움직이는 카드"></video></div></div>
+          <span class="family">운동형 · 펭귄</span><h3>페이스</h3><p class="copy">나만의 속도로, 한 구간씩.</p><div class="card-bottom">나만의 페이스 · 짧은 루틴 · 다시 시작</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="motion" style="--ink:#46683d;--tint:#e8f0df;--line:#688958;--motion-background:#e0e0da">
+    <h2 class="pair-title"><span>14</span> 바니 <small>운동형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 14</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/motion-solo-flexible.webp" alt="바니 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>바니</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 14</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/motion-solo-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/motion-solo-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="바니 움직이는 카드"></video></div></div>
+          <span class="family">운동형 · 토끼</span><h3>바니</h3><p class="copy">조금 바꿔서, 가볍게 다시 시작!</p><div class="card-bottom">가벼운 전환 · 자유로운 리듬 · 혼자 재충전</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="motion" style="--ink:#2c567c;--tint:#e5edf6;--line:#3d6389;--motion-background:#d8e8e9">
+    <h2 class="pair-title"><span>15</span> 루카 <small>운동형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 15</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/motion-team-planned.webp" alt="루카 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>루카</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 15</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/motion-team-planned-loop-8s-v1.mp4" poster="../public/characters/motion/motion-team-planned-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="루카 움직이는 카드"></video></div></div>
+          <span class="family">운동형 · 허스키</span><h3>루카</h3><p class="copy">우리, 다음 구간도 같이 가볼까?</p><div class="card-bottom">리듬 메이트 · 함께 체크 · 작은 코스</div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section class="pair" data-family="motion" style="--ink:#476635;--tint:#f0f2d9;--line:#718a43;--motion-background:#d7e8e7">
+    <h2 class="pair-title"><span>16</span> 스킵 <small>운동형</small></h2>
+    <div class="pair-cards">
+      <div class="state silhouette-state"><span class="state-label">미발견 · 실루엣</span>
+        <article class="card"><div class="card-top"><span>아직은 비밀</span><span>No. 16</span></div>
+          <div class="portrait silhouette"><span class="orbit"></span><img src="../public/characters/motion-team-flexible.webp" alt="스킵 실루엣" width="768" height="768"><span class="question" aria-hidden="true">?</span></div>
+          <h3>스킵</h3><p class="copy">어떤 귀여운 친구가 숨어 있을까?</p><p class="muted">어떤 모습일지, 만나면 알 수 있어요.</p><div class="card-bottom">첫 검사와 친구 초대로 하나씩 만나요</div>
+        </article>
+      </div>
+      <div class="state motion-state"><span class="state-label">발견 후 · 동영상</span>
+        <article class="card"><div class="card-top"><span>공부캐 도감</span><span>No. 16</span></div>
+          <div class="portrait"><div class="motion"><video src="../public/characters/motion/motion-team-flexible-loop-8s-v1.mp4" poster="../public/characters/motion/motion-team-flexible-loop-8s-v1.webp" muted autoplay loop playsinline preload="metadata" aria-label="스킵 움직이는 카드"></video></div></div>
+          <span class="family">운동형 · 쿼카</span><h3>스킵</h3><p class="copy">분위기 바꾸고, 한 번 더 해보자!</p><div class="card-bottom">전환의 신호 · 함께 재시작 · 유연한 리듬</div>
+        </article>
+      </div>
+    </div>
+  </section></main>
+<footer>영상은 무음으로 반복 재생됩니다. 프로젝트 폴더 안에서 이 HTML을 열면 함께 있는 이미지와 영상을 불러옵니다.</footer>
+<script>
+const grid=document.querySelector('.grid');const videos=[...document.querySelectorAll('video')];let paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const playback=document.querySelector('#playback');
+function syncPlayback(){playback.textContent=paused?'영상 재생':'영상 일시정지';playback.setAttribute('aria-pressed',String(paused));videos.forEach(v=>{const rect=v.getBoundingClientRect();const visible=!!v.getClientRects().length&&rect.top<innerHeight&&rect.bottom>0;if(!paused&&visible&&!document.hidden)v.play().catch(()=>{});else v.pause();});}
+function status(){const count=[...document.querySelectorAll('.pair')].filter(p=>!p.hidden).length;document.querySelector('#status').textContent=count+'명 표시 중';}
+document.querySelectorAll('.modes button').forEach(b=>b.addEventListener('click',()=>{grid.dataset.view=b.dataset.view;document.querySelectorAll('.modes button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));syncPlayback();status();}));
+document.querySelector('#family').addEventListener('change',e=>{document.querySelectorAll('.pair').forEach(p=>p.hidden=e.target.value!=='all'&&p.dataset.family!==e.target.value);syncPlayback();status();});
+playback.addEventListener('click',()=>{paused=!paused;syncPlayback();});document.querySelector('#size').addEventListener('input',e=>grid.style.setProperty('--pair-width',e.target.value+'px'));
+const observer=new IntersectionObserver(syncPlayback,{threshold:0});videos.forEach(v=>observer.observe(v));document.addEventListener('visibilitychange',syncPlayback);syncPlayback();status();
+</script></body></html>

@@ -7106,6 +7106,239 @@ body:has(.method-quick-menu) {
   }
 }
 
+/* Character catalog: a colorful collection cover and a clear reading order. */
+.character-catalog [data-family="visual"] {
+  --catalog-color: #53654a;
+  --catalog-tint: #eaf0df;
+}
+.character-catalog [data-family="auditory"] {
+  --catalog-color: #9c5b3a;
+  --catalog-tint: #fbebdd;
+}
+.character-catalog [data-family="tactile"] {
+  --catalog-color: #79618b;
+  --catalog-tint: #f0e7f7;
+}
+.character-catalog [data-family="motion"] {
+  --catalog-color: #477782;
+  --catalog-tint: #e2f0f3;
+}
+.character-catalog .catalog-intro {
+  position: relative;
+  margin: 24px 0;
+  padding: 16px 0;
+}
+.catalog-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: #73578c;
+  font-weight: 750;
+}
+.catalog-kicker img {
+  flex-shrink: 0;
+}
+.catalog-kicker small {
+  display: block;
+  margin-top: 3px;
+  color: #62695e;
+  font-size: 13px;
+  font-weight: 500;
+}
+.catalog-intro h1 {
+  position: relative;
+  z-index: 1;
+}
+.catalog-title-highlight {
+  color: #73578c;
+  background: linear-gradient(
+    transparent 73%,
+    #edd579 73%,
+    #edd579 94%,
+    transparent 94%
+  );
+}
+.catalog-intro > p strong {
+  color: #376556;
+  font-weight: 700;
+}
+.character-catalog .catalog-discovery-note {
+  margin-bottom: 24px;
+  background: #e8f1e7;
+  border-color: #c8d9c4;
+}
+.catalog-progress-copy {
+  flex: 1;
+  min-width: 0;
+}
+.catalog-progress-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.catalog-progress-heading h2 {
+  color: #27785d;
+  font-size: 23px;
+}
+.catalog-progress-count {
+  color: #27785d;
+  font-family: "Cafe24 Ssurround", Pretendard, sans-serif;
+  font-size: 32px;
+  white-space: nowrap;
+}
+.catalog-progress-count small {
+  color: #61746c;
+  font-size: 16px;
+}
+.catalog-progress-slots {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 5px;
+  margin: 12px 0;
+}
+.catalog-progress-slots span {
+  height: 14px;
+  border: 1px solid #b9cbb3;
+  border-radius: 4px;
+  background: #f7faf3;
+}
+.catalog-progress-slots .is-found {
+  background: var(--catalog-color);
+  border-color: var(--catalog-color);
+}
+.character-catalog .catalog-discovery-note p {
+  font-size: 14px;
+  color: #53634f;
+}
+.catalog-discovery-note strong {
+  color: #27785d;
+}
+.catalog-preview-label {
+  color: #73578c;
+  font-size: 13px;
+  font-weight: 650;
+}
+.character-catalog .catalog-family-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.catalog-family-tabs button {
+  --catalog-color: #27785d;
+  --catalog-tint: #e8f1e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 14px 10px;
+  border: 1px solid color-mix(in srgb, var(--catalog-color) 35%, white);
+  border-radius: 15px;
+  color: var(--catalog-color);
+  background: var(--catalog-tint);
+  text-align: left;
+  font-weight: 750;
+}
+.catalog-family-tabs button small {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+.catalog-family-tabs button b {
+  margin-left: auto;
+  font-size: 19px;
+}
+.catalog-family-tabs button.active {
+  background: var(--catalog-color);
+  color: white;
+  border-color: var(--catalog-color);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--catalog-color) 70%, black);
+}
+.catalog-family-tabs button:hover {
+  border-color: var(--catalog-color);
+}
+.catalog-gallery-heading {
+  margin-bottom: 26px;
+}
+.catalog-gallery-heading h2 {
+  font-size: 25px;
+  color: #73578c;
+}
+.catalog-gallery-heading h2 > span {
+  font-size: 15px;
+  color: #27785d;
+  white-space: nowrap;
+}
+.catalog-gallery-heading .character-gallery-hint {
+  margin: 8px 0 0;
+  color: #61746c;
+  font-size: 14px;
+}
+@media (max-width: 1100px) {
+  .character-catalog .catalog-family-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .catalog-family-tabs button:first-child {
+    grid-column: 1 / -1;
+    padding-block: 10px;
+  }
+}
+@media (max-width: 767px) {
+  .character-catalog .catalog-intro {
+    margin-top: 18px;
+    padding: 8px 0;
+  }
+  .catalog-kicker {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .catalog-kicker img {
+    width: 48px;
+    height: 48px;
+  }
+  .catalog-kicker small {
+    font-size: 11px;
+  }
+  .catalog-intro > p {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  .character-catalog .catalog-discovery-note {
+    padding: 18px;
+    gap: 16px;
+  }
+  .catalog-progress-heading h2 {
+    font-size: 20px;
+  }
+  .catalog-progress-slots {
+    gap: 3px;
+  }
+  .catalog-progress-slots span {
+    height: 12px;
+  }
+  .character-catalog .catalog-family-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .catalog-family-tabs button {
+    min-height: 64px;
+    padding: 12px;
+  }
+  .catalog-family-tabs button:first-child {
+    min-height: 44px;
+  }
+  .catalog-gallery-heading h2 {
+    font-size: 21px;
+    line-height: 1.5;
+  }
+  .catalog-gallery-heading .character-gallery-hint {
+    font-size: 13px;
+  }
+}
+
 /* Shared display type for headings, prominent labels, and large counters. */
 h1,
 h2,

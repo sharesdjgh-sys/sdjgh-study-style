@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
 import { answersFor } from "../answers";
+import { CHARACTERS } from "../../src/lib/characters";
 
 async function seedOwn(
   page: Page,
@@ -38,7 +39,7 @@ async function seedOwn(
   );
 }
 
-test("미검사 도감은 이름 없이 16개 실루엣만 보여주며 필터도 정체를 숨김", async ({
+test("미검사 도감은 16명 이름과 고유 카드에 실루엣을 유지함", async ({
   page,
 }) => {
   await page.goto("/types");
@@ -47,23 +48,27 @@ test("미검사 도감은 이름 없이 16개 실루엣만 보여주며 필터�
   await expect(
     page.getByRole("link", { name: "내 캐릭터 만나기 →" }),
   ).toBeVisible();
-  const images = page.locator(".mystery-portrait img");
+  const silhouettes = page.locator(".mystery-card img");
+  await expect(silhouettes).toHaveCount(16);
+  await expect(page.locator(".mystery-card video")).toHaveCount(0);
   for (let i = 0; i < 16; i++) {
-    await images.nth(i).scrollIntoViewIfNeeded();
-    await expect(images.nth(i)).toHaveCSS("filter", "brightness(0)");
-    await expect(images.nth(i)).toHaveAttribute("alt", "");
-    await expect
-      .poll(() =>
-        images
-          .nth(i)
-          .evaluate(
-            (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
-          ),
-      )
-      .toBe(true);
+    await expect(silhouettes.nth(i)).toHaveCSS("filter", "brightness(0)");
+    await expect(silhouettes.nth(i)).toHaveAttribute("alt", "");
+  }
+  for (const character of Object.values(CHARACTERS)) {
+    await expect(
+      page
+        .locator(".mystery-card")
+        .getByRole("heading", { name: character.name, exact: true }),
+    ).toBeVisible();
   }
   await page.getByRole("button", { name: "운동형", exact: true }).click();
   await expect(page.locator(".mystery-card")).toHaveCount(4);
+  await expect(
+    page
+      .locator(".mystery-card")
+      .getByRole("heading", { name: "페이스", exact: true }),
+  ).toBeVisible();
   await expect(page.locator(".character-card")).toHaveCount(0);
   expect(
     await page.evaluate(

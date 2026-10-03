@@ -49,7 +49,7 @@ export function CharacterCard({
         >
           <div className="character-card-top">
             <span>공부캐 도감</span>
-            <span className="character-edition">{character.number} / 16</span>
+            <span className="character-edition">No. {character.number}</span>
           </div>
           <div className="character-portrait">
             <span className="character-halo" aria-hidden="true" />
@@ -107,7 +107,7 @@ export function CharacterCard({
         >
           <div className="character-card-top">
             <span>이 캐릭터의 공부 이야기</span>
-            <span className="character-edition">{character.number} / 16</span>
+            <span className="character-edition">No. {character.number}</span>
           </div>
           <span className="character-back-symbol" aria-hidden="true">
             {FAMILIES[type.modality].symbol}
