@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "./icon";
-import { CollectionLink } from "./collection-link";
+import styles from "./footer.module.css";
 export function Header() {
   return (
     <header className="header">
@@ -25,20 +26,31 @@ export function Header() {
 }
 export function Footer() {
   return (
-    <footer className="footer">
-      <div>
-        <Link href="/" className="brand">
-          공부캐<span className="footer-dot">.</span>
-        </Link>
-        <p>재미로 만나는 공부캐, 다양하게 즐기는 공부법.</p>
+    <footer className={styles.footer}>
+      <div className={styles.main}>
+        <div className={styles.intro}>
+          <Image
+            src="/brand/lifeprofessor-logo.png"
+            alt="인생교수의 AI 연구소"
+            width={399}
+            height={67}
+            sizes="210px"
+            className={styles.logo}
+          />
+          <p>공부캐를 모으고, 공부 스킬을 넓혀요.</p>
+        </div>
+        <nav className={styles.navigation} aria-label="푸터 메뉴">
+          <Link href="/collection">내 도감</Link>
+          <Link href="/methods">공부 스킬북</Link>
+          <Link href="/about">서비스 안내</Link>
+          <Link href="/privacy" className={styles.privacy}>
+            개인정보 안내
+          </Link>
+        </nav>
       </div>
-      <nav aria-label="서비스 안내">
-        <CollectionLink />
-        <Link href="/methods">공부 스킬북</Link>
-        <Link href="/about">테스트와 학교 활용 안내</Link>
-        <Link href="/privacy">저장 및 개인정보 안내</Link>
-      </nav>
-      <span className="footer-year">© 2026 공부캐</span>
+      <p className={styles.copyright}>
+        Copyright © 2026 인생교수의 AI 연구소. All rights reserved.
+      </p>
     </footer>
   );
 }
