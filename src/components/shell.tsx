@@ -6,13 +6,16 @@ export function Header() {
   return (
     <header className="header">
       <Link className="brand" href="/" aria-label="공부캐 홈">
-        <span className="brand-mark">
-          <span />
-          <span />
-          <span />
-          <span />
-        </span>
-        공부캐<span className="brand-caption">공부할 때, 또 다른 나</span>
+        <Image
+          className="brand-character-mark"
+          src="/brand/study-friends-v2-192.png"
+          alt=""
+          width={64}
+          height={64}
+          priority
+        />
+        <span className="brand-wordmark">공부캐</span>
+        <span className="brand-caption">공부할 때, 또 다른 나</span>
       </Link>
       <nav aria-label="주요 메뉴">
         <Link href="/types">공부캐 도감</Link>
