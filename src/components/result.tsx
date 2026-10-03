@@ -60,7 +60,7 @@ export function TypeResult({
     <main id="main" className="result-shell">
       <Link href={session ? "/" : "/types"} className="text-link small">
         <Icon name="arrow-left-linear" size={16} />
-        {session ? "공부캐 홈" : "공부캐 도감"}
+        {session ? "StudyCrew 홈" : "공부캐 도감"}
       </Link>
       <section className="result-hero">
         <div className="result-copy">

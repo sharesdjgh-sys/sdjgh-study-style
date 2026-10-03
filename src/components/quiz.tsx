@@ -214,7 +214,7 @@ export function Quiz() {
     <main id="main" className="quiz-shell">
       <div className="quiz-top">
         <Link href="/" className="muted small">
-          공부캐 홈
+          StudyCrew 홈
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />

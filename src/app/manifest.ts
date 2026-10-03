@@ -3,9 +3,10 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "공부캐 — 나와 닮은 공부 친구",
-    short_name: "공부캐",
-    description: "나와 닮은 캐릭터를 만나고, 공부 친구와 스킬을 모아요.",
+    name: "StudyCrew",
+    short_name: "StudyCrew",
+    description:
+      "나와 닮은 공부캐를 만나고, 도감을 채우며 나만의 공부법을 발견해요.",
     lang: "ko",
     start_url: "/",
     scope: "/",

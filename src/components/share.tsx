@@ -61,10 +61,10 @@ export function Share({ type }: { type?: StudyType }) {
         content: {
           title: type
             ? `내 공부캐는 ${CHARACTERS[type.code].name}! 너는 누구야?`
-            : "공부 스타일을 캐릭터로 만나는 테스트",
+            : "StudyCrew — 나와 닮은 공부캐를 만나요",
           description: type
             ? `시그니처 공부법은 ${getMethod(SIGNATURE_METHODS[type.code]).name}! 재미로 만나는 공부 캐릭터와 다양한 공부법을 발견해요.`
-            : "평소 공부하는 모습을 골라 나만의 캐릭터를 찾고, 다양한 공부법을 탐색해 보세요.",
+            : "나와 닮은 공부캐를 만나고, 도감을 채우며 다양한 공부법과 미션을 즐겨 보세요.",
           imageUrl: `${window.location.origin}${shareImagePath(type?.code)}`,
           imageWidth: SHARE_IMAGE_WIDTH,
           imageHeight: SHARE_IMAGE_HEIGHT,

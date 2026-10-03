@@ -1,21 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import { QUESTIONS, SITUATIONS, PAIRS, VERSION } from "@/lib/content";
-export const metadata = { title: "테스트와 학교 활용 안내" };
+export const metadata = { title: "서비스와 학교 활용 안내" };
 export default function Page() {
   return (
     <main id="main" className="prose-shell">
-      <span className="eyebrow">공부캐를 소개해요</span>
+      <span className="eyebrow">StudyCrew를 소개해요</span>
       <h1>
         캐릭터는 재미로,
         <br />
         공부법은 다양하게.
       </h1>
       <p className="prose-lead">
-        공부캐는 재미로 즐기는 공부 캐릭터 테스트예요. 다양한 공부 스타일과
-        공부법이 있다는 것을 알아보고, 새로운 방법을 가볍게 시도하도록
-        만들었어요. 캐릭터 하나로 나를 정의하거나 공부 방법을 정할 필요는
-        없어요.
+        StudyCrew는 나와 닮은 공부캐를 만나고, 나만의 공부법을 발견하는
+        서비스예요. 질문에 답하며 첫 공부캐를 만나고, 친구 초대로 도감을 채우며
+        공부 스킬북과 미션에서 새로운 방법을 가볍게 시도해요. 캐릭터 하나로 나를
+        정의하거나 공부 방법을 정할 필요는 없어요.
       </p>
       <section className="prose-section">
         <h2>어떤 테스트인가요?</h2>
@@ -44,7 +44,7 @@ export default function Page() {
         <p>
           공부법에 따라 기억에 남는 정도는 크게 달라져요. 하지만 그 차이를
           만드는 것은 ‘시각형이라서 그림’ 같은 감각 유형이 아니라, 어떤 공부
-          전략을 쓰느냐에 가까워요. 그래서 공부캐의 모든 활동은 효과가 꾸준히
+          전략을 쓰느냐에 가까워요. 그래서 StudyCrew의 모든 활동은 효과가 꾸준히
           확인된 전략을 바탕에 두고, 그 전략을 내가 끌리는 방식(그리기·말하기·
           손으로 다루기·몸 움직이기)으로 실행하게 짰어요.
         </p>
@@ -213,7 +213,7 @@ export default function Page() {
           src="/api/qr"
           width="144"
           height="144"
-          alt="공부캐 시작 화면으로 이동하는 QR 코드"
+          alt="StudyCrew 시작 화면으로 이동하는 QR 코드"
         />
         <div>
           <h2>포스터에 붙여보세요.</h2>
@@ -221,7 +221,7 @@ export default function Page() {
             운영 주소로 연결되는 QR이에요. 배포 시 사이트 주소를 설정한 뒤
             내려받아 사용하세요.
           </p>
-          <a className="text-link" href="/api/qr" download="공부캐-QR.png">
+          <a className="text-link" href="/api/qr" download="StudyCrew-QR.png">
             QR 이미지 내려받기 →
           </a>
         </div>

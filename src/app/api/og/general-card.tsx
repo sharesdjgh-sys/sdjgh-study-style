@@ -35,7 +35,7 @@ export function GeneralShareCard({ portrait }: { portrait: string }) {
           gap: 20,
         }}
       >
-        <span style={{ fontSize: 32, color: "#27785d" }}>공부캐</span>
+        <span style={{ fontSize: 32, color: "#27785d" }}>StudyCrew</span>
         <span
           style={{
             fontSize: 21,

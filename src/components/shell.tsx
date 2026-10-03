@@ -5,23 +5,32 @@ import styles from "./footer.module.css";
 export function Header() {
   return (
     <header className="header">
-      <Link className="brand" href="/" aria-label="공부캐 홈">
+      <Link className="brand" href="/" aria-label="StudyCrew 홈">
         <Image
-          className="brand-character-mark"
+          className="brand-card-mark"
           src="/brand/study-friends-v2-192.png"
           alt=""
-          width={64}
-          height={64}
+          width={192}
+          height={192}
+          sizes="(max-width: 480px) 40px, 64px"
           priority
         />
-        <span className="brand-wordmark">공부캐</span>
+        <Image
+          className="brand-wordmark"
+          src="/brand/studycrew-wordmark-book.webp"
+          alt="StudyCrew"
+          width={900}
+          height={245}
+          sizes="(max-width: 480px) 120px, 176px"
+          priority
+        />
         <span className="brand-caption">공부할 때, 또 다른 나</span>
       </Link>
       <nav aria-label="주요 메뉴">
         <Link href="/types">공부캐 도감</Link>
         <Link href="/methods">공부 스킬북</Link>
         <Link href="/quiz" className="nav-start">
-          내 캐 찾기 <Icon name="arrow-right-up-linear" size={17} />
+          내 공부캐 찾기 <Icon name="arrow-right-up-linear" size={17} />
         </Link>
       </nav>
     </header>

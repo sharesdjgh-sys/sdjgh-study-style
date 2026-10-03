@@ -145,18 +145,37 @@ legend {
   margin-left: 8px;
   padding-left: 18px;
 }
-.brand-character-mark {
+.brand-card-mark {
+  display: block;
   width: 64px;
   height: 64px;
-  flex-shrink: 0;
   object-fit: contain;
-  border-radius: 18px;
+  flex-shrink: 0;
 }
 .brand-wordmark {
-  font-weight: 900;
-  letter-spacing: -0.045em;
-  color: var(--accent);
-  line-height: 1.15;
+  display: block;
+  width: 176px;
+  height: auto;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .header .brand {
+    gap: 7px;
+  }
+  .brand-card-mark {
+    width: 40px;
+    height: 40px;
+  }
+  .brand-wordmark {
+    width: 120px;
+  }
+  .header nav > a:first-child {
+    display: none;
+  }
+  .header nav .nav-start {
+    white-space: nowrap;
+    padding-inline: 10px;
+  }
 }
 .header nav {
   display: flex;
@@ -3086,6 +3105,12 @@ legend {
   .header nav {
     gap: 11px;
   }
+  .header nav > a:first-child {
+    display: none;
+  }
+  .header nav .nav-start {
+    white-space: nowrap;
+  }
   .nav-start svg {
     display: none;
   }
@@ -5394,11 +5419,6 @@ body {
   .brand {
     font-size: 25px;
     gap: 9px;
-  }
-  .brand-character-mark {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
   }
   .header nav {
     gap: 14px;

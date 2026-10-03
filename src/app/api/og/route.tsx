@@ -63,7 +63,7 @@ export async function GET(request: Request) {
           }}
         >
           <div style={{ display: "flex", fontSize: 30, color: "#36725a" }}>
-            공부캐 · 공부할 때, 또 다른 나
+            StudyCrew · 공부할 때, 또 다른 나
           </div>
           <div
             style={{

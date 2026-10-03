@@ -11,18 +11,21 @@ export const viewport: Viewport = {
   themeColor: "#27785d",
 };
 export const metadata: Metadata = {
-  applicationName: "공부캐",
-  appleWebApp: { capable: true, title: "공부캐", statusBarStyle: "default" },
+  applicationName: "StudyCrew",
+  appleWebApp: { capable: true, title: "StudyCrew", statusBarStyle: "default" },
   metadataBase: new URL(siteUrl()),
-  title: { default: "공부캐 — 너의 공부캐는 누구?", template: "%s | 공부캐" },
-  description: `재미로 만나는 귀여운 공부캐! ${QUESTIONS.length}개의 질문으로 캐릭터를 만나고, 다양한 공부 스타일과 공부법을 탐색해 보세요. 성격·능력을 진단하는 검사가 아니에요.`,
+  title: {
+    default: "StudyCrew — 나와 닮은 공부캐를 만나요",
+    template: "%s | StudyCrew",
+  },
+  description: `StudyCrew에서 나와 닮은 공부캐를 만나고, 나만의 공부법을 발견해요. ${QUESTIONS.length}개의 질문으로 첫 친구를 찾고, 캐릭터 도감과 공부 스킬북, 미션을 즐겨 보세요. 성격·능력을 진단하는 검사가 아니에요.`,
   openGraph: {
     locale: "ko_KR",
     type: "website",
-    siteName: "공부캐",
-    title: "공부 스타일을 캐릭터로 만나는 테스트",
+    siteName: "StudyCrew",
+    title: "StudyCrew — 나와 닮은 공부캐를 만나요",
     description:
-      "평소 공부하는 모습을 골라 나만의 캐릭터를 찾고, 다양한 공부법을 탐색해 보세요.",
+      "나와 닮은 공부캐를 만나고, 도감을 채우며 다양한 공부법과 미션을 즐겨 보세요.",
     images: [{ url: shareImagePath(), width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
