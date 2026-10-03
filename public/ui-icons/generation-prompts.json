@@ -1,0 +1,34 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "prompts": [
+    {
+      "id": "quest-collect",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: a small fan of THREE collectible character cards, sage green edges, cream front card with a very simple cute round animal face portrait, two lavender and gold cards behind. This is the quest collect cards icon."
+    },
+    {
+      "id": "quest-explore",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: An OPEN lavender magical study skill book with thick cream pages and a single golden four-point star hovering just above its center. This is quest discover skills."
+    },
+    {
+      "id": "quest-practice",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: A chunky warm golden and cream analog study timer with sage green winding knob and a tiny lavender pencil resting against it. A simple clock dial without numerals. This is quest practice for ten minutes."
+    },
+    {
+      "id": "nav-home",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: A tiny cozy sage green house with cream walls, rounded roof, one gold door, one simple round window. This is home navigation."
+    },
+    {
+      "id": "nav-collection",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: An upright sage green collectible card album, slightly open with thick cream page edges and two visible colored card tabs. On the cover a single embossed cute round animal face within a rounded card frame. This is character collection navigation."
+    },
+    {
+      "id": "nav-skills",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: A CLOSED lavender study skill spellbook with cream page edges, a golden four-point star emblem on the cover, and sage green bookmark ribbon. This is study skills navigation."
+    },
+    {
+      "id": "nav-character",
+      "prompt": "Use case: stylized-concept. Create ONE production app icon, square canvas, actual transparent background. Premium friendly Korean study-character collectible card game UI. Soft tactile matte clay 3D miniature, rounded chunky forms, restrained sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting, crisp recognizable silhouette at 36px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only a minimal soft contact shadow. Subject: One upright cream collectible character portrait card with a sage green rounded frame, a friendly simple cute round bear face in the center and a small golden magnifying glass overlapping the lower right corner. This is find my character navigation."
+    }
+  ]
+}

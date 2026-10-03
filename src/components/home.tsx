@@ -210,36 +210,51 @@ export function Home() {
         </div>
       </section>
       <MethodPreview />
-      <section className="journey-section">
+      <section className="journey-section" aria-labelledby="journey-title">
         <div className="journey-title">
-          <span className="eyebrow">발견에서 시도까지</span>
-          <h2>
-            결과를 읽고 나면,
+          <span className="eyebrow quest-label">
+            <Icon name="stars-linear" size={16} />
+            공부캐와 함께하는 퀘스트
+          </span>
+          <h2 id="journey-title">
+            카드는 <span className="quest-card-accent">차곡차곡,</span>
             <br />
-            한번 해보는 거예요.
+            스킬은 <span className="quest-skill-accent">하나씩.</span>
           </h2>
           <Link href="/methods" className="text-link">
-            공부 스킬북 펼쳐보기
+            공부 스킬북 펼치기
             <Icon name="arrow-right-linear" size={20} />
           </Link>
         </div>
         <ol className="journey-list">
           {[
             {
-              title: "평소의 나를 떠올려요",
-              text: "최근 2주의 공부 모습을 떠올리며 내 속도로 골라 보세요. 더 좋은 답은 없어요.",
+              icon: "quest-collect",
+              title: "공부캐 카드로 도감 채우기",
+              text: "테스트로 나를 닮은 첫 공부캐를 만나요. 친구와 함께 다른 공부캐 카드도 모으며 나만의 도감을 채워 봐요.",
             },
             {
-              title: "나를 닮은 공부캐를 만나요",
-              text: "캐릭터의 이야기에 공감해 보고 친구와 비교해요. 딱 맞지 않는 부분이 있어도 괜찮아요.",
+              icon: "quest-explore",
+              title: "궁금한 공부캐의 스킬 알아보기",
+              text: "이 공부캐는 어떻게 외우고, 문제를 풀까? 스킬북에서 다양한 공부 스킬과 쓰는 방법을 하나씩 알아봐요.",
             },
             {
-              title: "오늘, 딱 10분만 해봐요",
-              text: "내 캐릭터의 방법도, 다른 캐릭터의 방법도! 하나를 골라 시도하고 내게 어땠는지 살펴봐요.",
+              icon: "quest-practice",
+              title: "마음에 드는 스킬, 내 공부에 써 보기",
+              text: "오늘 할 공부에 스킬 하나를 골라 10분만 써 봐요. 모은 카드와 상관없이 모든 스킬을 자유롭게 연습할 수 있어요.",
             },
           ].map((item, i) => (
             <li key={item.title}>
-              <span>0{i + 1}</span>
+              <span className="quest-step">
+                <Image
+                  src={`/ui-icons/${item.icon}.webp`}
+                  alt=""
+                  width={52}
+                  height={52}
+                  className="quest-step-icon"
+                />
+                <span>0{i + 1}</span>
+              </span>
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>

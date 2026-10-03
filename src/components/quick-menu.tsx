@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Icon } from "./icon";
 import { useSavedSession } from "./use-saved-session";
 import { MethodQuickMenu } from "./method-quick-menu";
 
@@ -15,22 +15,22 @@ export function QuickMenu() {
     ? { href: "/result", label: "내 결과" }
     : { href: "/quiz", label: "내 캐 찾기" };
   const items = [
-    { href: "/", label: "홈", icon: "home-smile-linear", active: path === "/" },
+    { href: "/", label: "홈", icon: "nav-home", active: path === "/" },
     {
       href: "/types",
       label: "공부캐 도감",
-      icon: "users-group-rounded-linear",
+      icon: "nav-collection",
       active: path.startsWith("/types") || path.startsWith("/collection"),
     },
     {
       href: "/methods",
       label: "공부 스킬북",
-      icon: "book-bookmark-linear",
+      icon: "nav-skills",
       active: path.startsWith("/methods"),
     },
     {
       ...mine,
-      icon: "user-rounded-linear",
+      icon: "nav-character",
       active: path.startsWith("/result"),
     },
   ];
@@ -42,7 +42,13 @@ export function QuickMenu() {
           href={item.href}
           aria-current={item.active ? "page" : undefined}
         >
-          <Icon name={item.icon} size={22} />
+          <Image
+            src={`/ui-icons/${item.icon}.webp`}
+            alt=""
+            width={36}
+            height={36}
+            className="quick-menu-icon"
+          />
           <span>{item.label}</span>
         </Link>
       ))}
