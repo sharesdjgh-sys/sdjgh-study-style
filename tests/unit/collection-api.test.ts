@@ -379,7 +379,7 @@ it("최초 유효 초대 코드를 유지하고 이미 등록한 사용자는 �
         }),
       )
     ).json(),
-  ).toEqual({ outcome: "referred" });
+  ).toMatchObject({ outcome: "referred", bonus: expect.any(String) });
   expect(
     (
       await db.query<{ invite_code: string }>(

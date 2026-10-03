@@ -36,7 +36,15 @@ export function CollectionNudge() {
     </section>
   );
 }
-function RewardReveal({ code, close }: { code: string; close: () => void }) {
+function RewardReveal({
+  code,
+  close,
+  bonus = false,
+}: {
+  code: string;
+  close: () => void;
+  bonus?: boolean;
+}) {
   const [revealed, setRevealed] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const type = getType(code)!;
@@ -55,7 +63,11 @@ function RewardReveal({ code, close }: { code: string; close: () => void }) {
         close();
       }}
     >
-      <p className="eyebrow">친구의 첫 발견이 전해졌어요</p>
+      <p className="eyebrow">
+        {bonus
+          ? "친구 추천 보너스가 도착했어요"
+          : "친구의 첫 발견이 전해졌어요"}
+      </p>
       <h2 id="reward-title" aria-live="polite">
         {revealed
           ? `${CHARACTERS[code].name}, 도감에 합류!`
@@ -94,7 +106,10 @@ export function CollectionManager() {
   const [captured, setCaptured] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
-  const [reward, setReward] = useState<string | null>(null);
+  const [reward, setReward] = useState<{
+    code: string;
+    bonus: boolean;
+  } | null>(null);
   const [confirm, confirmDialog] = useConfirm();
   useEffect(() => {
     const controller = new AbortController();
@@ -231,7 +246,8 @@ export function CollectionManager() {
                 {captured ? (
                   <p className="invite-captured">
                     초대 코드 <strong>{captured}</strong>가 연결됐어요. 첫
-                    저장을 마치면 친구에게도 새 캐릭터가 도착해요.
+                    저장을 마치면 나에게 보너스 캐릭터 1명, 친구에게도 새
+                    캐릭터가 도착해요.
                   </p>
                 ) : (
                   <label className="invite-input">
@@ -265,12 +281,14 @@ export function CollectionManager() {
                       session: first,
                       ...(code ? { inviteCode: code } : {}),
                     });
-                    if (result)
-                      setNotice(
-                        result.outcome === "referred"
-                          ? "첫 친구를 저장했어요! 초대한 친구에게도 발견이 전해졌어요."
-                          : "첫 친구를 도감에 저장했어요!",
-                      );
+                    if (!result) return;
+                    setNotice(
+                      result.outcome === "referred"
+                        ? "첫 친구와 보너스 친구를 저장했어요! 초대한 친구에게도 새 캐릭터가 전해졌어요."
+                        : "첫 친구를 도감에 저장했어요!",
+                    );
+                    if (result.bonus)
+                      setReward({ code: result.bonus, bonus: true });
                   }}
                 >
                   {busy ? "도감에 저장하는 중…" : "첫 캐릭터 도감에 저장하기"}
@@ -326,7 +344,7 @@ export function CollectionManager() {
                       "/api/collection/rewards/open",
                       { id: data.pending[0].id },
                     );
-                    if (result) setReward(result.code);
+                    if (result) setReward({ code: result.code, bonus: false });
                   }}
                 >
                   {busy ? "선물 확인 중…" : "두근두근, 열어보기"}
@@ -393,8 +411,9 @@ export function CollectionManager() {
       </section>
       {reward && (
         <RewardReveal
-          key={reward}
-          code={reward}
+          key={reward.code}
+          code={reward.code}
+          bonus={reward.bonus}
           close={() => setReward(null)}
         />
       )}

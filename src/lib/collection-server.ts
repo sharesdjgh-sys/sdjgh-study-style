@@ -72,6 +72,13 @@ export async function collectionData(
     referralCount: Number(counts[0].total),
   };
 }
+// The bonus card a newly referred account opened alongside its first card.
+export async function latestBonus(ownerId: string) {
+  const rows = await database()`SELECT type_code FROM collection_cards
+    WHERE account_id=${ownerId}::uuid AND source='referral' AND opened_at IS NOT NULL
+    ORDER BY created_at DESC,opened_at DESC LIMIT 1`;
+  return rows[0] ? String(rows[0].type_code) : null;
+}
 export function json(data: unknown, status = 200) {
   return Response.json(data, {
     status,
