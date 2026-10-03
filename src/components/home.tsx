@@ -263,25 +263,46 @@ export function Home() {
           ))}
         </ol>
       </section>
-      <section className="closing-cta">
-        <span className="closing-symbol">✳</span>
-        <div>
-          <p className="eyebrow">친구에게도 물어봐요. 너 무슨 캐 나왔어?</p>
-          <h2>
-            공부할 때의 나는,
+      <section
+        className="closing-cta closing-reveal"
+        aria-labelledby="closing-title"
+      >
+        <div className="closing-copy">
+          <p className="eyebrow">16명의 공부캐 · 너를 닮은 한 명</p>
+          <h2 id="closing-title">
+            내가 공부캐라면,
             <br />
-            어떤 귀여운 친구일까?
+            <span>어떤 친구일까?</span>
           </h2>
+          <p className="closing-description">
+            계획표부터 짜는 너도, 일단 시작하는 너도.
+            <br />
+            평소의 너를 고르면, 닮은 공부캐가 나타나요.
+          </p>
         </div>
-        <Link className="button primary large" href="/quiz">
-          내 공부캐 찾기
-          <Arrow />
-        </Link>
-        <p className="closing-note">
-          재미로 만나고, 새로운 공부법도 발견해요.
-          <br />
-          캐릭터 하나가 나의 공부 가능성을 정하지 않아요.
-        </p>
+        <div className="closing-card-art">
+          <MysteryCarousel silhouetteOnly />
+        </div>
+        <div className="closing-actions">
+          <Link
+            className="button primary large"
+            href={saved?.result ? "/result" : "/quiz"}
+          >
+            {saved?.result
+              ? "내 공부캐 카드 다시 보기"
+              : saved
+                ? "이어서 내 공부캐 만나기"
+                : "내 공부캐 카드 만나기"}
+            <Arrow />
+          </Link>
+          <p className="closing-time">
+            <Icon name="clock-circle-linear" size={15} />약 3~5분 · 가입 없이
+            바로 시작
+          </p>
+          <p className="closing-note">
+            카드로 만나는 나의 공부 습관, 스킬북으로 넓어지는 공부 방법.
+          </p>
+        </div>
       </section>
     </main>
   );

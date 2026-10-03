@@ -8,6 +8,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { STUDY_TYPES, type StudyType } from "@/lib/content";
+import Image from "next/image";
 import { MysteryCard } from "./mystery-card";
 
 function subscribeMotion(callback: () => void) {
@@ -30,7 +31,11 @@ function shuffledRound(previous?: StudyType) {
   return round;
 }
 
-export function MysteryCarousel() {
+export function MysteryCarousel({
+  silhouetteOnly = false,
+}: {
+  silhouetteOnly?: boolean;
+}) {
   const remaining = useRef<StudyType[]>([]);
   const current = useRef<StudyType | undefined>(undefined);
   const [type, setType] = useState<StudyType | null>(null);
@@ -62,6 +67,27 @@ export function MysteryCarousel() {
     }, 4000);
     return () => window.clearInterval(timer);
   }, [isPaused, next, type]);
+
+  if (silhouetteOnly) {
+    return (
+      <div className="silhouette-preview" data-ready={!!type}>
+        <div className="silhouette-stage" aria-hidden="true">
+          <span className="silhouette-glow" />
+          <Image
+            key={type?.code}
+            src={(type ?? STUDY_TYPES[0]).asset!}
+            alt=""
+            width={360}
+            height={360}
+            sizes="(max-width: 767px) 220px, 300px"
+            draggable={false}
+          />
+          <span className="silhouette-question">?</span>
+        </div>
+        <p className="silhouette-caption">이 실루엣, 너랑 닮았을지도?</p>
+      </div>
+    );
+  }
 
   return (
     <>
