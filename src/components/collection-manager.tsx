@@ -12,6 +12,8 @@ import { MysteryCard } from "./mystery-card";
 import { Share } from "./share";
 import { useConfirm } from "./ui/confirm-dialog";
 import { collectionProgress } from "@/lib/collection-progress";
+import { SavedResults } from "./saved-results";
+import { useAccountResults } from "./account-results-provider";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -101,7 +103,9 @@ const ERRORS: Record<string, string> = {
 };
 export function CollectionManager() {
   const { data, loaded, error, refresh } = useCollection();
-  const { first } = useSavedSession();
+  const { first: localFirst } = useSavedSession();
+  const { results } = useAccountResults();
+  const first = localFirst ?? results.filter((s) => !s.isRetake).at(-1) ?? null;
   const [code, setCode] = useState("");
   const [captured, setCaptured] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
@@ -223,7 +227,8 @@ export function CollectionManager() {
               </button>
             </form>
             <p className="small muted">
-              이미 모은 도감도 같은 계정으로 로그인하면 돌아와요.
+              검사 답변·점수가 계정에 저장돼요. 같은 계정으로 로그인하면 결과와
+              도감이 돌아와요.
             </p>
             {!data.configured && (
               <p className="notice" role="status">
@@ -269,9 +274,8 @@ export function CollectionManager() {
                   </label>
                 )}
                 <p className="small muted">
-                  완료 확인을 위해 답변을 잠깐 전송해 검증해요. 답변·상세 점수는
-                  서버에 저장하지 않아요. 저장 후 첫 캐릭터와 추천인은 바꿀 수
-                  없어요.
+                  답변을 서버에서 검증하고 점수와 함께 계정에 보관해요. 저장 후
+                  첫 캐릭터와 추천인은 바꿀 수 없어요.
                 </p>
                 <button
                   className="button primary"
@@ -386,7 +390,7 @@ export function CollectionManager() {
                   await confirm({
                     title: "계정과 도감을 삭제할까요?",
                     description:
-                      "이 서비스의 계정, 수집한 캐릭터, 초대 코드와 모든 로그인 세션을 삭제해요.",
+                      "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 초대 코드와 모든 로그인 세션을 삭제해요.",
                     note: "복구할 수 없어요. 친구에게 이미 지급된 캐릭터는 유지되고, 이 기기의 검사 기록도 함께 지워요. 카카오 계정 자체를 삭제하는 것은 아니에요.",
                     confirmLabel: "계정·도감 삭제",
                     tone: "danger",
@@ -409,6 +413,7 @@ export function CollectionManager() {
           </div>
         )}
       </section>
+      {data.signedIn && <SavedResults history />}
       {reward && (
         <RewardReveal
           key={reward.code}

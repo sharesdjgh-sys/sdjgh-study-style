@@ -1,5 +1,6 @@
 export type CollectedCard = { code: string; source: "first" | "referral" };
 export type CollectionData = {
+  accountId?: string;
   configured: boolean;
   signedIn: boolean;
   firstType: string | null;

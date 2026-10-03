@@ -49,6 +49,12 @@ import { POST as logout } from "../../src/app/api/auth/logout/route";
 import { DELETE as remove } from "../../src/app/api/collection/account/route";
 import { POST as open } from "../../src/app/api/collection/rewards/open/route";
 import { GET as specialCard } from "../../src/app/api/collection/special-card/route";
+import {
+  GET as results,
+  POST as saveResult,
+} from "../../src/app/api/results/route";
+import { parseSession, DAY } from "../../src/lib/storage";
+import { scoreAnswers } from "../../src/lib/scoring";
 let db: PGlite;
 let owner: string;
 const origin = "https://study.example";
@@ -83,6 +89,7 @@ function session() {
 beforeAll(async () => {
   db = new PGlite();
   await db.exec(await readFile("db/003_collections.sql", "utf8"));
+  await db.exec(await readFile("db/004_saved_results.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -470,7 +477,7 @@ it("다른 계정의 선물을 열지 않고 로그아웃은 도감을 유지한
   expect((await collection()).status).toBe(200);
   expect((await (await collection()).json()).signedIn).toBe(false);
 });
-it("계정 삭제는 도감과 세션을 삭제한다", async () => {
+it("계정 삭제는 도감과 세션, 검사 답변과 점수를 삭제한다", async () => {
   await register(request("/api/collection/register", { session: session() }));
   expect(
     (await remove(request("/api/collection/account", {}, "DELETE"))).status,
@@ -481,4 +488,102 @@ it("계정 삭제는 도감과 세션을 삭제한다", async () => {
   expect((await db.query("SELECT * FROM collection_cards")).rows).toHaveLength(
     0,
   );
+  expect(
+    (await db.query("SELECT * FROM saved_study_results")).rows,
+  ).toHaveLength(0);
+});
+
+it("로그인한 계정에 서버 재채점 결과를 저장하고 같은 응답 재전송은 중복을 만들지 않는다", async () => {
+  const s = session();
+  for (let i = 0; i < 2; i++)
+    expect(
+      (
+        await saveResult(
+          request("/api/results", { ...s, scores: { visual: 999 } }),
+        )
+      ).status,
+    ).toBe(200);
+  const stored = (
+    await db.query<{ scores: unknown; session: unknown }>(
+      "SELECT scores,session FROM saved_study_results",
+    )
+  ).rows;
+  expect(stored).toHaveLength(1);
+  expect(stored[0].scores).toEqual(scoreAnswers(s.answers));
+  expect(stored[0].session).not.toHaveProperty("scores");
+  const response = await results();
+  expect(response.headers.get("cache-control")).toBe("no-store");
+  expect(response.headers.get("vary")).toBe("Cookie");
+  expect((await response.json()).results).toEqual([s]);
+  const changed = { ...s, answers: { ...s.answers, A01: "auditory" } };
+  expect((await saveResult(request("/api/results", changed))).status).toBe(409);
+});
+it("응답 검증, 로그인, 출처 검증과 검사 소유권을 강제한다", async () => {
+  const s = session();
+  expect(
+    (
+      await saveResult(
+        request("/api/results", s, "POST", "https://evil.example"),
+      )
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await saveResult(
+        request("/api/results", { ...s, result: "motion-team-flexible" }),
+      )
+    ).status,
+  ).toBe(400);
+  expect(
+    (await saveResult(request("/api/results", { ...s, answers: {} }))).status,
+  ).toBe(400);
+  const other = randomUUID();
+  await db.query(
+    "INSERT INTO collection_accounts(id,kakao_id,invite_code) VALUES($1,'other','BBBBBBBBBB')",
+    [other],
+  );
+  await db.query(
+    "INSERT INTO collection_sessions VALUES($1,$2,now()+interval '1 day')",
+    [digest("other-session"), other],
+  );
+  expect((await saveResult(request("/api/results", s))).status).toBe(200);
+  mocks.jar.set("study-collection", "other-session");
+  expect((await (await results()).json()).results).toEqual([]);
+  expect((await saveResult(request("/api/results", s))).status).toBe(409);
+  expect(
+    (await register(request("/api/collection/register", { session: s })))
+      .status,
+  ).toBe(409);
+  expect((await db.query("SELECT * FROM collection_cards")).rows).toHaveLength(
+    0,
+  );
+  mocks.jar.clear();
+  expect((await results()).status).toBe(401);
+  expect((await saveResult(request("/api/results", s))).status).toBe(401);
+});
+it("7일 지난 서버 결과는 복원하지만 만료된 기기 기록은 신규 업로드하지 않는다", async () => {
+  const s = session();
+  s.startedAt -= 30 * DAY;
+  s.updatedAt -= 30 * DAY;
+  s.completedAt -= 30 * DAY;
+  expect(parseSession(JSON.stringify(s))).toBeNull();
+  expect(parseSession(JSON.stringify(s), Date.now(), true)).toEqual(s);
+  expect((await saveResult(request("/api/results", s))).status).toBe(400);
+  await db.query(
+    "INSERT INTO saved_study_results(run_id,account_id,version,type_code,session,scores,completed_at) VALUES($1,$2,$3,$4,$5,$6,$7)",
+    [
+      s.runId,
+      owner,
+      s.version,
+      s.result,
+      JSON.stringify(s),
+      JSON.stringify(scoreAnswers(s.answers)),
+      new Date(s.completedAt),
+    ],
+  );
+  expect((await (await results()).json()).results).toEqual([s]);
+  expect(
+    (await register(request("/api/collection/register", { session: s })))
+      .status,
+  ).toBe(200);
 });

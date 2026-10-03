@@ -57,6 +57,7 @@ export async function collectionData(
   return {
     configured: loginConfigured(),
     signedIn: true,
+    accountId: owner.id,
     firstType: owner.first_type,
     firstRunId: owner.first_run_id,
     inviteCode: owner.first_type ? owner.invite_code : null,

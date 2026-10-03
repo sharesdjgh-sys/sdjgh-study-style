@@ -32,4 +32,15 @@ await sql.transaction(
     .filter(Boolean)
     .map((statement) => sql.query(statement)),
 );
-console.log("공부캐 이용 통계·계정·캐릭터 도감 테이블 준비 완료");
+const results = await readFile(
+  new URL("../db/004_saved_results.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  results
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+    .map((statement) => sql.query(statement)),
+);
+console.log("StudyCrew 통계·계정·도감·검사 결과 테이블 준비 완료");

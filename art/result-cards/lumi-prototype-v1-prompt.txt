@@ -1,0 +1,21 @@
+Tool: built-in image_gen.
+Prototype only: illustrative scores, not a real student's result.
+Character: Lumi / visual-solo-planned. Signature: outline / 목차 공부법.
+Example counts: visual 6, auditory 3, tactile 2, motion 1 out of 12.
+Displayed rounded percentages: 50%, 25%, 17%, 8%.
+Delivery: lumi-prototype-v1-1080x1920.png (9:16).
+
+Create ONE finished premium collectible character result card in EXACT 9:16 portrait aspect ratio, target 1080x1920. It is a keepsake students want to save on their phone and proudly share as a story. Not a webpage, no phone mockup, no download buttons. Full bleed finished design with safe inner margins. Image 1 is the exact character identity reference: Lumi, sage-green and cream plush owl with round thin gold glasses, brown sparkling eyes, green knitted school vest, white collar, gold star pin, red pencil and open concept-map notebook. Faithfully preserve this character and its charming plush 3D rendering; show a LARGE complete full-body portrait, all feet and head visible, filling central 50% of total canvas height, no other characters. Image 2 is the approved StudyCrew brand logo, use it small and tasteful at the top.
+Art direction: sophisticated storybook collectible card, forest green, ivory, soft sage, restrained champagne-gold foil lines. Thin double rounded rectangular frame inset from edges. Mostly clean ivory paper background with subtle mint light behind character, a very faint oversized LUMI typographic backdrop, two tiny constellation/map line motifs to reflect visual thinking, plenty of breathing room. Desirable polished editorial hierarchy, warm and premium, not cluttered RPG UI, no invented rarity/achievement/verified stamps.
+Layout top to bottom:
+1. Small StudyCrew logo at top left, tiny “NO. 01” at top right.
+2. Small eyebrow “나의 공부캐”, then large gorgeous Korean name “루미” with smaller “LUMI” alongside. One concise tagline: “복잡한 생각도, 한 장의 지도로.”
+3. HUGE hero character centered, naturally posed with notebook and pencil from reference. Beneath hero, three small elegant chips: “시각형” “혼자 몰입” “차근차근 계획”.
+4. Bottom information area on ivory, separated by elegant thin green rule, heading “나의 공부 스타일”, tiny annotation alongside “선택 비율 · 예시”. Four tidy horizontal rows each with label, track, colored bar, right-aligned number. Every track same width; fill lengths mathematically proportional to 100% full scale: visual half, auditory quarter, tactile seventeen hundredths, motion eight hundredths. EXACT rows:
+“시각형” — “50%” sage/forest green bar
+“청각형” — “25%” muted coral bar
+“촉각형” — “17%” muted lavender bar
+“운동형” — “8%” warm ochre bar
+5. One compact highlighted signature panel, understated rounded sage border, with small label “루미의 시그니처”, main bold text “목차 공부법”, explanatory copy in two clean readable lines: “큰 틀을 먼저 떠올리고,” then “빈칸을 하나씩 채워요.”
+6. Very small legible bottom note “시안용 예시 점수 · 능력이나 성적을 뜻하지 않아요”.
+Korean text must be spelled exactly, clear crisp typesetting, no extra paragraphs, no illegible filler, no added text. All four score rows and signature panel must fit fully inside the card with generous margins. Balance hero desirability with phone-readable information. Render the actual complete print-quality card, exact 9:16 portrait, opaque background.

@@ -49,7 +49,11 @@ const sessionSchema = z.object({
 export type Session = z.infer<typeof sessionSchema>;
 let memory: Session | null = null;
 let firstMemory: Session | null = null;
-export function parseSession(raw: string, now = Date.now()): Session | null {
+export function parseSession(
+  raw: string,
+  now = Date.now(),
+  allowArchived = false,
+): Session | null {
   try {
     const parsed = sessionSchema.safeParse(JSON.parse(raw));
     if (!parsed.success) return null;
@@ -57,7 +61,8 @@ export function parseSession(raw: string, now = Date.now()): Session | null {
     if (
       s.startedAt > now ||
       s.updatedAt > now ||
-      now - (s.completedAt ?? s.updatedAt) > (s.result ? 7 * DAY : DAY)
+      (!allowArchived &&
+        now - (s.completedAt ?? s.updatedAt) > (s.result ? 7 * DAY : DAY))
     )
       return null;
     if (

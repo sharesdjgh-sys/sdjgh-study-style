@@ -13,6 +13,7 @@ import {
 } from "@/lib/collection-server";
 import { parseSession } from "@/lib/storage";
 import { database } from "@/lib/db";
+import { saveAccountResult } from "@/lib/saved-results-server";
 const schema = z.object({
   session: z.unknown(),
   inviteCode: z
@@ -29,16 +30,26 @@ export async function POST(request: Request) {
   } catch {
     return json({ error: "payload" }, 400);
   }
-  // Validation re-scores every answer; raw answers are never persisted or logged.
-  const session = parseSession(JSON.stringify(data.session));
+  // Validation re-scores every answer before storing the account snapshot.
+  const raw = JSON.stringify(data.session);
+  const session = parseSession(raw, Date.now(), true);
   if (!session?.result || session.isRetake)
     return json({ error: "first_result_required" }, 400);
   try {
     const owner = await account();
     if (!owner) return json({ error: "unauthorized" }, 401);
+    // Old records may register only if this account already owns the snapshot.
+    if (!parseSession(raw)) {
+      const saved = await database()`SELECT run_id FROM saved_study_results
+        WHERE run_id=${session.runId}::uuid AND account_id=${owner.id}::uuid`;
+      if (!saved.length) return json({ error: "first_result_required" }, 400);
+    }
     if (await limited(`register:${owner.id}`))
       return json({ error: "rate_limit" }, 429);
     const invite = (await capturedInvite()) ?? data.inviteCode ?? null;
+    // Claim the immutable snapshot before issuing a first-character reward.
+    if (!(await saveAccountResult(owner.id, session)))
+      return json({ error: "run_claimed" }, 409);
     const sql = database();
     const rows =
       await sql`SELECT register_collection(${owner.id}::uuid,${session.runId}::uuid,${session.result},${invite}) AS outcome`;

@@ -1,0 +1,9 @@
+Use case: precise-object-edit.
+Edit target: supplied Lumi collectible card. Preserve this exact finished design and composition, character identity and pose, typography, Korean/English names, StudyCrew logo, sage paper texture, decorative green/gold border, leaves, icons, fixed trait badges and signature study-method panel. Do NOT redesign it or introduce a scenic background.
+Make ONLY these surgical changes in the four score rows in the lower section:
+1. Remove all four colored progress fills, leaving four identical EMPTY neutral light-grey full-length rounded tracks in exactly the same positions.
+2. Remove the four percentage texts 50%, 25%, 17%, 8% completely, leaving blank matching ivory paper to the right of each track.
+3. Keep the four row icons and Korean labels 시각형, 청각형, 촉각형, 운동형 exactly unchanged.
+4. Replace tiny heading "선택 비율 · 예시" with "선택 비율".
+5. At the very bottom replace only "시안용 예시 점수 · 능력이나 성적을 뜻하지 않아요" with "응답 선택 비율 · 능력이나 성적을 뜻하지 않아요".
+Everything else must remain exactly the same, especially the large styled 루미 lettering, LUMI, "시각형", "혼자 몰입", "차근차근 계획", and the signature "목차 공부법". Preserve full portrait aspect ratio and all edges. This is a reusable finished card; dynamic bar fills and numbers will be overlaid by code later. No sample numbers, no zeroes, no placeholder marks.

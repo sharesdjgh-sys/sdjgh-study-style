@@ -1,3 +1,99 @@
+.keepsake-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  margin: 24px 0;
+  border: 1px solid #d8dfca;
+  border-radius: 24px;
+  background: #f4f1e5;
+}
+.keepsake-section h2 {
+  margin: 8px 0 12px;
+}
+.keepsake-section p {
+  margin: 8px 0;
+}
+.keepsake-section > .button {
+  flex-shrink: 0;
+}
+.keepsake-dialog {
+  width: min(100% - 24px, 530px);
+  max-height: 92dvh;
+  overflow-y: auto;
+  border: 1px solid #d8dfca;
+  border-radius: 22px;
+  padding: 20px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.keepsake-dialog::backdrop {
+  background: #13281dcc;
+}
+.keepsake-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.keepsake-heading h2 {
+  font-size: 20px;
+  margin: 0;
+}
+.keepsake-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+.keepsake-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.keepsake-actions .button {
+  flex: 1;
+}
+.saved-results {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--white);
+}
+.saved-results-list {
+  list-style: none;
+  padding: 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.saved-results-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.saved-results-list small {
+  flex-shrink: 0;
+}
+.result-save-status {
+  margin: 24px 0;
+}
+@media (max-width: 680px) {
+  .keepsake-section {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+  }
+  .saved-results-list a {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
 @font-face {
   font-family: Pretendard;
   src: url("/fonts/PretendardVariable.woff2") format("woff2");
@@ -5224,7 +5320,8 @@ body {
   grid-template-areas: "copy art" "actions art";
   gap: 24px 40px;
   padding: 44px 48px;
-  background: radial-gradient(ellipse at 85% 45%, #efe7fa 0, transparent 55%), #f7f3e6;
+  background:
+    radial-gradient(ellipse at 85% 45%, #efe7fa 0, transparent 55%), #f7f3e6;
   border-color: #e3ddc9;
 }
 .closing-copy {

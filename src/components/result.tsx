@@ -29,6 +29,10 @@ import { TypeStory } from "./type-story";
 import { MysteryCard } from "./mystery-card";
 import { useCollection } from "./collection-provider";
 import { CollectionNudge } from "./collection-manager";
+import { ResultCardDownload } from "./result-card-download";
+import { useAccountResults } from "./account-results-provider";
+import { SavedResults } from "./saved-results";
+import { useSearchParams } from "next/navigation";
 const AXES = [
   {
     key: "social",
@@ -140,6 +144,10 @@ export function TypeResult({
         </div>
       </section>
       {session && <CollectionNudge />}
+      {session && <SavedResults />}
+      {session && !hideCharacter && (
+        <ResultCardDownload key={session.runId} session={session} />
+      )}
       <TypeStory key={type.code} type={type} session={session} />
       {scores && (
         <section className="score-section">
@@ -261,7 +269,9 @@ export function TypeResult({
 }
 export function PersonalResult() {
   const { data: collection, loaded: accountLoaded } = useCollection();
-  const [session, setSession] = useState<Session | null>(null);
+  const saved = useAccountResults();
+  const search = useSearchParams();
+  const [localSession, setSession] = useState<Session | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [confirm, dialog] = useConfirm();
   useEffect(() => {
@@ -271,7 +281,14 @@ export function PersonalResult() {
     });
     return () => cancelAnimationFrame(id);
   }, []);
-  if (!loaded || !accountLoaded)
+  const requestedRun = search.get("run");
+  const session = requestedRun
+    ? (saved.results.find((s) => s.runId === requestedRun) ??
+      (localSession?.runId === requestedRun ? localSession : null))
+    : localSession?.result
+      ? localSession
+      : (saved.results[0] ?? null);
+  if (!loaded || !accountLoaded || (!session && !saved.loaded))
     return (
       <main id="main" className="empty-state" role="status">
         내 결과를 불러오고 있어요.
@@ -282,13 +299,13 @@ export function PersonalResult() {
     return (
       <main id="main" className="empty-state">
         <span className="eyebrow">새로운 발견을 시작해요</span>
-        <h1>아직 이 기기에 결과가 없어요.</h1>
+        <h1>아직 불러올 검사 결과가 없어요.</h1>
         <p>
           검사를 완료하면 나만의 스타일과 공부법을 볼 수 있어요.
           <br />
-          답변·점수는 이 기기에만 남아요. 저장한 도감은 로그인하면 불러올 수
-          있어요.
+          로그인한 계정에 저장한 답변과 점수는 다른 기기에서도 불러올 수 있어요.
         </p>
+        <SavedResults />
         <Link className="button primary" href="/quiz">
           내 스타일 찾기
           <Icon name="arrow-right-linear" />
@@ -320,7 +337,7 @@ export function PersonalResult() {
               await confirm({
                 title: "이 기기의 기록을 지울까요?",
                 description:
-                  "이 기기의 최초·최근 검사와 활동 기록을 지워요. 계정에 저장한 도감은 유지돼요.",
+                  "이 기기의 최초·최근 검사와 활동 기록을 지워요. 계정에 저장한 도감과 검사 결과는 유지돼요.",
                 note: "삭제한 기기 기록은 복구할 수 없어요. 이미 전송된 이용 통계는 정해진 보관 기간에 따라 처리돼요.",
                 confirmLabel: "기록 지우기",
                 tone: "danger",

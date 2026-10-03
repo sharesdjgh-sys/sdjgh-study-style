@@ -130,7 +130,7 @@ test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async (
     .click();
   await page.getByRole("button", { name: "기록 지우기", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "아직 이 기기에 결과가 없어요." }),
+    page.getByRole("heading", { name: "아직 불러올 검사 결과가 없어요." }),
   ).toBeVisible();
 });
 test("저장소 차단과 공유 실패에서도 사용 가능", async ({ page }) => {

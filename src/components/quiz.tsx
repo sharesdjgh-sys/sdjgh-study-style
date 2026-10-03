@@ -218,7 +218,7 @@ export function Quiz() {
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />
-          답변 원문은 서버에 저장하지 않아요
+          로그인하면 결과를 계정에 보관해요
         </span>
       </div>
       {session.index === 0 && !ties && (
