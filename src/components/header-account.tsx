@@ -1,106 +1,65 @@
 "use client";
-
-import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useCollection } from "./collection-provider";
+import { useAuth } from "./auth-provider";
 import styles from "./header-account.module.css";
 
 export function HeaderAccount() {
-  const { data, loaded, error, refresh } = useCollection();
-  const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
-  useEffect(() => {
-    const reset = () => {
-      setBusy(false);
-      setNotice("");
-    };
-    window.addEventListener("pageshow", reset);
-    return () => window.removeEventListener("pageshow", reset);
-  }, []);
-  const label = data.signedIn ? "로그아웃" : "카카오 로그인";
-  const content = (
-    <Image
-      className={styles.wordmark}
-      src={`/brand/${data.signedIn ? "logout" : "login"}-wordmark-v1.webp`}
-      alt={data.signedIn ? "Logout" : "Login"}
-      width={100}
-      height={38}
-      unoptimized
-    />
-  );
-
-  async function logout() {
-    setBusy(true);
-    setNotice("");
-    try {
-      const response = await fetch("/api/auth/logout", { method: "POST" });
-      if (!response.ok) throw new Error("logout_failed");
-      await refresh();
-    } catch {
-      setNotice("로그아웃하지 못했어요. 다시 눌러 주세요.");
-    } finally {
-      setBusy(false);
-    }
-  }
-
+  const auth = useAuth();
+  const signedIn = auth.status === "authenticated";
+  const error = auth.status === "error";
+  const label =
+    auth.status === "checking"
+      ? "로그인 확인 중"
+      : auth.status === "redirecting"
+        ? "카카오로 이동 중"
+        : auth.status === "signing-out"
+          ? "로그아웃 중"
+          : error
+            ? "로그인 상태 다시 확인"
+            : signedIn
+              ? "로그아웃"
+              : "카카오 로그인";
   return (
     <div className={styles.container}>
-      {!loaded ? (
-        <button
-          className={styles.account}
-          type="button"
-          disabled
-          aria-label="로그인 상태 확인 중"
-          aria-busy="true"
-        >
-          {content}
-        </button>
-      ) : data.signedIn ? (
-        <button
-          className={styles.account}
-          type="button"
-          aria-label={label}
-          title={label}
-          disabled={busy}
-          aria-busy={busy}
-          onClick={() => void logout()}
-        >
-          {content}
-        </button>
-      ) : loaded && !error && data.configured ? (
-        <form
-          action="/api/auth/kakao/start"
-          method="post"
-          onSubmit={() => {
-            setBusy(true);
-            setNotice("카카오 로그인 화면으로 이동하고 있어요…");
-          }}
-        >
-          <button
-            className={styles.account}
-            type="submit"
-            aria-label={label}
-            title={label}
-            disabled={busy}
-            aria-busy={busy}
-          >
-            {content}
-          </button>
-        </form>
-      ) : (
-        <Link
-          className={styles.account}
-          href="/collection"
-          aria-label={label}
-          title={label}
-        >
-          {content}
-        </Link>
-      )}
-      {notice && (
+      <button
+        className={styles.account}
+        type="button"
+        aria-label={label}
+        title={label}
+        disabled={
+          auth.busy || (!error && !signedIn && !auth.session.configured)
+        }
+        aria-busy={auth.busy}
+        onClick={() =>
+          void (error
+            ? auth.refresh()
+            : signedIn
+              ? auth.logout()
+              : auth.login())
+        }
+      >
+        {auth.busy || error ? (
+          <span className={styles.progress}>
+            {auth.busy && (
+              <span className={styles.spinner} aria-hidden="true" />
+            )}
+            {label}
+          </span>
+        ) : (
+          <Image
+            className={styles.wordmark}
+            src={`/brand/${signedIn ? "logout" : "login"}-wordmark-v1.webp`}
+            alt={signedIn ? "Logout" : "Login"}
+            width={100}
+            height={38}
+            unoptimized
+          />
+        )}
+      </button>
+      {(auth.message ||
+        (!auth.busy && !error && !signedIn && !auth.session.configured)) && (
         <span className={styles.notice} role="status">
-          {notice}
+          {auth.message || "카카오 로그인을 준비 중이에요."}
         </span>
       )}
     </div>

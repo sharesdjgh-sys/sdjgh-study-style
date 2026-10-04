@@ -4,6 +4,7 @@ import { QuickMenu } from "@/components/quick-menu";
 import { siteUrl } from "@/lib/site";
 import { SourceCapture } from "@/components/source-capture";
 import { CollectionProvider } from "@/components/collection-provider";
+import { AuthProvider } from "@/components/auth-provider";
 import { AccountResultsProvider } from "@/components/account-results-provider";
 import { QUESTIONS } from "@/lib/content";
 import { shareImagePath } from "@/lib/share-image";
@@ -39,20 +40,22 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <CollectionProvider>
-          <AccountResultsProvider>
-            <SourceCapture />
-            <a className="skip-link" href="#main">
-              본문으로 바로가기
-            </a>
-            <div className="site-shell">
-              <Header />
-              {children}
-              <Footer />
-            </div>
-            <QuickMenu />
-          </AccountResultsProvider>
-        </CollectionProvider>
+        <AuthProvider>
+          <CollectionProvider>
+            <AccountResultsProvider>
+              <SourceCapture />
+              <a className="skip-link" href="#main">
+                본문으로 바로가기
+              </a>
+              <div className="site-shell">
+                <Header />
+                {children}
+                <Footer />
+              </div>
+              <QuickMenu />
+            </AccountResultsProvider>
+          </CollectionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -44,3 +44,15 @@ await sql.transaction(
     .map((statement) => sql.query(statement)),
 );
 console.log("StudyCrew 통계·계정·도감·검사 결과 테이블 준비 완료");
+const lifecycle = await readFile(
+  new URL("../db/005_account_lifecycle.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  lifecycle
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+    .map((statement) => sql.query(statement)),
+);
+console.log("7일 재가입 제한·최초 가입 보상 정책 준비 완료");

@@ -234,12 +234,13 @@ test("미공개 도감은 영상 파일을 요청하지 않음", async ({ page }
 test("완성 도감에서 16명의 8초 영상을 표시하고 화면 밖 재생은 멈춤", async ({
   page,
 }) => {
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({
       json: {
         ...EMPTY_COLLECTION,
         configured: true,
         signedIn: true,
+        accountId: "test-account",
         firstType: STUDY_TYPES[0].code,
         firstRunId: crypto.randomUUID(),
         inviteCode: "ABCDEF1234",

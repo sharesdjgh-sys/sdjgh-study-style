@@ -2,6 +2,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { database } from "./db";
 import { siteUrl } from "./site";
+import { identityKeyConfigured } from "./auth-server";
 export { sameOrigin } from "./site";
 import { EMPTY_COLLECTION, type CollectionData } from "./collection-contract";
 
@@ -22,7 +23,8 @@ export function loginConfigured() {
   return Boolean(
     process.env.DATABASE_URL &&
     process.env.KAKAO_REST_API_KEY &&
-    process.env.KAKAO_CLIENT_SECRET,
+    process.env.KAKAO_CLIENT_SECRET &&
+    identityKeyConfigured(),
   );
 }
 export function callbackUrl() {
@@ -34,6 +36,7 @@ export type CollectionAccount = {
   invite_code: string;
   first_type: string | null;
   first_run_id: string | null;
+  referral_eligible: boolean;
 };
 export async function account() {
   const value = (await cookies()).get(AUTH_COOKIE)?.value;
@@ -60,6 +63,7 @@ export async function collectionData(
     accountId: owner.id,
     firstType: owner.first_type,
     firstRunId: owner.first_run_id,
+    referralEligible: owner.referral_eligible,
     inviteCode: owner.first_type ? owner.invite_code : null,
     cards: cards
       .filter((c) => c.opened_at)

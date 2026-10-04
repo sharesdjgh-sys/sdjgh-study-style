@@ -47,6 +47,14 @@ it("실제 마이그레이션 실행기가 단일 명령 prepared query로 설�
       id,
       run,
     ]);
+    await db.query(
+      "UPDATE collection_accounts SET referral_eligible=false WHERE id=$1",
+      [id],
+    );
+    await db.query(
+      "INSERT INTO collection_withdrawals VALUES($1,now(),now()+interval '168 hours')",
+      ["a".repeat(64)],
+    );
     vi.resetModules();
     await import(runner);
     expect(
@@ -63,8 +71,19 @@ it("실제 마이그레이션 실행기가 단일 명령 prepared query로 설�
           "SELECT count(*)::int AS total FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'",
         )
       ).rows[0].total,
-    ).toBe(11);
+    ).toBe(12);
     expect((await db.query("SELECT study_rollup()")).rows).toHaveLength(1);
+    expect(
+      (
+        await db.query(
+          "SELECT referral_eligible FROM collection_accounts WHERE id=$1",
+          [id],
+        )
+      ).rows,
+    ).toEqual([{ referral_eligible: false }]);
+    expect(
+      (await db.query("SELECT identity_hash FROM collection_withdrawals")).rows,
+    ).toEqual([{ identity_hash: "a".repeat(64) }]);
   } finally {
     await db.close();
   }

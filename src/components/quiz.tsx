@@ -25,6 +25,7 @@ import { Arrow } from "./shell";
 import { useConfirm } from "./ui/confirm-dialog";
 import { TypeDiscovery } from "./type-discovery";
 import { useCollection } from "./collection-provider";
+import { useAccountResults } from "./account-results-provider";
 const TOTAL = QUESTIONS.length;
 const LAST = TOTAL - 1;
 const ENCOURAGEMENTS = [
@@ -64,6 +65,10 @@ const PAIR_SIDES = [
 export function Quiz() {
   const router = useRouter();
   const { data: collection, loaded: collectionLoaded } = useCollection();
+  const saved = useAccountResults();
+  const hasPreviousResult = Boolean(
+    collection.firstType || saved.results.length,
+  );
   const [session, setSession] = useState<Session | null>(null);
   const [ties, setTies] = useState(false);
   const [discovering, setDiscovering] = useState(false);
@@ -130,7 +135,7 @@ export function Quiz() {
       result: code,
       completedAt: Date.now(),
       updatedAt: Date.now(),
-      isRetake: Boolean(s.isRetake || collection.firstType),
+      isRetake: Boolean(s.isRetake || hasPreviousResult),
     };
     update(completed);
     rememberFirstSession(completed);
@@ -164,7 +169,7 @@ export function Quiz() {
       track(s, "question", "1");
     }
   }
-  if (!session || !collectionLoaded)
+  if (!session || !collectionLoaded || !saved.loaded)
     return (
       <main id="main" className="quiz-shell">
         <div className="loading-state" role="status">
@@ -235,7 +240,7 @@ export function Quiz() {
       {session.index === 0 && !ties && (
         <aside className="quiz-collection-notice">
           <strong>
-            {session.isRetake || collection.firstType
+            {session.isRetake || hasPreviousResult
               ? "다시 알아보는 나의 공부 취향"
               : "시작 전에, 캐릭터 도감 안내"}
           </strong>

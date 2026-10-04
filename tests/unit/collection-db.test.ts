@@ -11,6 +11,8 @@ beforeAll(async () => {
     "001_analytics.sql",
     "002_retention.sql",
     "003_collections.sql",
+    "004_saved_results.sql",
+    "005_account_lifecycle.sql",
   ])
     await db.exec(await readFile(`db/${file}`, "utf8"));
 }, 60000);

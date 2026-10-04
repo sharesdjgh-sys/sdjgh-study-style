@@ -91,7 +91,7 @@ function session(code: string): Session {
   };
 }
 async function mockGuest(page: Page) {
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({ json: EMPTY_COLLECTION }),
   );
   await page.route("**/api/referrals", (route) =>
@@ -149,7 +149,7 @@ test("계정 결과는 빈 기기에서 7일 뒤에도 복원되고 로그아웃
   s.updatedAt -= old;
   s.completedAt! -= old;
   let signedIn = true;
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({
       json: signedIn
         ? {

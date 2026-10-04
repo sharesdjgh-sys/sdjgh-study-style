@@ -11,12 +11,13 @@ test("유형 네 명 수집 후 사진 해제·확대·저장과 유형 필터",
     ...EMPTY_COLLECTION,
     configured: true,
     signedIn: true,
+    accountId: "test-account",
     cards: STUDY_TYPES.filter((t) => t.modality === "visual")
       .slice(0, 3)
       .map((t) => ({ code: t.code, source: "referral" })),
     pending: [{ id: "pending-fourth" }],
   };
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({ json: data }),
   );
   await page.route("**/api/referrals", (route) =>

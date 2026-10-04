@@ -4,12 +4,13 @@ import { EMPTY_COLLECTION } from "../../src/lib/collection-contract";
 import { FAMILIES, MODALITIES, STUDY_TYPES } from "../../src/lib/content";
 
 async function setup(page: Page, failVideo = false) {
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({
       json: {
         ...EMPTY_COLLECTION,
         configured: true,
         signedIn: true,
+        accountId: "test-account",
         cards: STUDY_TYPES.map((t) => ({ code: t.code, source: "referral" })),
       },
     }),

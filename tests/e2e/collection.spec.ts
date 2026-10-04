@@ -36,8 +36,13 @@ async function seed(page: Page) {
 }
 async function server(page: Page, initial: CollectionData) {
   const state = { data: initial };
-  await page.route("**/api/collection", (route) =>
-    route.fulfill({ json: state.data }),
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
+    route.fulfill({
+      json: {
+        ...state.data,
+        accountId: state.data.accountId ?? "test-account",
+      },
+    }),
   );
   await page.route("**/api/referrals", (route) =>
     route.fulfill({ json: { code: null } }),
@@ -462,13 +467,15 @@ test("로그인 취소와 서버 장애에도 검사 가능, 계정 삭제는 �
     .getByRole("button", { name: "계정·도감 삭제", exact: true })
     .click();
   await expect(
-    page.getByRole("button", { name: "카카오 로그인" }),
+    page
+      .getByRole("region", { name: "내 도감 관리" })
+      .getByRole("button", { name: "카카오 로그인" }),
   ).toBeVisible();
   await page.goto("/collection?auth=cancelled");
   await expect(
     page.getByRole("status").filter({ hasText: "로그인을 취소했어요" }),
   ).toBeVisible();
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({ status: 503, json: { error: "unavailable" } }),
   );
   await page.reload();

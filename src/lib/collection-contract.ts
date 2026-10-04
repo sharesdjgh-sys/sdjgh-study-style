@@ -9,6 +9,7 @@ export type CollectionData = {
   cards: CollectedCard[];
   pending: { id: string }[];
   referralCount: number;
+  referralEligible: boolean;
 };
 export const EMPTY_COLLECTION: CollectionData = {
   configured: false,
@@ -19,4 +20,5 @@ export const EMPTY_COLLECTION: CollectionData = {
   cards: [],
   pending: [],
   referralCount: 0,
+  referralEligible: true,
 };

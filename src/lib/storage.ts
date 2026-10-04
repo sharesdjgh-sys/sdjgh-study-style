@@ -11,6 +11,13 @@ import { resolveType, scoreAnswers } from "./scoring";
 import { METHOD_IDS, type MethodId } from "./methods";
 const KEY = "study-style:session";
 const FIRST_KEY = "study-style:first-result";
+export const RECORDS_CLEARED = "study-style:records-cleared";
+export function isRecordRemoval(event: StorageEvent) {
+  return (
+    event.newValue === null &&
+    (event.key === null || event.key === KEY || event.key === FIRST_KEY)
+  );
+}
 export const DAY = 86_400_000;
 const sessionSchema = z.object({
   version: z.literal(VERSION),
@@ -49,6 +56,8 @@ const sessionSchema = z.object({
 export type Session = z.infer<typeof sessionSchema>;
 let memory: Session | null = null;
 let firstMemory: Session | null = null;
+let memoryOnly = false;
+let firstMemoryOnly = false;
 export function parseSession(
   raw: string,
   now = Date.now(),
@@ -89,6 +98,7 @@ export function readSession(): Session | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(KEY);
+    if (!raw && !memoryOnly) memory = null;
     if (raw) {
       memory = parseSession(raw);
       if (!memory) localStorage.removeItem(KEY);
@@ -103,8 +113,10 @@ export function saveSession(s: Session): boolean {
   memory = s;
   try {
     localStorage.setItem(KEY, JSON.stringify(s));
+    memoryOnly = false;
     return true;
   } catch {
+    memoryOnly = true;
     return false;
   }
 }
@@ -112,6 +124,7 @@ export function readFirstSession(): Session | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(FIRST_KEY);
+    if (!raw && !firstMemoryOnly) firstMemory = null;
     if (raw) {
       firstMemory = parseSession(raw);
       if (!firstMemory?.result || firstMemory.isRetake) firstMemory = null;
@@ -129,9 +142,10 @@ export function readFirstSession(): Session | null {
   return firstMemory;
 }
 export function rememberFirstSession(s: Session) {
-  if (!s.result || s.isRetake || firstMemory) return;
+  if (!s.result || s.isRetake) return;
   try {
     const existing = localStorage.getItem(FIRST_KEY);
+    if (!existing && !firstMemoryOnly) firstMemory = null;
     if (existing) {
       firstMemory = parseSession(existing);
       if (!firstMemory?.result || firstMemory.isRetake) firstMemory = null;
@@ -143,20 +157,31 @@ export function rememberFirstSession(s: Session) {
   firstMemory = { ...s, mission: undefined };
   try {
     localStorage.setItem(FIRST_KEY, JSON.stringify(firstMemory));
+    firstMemoryOnly = false;
   } catch {
+    firstMemoryOnly = true;
     /* 메모리로 계속 사용 */
   }
 }
 export function clearSession() {
   memory = null;
   firstMemory = null;
+  memoryOnly = false;
+  firstMemoryOnly = false;
+  for (const key of [KEY, FIRST_KEY]) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* Attempt each key even when one storage operation fails. */
+    }
+  }
   try {
-    localStorage.removeItem(KEY);
-    localStorage.removeItem(FIRST_KEY);
     sessionStorage.removeItem("study-style:source");
   } catch {
     /* 저장 차단 */
   }
+  if (typeof window !== "undefined")
+    window.dispatchEvent?.(new Event(RECORDS_CLEARED));
 }
 export function newSession(): Session {
   let source = new URLSearchParams(window.location.search).get("from");
@@ -179,6 +204,6 @@ export function newSession(): Session {
     index: 0,
     choices: {},
     result: null,
-    isRetake: Boolean(readFirstSession()?.result),
+    isRetake: Boolean(readFirstSession()?.result || readSession()?.isRetake),
   };
 }

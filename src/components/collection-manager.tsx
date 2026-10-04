@@ -14,6 +14,7 @@ import { useConfirm } from "./ui/confirm-dialog";
 import { collectionProgress } from "@/lib/collection-progress";
 import { SavedResults } from "./saved-results";
 import { useAccountResults } from "./account-results-provider";
+import { notifyAuthChange, useAuth } from "./auth-provider";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -102,6 +103,8 @@ const ERRORS: Record<string, string> = {
   rate_limit: "요청이 많아 잠시 쉬고 있어요. 조금 뒤 다시 시도해 주세요.",
 };
 export function CollectionManager() {
+  const authState = useAuth();
+  const completionShown = useRef(false);
   const { data, loaded, error, refresh } = useCollection();
   const { first: localFirst } = useSavedSession();
   const { results } = useAccountResults();
@@ -109,6 +112,7 @@ export function CollectionManager() {
   const [code, setCode] = useState("");
   const [captured, setCaptured] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [busy, setBusy] = useState(false);
   const [reward, setReward] = useState<{
     code: string;
@@ -137,14 +141,20 @@ export function CollectionManager() {
     window.addEventListener("pageshow", resetBusy);
     const auth = new URLSearchParams(location.search).get("auth");
     const messages: Record<string, string> = {
-      success:
-        "카카오 로그인이 완료됐어요. 검사 결과와 캐릭터 카드를 계정에 보관할 수 있어요.",
       cancelled: "로그인을 취소했어요. 검사 결과는 그대로예요.",
       expired: "로그인 시간이 지났어요. 다시 시도해 주세요.",
       failed: "로그인을 마치지 못했어요. 다시 시도해 주세요.",
       unavailable:
         "지금은 도감 로그인을 준비하고 있어요. 검사는 계속 이용할 수 있어요.",
+      rejoin_blocked: "탈퇴 후 7일 동안은 다시 가입할 수 없어요.",
     };
+    if (auth === "rejoin_blocked") {
+      const retryAt = new Date(
+        new URLSearchParams(location.search).get("retryAt") ?? "",
+      );
+      if (Number.isFinite(retryAt.getTime()))
+        messages.rejoin_blocked += ` ${retryAt.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)부터 다시 가입할 수 있어요.`;
+    }
     if (auth && messages[auth])
       requestAnimationFrame(() => setNotice(messages[auth]));
     return () => {
@@ -153,9 +163,24 @@ export function CollectionManager() {
       window.removeEventListener("pageshow", resetBusy);
     };
   }, []);
+  useEffect(() => {
+    if (
+      completionShown.current ||
+      authState.status !== "authenticated" ||
+      new URLSearchParams(location.search).get("auth") !== "success"
+    )
+      return;
+    const frame = requestAnimationFrame(() => {
+      completionShown.current = true;
+      notifyAuthChange();
+      setLoginSuccess(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [authState.status]);
   async function action(path: string, payload?: unknown, method = "POST") {
     setBusy(true);
     setNotice("");
+    setLoginSuccess(false);
     try {
       const response = await fetch(path, {
         method,
@@ -168,7 +193,8 @@ export function CollectionManager() {
           ERRORS[result.error] ??
             "저장하지 못했어요. 연결을 확인하고 다시 시도해 주세요.",
         );
-      await refresh();
+      if (method === "DELETE") authState.signedOut();
+      else await refresh();
       return result;
     } catch (failure) {
       setNotice(
@@ -182,6 +208,11 @@ export function CollectionManager() {
     }
   }
   const ownType = data.firstType ? getType(data.firstType) : null;
+  const displayNotice =
+    notice ||
+    (loginSuccess && authState.status === "authenticated"
+      ? "카카오 로그인이 완료됐어요. 검사 결과와 캐릭터 카드를 계정에 보관할 수 있어요."
+      : "");
   const progress = collectionProgress(data, first?.result);
   return (
     <>
@@ -205,11 +236,20 @@ export function CollectionManager() {
           <br />내 공부캐 1명에 친구 초대로 {progress.inviteGoal}명을 더하면,
           모두 {progress.total}명이에요.
         </p>
-        {!loaded ? (
+        {authState.busy ? (
+          <p role="status" aria-busy="true">
+            <span className="loading-dot" aria-hidden="true" />{" "}
+            {authState.message}
+          </p>
+        ) : !loaded ? (
           <p role="status">내 도감을 불러오고 있어요.</p>
         ) : error ? (
           <div role="status">
-            <p>도감을 불러오지 못했어요. 저장된 카드가 없어진 것은 아니에요.</p>
+            <p>
+              {authState.status === "error"
+                ? authState.message
+                : "도감을 불러오지 못했어요. 저장된 카드가 없어진 것은 아니에요."}
+            </p>
             <button className="button secondary" onClick={() => void refresh()}>
               다시 불러오기
             </button>
@@ -219,9 +259,9 @@ export function CollectionManager() {
             <form
               action="/api/auth/kakao/start"
               method="post"
-              onSubmit={() => {
-                setBusy(true);
-                setNotice("카카오 로그인 화면으로 이동하고 있어요…");
+              onSubmit={(event) => {
+                event.preventDefault();
+                void authState.login();
               }}
             >
               <button
@@ -261,7 +301,12 @@ export function CollectionManager() {
                   처음 만난 <strong>{CHARACTERS[first.result].name}</strong>를
                   이 계정에 저장해요.
                 </p>
-                {captured ? (
+                {!data.referralEligible ? (
+                  <p className="notice">
+                    재가입 계정은 신규 가입 초대 보상 대상이 아니에요. 첫
+                    캐릭터를 저장하고 새 친구를 초대할 수는 있어요.
+                  </p>
+                ) : captured ? (
                   <p className="invite-captured">
                     초대 코드 <strong>{captured}</strong>가 연결됐어요. 첫
                     저장을 마치면 나에게 보너스 캐릭터 1명, 친구에게도 새
@@ -292,11 +337,16 @@ export function CollectionManager() {
                 </p>
                 <button
                   className="button primary"
-                  disabled={busy || (!!code && code.length !== 10)}
+                  disabled={
+                    busy ||
+                    (data.referralEligible && !!code && code.length !== 10)
+                  }
                   onClick={async () => {
                     const result = await action("/api/collection/register", {
                       session: first,
-                      ...(code ? { inviteCode: code } : {}),
+                      ...(data.referralEligible && code
+                        ? { inviteCode: code }
+                        : {}),
                     });
                     if (!result) return;
                     setNotice(
@@ -381,30 +431,37 @@ export function CollectionManager() {
             </p>
           </>
         )}
-        {notice && (
+        {!authState.busy &&
+          authState.status !== "error" &&
+          authState.message && (
+            <p role="status" className="notice">
+              {authState.message}
+            </p>
+          )}
+        {displayNotice && (
           <p role="status" className="notice">
-            {notice}
+            {displayNotice}
           </p>
         )}
         {data.signedIn && (
           <div className="collection-account-actions">
             <button
               className="text-link"
-              disabled={busy}
-              onClick={() => void action("/api/auth/logout")}
+              disabled={busy || authState.busy}
+              onClick={() => void authState.logout()}
             >
               로그아웃
             </button>
             <button
               className="text-link muted"
-              disabled={busy}
+              disabled={busy || authState.busy}
               onClick={async () => {
                 if (
                   await confirm({
                     title: "계정과 도감을 삭제할까요?",
                     description:
                       "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 초대 코드와 모든 로그인 세션을 삭제해요.",
-                    note: "복구할 수 없어요. 친구에게 이미 지급된 캐릭터는 유지되고, 이 기기의 검사 기록도 함께 지워요. 카카오 계정 자체를 삭제하는 것은 아니에요.",
+                    note: "탈퇴 후 7일간 재가입할 수 없고, 기존 데이터는 복원되지 않아요. 재가입해도 신규 초대 보상은 받을 수 없어요. 이를 확인하는 최소 식별값과 탈퇴 시각은 서비스 운영 기간 동안 별도로 보관해요. 친구에게 이미 지급된 캐릭터는 유지되고 이 브라우저의 검사 기록은 지워요. 카카오 계정 자체는 삭제되지 않아요.",
                     confirmLabel: "계정·도감 삭제",
                     tone: "danger",
                   })

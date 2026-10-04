@@ -21,6 +21,28 @@
   object-fit: contain;
   transition: transform 150ms;
 }
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #27785d;
+}
+.spinner {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: 2px solid #b9d5c7;
+  border-top-color: #27785d;
+  border-radius: 50%;
+  animation: auth-spin 800ms linear infinite;
+}
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .account:hover .wordmark {
   transform: translateY(-1px);
 }
@@ -60,6 +82,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
   .wordmark {
     transition: none;
   }

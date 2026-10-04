@@ -43,6 +43,8 @@ import {
   GET as referral,
 } from "../../src/app/api/referrals/route";
 import { GET as collection } from "../../src/app/api/collection/route";
+import { GET as authSession } from "../../src/app/api/auth/session/route";
+import { identityHash } from "../../src/lib/auth-server";
 import { POST as start } from "../../src/app/api/auth/kakao/start/route";
 import { GET as callback } from "../../src/app/api/auth/kakao/callback/route";
 import { POST as logout } from "../../src/app/api/auth/logout/route";
@@ -90,10 +92,11 @@ beforeAll(async () => {
   db = new PGlite();
   await db.exec(await readFile("db/003_collections.sql", "utf8"));
   await db.exec(await readFile("db/004_saved_results.sql", "utf8"));
+  await db.exec(await readFile("db/005_account_lifecycle.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
-    "TRUNCATE collection_accounts,collection_limits,collection_oauth_states CASCADE",
+    "TRUNCATE collection_accounts,collection_limits,collection_oauth_states,collection_withdrawals CASCADE",
   );
   mocks.jar.clear();
   mocks.query.mockImplementation(
@@ -103,6 +106,10 @@ beforeEach(async () => {
   vi.stubEnv("DATABASE_URL", "postgres://test");
   vi.stubEnv("KAKAO_REST_API_KEY", "test-key");
   vi.stubEnv("KAKAO_CLIENT_SECRET", "test-secret");
+  vi.stubEnv(
+    "AUTH_IDENTITY_HMAC_SECRET",
+    "test-only-identity-key-at-least-32-characters",
+  );
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", origin);
   owner = randomUUID();
   await db.query(
@@ -429,7 +436,7 @@ it("카카오 OAuth는 상태와 브라우저를 검증하고 취소 시 계정�
   );
   expect(
     new URL(response.headers.get("location")!).searchParams.get("prompt"),
-  ).toBe("login");
+  ).toBeNull();
   expect(
     (
       await callback(
@@ -502,6 +509,230 @@ it("계정 삭제는 도감과 세션, 검사 답변과 점수를 삭제한다",
   );
   expect(
     (await db.query("SELECT * FROM saved_study_results")).rows,
+  ).toHaveLength(0);
+});
+
+it("인증 상태는 도감 조회 없이 확인하고 실패를 비로그인으로 위장하지 않는다", async () => {
+  mocks.query.mockClear();
+  const response = await authSession();
+  expect(await response.json()).toEqual({
+    signedIn: true,
+    configured: true,
+    accountId: owner,
+  });
+  expect(response.headers.get("cache-control")).toBe("no-store");
+  expect(mocks.query).toHaveBeenCalledTimes(1);
+  mocks.query.mockRejectedValueOnce(new Error("offline"));
+  expect((await authSession()).status).toBe(503);
+  mocks.jar.clear();
+  expect(await (await authSession()).json()).toEqual({
+    signedIn: false,
+    configured: true,
+  });
+});
+
+it("JSON 로그인 시작은 재인증 없는 카카오 URL을 반환한다", async () => {
+  const input = request("/api/auth/kakao/start");
+  input.headers.set("accept", "application/json");
+  const response = await start(input);
+  const url = new URL((await response.json()).authorizationUrl);
+  expect(response.status).toBe(200);
+  expect(url.origin).toBe("https://kauth.kakao.com");
+  expect(url.searchParams.has("prompt")).toBe(false);
+  expect(url.searchParams.get("state")).toBeTruthy();
+});
+
+async function kakaoLogin(id: number) {
+  vi.stubGlobal(
+    "fetch",
+    vi
+      .fn()
+      .mockResolvedValueOnce(Response.json({ access_token: "provider-token" }))
+      .mockResolvedValueOnce(Response.json({ id })),
+  );
+  const beginning = await start(request("/api/auth/kakao/start"));
+  const state = new URL(beginning.headers.get("location")!).searchParams.get(
+    "state",
+  );
+  return callback(
+    new Request(
+      `${origin}/api/auth/kakao/callback?state=${state}&code=test-code`,
+    ),
+  );
+}
+
+it("탈퇴는 식별값만 남기고 7일 직전까지 OAuth 재가입·세션 발급을 차단한다", async () => {
+  await register(request("/api/collection/register", { session: session() }));
+  const deletion = await remove(
+    request("/api/collection/account", {}, "DELETE"),
+  );
+  expect(deletion.status).toBe(200);
+  const withdrawn = (
+    await db.query<{
+      identity_hash: string;
+      withdrawn_at: Date;
+      rejoin_after: Date;
+    }>("SELECT * FROM collection_withdrawals")
+  ).rows[0];
+  expect(withdrawn.identity_hash).toBe(identityHash("1"));
+  expect(Object.keys(withdrawn).sort()).toEqual([
+    "identity_hash",
+    "rejoin_after",
+    "withdrawn_at",
+  ]);
+  expect(
+    new Date(withdrawn.rejoin_after).getTime() -
+      new Date(withdrawn.withdrawn_at).getTime(),
+  ).toBe(7 * DAY);
+  expect((await kakaoLogin(1)).headers.get("location")).toContain(
+    "auth=rejoin_blocked",
+  );
+  await db.query(
+    "UPDATE collection_withdrawals SET withdrawn_at=now()-interval '168 hours'+interval '1 minute',rejoin_after=now()+interval '1 minute'",
+  );
+  expect((await kakaoLogin(1)).headers.get("location")).toContain(
+    "auth=rejoin_blocked",
+  );
+  expect(
+    (await db.query("SELECT * FROM collection_accounts")).rows,
+  ).toHaveLength(0);
+  expect(
+    (await db.query("SELECT * FROM collection_sessions")).rows,
+  ).toHaveLength(0);
+});
+
+it("7일 이후 재가입은 새 계정이며 과거 검사·도감과 신규 초대 보상을 복구하지 않는다", async () => {
+  await remove(request("/api/collection/account", {}, "DELETE"));
+  await db.query(
+    "UPDATE collection_withdrawals SET withdrawn_at=now()-interval '168 hours',rejoin_after=now()",
+  );
+  expect((await kakaoLogin(1)).headers.get("location")).toContain(
+    "auth=success",
+  );
+  const returned = await (await collection()).json();
+  expect(returned.accountId).not.toBe(owner);
+  expect(returned.referralEligible).toBe(false);
+  expect(returned.cards).toEqual([]);
+  expect((await (await results()).json()).results).toEqual([]);
+  const inviter = randomUUID();
+  await db.query(
+    "INSERT INTO collection_accounts(id,kakao_id,invite_code) VALUES($1,'2','BBBBBBBBBB')",
+    [inviter],
+  );
+  await db.query("SELECT register_collection($1,$2,'visual-solo-planned')", [
+    inviter,
+    randomUUID(),
+  ]);
+  await db.query(
+    "INSERT INTO collection_invites VALUES($1,$2,now()+interval '1 day')",
+    [digest("returning-invite"), inviter],
+  );
+  mocks.jar.set("study-invite", "returning-invite");
+  const response = await register(
+    request("/api/collection/register", {
+      session: session(),
+      inviteCode: "BBBBBBBBBB",
+    }),
+  );
+  expect(await response.json()).toEqual({ outcome: "registered" });
+  expect(
+    (await db.query("SELECT * FROM collection_referrals")).rows,
+  ).toHaveLength(0);
+  expect(
+    (
+      await db.query("SELECT * FROM collection_cards WHERE account_id=$1", [
+        inviter,
+      ])
+    ).rows,
+  ).toHaveLength(1);
+  expect((await (await collection()).json()).cards).toHaveLength(1);
+  const newcomer = randomUUID();
+  await db.query(
+    "INSERT INTO collection_accounts(id,kakao_id,invite_code) VALUES($1,'3','CCCCCCCCCC')",
+    [newcomer],
+  );
+  const returningCode = (await (await collection()).json()).inviteCode;
+  expect(
+    (
+      await db.query<{ outcome: string }>(
+        "SELECT register_collection($1,$2,'motion-team-flexible',$3) AS outcome",
+        [newcomer, randomUUID(), returningCode],
+      )
+    ).rows[0].outcome,
+  ).toBe("referred");
+  expect((await (await collection()).json()).pending).toHaveLength(1);
+});
+
+it("탈퇴 트랜잭션이 실패하면 식별 기록과 계정 삭제를 모두 롤백한다", async () => {
+  await register(request("/api/collection/register", { session: session() }));
+  await db.exec(
+    "CREATE FUNCTION reject_account_delete() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'test_failure'; END; $$; CREATE TRIGGER reject_delete BEFORE DELETE ON collection_accounts FOR EACH ROW EXECUTE FUNCTION reject_account_delete();",
+  );
+  try {
+    expect(
+      (await remove(request("/api/collection/account", {}, "DELETE"))).status,
+    ).toBe(503);
+    expect(
+      (await db.query("SELECT * FROM collection_withdrawals")).rows,
+    ).toHaveLength(0);
+    expect(
+      (await db.query("SELECT * FROM collection_accounts")).rows,
+    ).toHaveLength(1);
+    expect(
+      (await db.query("SELECT * FROM saved_study_results")).rows,
+    ).toHaveLength(1);
+    expect(mocks.jar.get("study-collection")).toBe("session");
+  } finally {
+    await db.exec(
+      "DROP TRIGGER reject_delete ON collection_accounts; DROP FUNCTION reject_account_delete()",
+    );
+  }
+});
+
+it("식별 키 누락 시 제한을 우회하지 않고 계정 데이터도 삭제하지 않는다", async () => {
+  vi.stubEnv("AUTH_IDENTITY_HMAC_SECRET", "");
+  expect(
+    (await remove(request("/api/collection/account", {}, "DELETE"))).status,
+  ).toBe(503);
+  expect(
+    (await db.query("SELECT * FROM collection_accounts")).rows,
+  ).toHaveLength(1);
+  expect(
+    (await start(request("/api/auth/kakao/start"))).headers.get("location"),
+  ).toContain("auth=unavailable");
+});
+
+it("동일 계정의 중복 로그인은 계정을 늘리지 않고 탈퇴 후에는 모든 재발급을 막는다", async () => {
+  const fingerprint = identityHash("7000");
+  const establish = (n: number) =>
+    db.query<{ account_id: string | null; rejoin_after: Date | null }>(
+      "SELECT * FROM establish_collection_session('7000',$1,$2,$3,'')",
+      [fingerprint, `DDDDDDDDD${n}`, digest(`new-session-${n}`)],
+    );
+  const issued = await Promise.all([establish(1), establish(2)]);
+  expect(issued[0].rows[0].account_id).toBe(issued[1].rows[0].account_id);
+  const id = issued[0].rows[0].account_id;
+  await db.query("SELECT withdraw_collection_account($1,$2)", [
+    id,
+    fingerprint,
+  ]);
+  const blocked = await Promise.all([establish(3), establish(4)]);
+  expect(
+    blocked.every(
+      (result) =>
+        result.rows[0].account_id === null && result.rows[0].rejoin_after,
+    ),
+  ).toBe(true);
+  expect(
+    (
+      await db.query("SELECT * FROM collection_sessions WHERE account_id=$1", [
+        id,
+      ])
+    ).rows,
+  ).toHaveLength(0);
+  expect(
+    (await db.query("SELECT * FROM collection_accounts WHERE kakao_id='7000'"))
+      .rows,
   ).toHaveLength(0);
 });
 

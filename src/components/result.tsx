@@ -11,7 +11,7 @@ import {
   type Answers,
   type StudyType,
 } from "@/lib/content";
-import { readSession, clearSession, type Session } from "@/lib/storage";
+import { readSession, type Session } from "@/lib/storage";
 import {
   scoreAnswers,
   axisStrength,
@@ -24,7 +24,6 @@ import { Share } from "./share";
 import { MethodToolkit } from "./method-toolkit";
 import { Icon } from "./icon";
 import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
-import { useConfirm } from "./ui/confirm-dialog";
 import { TypeStory } from "./type-story";
 import { MysteryCard } from "./mystery-card";
 import { useCollection } from "./collection-provider";
@@ -273,7 +272,6 @@ export function PersonalResult() {
   const search = useSearchParams();
   const [localSession, setSession] = useState<Session | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [confirm, dialog] = useConfirm();
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       setSession(readSession());
@@ -330,28 +328,7 @@ export function PersonalResult() {
           다시 검사하기
           <Icon name="restart-linear" size={17} />
         </Link>
-        <button
-          className="text-link muted"
-          onClick={async () => {
-            if (
-              await confirm({
-                title: "이 기기의 기록을 지울까요?",
-                description:
-                  "이 기기의 최초·최근 검사와 활동 기록을 지워요. 계정에 저장한 도감과 검사 결과는 유지돼요.",
-                note: "삭제한 기기 기록은 복구할 수 없어요. 이미 전송된 이용 통계는 정해진 보관 기간에 따라 처리돼요.",
-                confirmLabel: "기록 지우기",
-                tone: "danger",
-              })
-            ) {
-              clearSession();
-              setSession(null);
-            }
-          }}
-        >
-          이 기기의 기록 지우기
-        </button>
       </div>
-      {dialog}
     </>
   );
 }

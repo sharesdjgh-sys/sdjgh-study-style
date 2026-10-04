@@ -51,7 +51,10 @@ export function AccountResultsProvider({
         const fetchResults = async () => {
           const response = await fetch("/api/results", {
             cache: "no-store",
-            signal: controller.signal,
+            signal: AbortSignal.any([
+              controller.signal,
+              AbortSignal.timeout(10000),
+            ]),
           });
           if (!response.ok)
             throw new Error(
@@ -73,7 +76,10 @@ export function AccountResultsProvider({
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(session),
-            signal: controller.signal,
+            signal: AbortSignal.any([
+              controller.signal,
+              AbortSignal.timeout(10000),
+            ]),
           });
           if (!response.ok)
             throw new Error(

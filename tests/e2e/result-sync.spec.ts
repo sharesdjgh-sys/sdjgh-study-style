@@ -26,7 +26,7 @@ test("로그인 후 첫 검사와 재검사를 서버에 보내고 저장 실패
     latest = result("motion-team-flexible", true);
   const stored: Session[] = [];
   let fail = true;
-  await page.route("**/api/collection", (route) =>
+  await page.route(/\/api\/(?:collection|auth\/session)$/, (route) =>
     route.fulfill({
       json: {
         ...EMPTY_COLLECTION,
