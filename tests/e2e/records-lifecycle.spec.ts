@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { acceptQuizIntro } from "../quiz";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
 import {
   EMPTY_COLLECTION,
@@ -133,6 +134,7 @@ test("계정 삭제 후 다른 탭의 옛 결과도 사라지고 새 계정에 �
   ).toContainText("아직 계정에 저장한 검사 결과가 없어요.");
   expect(posted).toEqual([]);
   await visit(other, "/quiz");
+  await acceptQuizIntro(other);
   await expect(other.locator(".question-number")).toHaveText("질문 01");
   const next = await other.evaluate(() =>
     JSON.parse(localStorage.getItem("study-style:session")!),
@@ -173,6 +175,7 @@ test("도감 등록 전이어도 계정에 첫 검사가 있으면 다른 결과
     },
   );
   await visit(page, "/quiz");
+  await acceptQuizIntro(page);
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page).toHaveURL(/\/result$/);
   await expect(page.locator(".result-character .mystery-card")).toHaveCount(1);

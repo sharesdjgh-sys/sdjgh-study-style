@@ -46,7 +46,7 @@ export function Header() {
 }
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`site-footer ${styles.footer}`}>
       <div className={styles.main}>
         <div className={styles.intro}>
           <Image

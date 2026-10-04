@@ -7355,6 +7355,19 @@ body:has(.method-quick-menu) {
   }
 }
 
+/* The question card carries its own signature during the quiz. */
+.site-shell:has(.quiz-active) > .site-footer {
+  display: none;
+}
+@media (max-width: 767px) {
+  .site-shell:has(.quiz-active) {
+    padding: 0 12px;
+  }
+  .site-shell:has(.quiz-active) > .header {
+    display: none;
+  }
+}
+
 /* Shared display type for headings, prominent labels, and large counters. */
 h1,
 h2,

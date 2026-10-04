@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS, VERSION, STUDY_TYPES } from "../../src/lib/content";
 import { answersFor } from "../answers";
+import { acceptQuizIntro } from "../quiz";
 import { readFile } from "node:fs/promises";
 import {
   EMPTY_COLLECTION,
@@ -266,9 +267,10 @@ test("첫 캐릭터는 비로그인 공개, 재검사는 분석부터 결과까�
     .click();
   await expect(page.getByRole("dialog")).toContainText("실루엣");
   await page.getByRole("button", { name: "새로 시작", exact: true }).click();
-  await expect(page.locator(".quiz-collection-notice")).toContainText(
-    "새 캐릭터는 추가되지 않아요",
-  );
+  await expect(
+    page.getByText(/재검사에서는 새 캐릭터를 지급하지 않으며/),
+  ).toBeVisible();
+  await acceptQuizIntro(page);
   const saved = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("study-style:session")!),
   );
@@ -283,6 +285,7 @@ test("첫 캐릭터는 비로그인 공개, 재검사는 분석부터 결과까�
     retake,
   );
   await page.reload();
+  await acceptQuizIntro(page);
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toHaveAttribute(
     "data-stage",
@@ -483,5 +486,6 @@ test("로그인 취소와 서버 장애에도 검사 가능, 계정 삭제는 �
     page.getByRole("button", { name: "다시 불러오기" }),
   ).toBeVisible();
   await page.goto("/quiz");
+  await acceptQuizIntro(page);
   await expect(page.locator(".question-number")).toHaveText("질문 01");
 });

@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { QUESTIONS } from "../../src/lib/content";
+import { acceptQuizIntro } from "../quiz";
 // 상황형은 늘 첫 선택지, 양극형은 늘 위 문장 쪽으로 답해요.
 async function answerFirst(page: Page, index: number) {
   if (QUESTIONS[index].kind === "situation")
@@ -36,6 +37,7 @@ test("홈과 스타일 탐색, 작은 화면에서 가로 넘침 없음", async 
 });
 test("미응답 검사, 복구, 동점 선택, 결과와 활동 평가", async ({ page }) => {
   await page.goto("/quiz");
+  await acceptQuizIntro(page);
   await page.getByRole("button", { name: "다음 질문" }).click();
   await expect(page.locator(".error-message[role=alert]")).toContainText(
     "답을 하나",
@@ -140,7 +142,10 @@ test("저장소 차단과 공유 실패에서도 사용 가능", async ({ page }
     };
   });
   await page.goto("/quiz");
-  await expect(page.getByRole("status")).toContainText("이어하기 저장");
+  await acceptQuizIntro(page);
+  await expect(page.getByRole("status")).toContainText(
+    "답변은 이 창에서만 유지돼요",
+  );
   await answerFirst(page, 0);
   await page.getByRole("button", { name: "다음 질문" }).click();
   await expect(page.locator(".question-number")).toHaveText("질문 02");

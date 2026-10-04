@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { QUESTIONS, VERSION } from "../../src/lib/content";
 import { answersFor } from "../answers";
+import { acceptQuizIntro } from "../quiz";
 
 test("미리보기는 실루엣을 섞고 선택한 캐릭터를 공개하며 다시 재생할 수 있음", async ({
   page,
@@ -56,6 +57,7 @@ test("분석 도중 새로고침해도 완료 결과가 보존됨", async ({ pag
     },
   );
   await page.reload();
+  await acceptQuizIntro(page);
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toBeVisible();
   await page.reload();
@@ -98,6 +100,7 @@ test("동작 줄이기에서도 분석이 완료되고 결과 설명을 읽을 �
     },
   );
   await page.reload();
+  await acceptQuizIntro(page);
   await page.getByRole("button", { name: "내 결과 보기", exact: true }).click();
   await expect(page.locator(".discovery-shell")).toBeVisible();
   await expect(page.locator(".discovery-progress > span")).toHaveCSS(

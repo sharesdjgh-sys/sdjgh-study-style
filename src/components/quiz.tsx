@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   QUESTIONS,
+  VERSION,
   QUESTION_GUIDES,
   FAMILIES,
   type Answer,
@@ -28,6 +29,9 @@ import { TypeDiscovery } from "./type-discovery";
 import { useCollection } from "./collection-provider";
 import { useAccountResults } from "./account-results-provider";
 import styles from "./quiz.module.css";
+import { QuizIntro } from "./quiz-intro";
+const CONSENT_VERSION = `${VERSION}:intro-v1`;
+const CONSENT_KEY = "study-style:quiz-consent";
 const TOTAL = QUESTIONS.length;
 const LAST = TOTAL - 1;
 const ENCOURAGEMENTS = [
@@ -72,6 +76,7 @@ export function Quiz() {
     collection.firstType || saved.results.length,
   );
   const [session, setSession] = useState<Session | null>(null);
+  const [acceptedRun, setAcceptedRun] = useState<string | null>(null);
   const [ties, setTies] = useState(false);
   const [discovering, setDiscovering] = useState(false);
   const [direction, setDirection] = useState("next");
@@ -88,18 +93,25 @@ export function Quiz() {
     const id = requestAnimationFrame(() => {
       const s = readSession() ?? newSession();
       setSession(s);
-      if (!s.result) {
-        if (!saveSession(s))
-          setWarning(
-            "이 브라우저에서는 이어하기 저장이 어려워요. 이 창에서 계속 진행해 주세요.",
-          );
-        track(s, "start");
-        track(s, "question", String(s.index + 1));
+      try {
+        if (
+          sessionStorage.getItem(CONSENT_KEY) ===
+          `${CONSENT_VERSION}:${s.runId}`
+        )
+          setAcceptedRun(s.runId);
+      } catch {
+        /* In-memory consent still allows this visit to continue. */
       }
     });
     return () => cancelAnimationFrame(id);
   }, []);
   useEffect(() => {
+    if (heading.current && window.matchMedia("(max-width: 767px)").matches) {
+      scrollToNextQuestion.current = false;
+      heading.current.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
     if (scrollToNextQuestion.current) {
       scrollToNextQuestion.current = false;
       heading.current?.focus({ preventScroll: true });
@@ -112,13 +124,28 @@ export function Quiz() {
     } else {
       heading.current?.focus();
     }
-  }, [session?.index, ties]);
+  }, [session?.index, ties, acceptedRun]);
+  function acceptIntro() {
+    if (!session) return;
+    try {
+      sessionStorage.setItem(
+        CONSENT_KEY,
+        `${CONSENT_VERSION}:${session.runId}`,
+      );
+    } catch {
+      /* Ask again after reload if session storage is unavailable. */
+    }
+    setAcceptedRun(session.runId);
+    update(session);
+    track(session, "start");
+    track(session, "question", String(session.index + 1));
+  }
   function update(s: Session) {
     setSession(s);
     if (!saveSession(s))
       setWarning("답변은 이 창에서만 유지돼요. 완료 전까지 창을 닫지 마세요.");
   }
-  function finish(s: Session) {
+  function finish(s: Session, completedAt: number) {
     const missing = QUESTIONS.findIndex((question) => !s.answers[question.id]);
     if (missing !== -1) {
       update({ ...s, index: missing });
@@ -135,8 +162,8 @@ export function Quiz() {
     const completed = {
       ...s,
       result: code,
-      completedAt: Date.now(),
-      updatedAt: Date.now(),
+      completedAt,
+      updatedAt: completedAt,
       isRetake: Boolean(s.isRetake || hasPreviousResult),
     };
     update(completed);
@@ -154,6 +181,27 @@ export function Quiz() {
       updatedAt,
     });
   }
+  function navigateQuestion(index: number, updatedAt: number) {
+    if (!session) return;
+    setError("");
+    setDirection(index > session.index ? "next" : "previous");
+    scrollToNextQuestion.current = true;
+    const next = { ...session, index, updatedAt };
+    update(next);
+    track(next, "question", String(index + 1));
+  }
+  function handlePrevious(updatedAt: number) {
+    if (session) navigateQuestion(session.index - 1, updatedAt);
+  }
+  function handleNext(updatedAt: number) {
+    if (!session) return;
+    if (!session.answers[QUESTIONS[session.index].id]) {
+      setError("답을 하나 골라주세요.");
+      return;
+    }
+    if (session.index === LAST) finish(session, updatedAt);
+    else navigateQuestion(session.index + 1, updatedAt);
+  }
   async function restart() {
     if (
       await confirm({
@@ -165,10 +213,9 @@ export function Quiz() {
       })
     ) {
       const s = newSession();
-      update(s);
+      setSession(s);
+      setAcceptedRun(null);
       setTies(false);
-      track(s, "start");
-      track(s, "question", "1");
     }
   }
   if (!session || !collectionLoaded || !saved.loaded)
@@ -209,6 +256,14 @@ export function Quiz() {
         {dialog}
       </main>
     );
+  if (acceptedRun !== session.runId)
+    return (
+      <QuizIntro
+        key={session.runId}
+        resume={Object.keys(session.answers).length > 0}
+        onAccept={acceptIntro}
+      />
+    );
   const q = QUESTIONS[session.index];
   const count = Object.keys(session.answers).length;
   const scores = ties ? scoreAnswers(session.answers as Answers) : null;
@@ -218,10 +273,26 @@ export function Quiz() {
   const choose = (key: keyof Choices, value: string) =>
     update({ ...session, choices: { ...session.choices, [key]: value } });
   return (
-    <main id="main" className={`quiz-shell ${styles.page}`}>
+    <main id="main" className={`quiz-shell quiz-active ${styles.page}`}>
       <div className="quiz-top">
-        <Link href="/" className="muted small">
-          StudyCrew 홈
+        <Link href="/" className={styles.homeLink} aria-label="StudyCrew 홈">
+          <Image
+            className={styles.homeCards}
+            src="/brand/study-friends-v2-192.png"
+            alt=""
+            width={192}
+            height={192}
+            sizes="34px"
+            loading="eager"
+          />
+          <Image
+            src="/brand/studycrew-wordmark-book.webp"
+            alt="StudyCrew"
+            width={900}
+            height={245}
+            sizes="104px"
+            loading="eager"
+          />
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />
@@ -230,51 +301,6 @@ export function Quiz() {
             : "로그인 없이도 검사할 수 있어요"}
         </span>
       </div>
-      <div className={styles.intro}>
-        <div>
-          <span className="eyebrow">나를 알아가는 {TOTAL}개의 질문</span>
-          <p className={styles.title}>
-            나의 <span>공부 취향</span>을 찾아요
-          </p>
-          <p className={styles.subtitle}>
-            정답은 없어요. 최근 2주 동안의 나를 떠올려 보세요.
-          </p>
-        </div>
-        <Image
-          src="/ui-icons/nav-character.webp"
-          alt=""
-          width={88}
-          height={88}
-          priority
-        />
-      </div>
-      {session.index === 0 && !ties && (
-        <details className={styles.about}>
-          <summary>
-            시작 전에 알아두세요 <span>검사·도감 안내</span>
-          </summary>
-          <div>
-            <p>
-              재미로 고르고, 다양한 공부법을 발견해요. 성격·능력을 진단하는
-              검사가 아니에요. 결과가 나의 공부 방식을 정하지 않으니, 가볍게
-              즐겨주세요.
-            </p>
-            <strong>
-              {session.isRetake || hasPreviousResult
-                ? "다시 알아보는 나의 공부 취향"
-                : "시작 전에, 캐릭터 도감 안내"}
-            </strong>
-            <p>
-              첫 검사에서는 로그인 없이 나만의 캐릭터를 만나요. 도감에 저장하고
-              친구를 모으려면 카카오 로그인이 필요해요.
-            </p>
-            <p>
-              재검사는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 새
-              캐릭터는 추가되지 않아요.
-            </p>
-          </div>
-        </details>
-      )}
       <div ref={progressHeading} className="progress-heading">
         <span>{ties ? "마지막으로, 하나만 골라주세요" : "내 공부캐 찾기"}</span>
         <strong>
@@ -311,107 +337,106 @@ export function Quiz() {
       >
         {!ties ? (
           <>
-            <div className="question-meta">
-              <span className="question-number">
-                질문 {String(session.index + 1).padStart(2, "0")}
-              </span>
-              <span className="question-kind">
-                {q.kind === "situation" ? "상황 고르기" : "두 문장 비교"}
-              </span>
-            </div>
-            <h1 ref={heading} tabIndex={-1}>
-              {q.text}
-            </h1>
-            <p className="question-hint">{q.hint}</p>
-            {firstOfKind && (
-              <details className="question-guide" open={q.kind === "pair"}>
-                <summary>
-                  {q.kind === "situation"
-                    ? "하나만 고르기 어려운가요?"
-                    : "두 문장은 어떻게 고르나요?"}
-                </summary>
-                <p>{QUESTION_GUIDES[q.kind]}</p>
-              </details>
-            )}
-            {q.kind === "situation" ? (
-              <fieldset className="situation-options">
-                <legend className="sr-only">
-                  가장 먼저 손이 가는 방법 하나를 골라 주세요
-                </legend>
-                {q.options.map((option) => (
-                  <label
-                    className={`situation-option ${session.answers[q.id] === option.modality ? "checked" : ""}`}
-                    key={option.modality}
-                  >
-                    <input
-                      type="radio"
-                      name={q.id}
-                      value={option.modality}
-                      checked={session.answers[q.id] === option.modality}
-                      onChange={() => answer(q.id, option.modality, Date.now())}
-                    />
-                    <span>{option.text}</span>
-                  </label>
-                ))}
-              </fieldset>
-            ) : (
-              <fieldset className="pair-options">
-                <legend className="sr-only">
-                  두 문장 중 요즘의 나에게 더 가까운 쪽을 골라 주세요
-                </legend>
-                {PAIR_SIDES.map(({ side, choices }, i) => (
-                  <div
-                    className={`pair-card ${choices.some((c) => c.value === session.answers[q.id]) ? "chosen" : ""}`}
-                    key={side}
-                  >
-                    {i === 1 && (
-                      <span className="pair-divider" aria-hidden="true">
-                        또는
-                      </span>
-                    )}
-                    <p className="pair-statement" id={`${q.id}-${side}`}>
-                      <span className={styles.statementLabel}>
-                        {i === 0 ? "위 문장" : "아래 문장"}
-                      </span>
-                      {q[side].text}
-                    </p>
-                    <div className="pair-choices">
-                      {choices.map((choice) => (
-                        <label
-                          className={`pair-choice ${session.answers[q.id] === choice.value ? "checked" : ""}`}
-                          key={choice.value}
-                        >
-                          <input
-                            type="radio"
-                            name={q.id}
-                            value={choice.value}
-                            aria-label={choice.name}
-                            aria-describedby={`${q.id}-${side}`}
-                            checked={session.answers[q.id] === choice.value}
-                            onChange={() =>
-                              answer(q.id, choice.value, Date.now())
-                            }
-                          />
-                          <span aria-hidden="true">{choice.label}</span>
-                        </label>
-                      ))}
+            <div className={`quiz-question-body ${styles.questionBody}`}>
+              <div className="question-meta">
+                <span className="question-number">
+                  질문 {String(session.index + 1).padStart(2, "0")}
+                </span>
+                <span className="question-kind">
+                  {q.kind === "situation" ? "상황 고르기" : "두 문장 비교"}
+                </span>
+              </div>
+              <h1 ref={heading} tabIndex={-1}>
+                {q.text}
+              </h1>
+              <p className="question-hint">{q.hint}</p>
+              {firstOfKind && (
+                <details className="question-guide" open={q.kind === "pair"}>
+                  <summary>
+                    {q.kind === "situation"
+                      ? "하나만 고르기 어려운가요?"
+                      : "두 문장은 어떻게 고르나요?"}
+                  </summary>
+                  <p>{QUESTION_GUIDES[q.kind]}</p>
+                </details>
+              )}
+              {q.kind === "situation" ? (
+                <fieldset className="situation-options">
+                  <legend className="sr-only">
+                    가장 먼저 손이 가는 방법 하나를 골라 주세요
+                  </legend>
+                  {q.options.map((option) => (
+                    <label
+                      className={`situation-option ${session.answers[q.id] === option.modality ? "checked" : ""}`}
+                      key={option.modality}
+                    >
+                      <input
+                        type="radio"
+                        name={q.id}
+                        value={option.modality}
+                        checked={session.answers[q.id] === option.modality}
+                        onChange={() =>
+                          answer(q.id, option.modality, Date.now())
+                        }
+                      />
+                      <span>{option.text}</span>
+                    </label>
+                  ))}
+                </fieldset>
+              ) : (
+                <fieldset className="pair-options">
+                  <legend className="sr-only">
+                    두 문장 중 요즘의 나에게 더 가까운 쪽을 골라 주세요
+                  </legend>
+                  {PAIR_SIDES.map(({ side, choices }, i) => (
+                    <div
+                      className={`pair-card ${choices.some((c) => c.value === session.answers[q.id]) ? "chosen" : ""}`}
+                      key={side}
+                    >
+                      {i === 1 && (
+                        <span className="pair-divider" aria-hidden="true">
+                          또는
+                        </span>
+                      )}
+                      <p className="pair-statement" id={`${q.id}-${side}`}>
+                        <span className={styles.statementLabel}>
+                          {i === 0 ? "위 문장" : "아래 문장"}
+                        </span>
+                        {q[side].text}
+                      </p>
+                      <div className="pair-choices">
+                        {choices.map((choice) => (
+                          <label
+                            className={`pair-choice ${session.answers[q.id] === choice.value ? "checked" : ""}`}
+                            key={choice.value}
+                          >
+                            <input
+                              type="radio"
+                              name={q.id}
+                              value={choice.value}
+                              aria-label={choice.name}
+                              aria-describedby={`${q.id}-${side}`}
+                              checked={session.answers[q.id] === choice.value}
+                              onChange={() =>
+                                answer(q.id, choice.value, Date.now())
+                              }
+                            />
+                            <span aria-hidden="true">{choice.label}</span>
+                          </label>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </fieldset>
-            )}
+                  ))}
+                </fieldset>
+              )}
+            </div>
             <div className="quiz-controls">
               <button
                 className="button ghost"
                 disabled={session.index === 0}
                 onClick={() => {
-                  setError("");
-                  setDirection("previous");
-                  update({
-                    ...session,
-                    index: session.index - 1,
-                    updatedAt: Date.now(),
-                  });
+                  // eslint-disable-next-line react-hooks/purity -- Timestamp is read only on a user click, never during render.
+                  handlePrevious(Date.now());
                 }}
               >
                 <Icon name="arrow-left-linear" size={18} />
@@ -420,22 +445,8 @@ export function Quiz() {
               <button
                 className="button primary"
                 onClick={() => {
-                  if (!session.answers[q.id]) {
-                    setError("답을 하나 골라주세요.");
-                    return;
-                  }
-                  if (session.index === LAST) finish(session);
-                  else {
-                    scrollToNextQuestion.current = true;
-                    setDirection("next");
-                    const s = {
-                      ...session,
-                      index: session.index + 1,
-                      updatedAt: Date.now(),
-                    };
-                    update(s);
-                    track(s, "question", String(s.index + 1));
-                  }
+                  // eslint-disable-next-line react-hooks/purity -- Timestamp is read only on a user click, never during render.
+                  handleNext(Date.now());
                 }}
               >
                 {session.index === LAST ? "내 결과 보기" : "다음 질문"}
@@ -446,37 +457,39 @@ export function Quiz() {
         ) : (
           scores && (
             <>
-              <span className="question-number">
-                여러 방식을 비슷하게 골랐어요
-              </span>
-              <h1 ref={heading} tabIndex={-1}>
-                다음 공부 시간에
-                <br />
-                하나만 해 본다면?
-              </h1>
-              <p className="question-hint">
-                추가 점수는 없어요. 고른 방식을 대표 스타일로 보여 드릴게요.
-                {scores.uniform &&
-                  " 네 방식을 고르게 골랐어요. 어떤 방법이든 시작점이 될 수 있어요."}
-              </p>
-              <fieldset className="tie-group">
-                <legend>먼저 해보고 싶은 활동</legend>
-                {scores.candidates.modality.map((m) => (
-                  <label
-                    className={`tie-choice ${session.choices.modality === m ? "checked" : ""}`}
-                    key={m}
-                  >
-                    <input
-                      type="radio"
-                      name="modality"
-                      checked={session.choices.modality === m}
-                      onChange={() => choose("modality", m)}
-                    />
-                    <Icon name={FAMILIES[m].icon} />
-                    {FAMILIES[m].activity}
-                  </label>
-                ))}
-              </fieldset>
+              <div className={`quiz-question-body ${styles.questionBody}`}>
+                <span className="question-number">
+                  여러 방식을 비슷하게 골랐어요
+                </span>
+                <h1 ref={heading} tabIndex={-1}>
+                  다음 공부 시간에
+                  <br />
+                  하나만 해 본다면?
+                </h1>
+                <p className="question-hint">
+                  추가 점수는 없어요. 고른 방식을 대표 스타일로 보여 드릴게요.
+                  {scores.uniform &&
+                    " 네 방식을 고르게 골랐어요. 어떤 방법이든 시작점이 될 수 있어요."}
+                </p>
+                <fieldset className="tie-group">
+                  <legend>먼저 해보고 싶은 활동</legend>
+                  {scores.candidates.modality.map((m) => (
+                    <label
+                      className={`tie-choice ${session.choices.modality === m ? "checked" : ""}`}
+                      key={m}
+                    >
+                      <input
+                        type="radio"
+                        name="modality"
+                        checked={session.choices.modality === m}
+                        onChange={() => choose("modality", m)}
+                      />
+                      <Icon name={FAMILIES[m].icon} />
+                      {FAMILIES[m].activity}
+                    </label>
+                  ))}
+                </fieldset>
+              </div>
               <div className="quiz-controls">
                 <button
                   className="button ghost"
@@ -494,7 +507,7 @@ export function Quiz() {
                       setError("활동을 하나 골라주세요.");
                       return;
                     }
-                    finish(session);
+                    finish(session, Date.now());
                   }}
                 >
                   내 결과 보기
@@ -509,6 +522,16 @@ export function Quiz() {
             {error}
           </p>
         )}
+        <div className={`quiz-signature ${styles.signature}`}>
+          <Image
+            src="/brand/lifeprofessor-logo.png"
+            alt="인생교수의 AI 연구소"
+            width={399}
+            height={67}
+            sizes="132px"
+            loading="eager"
+          />
+        </div>
       </section>
       <p className="quiz-footnote">
         정답은 없어요. 최근 2주 동안의 나를 떠올려 보세요.

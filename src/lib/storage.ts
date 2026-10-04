@@ -177,6 +177,7 @@ export function clearSession() {
   }
   try {
     sessionStorage.removeItem("study-style:source");
+    sessionStorage.removeItem("study-style:quiz-consent");
   } catch {
     /* 저장 차단 */
   }

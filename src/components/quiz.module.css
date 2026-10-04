@@ -3,6 +3,105 @@
   margin: 28px auto 0;
   padding-bottom: 24px;
 }
+.consentIntro {
+  margin: 24px 0;
+}
+.consentIntro > img {
+  float: right;
+  margin-left: 16px;
+}
+.consentIntro h1 {
+  margin: 12px 0 18px;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.4;
+}
+.consentIntro p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.consentNotes {
+  display: grid;
+  gap: 14px;
+}
+.consentNotes section {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+}
+.consentNotes h2 {
+  margin-bottom: 10px;
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+.consentNotes p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.consentNotes a {
+  font-size: 0.875rem;
+}
+.consentForm {
+  margin-top: 22px;
+  display: grid;
+  gap: 18px;
+}
+.consentForm label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.consentForm input {
+  width: 22px;
+  height: 22px;
+  margin: 1px 0 0;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+.consentForm :global(.button) {
+  width: 100%;
+}
+.questionBody {
+  min-width: 0;
+}
+.homeLink {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+.homeLink img {
+  display: block;
+  width: 104px;
+  height: auto;
+}
+.homeLink .homeCards {
+  width: 34px;
+  height: 34px;
+}
+.page:global(.quiz-active) :global(.quiz-top > span) {
+  margin-left: auto;
+}
+.homeLink:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.signature {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 14px;
+}
+.signature img {
+  display: block;
+  width: 132px;
+  height: auto;
+  opacity: 0.8;
+}
 .page :global(.quiz-top) {
   gap: 16px;
   margin-bottom: 24px;
@@ -356,5 +455,159 @@
   }
   .page :global(.pair-choices) {
     grid-template-columns: 1fr;
+  }
+}
+
+/* The question body may scroll at large text sizes; navigation stays in reach. */
+@media (max-width: 767px) {
+  .homeLink {
+    display: inline-flex;
+  }
+  .page:global(.quiz-active) {
+    width: 100%;
+    height: 100dvh;
+    max-height: 680px;
+    max-width: 760px;
+    min-height: 0;
+    margin: 0 auto;
+    padding: max(8px, env(safe-area-inset-top)) 0
+      max(8px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+  }
+  .page:global(.quiz-active) :global(.quiz-top) {
+    margin: 0 0 8px;
+    font-size: 0.6875rem;
+  }
+  .page:global(.quiz-active) :global(.progress-heading) {
+    margin-bottom: 5px;
+    font-size: 0.8125rem;
+  }
+  .page:global(.quiz-active) :global(.progress-heading strong) {
+    font-size: 1.125rem;
+  }
+  .page:global(.quiz-active) :global(.progress-track) {
+    height: 5px;
+    flex-shrink: 0;
+  }
+  .page:global(.quiz-active) :global(.quiz-encouragement),
+  .page:global(.quiz-active) :global(.quiz-footnote) {
+    display: none;
+  }
+  .page:global(.quiz-active) :global(.question-card) {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 18px;
+    animation: none;
+  }
+  .page .questionBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding: 2px 3px 4px;
+  }
+  .page .questionBody > * {
+    flex-shrink: 0;
+  }
+  .page .questionBody > fieldset {
+    flex: 1 0 auto;
+    margin-top: 0;
+    grid-auto-rows: auto;
+  }
+  .signature {
+    margin-top: 10px;
+  }
+  .page:global(.quiz-active) :global(.question-card h1) {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin: 8px 0 6px;
+  }
+  .page:global(.quiz-active) :global(.question-hint) {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .page:global(.quiz-active) :global(.question-guide) {
+    margin: 0 0 8px;
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+  .page:global(.quiz-active) :global(.question-guide summary) {
+    padding: 4px 0;
+  }
+  .page:global(.quiz-active) :global(.question-guide p) {
+    padding: 6px 8px;
+  }
+  .page:global(.quiz-active) :global(.situation-options),
+  .page:global(.quiz-active) :global(.tie-group) {
+    gap: 8px;
+  }
+  .page:global(.quiz-active) :global(.situation-option),
+  .page:global(.quiz-active) :global(.tie-choice) {
+    min-height: 52px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    gap: 10px;
+  }
+  .page:global(.quiz-active) :global(.pair-options) {
+    gap: 16px;
+  }
+  .page:global(.quiz-active) :global(.pair-card) {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+  .page:global(.quiz-active) :global(.pair-choices) {
+    flex: 1;
+  }
+  .page:global(.quiz-active) :global(.pair-divider) {
+    top: -16px;
+    padding-block: 0;
+  }
+  .page:global(.quiz-active) :global(.pair-statement) {
+    font-size: 1rem;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .page .statementLabel {
+    font-size: 0.6875rem;
+    margin-bottom: 3px;
+  }
+  .page:global(.quiz-active) :global(.pair-choice) {
+    min-height: 44px;
+    padding: 8px 4px;
+    font-size: 0.8125rem;
+    gap: 5px;
+  }
+  .page:global(.quiz-active) :global(.quiz-controls) {
+    flex-shrink: 0;
+    margin-top: 8px;
+    padding-top: 8px;
+    gap: 8px;
+  }
+  .page:global(.quiz-active) :global(.quiz-controls .button) {
+    min-height: 44px;
+    padding: 8px 12px;
+    font-size: 0.9375rem;
+  }
+  .page:global(.quiz-active) :global(.error-message) {
+    margin: 6px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+  .page:global(.quiz-active) > :global(.notice) {
+    flex-shrink: 0;
+    margin: 4px 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 }
