@@ -30,6 +30,15 @@ export function Header() {
       <nav aria-label="주요 메뉴">
         <Link href="/types">공부캐 도감</Link>
         <Link href="/methods">공부 스킬북</Link>
+        <Link href="/account" className="header-my-account">
+          <Image
+            src="/ui-icons/nav-account.webp"
+            alt=""
+            width={28}
+            height={28}
+          />
+          내 정보
+        </Link>
         <HeaderAccount />
       </nav>
     </header>
@@ -52,6 +61,7 @@ export function Footer() {
         </div>
         <nav className={styles.navigation} aria-label="푸터 메뉴">
           <Link href="/collection">내 도감</Link>
+          <Link href="/account">내 정보</Link>
           <Link href="/methods">공부 스킬북</Link>
           <Link href="/about">서비스 안내</Link>
           <Link href="/privacy" className={styles.privacy}>

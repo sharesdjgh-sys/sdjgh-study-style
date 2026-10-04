@@ -33,6 +33,12 @@ export function QuickMenu() {
       icon: "nav-character",
       active: path.startsWith("/result"),
     },
+    {
+      href: "/account",
+      label: "내 정보",
+      icon: "nav-account",
+      active: path === "/account",
+    },
   ];
   return (
     <nav className="quick-menu" aria-label="빠른 메뉴">

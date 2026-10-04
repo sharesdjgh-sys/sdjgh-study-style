@@ -6685,14 +6685,23 @@ body {
 .quick-menu {
   display: none;
 }
+.header nav .header-my-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
 @media (max-width: 767px) {
+  .header nav .header-my-account {
+    display: none;
+  }
   /* 모바일 하단 퀵메뉴 */
   .quick-menu {
     position: fixed;
     inset: auto 0 0;
     z-index: 30;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--line);
     background: #fbfcf8f2;
@@ -6887,6 +6896,9 @@ body {
   background: var(--pale);
   color: var(--accent);
 }
+.method-quick-menu .method-quick-home {
+  display: none;
+}
 .method-quick-menu a:hover {
   background: var(--sage);
 }
@@ -6899,6 +6911,7 @@ body:has(.method-quick-menu) {
 @media (max-width: 767px) {
   .method-quick-menu {
     inset: auto 0 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
     border: 0;
@@ -6907,6 +6920,9 @@ body:has(.method-quick-menu) {
   }
   .method-quick-menu a {
     font-size: 12px;
+  }
+  .method-quick-menu .method-quick-home {
+    display: grid;
   }
   body:has(.method-quick-menu) {
     padding-bottom: calc(88px + env(safe-area-inset-bottom));

@@ -13,7 +13,7 @@ test("공부 스킬북 퀵메뉴로 분류를 이동하고, 아직 만나지 않
   const categories = page.getByRole("navigation", {
     name: "공부법 분류 빠른 메뉴",
   });
-  await expect(categories.getByRole("link")).toHaveCount(4);
+  await expect(categories.getByRole("link")).toHaveCount(isMobile ? 5 : 4);
   const review = categories.getByRole("link", {
     name: "복습·리듬",
     exact: true,
@@ -80,6 +80,12 @@ test("모바일 하단 퀵메뉴로 이동하고, 검사 중에는 숨김", asyn
   await expect(
     page.getByRole("navigation", { name: "공부법 분류 빠른 메뉴" }),
   ).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "공부법 분류 빠른 메뉴" })
+    .getByRole("link", { name: "홈", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(menu).toBeVisible();
   await page.goto("/methods/mini-quiz");
   await expect(menu).toBeVisible();
   await page.goto("/quiz");

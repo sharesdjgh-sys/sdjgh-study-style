@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CATEGORIES, type MethodCategory } from "@/lib/methods";
 import { MethodIcon } from "./method-icon";
@@ -42,6 +44,10 @@ export function MethodQuickMenu() {
       className="quick-menu method-quick-menu"
       aria-label="공부법 분류 빠른 메뉴"
     >
+      <Link href="/" className="method-quick-home">
+        <Image src="/ui-icons/nav-home.webp" alt="" width={36} height={36} />
+        <span>홈</span>
+      </Link>
       {CATEGORIES_IN_ORDER.map((category) => (
         <a
           key={category}
