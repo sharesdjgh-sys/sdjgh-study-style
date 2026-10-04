@@ -4,16 +4,21 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSavedSession } from "./use-saved-session";
 import { MethodQuickMenu } from "./method-quick-menu";
+import { useAccountResults } from "./account-results-provider";
+import { useAuth } from "./auth-provider";
 
 /** 모바일 하단 퀵메뉴. 검사 중에는 문항에 집중하도록 숨겨요. */
 export function QuickMenu() {
   const path = usePathname();
-  const { session } = useSavedSession();
+  const { session, first } = useSavedSession();
+  const { results } = useAccountResults();
+  const auth = useAuth();
   if (path.startsWith("/quiz")) return null;
   if (path === "/methods") return <MethodQuickMenu />;
-  const mine = session?.result
-    ? { href: "/result", label: "내 결과" }
-    : { href: "/quiz", label: "내 캐 찾기" };
+  const mine =
+    session?.result || first?.result || results.length || auth.session.signedIn
+      ? { href: "/result", label: "내 결과" }
+      : { href: "/quiz", label: "내 캐 찾기" };
   const items = [
     { href: "/", label: "홈", icon: "nav-home", active: path === "/" },
     {

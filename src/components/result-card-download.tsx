@@ -10,13 +10,21 @@ export function ResultCardDownload({ session }: { session: Session }) {
   const card = useCardImage(session);
   const data = resultCardData(session);
   return (
-    <section className="keepsake-section" aria-label="내 공부캐 이미지 저장">
+    <section
+      id="my-character-card"
+      className="keepsake-section"
+      aria-label="내 공부캐 이미지 저장"
+    >
       <div>
         <span className="eyebrow">MY STUDYCREW CARD</span>
         <h2>내 공부캐, 한 장으로 간직해요.</h2>
         <p>
           {CHARACTERS[session.result!].name}의 공간에 내 점수와 시그니처
           공부법을 담았어요.
+        </p>
+        <p className="small muted">
+          처음 만난 내 캐릭터와 최초 검사의 점수로 만든 카드예요. 재검사 후에도
+          언제든 다시 저장할 수 있어요.
         </p>
       </div>
       <div className="keepsake-inline">
@@ -72,11 +80,15 @@ function useCardImage(session: Session) {
   const [image, setImage] = useState<{ url: string; blob: Blob } | null>(null);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  // Refetching the same immutable record must not revoke a displayed image.
+  const snapshot = JSON.stringify({ ...session, mission: undefined });
   useEffect(() => {
     let active = true;
     let url = "";
     void import("@/lib/render-result-card")
-      .then(({ renderResultCard }) => renderResultCard(session))
+      .then(({ renderResultCard }) =>
+        renderResultCard(JSON.parse(snapshot) as Session),
+      )
       .then((blob) => {
         if (!active) return;
         url = URL.createObjectURL(blob);
@@ -92,7 +104,7 @@ function useCardImage(session: Session) {
       active = false;
       if (url) URL.revokeObjectURL(url);
     };
-  }, [session, attempt]);
+  }, [snapshot, attempt]);
   return {
     image,
     error,

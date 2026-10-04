@@ -25,9 +25,11 @@ const subject = (word: string) => {
 export function MethodToolkit({
   type,
   hideCharacter = false,
+  resultRunId,
 }: {
   type: StudyType;
   hideCharacter?: boolean;
+  resultRunId?: string;
 }) {
   const lineup = lineupFor(type);
   const cards: { id: MethodId; kind: string; signature?: boolean }[] = [
@@ -42,7 +44,11 @@ export function MethodToolkit({
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       // 지난번에 고른 공부법이 이 공부캐의 공부법이면 그대로 이어서 보여 줘요.
-      const m = readSession()?.mission;
+      const local = readSession();
+      const m =
+        !resultRunId || local?.runId === resultRunId
+          ? local?.mission
+          : undefined;
       const saved = m && missionMethod(m);
       const { signature, byTask } = lineupFor(type);
       if (
@@ -52,7 +58,7 @@ export function MethodToolkit({
         setSelected(saved);
     });
     return () => cancelAnimationFrame(id);
-  }, [type]);
+  }, [type, resultRunId]);
   function choose(id: MethodId) {
     setSelected(id);
     const reduce = window.matchMedia(
@@ -121,7 +127,12 @@ export function MethodToolkit({
         </Link>
       </section>
       <div className="toolkit-mission" ref={mission}>
-        <Mission key={selected} methodId={selected} type={type} />
+        <Mission
+          key={selected}
+          methodId={selected}
+          type={type}
+          resultRunId={resultRunId}
+        />
       </div>
     </>
   );

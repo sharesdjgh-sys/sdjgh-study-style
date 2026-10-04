@@ -11,7 +11,7 @@ export function SavedResults({ history = false }: { history?: boolean }) {
     return (
       <p className="result-save-status small">
         카카오 로그인하면 검사 답변과 점수가 계정에 저장돼요.{" "}
-        <Link href="/collection">로그인하고 보관하기 →</Link>
+        <Link href="/account">로그인하고 보관하기 →</Link>
       </p>
     );
   return (

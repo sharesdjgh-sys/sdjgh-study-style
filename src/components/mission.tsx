@@ -23,9 +23,11 @@ export function Mission({
   methodId,
   type,
   tabs,
+  resultRunId,
 }: {
   methodId: MethodId;
   type?: StudyType;
+  resultRunId?: string;
   /** 공부법을 고르는 탭(방식별 공부법 페이지의 과제 탭) */
   tabs?: ReactNode;
 }) {
@@ -56,7 +58,11 @@ export function Mission({
   const clock = `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
   useEffect(() => {
     const id = requestAnimationFrame(() => {
-      const m = readSession()?.mission;
+      const local = readSession();
+      const m =
+        !resultRunId || local?.runId === resultRunId
+          ? local?.mission
+          : undefined;
       if (m && missionMethod(m) === methodId) {
         setSelected(true);
         setStarted(m.started);
@@ -64,7 +70,7 @@ export function Mission({
       }
     });
     return () => cancelAnimationFrame(id);
-  }, [methodId]);
+  }, [methodId, resultRunId]);
   function persist(
     action: "select" | "start" | "feedback",
     value?: "helpful" | "mixed" | "not-yet",
@@ -76,6 +82,12 @@ export function Mission({
     }
     if (value) setFeedback(value);
     const s = readSession();
+    if (resultRunId && s?.runId !== resultRunId) {
+      setMessage(
+        "이 기록의 공부법을 바로 시도할 수 있어요. 다른 검사의 활동 기록은 바꾸지 않아요.",
+      );
+      return;
+    }
     if (!s?.result) {
       setMessage(
         "이 페이지에서는 바로 시도할 수 있어요. 검사 후에는 활동 기록도 기기에 남길 수 있어요.",
