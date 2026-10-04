@@ -6,7 +6,7 @@ export const metadata = {
 };
 export default function Page() {
   return (
-    <main id="main" className="catalog-shell">
+    <main id="main" className="catalog-shell character-catalog">
       <div className="page-intro">
         <span className="eyebrow">나의 공부 친구들</span>
         <h1>
