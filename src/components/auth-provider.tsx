@@ -47,13 +47,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     controller.current?.abort();
     pending.current = null;
   }, []);
-  const refresh = useCallback(async () => {
+  const refresh = useCallback(async (background = false) => {
     if (action.current) return;
     if (pending.current) return pending.current;
     const current = ++serial.current;
     const abort = new AbortController();
     controller.current = abort;
-    setState((old) => ({ ...old, status: "checking", message: "" }));
+    setState((old) =>
+      background &&
+      (old.status === "authenticated" || old.status === "anonymous")
+        ? old
+        : { ...old, status: "checking", message: "" },
+    );
     const work = async () => {
       try {
         const response = await fetch("/api/auth/session", {
@@ -76,11 +81,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
       } catch {
         if (current === serial.current)
-          setState((old) => ({
-            status: "error",
-            session: { ...anonymous, configured: old.session.configured },
-            message: "로그인 상태를 확인하지 못했어요. 다시 확인해 주세요.",
-          }));
+          setState((old) =>
+            // A failed background request does not establish a logout.
+            // Explicit revalidation and account changes still fail closed.
+            background &&
+            (old.status === "authenticated" || old.status === "anonymous")
+              ? old
+              : {
+                  status: "error",
+                  session: { ...anonymous, configured: old.session.configured },
+                  message:
+                    "로그인 상태를 확인하지 못했어요. 다시 확인해 주세요.",
+                },
+          );
       } finally {
         if (current === serial.current) pending.current = null;
       }
@@ -166,7 +179,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const frame = requestAnimationFrame(() => void refresh());
     const visible = () => {
-      if (document.visibilityState === "visible") void refresh();
+      if (document.visibilityState === "visible") void refresh(true);
     };
     const restored = (event: PageTransitionEvent) => {
       if (!event.persisted) return;

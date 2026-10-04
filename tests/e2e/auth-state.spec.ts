@@ -15,6 +15,54 @@ const signedIn = { signedIn: true, configured: true, accountId: "auth-test" };
 const guest = { signedIn: false, configured: true };
 const header = (page: Page) => page.getByRole("banner");
 
+test("자동 확인 응답을 기다리는 동안에도 로그아웃할 수 있고 늦은 응답이 로그인을 복구하지 않는다", async ({
+  page,
+  context,
+}) => {
+  await emptyResults(context);
+  let delay = false;
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let requests = 0;
+  await page.route("**/api/auth/session", async (route) => {
+    requests++;
+    if (delay) await gate;
+    await route.fulfill({ json: signedIn });
+  });
+  await page.route("**/api/collection", (route) =>
+    route.fulfill({ json: { ...EMPTY_COLLECTION, ...signedIn } }),
+  );
+  await page.route("**/api/auth/logout", (route) =>
+    route.fulfill({ json: { ok: true } }),
+  );
+  await visit(page, "/account");
+  const logout = header(page).getByRole("button", {
+    name: "로그아웃",
+    exact: true,
+  });
+  await expect(logout).toBeEnabled();
+  delay = true;
+  const before = requests;
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect.poll(() => requests).toBeGreaterThan(before);
+  await expect(logout).toBeEnabled();
+  const settled = page.waitForEvent("requestfailed", {
+    predicate: (request) => request.url().endsWith("/api/auth/session"),
+  });
+  await logout.click();
+  await expect(
+    header(page).getByRole("button", { name: "카카오 로그인", exact: true }),
+  ).toBeEnabled();
+  release();
+  await settled;
+  await expect(logout).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "계정·도감 삭제", exact: true }),
+  ).toHaveCount(0);
+});
+
 test("인증 확인 중에는 로그아웃을 표시하지 않고 도감이 느려도 인증은 먼저 완료한다", async ({
   page,
   context,
@@ -56,7 +104,7 @@ test("인증 확인 중에는 로그아웃을 표시하지 않고 도감이 느�
   ).toContainText("아직 저장할 첫 검사 결과가 없어요.");
 });
 
-test("상태 조회 실패 시 이전 로그아웃 표시를 숨기고 재시도로 만료된 세션을 확인한다", async ({
+test("자동 확인의 일시적 오류는 화면을 유지하고 세션 만료가 확인되면 로그아웃을 반영한다", async ({
   page,
   context,
 }) => {
@@ -77,21 +125,74 @@ test("상태 조회 실패 시 이전 로그아웃 표시를 숨기고 재시도
     header(page).getByRole("button", { name: "로그아웃", exact: true }),
   ).toBeVisible();
   mode = "error";
+  const failed = page.waitForResponse("**/api/auth/session");
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  expect((await failed).status()).toBe(503);
+  await expect(
+    header(page).getByRole("button", { name: "로그아웃", exact: true }),
+  ).toBeEnabled();
   await expect(
     header(page).getByRole("button", { name: "로그인 상태 다시 확인" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "로그아웃", exact: true }),
   ).toHaveCount(0);
   mode = "guest";
-  await header(page)
-    .getByRole("button", { name: "로그인 상태 다시 확인" })
-    .click();
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(
     header(page).getByRole("button", { name: "카카오 로그인" }),
   ).toBeEnabled();
 });
+
+for (const authenticated of [false, true]) {
+  test(`${authenticated ? "로그인" : "비로그인"} 화면은 주기·탭 복귀 확인이 지연되어도 로딩으로 바뀌지 않는다`, async ({
+    page,
+    context,
+  }) => {
+    await emptyResults(context);
+    await page.clock.install();
+    const identity = authenticated ? signedIn : guest;
+    let gate: Promise<void> | undefined;
+    let requests = 0;
+    await page.route("**/api/auth/session", async (route) => {
+      requests++;
+      if (gate) await gate;
+      await route.fulfill({ json: identity });
+    });
+    await page.route("**/api/collection", (route) =>
+      route.fulfill({ json: { ...EMPTY_COLLECTION, ...identity } }),
+    );
+    await visit(page, "/account");
+    const button = header(page).getByRole("button", {
+      name: authenticated ? "로그아웃" : "카카오 로그인",
+      exact: true,
+    });
+    await expect(button).toBeEnabled();
+    await expect(
+      page.getByText("검사 기록을 확인하고 있어요…", { exact: true }),
+    ).toHaveCount(0);
+    for (const trigger of ["timer", "focus"]) {
+      let release!: () => void;
+      gate = new Promise<void>((resolve) => {
+        release = resolve;
+      });
+      const before = requests;
+      const response = page.waitForResponse("**/api/auth/session");
+      if (trigger === "timer") await page.clock.fastForward(30000);
+      else await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+      await expect.poll(() => requests).toBeGreaterThan(before);
+      await page.clock.fastForward(5200);
+      await expect(button).toBeEnabled();
+      await expect(button).toHaveAttribute("aria-busy", "false");
+      await expect(header(page)).not.toContainText("확인 중");
+      await expect(header(page)).not.toContainText("평소보다 오래");
+      await expect(
+        page.getByText("검사 기록을 확인하고 있어요…", { exact: true }),
+      ).toHaveCount(0);
+      release();
+      await response;
+      gate = undefined;
+      await expect(button).toBeEnabled();
+    }
+  });
+}
 
 test("로그아웃 성공 즉시 계정 화면을 비우고 다른 탭에도 반영한다", async ({
   page,
