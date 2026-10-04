@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -26,6 +27,7 @@ import { useConfirm } from "./ui/confirm-dialog";
 import { TypeDiscovery } from "./type-discovery";
 import { useCollection } from "./collection-provider";
 import { useAccountResults } from "./account-results-provider";
+import styles from "./quiz.module.css";
 const TOTAL = QUESTIONS.length;
 const LAST = TOTAL - 1;
 const ENCOURAGEMENTS = [
@@ -171,7 +173,7 @@ export function Quiz() {
   }
   if (!session || !collectionLoaded || !saved.loaded)
     return (
-      <main id="main" className="quiz-shell">
+      <main id="main" className={`quiz-shell ${styles.page}`}>
         <div className="loading-state" role="status">
           <span className="loading-dot" />
           질문을 준비하고 있어요.
@@ -216,43 +218,62 @@ export function Quiz() {
   const choose = (key: keyof Choices, value: string) =>
     update({ ...session, choices: { ...session.choices, [key]: value } });
   return (
-    <main id="main" className="quiz-shell">
+    <main id="main" className={`quiz-shell ${styles.page}`}>
       <div className="quiz-top">
         <Link href="/" className="muted small">
           StudyCrew 홈
         </Link>
         <span>
           <Icon name="shield-check-linear" size={16} />
-          로그인하면 결과를 계정에 보관해요
+          {collection.signedIn
+            ? "결과를 내 계정에 보관해요"
+            : "로그인 없이도 검사할 수 있어요"}
         </span>
       </div>
+      <div className={styles.intro}>
+        <div>
+          <span className="eyebrow">나를 알아가는 {TOTAL}개의 질문</span>
+          <p className={styles.title}>
+            나의 <span>공부 취향</span>을 찾아요
+          </p>
+          <p className={styles.subtitle}>
+            정답은 없어요. 최근 2주 동안의 나를 떠올려 보세요.
+          </p>
+        </div>
+        <Image
+          src="/ui-icons/nav-character.webp"
+          alt=""
+          width={88}
+          height={88}
+          priority
+        />
+      </div>
       {session.index === 0 && !ties && (
-        <aside className="test-purpose quiz-purpose">
-          <Icon name="stars-linear" size={20} />
-          <p>
-            <strong>재미로 고르고, 다양한 공부법을 발견해요.</strong>
-            <br />
-            성격·능력을 진단하는 검사가 아니에요. 결과가 나의 공부 방식을 정하지
-            않으니, 가볍게 즐겨주세요.
-          </p>
-        </aside>
-      )}
-      {session.index === 0 && !ties && (
-        <aside className="quiz-collection-notice">
-          <strong>
-            {session.isRetake || hasPreviousResult
-              ? "다시 알아보는 나의 공부 취향"
-              : "시작 전에, 캐릭터 도감 안내"}
-          </strong>
-          <p>
-            첫 검사에서는 로그인 없이 나만의 캐릭터를 만나요. 도감에 저장하고
-            친구를 모으려면 카카오 로그인이 필요해요.
-          </p>
-          <p>
-            재검사는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 새
-            캐릭터는 추가되지 않아요.
-          </p>
-        </aside>
+        <details className={styles.about}>
+          <summary>
+            시작 전에 알아두세요 <span>검사·도감 안내</span>
+          </summary>
+          <div>
+            <p>
+              재미로 고르고, 다양한 공부법을 발견해요. 성격·능력을 진단하는
+              검사가 아니에요. 결과가 나의 공부 방식을 정하지 않으니, 가볍게
+              즐겨주세요.
+            </p>
+            <strong>
+              {session.isRetake || hasPreviousResult
+                ? "다시 알아보는 나의 공부 취향"
+                : "시작 전에, 캐릭터 도감 안내"}
+            </strong>
+            <p>
+              첫 검사에서는 로그인 없이 나만의 캐릭터를 만나요. 도감에 저장하고
+              친구를 모으려면 카카오 로그인이 필요해요.
+            </p>
+            <p>
+              재검사는 캐릭터를 실루엣으로 가리고 유형과 설명만 보여줘요. 새
+              캐릭터는 추가되지 않아요.
+            </p>
+          </div>
+        </details>
       )}
       <div ref={progressHeading} className="progress-heading">
         <span>{ties ? "마지막으로, 하나만 골라주세요" : "내 공부캐 찾기"}</span>
@@ -298,13 +319,20 @@ export function Quiz() {
                 {q.kind === "situation" ? "상황 고르기" : "두 문장 비교"}
               </span>
             </div>
-            {firstOfKind && (
-              <p className="question-guide">{QUESTION_GUIDES[q.kind]}</p>
-            )}
             <h1 ref={heading} tabIndex={-1}>
               {q.text}
             </h1>
             <p className="question-hint">{q.hint}</p>
+            {firstOfKind && (
+              <details className="question-guide" open={q.kind === "pair"}>
+                <summary>
+                  {q.kind === "situation"
+                    ? "하나만 고르기 어려운가요?"
+                    : "두 문장은 어떻게 고르나요?"}
+                </summary>
+                <p>{QUESTION_GUIDES[q.kind]}</p>
+              </details>
+            )}
             {q.kind === "situation" ? (
               <fieldset className="situation-options">
                 <legend className="sr-only">
@@ -342,6 +370,9 @@ export function Quiz() {
                       </span>
                     )}
                     <p className="pair-statement" id={`${q.id}-${side}`}>
+                      <span className={styles.statementLabel}>
+                        {i === 0 ? "위 문장" : "아래 문장"}
+                      </span>
                       {q[side].text}
                     </p>
                     <div className="pair-choices">
