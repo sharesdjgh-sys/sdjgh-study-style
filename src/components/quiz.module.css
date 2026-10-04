@@ -96,7 +96,7 @@
   justify-content: center;
   gap: 16px;
   flex-shrink: 0;
-  margin-top: 20px;
+  margin-top: 32px;
 }
 .signature img {
   display: block;
@@ -472,17 +472,17 @@
     max-width: 760px;
     min-height: 0;
     margin: 0 auto;
-    padding: max(8px, env(safe-area-inset-top)) 0
+    padding: max(6px, env(safe-area-inset-top)) 0
       max(8px, env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
   }
   .page:global(.quiz-active) :global(.quiz-top) {
-    margin: 0 0 8px;
+    margin: 0 0 4px;
     font-size: 0.6875rem;
   }
   .page:global(.quiz-active) :global(.progress-heading) {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-size: 0.8125rem;
   }
   .page:global(.quiz-active) :global(.progress-heading strong) {
@@ -501,8 +501,8 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
-    padding: 12px;
+    margin-top: 6px;
+    padding: 10px 12px;
     border-radius: 18px;
     animation: none;
   }
@@ -525,7 +525,7 @@
     grid-auto-rows: auto;
   }
   .signature {
-    margin-top: 18px;
+    margin-top: 32px;
   }
   .page:global(.quiz-active) :global(.question-card h1) {
     font-size: 1.25rem;
