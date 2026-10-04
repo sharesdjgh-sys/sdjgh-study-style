@@ -131,8 +131,16 @@ test("질문·선택지 가독성과 안내 펼치기, 답변 복구부터 최�
   await page.reload();
   await expect(page.locator(".site-footer")).toBeHidden();
   await expect(
-    page.locator(".question-card .quiz-signature img"),
+    page.locator(
+      '.question-card .quiz-signature img[alt="인생교수의 AI 연구소"]',
+    ),
   ).toBeVisible();
+  await expect(
+    page.locator('.quiz-signature img[alt="서대전여자고등학교"]'),
+  ).toBeVisible();
+  await expect(
+    page.locator('.site-footer img[alt="서대전여자고등학교"]'),
+  ).toHaveCount(0);
   const pairIndex = QUESTIONS.findIndex((q) => q.kind === "pair");
   let previousAnchors:
     { controls: number; logo: number; options: number } | undefined;
@@ -288,7 +296,7 @@ test("320px 화면과 확대된 글자에서도 문장과 선택지가 잘리지
   ).toBe(true);
   expect(
     await page
-      .locator(".quiz-signature img")
+      .locator('.quiz-signature img[alt="인생교수의 AI 연구소"]')
       .evaluate((node) => node.getBoundingClientRect().bottom <= innerHeight),
   ).toBe(true);
   await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
