@@ -15,6 +15,27 @@
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   line-height: 1.4;
 }
+.consentIntro h1 span {
+  color: var(--accent);
+  background: linear-gradient(
+    transparent 76%,
+    #edd57980 76%,
+    #edd57980 95%,
+    transparent 95%
+  );
+  box-decoration-break: clone;
+}
+.consentIntro :global(.eyebrow) {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: #24634e;
+  background: #e8f0e5;
+}
+.consentIntro strong {
+  color: var(--accent);
+  font-weight: 650;
+}
 .consentIntro p {
   color: var(--muted);
   line-height: 1.6;
@@ -33,11 +54,39 @@
   margin-bottom: 10px;
   font-size: 1.125rem;
   line-height: 1.4;
+  color: #24634e;
 }
 .consentNotes p {
   font-size: 0.9375rem;
   line-height: 1.6;
   margin-bottom: 8px;
+  color: #4b5b52;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.consentNotes p:last-child {
+  margin-bottom: 0;
+}
+.consentNotes strong {
+  color: #24634e;
+  font-weight: 700;
+}
+.consentNotes mark {
+  display: inline;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #e8f0e5;
+  color: #24634e;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.consentNotes .consentCaution {
+  background: #fffaf0;
+  border-color: #e7d6ae;
+}
+.consentCaution h2,
+.consentCaution strong {
+  color: #805315;
 }
 .consentNotes a {
   font-size: 0.875rem;
@@ -53,6 +102,10 @@
   gap: 10px;
   cursor: pointer;
   line-height: 1.5;
+  color: #4b5b52;
+}
+.consentForm strong {
+  color: #24634e;
 }
 .consentForm input {
   width: 22px;
