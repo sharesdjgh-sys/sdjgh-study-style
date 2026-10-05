@@ -161,6 +161,12 @@
   color: var(--skill-purple);
 }
 
+@media (min-width: 1101px) {
+  .page :global(.catalog-grid) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 767px) {
   .page :global(.catalog-card) {
     padding-top: 32px;
