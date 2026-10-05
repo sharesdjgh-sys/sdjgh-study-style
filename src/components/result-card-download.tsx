@@ -2,7 +2,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { CHARACTERS } from "@/lib/characters";
 import type { Session } from "@/lib/storage";
-import { resultCardData } from "@/lib/result-card";
+import { resultCardData, resultCardUrl } from "@/lib/result-card";
 
 export function ResultCardDownload({ session }: { session: Session }) {
   const [open, setOpen] = useState(false);
@@ -81,14 +81,22 @@ function useCardImage(session: Session) {
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
   // Refetching the same immutable record must not revoke a displayed image.
-  const snapshot = JSON.stringify({ ...session, mission: undefined });
+  const source = resultCardUrl(session);
   useEffect(() => {
     let active = true;
     let url = "";
-    void import("@/lib/render-result-card")
-      .then(({ renderResultCard }) =>
-        renderResultCard(JSON.parse(snapshot) as Session),
-      )
+    const controller = new AbortController();
+    void fetch(source, { signal: controller.signal })
+      .then(async (response) => {
+        if (
+          !response.ok ||
+          !response.headers.get("content-type")?.startsWith("image/png")
+        )
+          throw new Error(
+            "카드를 만들지 못했어요. 연결을 확인하고 다시 시도해 주세요.",
+          );
+        return response.blob();
+      })
       .then((blob) => {
         if (!active) return;
         url = URL.createObjectURL(blob);
@@ -102,9 +110,10 @@ function useCardImage(session: Session) {
       });
     return () => {
       active = false;
+      controller.abort();
       if (url) URL.revokeObjectURL(url);
     };
-  }, [snapshot, attempt]);
+  }, [source, attempt]);
   return {
     image,
     error,
@@ -180,7 +189,7 @@ function CardPreview({
       </div>
       {image ? (
         <>
-          {/* A locally generated PNG, not a remotely optimized asset. */}
+          {/* The preview and HTTP download use the same server-rendered PNG. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="keepsake-preview"
@@ -190,8 +199,20 @@ function CardPreview({
             alt={`${data.character.name}. ${data.rows.map((r) => `${r.label} ${r.percent}%`).join(", ")}. 시그니처 ${data.method.name}`}
           />
           <div className="keepsake-actions">
-            <a className="button primary" href={image.url} download={filename}>
+            <a
+              className="button primary"
+              href={resultCardUrl(session, true)}
+              download={filename}
+            >
               PNG 저장
+            </a>
+            <a
+              className="button secondary"
+              href={resultCardUrl(session)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              이미지 열기
             </a>
             {canShare && (
               <button
@@ -204,8 +225,9 @@ function CardPreview({
             )}
           </div>
           <p className="small muted">
-            저장 창이 뜨지 않으면 이미지를 길게 눌러 사진에 저장해 주세요. 이
-            이미지에는 내 점수가 담겨요.
+            카카오톡 등 앱 안에서 저장이 안 되면 ‘이미지 열기’를 누른 뒤
+            이미지를 길게 눌러 저장해 주세요. 기기에 따라 메뉴에서 Safari나
+            Chrome으로 열어 저장할 수도 있어요. 이 이미지에는 내 점수가 담겨요.
           </p>
         </>
       ) : (

@@ -5,6 +5,7 @@ import {
   SOCIAL_LABELS,
   getType,
   type Answers,
+  type Modality,
 } from "./content";
 import { CHARACTERS } from "./characters";
 import { getMethod, SIGNATURE_METHODS } from "./methods";
@@ -12,24 +13,29 @@ import { scoreAnswers } from "./scoring";
 import type { Session } from "./storage";
 
 /** Largest-remainder rounding keeps the four displayed shares at exactly 100%. */
-export function resultCardData(session: Session) {
-  const type = session.result ? getType(session.result) : null;
-  if (!type) throw new Error("완료한 검사 결과가 필요해요.");
-  const scores = scoreAnswers(session.answers as Answers);
-  const total = MODALITIES.reduce((sum, m) => sum + scores.counts[m], 0);
+export function resultCardRows(counts: Record<Modality, number>) {
+  const total = MODALITIES.reduce((sum, m) => sum + counts[m], 0);
   if (!total) throw new Error("검사 응답을 모두 완료해 주세요.");
   const rows = MODALITIES.map((m) => ({
     key: m,
     label: FAMILIES[m].label,
-    count: scores.counts[m],
-    percent: Math.floor((scores.counts[m] / total) * 100),
-    fraction: scores.counts[m] / total,
+    count: counts[m],
+    percent: Math.floor((counts[m] / total) * 100),
+    fraction: counts[m] / total,
   }));
   const order = [...rows].sort(
     (a, b) => b.fraction * 100 - b.percent - (a.fraction * 100 - a.percent),
   );
   const remainder = 100 - rows.reduce((sum, r) => sum + r.percent, 0);
   for (let i = 0; i < remainder; i++) order[i].percent++;
+  return { rows, total };
+}
+
+export function resultCardData(session: Session) {
+  const type = session.result ? getType(session.result) : null;
+  if (!type) throw new Error("완료한 검사 결과가 필요해요.");
+  const scores = scoreAnswers(session.answers as Answers);
+  const { rows, total } = resultCardRows(scores.counts);
   return {
     type,
     character: CHARACTERS[type.code],
@@ -42,4 +48,15 @@ export function resultCardData(session: Session) {
     ],
     method: getMethod(SIGNATURE_METHODS[type.code]),
   };
+}
+
+/** Only the character and four score counts are needed to render the image. */
+export function resultCardUrl(session: Session, download = false) {
+  const data = resultCardData(session);
+  const params = new URLSearchParams({
+    type: data.type.code,
+    counts: data.rows.map((row) => row.count).join(","),
+  });
+  if (download) params.set("download", "1");
+  return `/api/result-card?${params}`;
 }

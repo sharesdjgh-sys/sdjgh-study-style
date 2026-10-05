@@ -11,6 +11,7 @@ import { EMPTY_COLLECTION } from "../../src/lib/collection-contract";
 import type { Session } from "../../src/lib/storage";
 import sharp from "sharp";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 
 test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진다", async ({
   page,
@@ -27,7 +28,7 @@ test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진�
     }, s);
     await page.goto("/result");
     const inline = page.locator(".keepsake-inline-open img");
-    await expect(inline).toBeVisible();
+    await expect(inline).toBeVisible({ timeout: 25000 });
     await expect(inline).toHaveAttribute("src", /^blob:/);
     const inlineSource = await inline.getAttribute("src");
     await page
@@ -51,8 +52,26 @@ test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진�
     );
     await page.screenshot({ path: test.info().outputPath("card-dialog.png") });
     const pending = page.waitForEvent("download");
+    await expect(
+      page.getByRole("link", { name: "PNG 저장", exact: true }),
+    ).toHaveAttribute("href", /^\/api\/result-card\?.*download=1$/);
+    await expect(
+      page.getByRole("link", { name: "이미지 열기", exact: true }),
+    ).toHaveAttribute("href", /^\/api\/result-card\?/);
     await page.getByRole("link", { name: "PNG 저장", exact: true }).click();
-    images.push(await readFile((await (await pending).path())!));
+    const downloaded = await readFile((await (await pending).path())!);
+    images.push(downloaded);
+    const previewHash = await inline.evaluate(async (img) => {
+      const bytes = await (
+        await fetch((img as HTMLImageElement).src)
+      ).arrayBuffer();
+      return [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+    });
+    expect(createHash("sha256").update(downloaded).digest("hex")).toBe(
+      previewHash,
+    );
   }
   expect(images[0].equals(images[1])).toBe(false);
   for (const region of [
@@ -98,6 +117,46 @@ async function mockGuest(page: Page) {
     route.fulfill({ json: { code: null } }),
   );
 }
+test("카카오톡 저장에 사용할 HTTP 이미지와 다운로드는 동일한 PNG다", async ({
+  request,
+}) => {
+  const href = "/api/result-card?type=visual-solo-planned&counts=6,3,2,1";
+  const response = await request.get(href + "&download=1", {
+    headers: { "User-Agent": "Mozilla/5.0 (Linux; Android 14) KAKAOTALK" },
+  });
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toBe("image/png");
+  expect(response.headers()["content-disposition"]).toContain("attachment;");
+  expect(response.headers()["content-disposition"]).toContain(
+    "filename*=UTF-8''",
+  );
+  const bytes = await response.body();
+  expect([...bytes.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
+  expect(await sharp(bytes).metadata()).toMatchObject({
+    format: "png",
+    width: 1080,
+    height: 1920,
+  });
+  const inline = await request.get(href);
+  expect(inline.headers()["content-disposition"]).toContain("inline;");
+  expect((await inline.body()).equals(bytes)).toBe(true);
+});
+
+test("카드 HTTP 응답은 잘못된 유형·점수·다운로드 요청을 거부한다", async ({
+  request,
+}) => {
+  for (const query of [
+    "",
+    "type=../../private&counts=12,0,0,0",
+    "type=visual-solo-planned&counts=13,0,0,0",
+    "type=visual-solo-planned&counts=-1,13,0,0",
+    "type=visual-solo-planned&counts=6,3,2",
+    "type=visual-solo-planned&counts=0,0,0,0",
+    "type=visual-solo-planned&counts=12,0,0,0&download=bad",
+  ])
+    expect((await request.get(`/api/result-card?${query}`)).status()).toBe(400);
+});
+
 test("16종 전용 카드에 실제 응답을 합성하고 1080×1920 PNG를 저장한다", async ({
   page,
 }, testInfo) => {
