@@ -2,6 +2,26 @@
   max-width: 1120px;
   margin: 28px auto 0;
 }
+.page .accountAction {
+  background: #dce9d7;
+  color: #365b48;
+  border-color: #b8cfae;
+  box-shadow: 0 3px 0 #c4d6bc;
+}
+.page .accountAction:hover {
+  background: #cfe0c8;
+  border-color: #9bb88e;
+}
+.page .retakeAction {
+  background: #eee3f5;
+  color: #6a4c83;
+  border-color: #d5bddf;
+  box-shadow: 0 3px 0 #ddcde6;
+}
+.page .retakeAction:hover {
+  background: #e4d4ee;
+  border-color: #bb9aca;
+}
 .guideHeader {
   display: flex;
   align-items: center;
@@ -531,7 +551,7 @@
   }
   .page :global(.result-character) {
     order: 4;
-    max-width: 280px;
+    max-width: 430px;
   }
   .page :global(.result-subtitle) {
     order: 5;

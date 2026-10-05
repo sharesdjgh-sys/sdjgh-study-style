@@ -1,0 +1,37 @@
+.actions {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.actions .copy {
+  background: #e8e0f0;
+  color: #5f4775;
+  border-color: #cbbada;
+  box-shadow: 0 3px 0 #d3c5de;
+}
+.actions .copy:hover {
+  background: #ded1e9;
+  border-color: #b59acb;
+}
+.actions .kakao {
+  background: #fee500;
+  color: #191919;
+  border-color: #e5ce00;
+  box-shadow: 0 3px 0 #dcc600;
+}
+.actions .kakao:hover {
+  background: #f5dc00;
+  border-color: #cfba00;
+}
+.kakao img {
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .actions > button {
+    width: 100%;
+    min-height: 48px;
+  }
+}

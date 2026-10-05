@@ -151,7 +151,7 @@ export function TypeResult({
             )}
             <a href="#my-story">
               <Image
-                src="/ui-icons/nav-collection.webp"
+                src="/ui-icons/result-story.webp"
                 alt=""
                 width={30}
                 height={30}
@@ -169,12 +169,22 @@ export function TypeResult({
             </a>
             {session && (
               <a href="#my-scores">
-                <Icon name="checklist-minimalistic-linear" size={24} />
+                <Image
+                  src="/ui-icons/result-answers.webp"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
                 <span>내 응답 살펴보기</span> <span aria-hidden="true">↓</span>
               </a>
             )}
             <a href="#share-style">
-              <Icon name="stars-linear" size={24} />
+              <Image
+                src="/ui-icons/result-share.webp"
+                alt=""
+                width={30}
+                height={30}
+              />
               <span>친구에게 보여주기</span> <span aria-hidden="true">↗</span>
             </a>
           </nav>
@@ -376,7 +386,10 @@ export function TypeResult({
             <h2>나의 기록, 다음에도 이어서</h2>
             <SavedResults />
           </div>
-          <Link className="button secondary" href="/account">
+          <Link
+            className={`button secondary ${styles.accountAction}`}
+            href="/account"
+          >
             내 정보·검사 기록 →
           </Link>
           <Link className="text-link" href="/collection">
@@ -388,7 +401,10 @@ export function TypeResult({
       )}
       {session && (
         <nav className={styles.actions} aria-label="결과 다음 행동">
-          <Link href="/quiz" className="button secondary">
+          <Link
+            href="/quiz"
+            className={`button secondary ${styles.retakeAction}`}
+          >
             다시 검사하기 <Icon name="restart-linear" size={17} />
           </Link>
           <Link href="/account" className="text-link">

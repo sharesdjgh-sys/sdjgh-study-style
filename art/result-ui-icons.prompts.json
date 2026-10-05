@@ -1,0 +1,19 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "reference": "public/ui-icons/nav-skills.webp",
+  "prompts": [
+    {
+      "id": "result-story",
+      "prompt": "Create ONE production app icon, square canvas, actual transparent background. Match the reference icon's soft tactile matte clay 3D miniature style, rounded chunky forms, sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting. Crisp recognizable silhouette at 30px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only minimal soft contact shadow. Subject: An OPEN cream storybook with a sage green cover and lavender bookmark, its thick rounded pages carrying a simple raised golden heart on one page and three short embossed lines on the other. This represents reading my study-style story. Keep few large clear details, friendly and collectible."
+    },
+    {
+      "id": "result-answers",
+      "prompt": "Create ONE production app icon, square canvas, actual transparent background. Match the reference icon's soft tactile matte clay 3D miniature style, rounded chunky forms, sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting. Crisp recognizable silhouette at 30px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only minimal soft contact shadow. Subject: one lavender clipboard with thick cream paper, sage green clip, THREE large sage green checkmarks and short lavender answer lines, a small chunky golden pencil leaning on its right edge. This represents reviewing my survey responses. Simple bold readable silhouette, same premium miniature material as reference."
+    },
+    {
+      "id": "result-share",
+      "prompt": "Create ONE production app icon, square canvas, actual transparent background. Match the reference icon's soft tactile matte clay 3D miniature style, rounded chunky forms, sage green, cream, lavender and warm gold palette, gentle upper-left studio lighting. Crisp recognizable silhouette at 30px, centered object occupying 85% of canvas with safe padding. Front three-quarter view. No text, letters, numbers, watermark, border, app tile, backdrop or floor. Only minimal soft contact shadow. Subject: two overlapping chunky friendly speech bubbles, larger sage green bubble behind and smaller lavender bubble in front, with a small warm golden heart embossed on the front bubble. This represents showing my study character to a friend and talking together. Keep very simple recognizable silhouette, no dots, no writing. Match reference material and subtle golden highlights."
+    }
+  ]
+}

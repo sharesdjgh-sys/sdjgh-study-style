@@ -1,5 +1,7 @@
 "use client";
 import Script from "next/script";
+import Image from "next/image";
+import styles from "./share.module.css";
 import { useState } from "react";
 import type { StudyType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
@@ -108,20 +110,18 @@ export function Share({ type }: { type?: StudyType }) {
           onError={() => setReady(false)}
         />
       )}
-      <div className="button-row">
-        <button className="button secondary" onClick={() => copy()}>
+      <div className={`button-row ${styles.actions}`}>
+        <button
+          className={`button secondary ${styles.copy}`}
+          onClick={() => copy()}
+        >
           <Icon name="copy-linear" size={18} />
           {type ? "내 공부캐 링크 복사" : "테스트 링크 복사"}
         </button>
-        <button className="button secondary" onClick={kakao}>
-          <Icon name="chat-round-dots-linear" size={18} />
+        <button className={`button secondary ${styles.kakao}`} onClick={kakao}>
+          <Image src="/kakao-symbol.svg" alt="" width={22} height={22} />
           카카오톡 공유
         </button>
-        {type && (
-          <button className="text-link" onClick={() => copy(true)}>
-            테스트만 소개하기
-          </button>
-        )}
       </div>
       <p className="small muted" role="status">
         {message}
