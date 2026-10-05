@@ -26,14 +26,21 @@ export function TypeStory({
   return (
     <div className="type-story" id="my-story">
       <section className="story-intro">
-        <span className="eyebrow">이 유형의 머릿속 한마디</span>
+        <span className="eyebrow">
+          {session ? "01 · 캐릭터의 한마디" : "이 유형의 머릿속 한마디"}
+        </span>
         <h2>“{story.quote}”</h2>
         <p>{story.story}</p>
-        <p className="story-rhythm">{story.rhythm}</p>
+        <p className="story-rhythm">
+          {session && <strong>내 페이스 찾기 · </strong>}
+          {story.rhythm}
+        </p>
       </section>
       <section className="relatable-section">
         <div className="story-section-heading">
-          <span className="eyebrow">공부하는 나의 한 장면</span>
+          <span className="eyebrow">
+            {session ? "02 · 나랑 닮은 장면 찾기" : "공부하는 나의 한 장면"}
+          </span>
           <h2>어, 이거 내 얘긴데?</h2>
           <p>공감되는 장면을 눌러보세요. 점수는 바뀌지 않아요.</p>
         </div>
@@ -73,7 +80,9 @@ export function TypeStory({
       <section className="study-playbook">
         <article className="playbook-strength">
           <Icon name={FAMILIES[type.modality].icon} size={30} />
-          <span className="eyebrow">이 취향을 써먹는 법</span>
+          <span className="eyebrow">
+            {session ? "03 · 취향 활용 공략" : "이 취향을 써먹는 법"}
+          </span>
           <h2>
             잘 풀리는 순간을
             <br />
@@ -82,11 +91,15 @@ export function TypeStory({
           <p>{story.strength}</p>
         </article>
         <article className="playbook-trap">
-          <span className="eyebrow">이럴 땐 살짝 방향 전환</span>
+          <span className="eyebrow">
+            {session ? "잠깐! 이런 함정은 피해요" : "이럴 땐 살짝 방향 전환"}
+          </span>
           <h3>열심히 했는데, 왜 안 떠오르지?</h3>
           <p>{story.trap}</p>
           <div className="rescue-note">
-            <strong>이렇게 바꿔보기 ↗</strong>
+            <strong>
+              {session ? "탈출 팁 · 이렇게 바꿔봐요 ↗" : "이렇게 바꿔보기 ↗"}
+            </strong>
             <p>{story.rescue}</p>
           </div>
         </article>

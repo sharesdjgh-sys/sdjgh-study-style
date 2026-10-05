@@ -82,12 +82,15 @@ export function MethodToolkit({
       >
         <div className="toolkit-head">
           <span className="eyebrow">
-            이름 있는 공부법 4가지 + 공부 팁 2가지
+            {resultRunId
+              ? "05 · 오늘 써볼 스킬 고르기"
+              : "이름 있는 공부법 4가지 + 공부 팁 2가지"}
           </span>
           <h2 id="study-methods-title">{owner}의 공부법 도구함</h2>
           <p>
-            {subject(owner)} 즐겨 쓰는 공부법이에요. 하나를 골라 아래에서 10분만
-            해 봐요. 다른 공부캐의 공부법도 누구나 쓸 수 있어요.
+            {subject(owner)} 즐겨 쓰는 공부법이에요.{" "}
+            <strong>하나만 골라 10분 도전!</strong> 직접 해보고 나에게 맞는지
+            살펴봐요. 다른 공부캐의 공부법도 누구나 쓸 수 있어요.
           </p>
         </div>
         <div className="toolkit-grid">

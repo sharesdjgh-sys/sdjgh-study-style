@@ -77,10 +77,30 @@ export function TypeResult({
       className={`result-shell ${session ? styles.page : ""}`}
       data-family={type.modality}
     >
-      <Link href={session ? "/" : "/types"} className="text-link small">
+      <Link
+        href={session ? "/" : "/types"}
+        className={`text-link small ${session ? styles.homeLink : ""}`}
+      >
         <Icon name="arrow-left-linear" size={16} />
         {session ? "StudyCrew 홈" : "공부캐 도감"}
       </Link>
+      {session && (
+        <div className={styles.guideHeader}>
+          <Image
+            src="/ui-icons/nav-skills.webp"
+            alt=""
+            width={46}
+            height={46}
+          />
+          <div>
+            <p className={styles.guideLabel}>MY STUDYCREW GUIDE</p>
+            <p className={styles.guideTitle}>
+              나만의 공부캐 <strong>공략집</strong>
+            </p>
+          </div>
+          <span className={styles.guideBadge}>가볍게 읽고, 하나만 도전!</span>
+        </div>
+      )}
       {resultLabel && <p className={styles.sourceLine}>{resultLabel}</p>}
       <section className="result-hero">
         <div className="result-copy">
@@ -112,26 +132,58 @@ export function TypeResult({
             <span>{PACE_LABELS[type.pace]}</span>
           </div>
           <nav className="result-shortcuts" aria-label="결과 자세히 보기">
+            {session && (
+              <p className={styles.shortcutHeading}>
+                궁금한 페이지부터 펼쳐봐요
+              </p>
+            )}
             {cardSession && (
               <a href="#my-character-card">
-                내 캐릭터 카드 저장 <span>→</span>
+                <Image
+                  src="/ui-icons/nav-character.webp"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
+                <span>내 캐릭터 카드 저장</span>{" "}
+                <span aria-hidden="true">→</span>
               </a>
             )}
             <a href="#my-story">
-              공부 스타일 이야기 <span>↓</span>
+              <Image
+                src="/ui-icons/nav-collection.webp"
+                alt=""
+                width={30}
+                height={30}
+              />
+              <span>공부 스타일 이야기</span> <span aria-hidden="true">↓</span>
             </a>
             <a href="#study-methods">
-              공부법 도구함 <span>↓</span>
+              <Image
+                src="/ui-icons/nav-skills.webp"
+                alt=""
+                width={30}
+                height={30}
+              />
+              <span>공부법 도구함</span> <span aria-hidden="true">↓</span>
             </a>
             {session && (
               <a href="#my-scores">
-                내 응답 살펴보기 <span>↓</span>
+                <Icon name="checklist-minimalistic-linear" size={24} />
+                <span>내 응답 살펴보기</span> <span aria-hidden="true">↓</span>
               </a>
             )}
             <a href="#share-style">
-              친구에게 보여주기 <span>↗</span>
+              <Icon name="stars-linear" size={24} />
+              <span>친구에게 보여주기</span> <span aria-hidden="true">↗</span>
             </a>
           </nav>
+          {session && (
+            <p className={styles.funNote}>
+              재미로 찾은 공부 취향이에요.{" "}
+              <strong>정답도, 능력 순위도 없어요.</strong>
+            </p>
+          )}
           <details className={styles.explanation}>
             <summary>이 결과는 어떻게 읽으면 좋을까요?</summary>
             <p className="result-explanation">
@@ -177,28 +229,6 @@ export function TypeResult({
         </div>
       </section>
       {context}
-      {session && (
-        <section className={styles.storage} aria-label="결과 보관 안내">
-          <Image
-            src="/ui-icons/nav-account.webp"
-            alt=""
-            width={48}
-            height={48}
-          />
-          <div>
-            <h2>나의 기록, 다음에도 이어서</h2>
-            <SavedResults />
-          </div>
-          <Link className="button secondary" href="/account">
-            내 정보·검사 기록 →
-          </Link>
-          <Link className="text-link" href="/collection">
-            {collection.firstType
-              ? "내 도감과 초대 코드 보기 →"
-              : "내 도감 시작하기 →"}
-          </Link>
-        </section>
-      )}
       {cardSession && (
         <ResultCardDownload
           key={`download:${cardSession.runId}`}
@@ -213,10 +243,10 @@ export function TypeResult({
       {scores && (
         <section className="score-section" id="my-scores">
           <div>
-            <span className="eyebrow">내 응답 살펴보기</span>
+            <span className="eyebrow">04 · 내 취향의 조합</span>
             <h2>
-              한 가지 모습만 <br />
-              있는 건 아니니까요.
+              내 공부 취향은 <br />
+              <mark className={styles.highlight}>어떤 조합일까?</mark>
             </h2>
             <p className="muted small">
               같은 상황에서 어떤 방식을 골랐는지 센 횟수예요. <br />
@@ -225,8 +255,12 @@ export function TypeResult({
           </div>
           <div className="score-bars">
             <p className="small muted">
-              {SITUATIONS.length}가지 상황 중 {FAMILIES[type.modality].label}{" "}
-              방식을 {scores.counts[type.modality]}번 골랐어요.
+              {SITUATIONS.length}가지 상황 중{" "}
+              <strong>
+                {FAMILIES[type.modality].label} 방식을{" "}
+                {scores.counts[type.modality]}번
+              </strong>{" "}
+              골랐어요.
             </p>
             {MODALITIES.map((m) => (
               <div className="score-row" key={m} data-family={m}>
@@ -285,7 +319,7 @@ export function TypeResult({
       <section className="next-review">
         <Icon name="calendar-linear" size={32} />
         <div>
-          <h3>내일 한 번 더, 짧게 꺼내보세요.</h3>
+          <h3>내일의 나에게 남기는 세이브 포인트</h3>
           <p>
             오늘 공부한 내용을 보지 않고 떠올려 보세요. 어려웠던 부분을 확인하고
             다시 시도해요. 다음 날은 시작을 위한 제안이며, 과목마다 간격을
@@ -294,7 +328,7 @@ export function TypeResult({
         </div>
       </section>
       <section className="alternatives">
-        <span className="eyebrow">다른 방법도 내 것이 될 수 있어요</span>
+        <span className="eyebrow">다른 캐릭터의 스킬도 써보기</span>
         <h2>다른 공부캐는 이렇게 공부해요.</h2>
         <div className="method-links">
           {MODALITIES.filter((m) => m !== type.modality).map((m) => {
@@ -330,6 +364,28 @@ export function TypeResult({
         </p>
         <Share type={hideCharacter ? undefined : type} />
       </section>
+      {session && (
+        <section className={styles.storage} aria-label="결과 보관 안내">
+          <Image
+            src="/ui-icons/nav-account.webp"
+            alt=""
+            width={48}
+            height={48}
+          />
+          <div>
+            <h2>나의 기록, 다음에도 이어서</h2>
+            <SavedResults />
+          </div>
+          <Link className="button secondary" href="/account">
+            내 정보·검사 기록 →
+          </Link>
+          <Link className="text-link" href="/collection">
+            {collection.firstType
+              ? "내 도감과 초대 코드 보기 →"
+              : "내 도감 시작하기 →"}
+          </Link>
+        </section>
+      )}
       {session && (
         <nav className={styles.actions} aria-label="결과 다음 행동">
           <Link href="/quiz" className="button secondary">
