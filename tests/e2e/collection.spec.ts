@@ -189,6 +189,7 @@ test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저�
     path: `.artifacts/special-locked-${testInfo.project.name}.png`,
   });
   await page.getByRole("button", { name: "두근두근, 열어보기" }).click();
+  await page.getByRole("button", { name: "선물 포장 열기" }).click();
   await page.getByRole("button", { name: "도감에서 만나기" }).click();
   await card.scrollIntoViewIfNeeded();
   await expect(card).toContainText("스페셜 카드 획득 완료");
@@ -240,7 +241,8 @@ test("16번째 선물을 개봉하면 스페셜 사진이 열리고 확대·저�
   ).toBe(true);
   state.data = { ...EMPTY_COLLECTION, configured: true };
   await page.reload();
-  await expect(card.locator("img")).toHaveCount(0);
+  await expect(card.locator(".special-photo-frame")).toHaveCount(0);
+  await expect(card.locator(".group-photo-silhouette img")).toHaveCount(16);
   await expect(
     card.getByRole("link", { name: "이미지 저장하기 ↓" }),
   ).toHaveCount(0);
@@ -342,6 +344,7 @@ test("계정 도감 복원과 선물 개봉, 수집한 캐릭터만 공개하고
   );
   await page.getByRole("button", { name: "두근두근, 열어보기" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", { name: "선물 포장 열기" }).click();
   await expect(
     page.getByRole("heading", { name: "스킵, 도감에 합류!" }),
   ).toBeVisible();
@@ -371,6 +374,136 @@ test("계정 도감 복원과 선물 개봉, 수집한 캐릭터만 공개하고
   await page.goto("/types/tactile-team-flexible");
   await expect(page.locator(".mystery-card")).toHaveCount(1);
 });
+
+for (const mode of ["video", "reduced", "failed", "skip"] as const) {
+  const bonus = mode === "reduced";
+  test(`${bonus ? "초대받은 친구" : "초대한 사용자"}가 선물 포장을 열고 새 카드와 다음 선물을 확인한다 (${mode})`, async ({
+    page,
+  }, testInfo) => {
+    const firstRunId = crypto.randomUUID();
+    const state = await server(page, {
+      ...EMPTY_COLLECTION,
+      signedIn: true,
+      configured: true,
+      firstType: bonus ? null : base,
+      firstRunId: bonus ? null : firstRunId,
+      inviteCode: "ABCDEF1234",
+      cards: bonus ? [] : [{ code: base, source: "first" }],
+      pending: bonus ? [] : [{ id: "gift-one" }, { id: "gift-two" }],
+      referralCount: bonus ? 0 : 2,
+    });
+    await page.route("**/api/results", (route) =>
+      route.fulfill({
+        json:
+          route.request().method() === "GET" ? { results: [] } : { ok: true },
+      }),
+    );
+    let requests = 0;
+    await page.route(
+      bonus ? "**/api/collection/register" : "**/api/collection/rewards/open",
+      (route) => {
+        requests++;
+        state.data = {
+          ...state.data,
+          firstType: base,
+          firstRunId,
+          cards: [
+            { code: base, source: "first" },
+            { code: second, source: "referral" },
+          ],
+          pending: bonus ? [] : [{ id: "gift-two" }],
+        };
+        return route.fulfill({
+          json: bonus
+            ? { outcome: "referred", bonus: second }
+            : { code: second },
+        });
+      },
+    );
+    if (bonus) await seed(page);
+    else {
+      await page.goto("/");
+      await expect(
+        page.getByRole("complementary", { name: "도착한 카드 선물" }),
+      ).toContainText("선물 2개 도착");
+      await page.getByRole("link", { name: "선물 받으러 가기" }).click();
+      await expect(page).toHaveURL(/\/collection#reward-inbox$/);
+    }
+    if (bonus) await page.goto("/collection");
+    await page
+      .getByRole("button", {
+        name: bonus ? "첫 캐릭터 도감에 저장하기" : "두근두근, 열어보기",
+      })
+      .click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toContainText("친구 덕분에, 선물 도착!");
+    await expect(dialog).toContainText("닫아도 사라지지 않아요");
+    await expect(
+      dialog.getByRole("button", { name: "선물 포장 열기" }),
+    ).toBeFocused();
+    await dialog.screenshot({
+      path: testInfo.outputPath(`gift-wrapped-${bonus}.png`),
+    });
+    if (bonus) await page.emulateMedia({ reducedMotion: "reduce" });
+    if (mode === "failed")
+      await page.route("**/rewards/card-pack-opening-v1.mp4", (route) =>
+        route.abort(),
+      );
+    await dialog.getByRole("button", { name: "선물 포장 열기" }).click();
+    if (mode === "video" || mode === "skip") {
+      await expect(dialog).toHaveAttribute("data-phase", "opening");
+      await expect
+        .poll(() =>
+          dialog
+            .locator("video")
+            .evaluate((clip: HTMLVideoElement) => clip.currentTime),
+        )
+        .toBeGreaterThan(0.1);
+      await dialog.screenshot({
+        path: testInfo.outputPath("card-pack-video.png"),
+      });
+    }
+    if (mode === "skip")
+      await dialog.getByRole("button", { name: "바로 공개하기" }).click();
+    if (!bonus && mode !== "skip") {
+      await expect(dialog).toHaveAttribute("data-phase", "rolling");
+      await expect
+        .poll(async () =>
+          Number(
+            await dialog.locator("[data-frame]").getAttribute("data-frame"),
+          ),
+        )
+        .toBeGreaterThanOrEqual(3);
+    }
+    await expect(dialog).toHaveAttribute("data-phase", "revealed");
+    await expect(dialog).toContainText("소리, 도감에 합류!");
+    await expect
+      .poll(() =>
+        dialog
+          .locator("img")
+          .evaluate(
+            (image: HTMLImageElement) =>
+              image.complete && image.naturalWidth > 0,
+          ),
+      )
+      .toBe(true);
+    await expect(dialog).toContainText("2 / 16");
+    await expect(dialog).toContainText(
+      bonus ? "다음엔 누가 올까요?" : "1개가 더 기다려요",
+    );
+    await dialog.screenshot({
+      path: testInfo.outputPath(`gift-revealed-${bonus}.png`),
+    });
+    expect(requests).toBe(1);
+    await page.keyboard.press("Escape");
+    await expect(dialog).toHaveCount(0);
+    await page.reload();
+    await expect(
+      page.locator(".character-gallery .character-card"),
+    ).toHaveCount(2);
+    expect(requests).toBe(1);
+  });
+}
 
 test("첫 결과 등록 실패 후 재시도하며 최근 재검사 대신 최초 결과를 전송", async ({
   page,

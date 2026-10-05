@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Header, Footer } from "@/components/shell";
 import { QuickMenu } from "@/components/quick-menu";
+import { GiftNotice } from "@/components/gift-notice";
 import { siteUrl } from "@/lib/site";
 import { SourceCapture } from "@/components/source-capture";
 import { CollectionProvider } from "@/components/collection-provider";
@@ -49,6 +50,7 @@ export default function RootLayout({
               </a>
               <div className="site-shell">
                 <Header />
+                <GiftNotice />
                 {children}
                 <Footer />
               </div>

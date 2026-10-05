@@ -7,8 +7,7 @@ import { CHARACTERS } from "@/lib/characters";
 import { clearSession } from "@/lib/storage";
 import { useCollection } from "./collection-provider";
 import { useSavedSession } from "./use-saved-session";
-import { CharacterCard } from "./character-card";
-import { MysteryCard } from "./mystery-card";
+import { GiftBox, RewardReveal } from "./reward-reveal";
 import { Share } from "./share";
 import { useConfirm } from "./ui/confirm-dialog";
 import { collectionProgress } from "@/lib/collection-progress";
@@ -37,58 +36,6 @@ export function CollectionNudge() {
         {data.firstType ? "내 도감과 초대 코드 보기" : "내 도감 시작하기"} →
       </Link>
     </section>
-  );
-}
-function RewardReveal({
-  code,
-  close,
-  bonus = false,
-}: {
-  code: string;
-  close: () => void;
-  bonus?: boolean;
-}) {
-  const [revealed, setRevealed] = useState(false);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const type = getType(code)!;
-  useEffect(() => {
-    dialog.current?.showModal();
-    const timer = setTimeout(() => setRevealed(true), 2200);
-    return () => clearTimeout(timer);
-  }, []);
-  return (
-    <dialog
-      className="reward-dialog"
-      ref={dialog}
-      aria-labelledby="reward-title"
-      onCancel={(event) => {
-        event.preventDefault();
-        close();
-      }}
-    >
-      <p className="eyebrow">
-        {bonus
-          ? "친구 추천 보너스가 도착했어요"
-          : "친구의 첫 발견이 전해졌어요"}
-      </p>
-      <h2 id="reward-title" aria-live="polite">
-        {revealed
-          ? `${CHARACTERS[code].name}, 도감에 합류!`
-          : "어떤 친구가 찾아왔을까요?"}
-      </h2>
-      <div className={revealed ? "reward-revealed" : "reward-waiting"}>
-        {revealed ? (
-          <CharacterCard type={type} priority />
-        ) : (
-          <MysteryCard type={type} priority />
-        )}
-      </div>
-      {revealed && (
-        <button className="button primary" onClick={close}>
-          도감에서 만나기
-        </button>
-      )}
-    </dialog>
   );
 }
 const ERRORS: Record<string, string> = {
@@ -224,7 +171,7 @@ export function CollectionManager() {
             <small> / {progress.total}</small>
           </span>
         </div>
-        <h2>
+        <h2 id="collection-heading" tabIndex={-1}>
           {progress.unlocked
             ? "열여섯 친구, 모두 만났어요!"
             : data.firstType
@@ -394,13 +341,16 @@ export function CollectionManager() {
                   : `${progress.remainingInvites}명의 친구가 첫 결과를 저장하면 초대가 완료돼요. 도착한 선물은 추가 초대 없이 개봉하면 돼요.`}
             </p>
             {data.pending.length > 0 && (
-              <div className="reward-inbox">
-                <span aria-hidden="true">✦</span>
+              <div className="reward-inbox" id="reward-inbox">
+                <GiftBox small />
                 <div>
-                  <h3>새 공부 친구가 도착했어요!</h3>
+                  <span className="reward-inbox-label">
+                    GIFT ARRIVED · 초대 성공!
+                  </span>
+                  <h3>친구가 이어준 카드 선물!</h3>
                   <p>
-                    선물 {data.pending.length}개가 기다리고 있어요. 중복 없이 한
-                    명씩 만나요.
+                    <strong>미개봉 선물 {data.pending.length}개</strong> ·
+                    카드팩마다 아직 없는 카드 한 장이 들어 있어요.
                   </p>
                 </div>
                 <button
@@ -416,6 +366,27 @@ export function CollectionManager() {
                 >
                   {busy ? "선물 확인 중…" : "두근두근, 열어보기"}
                 </button>
+              </div>
+            )}
+            {!progress.unlocked && (
+              <div className="invite-next-gift">
+                <GiftBox small />
+                <div>
+                  <strong>
+                    {progress.remainingInvites === 0
+                      ? "도감 완성까지, 선물만 열면 돼요!"
+                      : "다음 선물은 누구와 함께 열까요?"}
+                  </strong>
+                  <p>
+                    {progress.remainingInvites === 0
+                      ? "이미 도착한 선물을 모두 열면 스페셜 단체사진이 기다려요."
+                      : "새 친구가 초대 링크로 첫 검사·로그인·도감 저장을 마치면, 나와 친구에게 카드가 한 장씩!"}
+                  </p>
+                  <span>
+                    {progress.collected} / {progress.total}명 수집 · 중복 없이
+                    모으는 나만의 도감
+                  </span>
+                </div>
               </div>
             )}
             <div className="invite-code-box">
@@ -489,6 +460,11 @@ export function CollectionManager() {
           key={reward.code}
           code={reward.code}
           bonus={reward.bonus}
+          collected={
+            new Set([...data.cards.map((card) => card.code), reward.code]).size
+          }
+          total={progress.total}
+          pending={data.pending.length}
           close={() => setReward(null)}
         />
       )}
