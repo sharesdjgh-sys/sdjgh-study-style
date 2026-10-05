@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Icon } from "./icon";
 import styles from "./footer.module.css";
 import { HeaderAccount } from "./header-account";
+import { HeaderNavigation } from "./header-navigation";
 export function Header() {
   return (
     <header className="header">
@@ -27,20 +28,8 @@ export function Header() {
         />
         <span className="brand-caption">공부할 때, 또 다른 나</span>
       </Link>
-      <nav aria-label="주요 메뉴">
-        <Link href="/types">공부캐 도감</Link>
-        <Link href="/methods">공부 스킬북</Link>
-        <Link href="/account" className="header-my-account">
-          <Image
-            src="/ui-icons/nav-account.webp"
-            alt=""
-            width={28}
-            height={28}
-          />
-          내 정보
-        </Link>
-        <HeaderAccount />
-      </nav>
+      <HeaderNavigation />
+      <HeaderAccount />
     </header>
   );
 }

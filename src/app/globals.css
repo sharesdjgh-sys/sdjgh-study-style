@@ -320,9 +320,6 @@ legend {
   .brand-wordmark {
     width: 176px;
   }
-  .header nav > a:first-child {
-    display: none;
-  }
   .header nav .nav-start {
     white-space: nowrap;
     padding-inline: 8px;
@@ -2771,9 +2768,6 @@ legend {
     gap: 17px;
     font-size: var(--text-label);
   }
-  .header nav > a:nth-child(2) {
-    display: none;
-  }
   .nav-start {
     padding: 9px 12px;
     gap: 7px;
@@ -3284,9 +3278,6 @@ legend {
   }
   .header nav {
     gap: 11px;
-  }
-  .header nav > a:first-child {
-    display: none;
   }
   .header nav .nav-start {
     white-space: nowrap;
@@ -6685,14 +6676,76 @@ body {
 .quick-menu {
   display: none;
 }
-.header nav .header-my-account {
+.header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 16px;
+}
+.header .primary-navigation {
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 0;
+  font-size: 15px;
+}
+.header .primary-navigation a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  justify-content: center;
+  min-height: 48px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 14px;
   white-space: nowrap;
+  color: var(--muted);
+  font-weight: 650;
+}
+.primary-navigation img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.header .primary-navigation a:hover {
+  color: var(--accent);
+  background: #edf3e9;
+}
+.header .primary-navigation a[aria-current="page"] {
+  color: var(--accent);
+  background: var(--pale);
+  border-color: #c4d8bb;
+}
+.header .primary-navigation a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .header .brand-caption {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    height: auto;
+    padding-block: 12px;
+    row-gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .header .primary-navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .header .primary-navigation a {
+    min-height: 52px;
+  }
 }
 @media (max-width: 767px) {
-  .header nav .header-my-account {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .header .primary-navigation {
     display: none;
   }
   /* 모바일 하단 퀵메뉴 */

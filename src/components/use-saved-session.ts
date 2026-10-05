@@ -1,8 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { readSession, readFirstSession, type Session } from "@/lib/storage";
+import {
+  readSession,
+  readFirstSession,
+  RECORDS_CLEARED,
+  type Session,
+} from "@/lib/storage";
 
-export function useSavedSession() {
+export function useSavedSession(refreshKey?: string) {
   const [state, setState] = useState<{
     session: Session | null;
     first: Session | null;
@@ -13,14 +18,21 @@ export function useSavedSession() {
     loaded: false,
   });
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
+    function refresh() {
       setState({
         session: readSession(),
         first: readFirstSession(),
         loaded: true,
       });
-    });
-    return () => cancelAnimationFrame(id);
-  }, []);
+    }
+    const id = requestAnimationFrame(refresh);
+    window.addEventListener(RECORDS_CLEARED, refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener(RECORDS_CLEARED, refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, [refreshKey]);
   return state;
 }
