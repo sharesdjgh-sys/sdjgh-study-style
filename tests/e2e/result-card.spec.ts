@@ -53,12 +53,12 @@ test("루미의 고정 디자인은 같고 학생별 점수 영역만 달라진�
     await page.screenshot({ path: test.info().outputPath("card-dialog.png") });
     const pending = page.waitForEvent("download");
     await expect(
-      page.getByRole("link", { name: "PNG 저장", exact: true }),
+      page.getByRole("link", { name: "이미지 저장", exact: true }),
     ).toHaveAttribute("href", /^\/api\/result-card\?.*download=1$/);
     await expect(
       page.getByRole("link", { name: "이미지 열기", exact: true }),
     ).toHaveAttribute("href", /^\/api\/result-card\?/);
-    await page.getByRole("link", { name: "PNG 저장", exact: true }).click();
+    await page.getByRole("link", { name: "이미지 저장", exact: true }).click();
     const downloaded = await readFile((await (await pending).path())!);
     images.push(downloaded);
     const previewHash = await inline.evaluate(async (img) => {
@@ -180,7 +180,7 @@ test("16종 전용 카드에 실제 응답을 합성하고 1080×1920 PNG를 저
       new RegExp(`${CHARACTERS[type.code].name}.*50%`),
     );
     const downloadPromise = page.waitForEvent("download");
-    await page.getByRole("link", { name: "PNG 저장", exact: true }).click();
+    await page.getByRole("link", { name: "이미지 저장", exact: true }).click();
     const download = await downloadPromise;
     const path = testInfo.outputPath(`${type.code}.png`);
     await download.saveAs(path);

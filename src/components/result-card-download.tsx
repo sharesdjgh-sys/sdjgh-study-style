@@ -155,7 +155,7 @@ function CardPreview({
       });
     } catch (e) {
       if (!(e instanceof Error && e.name === "AbortError"))
-        setShareError("공유를 마치지 못했어요. PNG 저장으로 간직할 수 있어요.");
+        setShareError("공유를 마치지 못했어요. 이미지 저장으로 간직할 수 있어요.");
     } finally {
       setSharing(false);
     }
@@ -200,14 +200,14 @@ function CardPreview({
           />
           <div className="keepsake-actions">
             <a
-              className="button primary"
+              className="button keepsake-save"
               href={resultCardUrl(session, true)}
               download={filename}
             >
-              PNG 저장
+              이미지 저장
             </a>
             <a
-              className="button secondary"
+              className="button keepsake-open"
               href={resultCardUrl(session)}
               target="_blank"
               rel="noopener noreferrer"
@@ -216,7 +216,7 @@ function CardPreview({
             </a>
             {canShare && (
               <button
-                className="button secondary"
+                className="button keepsake-share"
                 disabled={sharing}
                 onClick={() => void share()}
               >

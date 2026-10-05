@@ -90,7 +90,37 @@
   margin-top: 16px;
 }
 .keepsake-actions .button {
-  flex: 1;
+  flex: 1 1 128px;
+  padding-inline: 12px;
+  color: var(--action-ink);
+  background: var(--action-fill);
+  border: 1px solid var(--action-line);
+  box-shadow: none;
+}
+.keepsake-save {
+  --action-ink: #285e47;
+  --action-fill: #e5f1e6;
+  --action-line: #bdd7c2;
+  --action-hover: #d6e9d8;
+}
+.keepsake-open {
+  --action-ink: #365f7a;
+  --action-fill: #e8f1f8;
+  --action-line: #c3d7e5;
+  --action-hover: #d8e8f4;
+}
+.keepsake-share {
+  --action-ink: #6b4d86;
+  --action-fill: #f0e9f7;
+  --action-line: #d9c8e6;
+  --action-hover: #e7dcf1;
+}
+.keepsake-actions .button:hover:not(:disabled) {
+  background: var(--action-hover);
+}
+.keepsake-actions .button:focus-visible {
+  outline: 2px solid var(--action-ink);
+  outline-offset: 3px;
 }
 .saved-results {
   margin: 24px 0;

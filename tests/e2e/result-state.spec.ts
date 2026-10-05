@@ -29,7 +29,7 @@ for (const signedIn of [false, true]) {
       /루미.*시각형 100%.*운동형 0%/,
     );
     const pending = page.waitForEvent("download");
-    await page.getByRole("link", { name: "PNG 저장", exact: true }).click();
+    await page.getByRole("link", { name: "이미지 저장", exact: true }).click();
     const download = await pending;
     expect(download.suggestedFilename()).toContain("루미");
     const metadata = await sharp((await download.path())!).metadata();
