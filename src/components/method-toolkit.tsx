@@ -12,6 +12,7 @@ import {
 } from "@/lib/methods";
 import { readSession } from "@/lib/storage";
 import { Icon } from "./icon";
+import { MethodIcon } from "./method-icon";
 import { Mission } from "./mission";
 import { BasicsNote, MethodMeta } from "./method-meta";
 
@@ -104,11 +105,21 @@ export function MethodToolkit({
                 aria-pressed={selected === id}
                 onClick={() => choose(id)}
               >
-                <span className="toolkit-kind">
-                  {signature && <span aria-hidden="true">★ </span>}
-                  {kind}
+                <span className="toolkit-title">
+                  <MethodIcon
+                    id={id}
+                    size={64}
+                    className="toolkit-method-icon"
+                    sizes="(max-width: 767px) 44px, 64px"
+                  />
+                  <span>
+                    <span className="toolkit-kind">
+                      {signature && <span aria-hidden="true">★ </span>}
+                      {kind}
+                    </span>
+                    <span className="toolkit-name">{method.name}</span>
+                  </span>
                 </span>
-                <span className="toolkit-name">{method.name}</span>
                 <span className="toolkit-line">{method.oneLine}</span>
                 <MethodMeta method={method} />
                 <span className="toolkit-go">

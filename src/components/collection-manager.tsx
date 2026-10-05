@@ -4,16 +4,15 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { getType } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
-import { clearSession } from "@/lib/storage";
 import { useCollection } from "./collection-provider";
 import { useSavedSession } from "./use-saved-session";
 import { GiftBox, RewardReveal } from "./reward-reveal";
 import { Share } from "./share";
-import { useConfirm } from "./ui/confirm-dialog";
 import { collectionProgress } from "@/lib/collection-progress";
 import { SavedResults } from "./saved-results";
 import { useAccountResults } from "./account-results-provider";
 import { notifyAuthChange, useAuth } from "./auth-provider";
+import styles from "./collection-manager.module.css";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -65,7 +64,6 @@ export function CollectionManager() {
     code: string;
     bonus: boolean;
   } | null>(null);
-  const [confirm, confirmDialog] = useConfirm();
   useEffect(() => {
     const controller = new AbortController();
     const check = async () => {
@@ -124,13 +122,13 @@ export function CollectionManager() {
     });
     return () => cancelAnimationFrame(frame);
   }, [authState.status]);
-  async function action(path: string, payload?: unknown, method = "POST") {
+  async function action(path: string, payload?: unknown) {
     setBusy(true);
     setNotice("");
     setLoginSuccess(false);
     try {
       const response = await fetch(path, {
-        method,
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: payload ? JSON.stringify(payload) : undefined,
       });
@@ -140,8 +138,7 @@ export function CollectionManager() {
           ERRORS[result.error] ??
             "저장하지 못했어요. 연결을 확인하고 다시 시도해 주세요.",
         );
-      if (method === "DELETE") authState.signedOut();
-      else await refresh();
+      await refresh();
       return result;
     } catch (failure) {
       setNotice(
@@ -163,7 +160,10 @@ export function CollectionManager() {
   const progress = collectionProgress(data, first?.result);
   return (
     <>
-      <section className="collection-panel" aria-label="내 도감 관리">
+      <section
+        className={`collection-panel ${styles.notebook}`}
+        aria-label="내 도감 관리"
+      >
         <div className="collection-panel-heading">
           <span className="eyebrow">공부 친구 수집 노트</span>
           <span className="collection-count">
@@ -178,10 +178,12 @@ export function CollectionManager() {
               ? "친구의 발견이, 나의 새 친구로."
               : "처음 만난 친구를 오래 간직해요."}
         </h2>
-        <p>
-          검사는 자유롭게, 도감은 내 계정에 안전하게.
-          <br />내 공부캐 1명에 친구 초대로 {progress.inviteGoal}명을 더하면,
-          모두 {progress.total}명이에요.
+        <p className={styles.intro}>
+          검사는 <strong>자유롭게</strong>, 도감은{" "}
+          <strong>내 계정에 안전하게</strong>.
+          <br />내 공부캐 <strong>1명</strong>에 친구 초대로{" "}
+          <strong>{progress.inviteGoal}명</strong>을 더하면, 모두{" "}
+          <strong className={styles.total}>{progress.total}명</strong>이에요.
         </p>
         {authState.busy ? (
           <p role="status" aria-busy="true">
@@ -227,8 +229,8 @@ export function CollectionManager() {
               </button>
             </form>
             <p className="small muted">
-              검사 답변·점수가 계정에 저장돼요. 같은 계정으로 로그인하면 결과와
-              도감이 돌아와요.
+              검사 답변·점수가 <strong>계정에 저장</strong>돼요. 같은 계정으로
+              로그인하면 <strong>결과와 도감이 돌아와요.</strong>
             </p>
             {!data.configured && (
               <p className="notice" role="status">
@@ -334,11 +336,26 @@ export function CollectionManager() {
               </span>
             </div>
             <p className="collection-invite-progress">
-              {progress.unlocked
-                ? "내 공부캐와 초대로 만난 15명, 도감을 모두 완성했어요!"
-                : progress.remainingInvites === 0
-                  ? `필요한 초대는 모두 완료했어요. 선물 ${progress.pending}개만 개봉하면 완성이에요!`
-                  : `${progress.remainingInvites}명의 친구가 첫 결과를 저장하면 초대가 완료돼요. 도착한 선물은 추가 초대 없이 개봉하면 돼요.`}
+              {progress.unlocked ? (
+                <>
+                  내 공부캐와 초대로 만난 <strong>15명</strong>,{" "}
+                  <strong>도감을 모두 완성했어요!</strong>
+                </>
+              ) : progress.remainingInvites === 0 ? (
+                <>
+                  필요한 초대는 모두 완료했어요.{" "}
+                  <strong>선물 {progress.pending}개만 개봉</strong>하면
+                  완성이에요!
+                </>
+              ) : (
+                <>
+                  <strong>
+                    {progress.remainingInvites}명의 친구가 첫 결과를 저장
+                  </strong>
+                  하면 초대가 완료돼요. 도착한 선물은{" "}
+                  <strong>추가 초대 없이 개봉</strong>하면 돼요.
+                </>
+              )}
             </p>
             {data.pending.length > 0 && (
               <div className="reward-inbox" id="reward-inbox">
@@ -395,10 +412,11 @@ export function CollectionManager() {
               <p>링크에 자동으로 담겨요. 친구가 직접 입력해도 돼요.</p>
             </div>
             <Share type={ownType!} />
-            <p className="small muted">
-              새 친구의 첫 검사 완료 + 카카오 로그인 + 도감 저장까지 마치면 추천
-              성공! 공유 버튼만 누르거나 같은 계정이 재검사하면 보상은 추가되지
-              않아요.
+            <p className={`small muted ${styles.conditions}`}>
+              새 친구의{" "}
+              <strong>첫 검사 완료 + 카카오 로그인 + 도감 저장</strong>까지
+              마치면 <strong>추천 성공!</strong> 공유 버튼만 누르거나 같은
+              계정이 재검사하면 <strong>보상은 추가되지 않아요.</strong>
             </p>
           </>
         )}
@@ -413,45 +431,6 @@ export function CollectionManager() {
           <p role="status" className="notice">
             {displayNotice}
           </p>
-        )}
-        {data.signedIn && (
-          <div className="collection-account-actions">
-            <button
-              className="text-link"
-              disabled={busy || authState.busy}
-              onClick={() => void authState.logout()}
-            >
-              로그아웃
-            </button>
-            <button
-              className="text-link muted"
-              disabled={busy || authState.busy}
-              onClick={async () => {
-                if (
-                  await confirm({
-                    title: "계정과 도감을 삭제할까요?",
-                    description:
-                      "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 초대 코드와 모든 로그인 세션을 삭제해요.",
-                    note: "탈퇴 후 7일간 재가입할 수 없고, 기존 데이터는 복원되지 않아요. 재가입해도 신규 초대 보상은 받을 수 없어요. 이를 확인하는 최소 식별값과 탈퇴 시각은 서비스 운영 기간 동안 별도로 보관해요. 친구에게 이미 지급된 캐릭터는 유지되고 이 브라우저의 검사 기록은 지워요. 카카오 계정 자체는 삭제되지 않아요.",
-                    confirmLabel: "계정·도감 삭제",
-                    tone: "danger",
-                  })
-                ) {
-                  const result = await action(
-                    "/api/collection/account",
-                    undefined,
-                    "DELETE",
-                  );
-                  if (result) {
-                    clearSession();
-                    window.location.reload();
-                  }
-                }
-              }}
-            >
-              계정·도감 삭제
-            </button>
-          </div>
         )}
       </section>
       {data.signedIn && <SavedResults history />}
@@ -468,7 +447,6 @@ export function CollectionManager() {
           close={() => setReward(null)}
         />
       )}
-      {confirmDialog}
     </>
   );
 }

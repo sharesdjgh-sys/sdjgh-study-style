@@ -125,10 +125,11 @@ export function AccountOverview() {
           ) : (
             !signedIn && (
               <button
-                className="button primary"
+                className={`button primary ${styles.kakaoAction}`}
                 disabled={auth.busy || !auth.session.configured}
                 onClick={() => void auth.login()}
               >
+                <Image src="/kakao-symbol.svg" alt="" width={22} height={22} />
                 카카오 로그인
               </button>
             )
@@ -295,7 +296,7 @@ export function AccountOverview() {
                   로그아웃
                 </button>
               </div>
-              <div className={styles.setting}>
+              <div className={`${styles.setting} ${styles.dangerSetting}`}>
                 <div>
                   <h3>계정 삭제</h3>
                   <p>

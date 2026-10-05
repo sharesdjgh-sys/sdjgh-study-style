@@ -587,14 +587,27 @@ test("로그인 취소와 서버 장애에도 검사 가능, 계정 삭제는 �
     state.data = { ...EMPTY_COLLECTION, configured: true };
     return route.fulfill({ json: { ok: true } });
   });
+  await page.route("**/api/results", (route) =>
+    route.fulfill({ json: { results: [] } }),
+  );
   await page.goto("/collection");
+  const notebook = page.getByRole("region", { name: "내 도감 관리" });
+  await expect(
+    notebook.getByRole("button", { name: "로그아웃", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    notebook.getByRole("button", { name: "계정·도감 삭제", exact: true }),
+  ).toHaveCount(0);
+  await page.goto("/account");
   await page
     .getByRole("button", { name: "계정·도감 삭제", exact: true })
     .click();
   await page.getByRole("button", { name: "취소", exact: true }).click();
-  await expect(page.locator(".character-gallery .character-card")).toHaveCount(
-    1,
-  );
+  await expect(
+    page
+      .getByRole("main")
+      .getByRole("button", { name: "로그아웃", exact: true }),
+  ).toBeVisible();
   await page
     .getByRole("button", { name: "계정·도감 삭제", exact: true })
     .click();
@@ -603,9 +616,7 @@ test("로그인 취소와 서버 장애에도 검사 가능, 계정 삭제는 �
     .getByRole("button", { name: "계정·도감 삭제", exact: true })
     .click();
   await expect(
-    page
-      .getByRole("region", { name: "내 도감 관리" })
-      .getByRole("button", { name: "카카오 로그인" }),
+    page.getByRole("main").getByRole("button", { name: "카카오 로그인" }),
   ).toBeVisible();
   await page.goto("/collection?auth=cancelled");
   await expect(

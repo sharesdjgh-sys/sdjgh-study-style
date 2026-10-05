@@ -24,6 +24,7 @@ import { CHARACTERS } from "@/lib/characters";
 import { Share } from "./share";
 import { MethodToolkit } from "./method-toolkit";
 import { Icon } from "./icon";
+import { MethodIcon } from "./method-icon";
 import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { TypeStory } from "./type-story";
 import { MysteryCard } from "./mystery-card";
@@ -327,7 +328,7 @@ export function TypeResult({
         resultRunId={session?.runId}
       />
       <section className="next-review">
-        <Icon name="calendar-linear" size={32} />
+        <MethodIcon id="spaced-retry" size={48} />
         <div>
           <h3>내일의 나에게 남기는 세이브 포인트</h3>
           <p>
@@ -347,7 +348,7 @@ export function TypeResult({
             const method = getMethod(id);
             return (
               <Link href={`/methods/${id}`} key={m}>
-                <Icon name={FAMILIES[m].icon} />
+                <MethodIcon id={id} size={48} />
                 <span>
                   <strong>{method.name}</strong>
                   <small>
@@ -406,9 +407,6 @@ export function TypeResult({
             className={`button secondary ${styles.retakeAction}`}
           >
             다시 검사하기 <Icon name="restart-linear" size={17} />
-          </Link>
-          <Link href="/account" className="text-link">
-            내 검사 기록 보기 →
           </Link>
         </nav>
       )}

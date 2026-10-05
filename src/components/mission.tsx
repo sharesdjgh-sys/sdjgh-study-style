@@ -11,6 +11,7 @@ import {
 import { readSession, saveSession } from "@/lib/storage";
 import { track } from "@/lib/telemetry";
 import { Icon } from "./icon";
+import { MethodIcon } from "./method-icon";
 import { MethodMeta } from "./method-meta";
 const TIMER_MS = 10 * 60 * 1000;
 type Timer =
@@ -136,7 +137,10 @@ export function Mission({
           10분
         </span>
       </div>
-      <h2>{method.name}</h2>
+      <div className="mission-heading">
+        <MethodIcon id={methodId} size={64} />
+        <h2>{method.name}</h2>
+      </div>
       <p className="method-aka">{method.aka.join(" · ")}</p>
       <p className="mission-lead">{method.oneLine}</p>
       <MethodMeta method={method} />

@@ -120,7 +120,7 @@ export function Share({ type }: { type?: StudyType }) {
         </button>
         <button className={`button secondary ${styles.kakao}`} onClick={kakao}>
           <Image src="/kakao-symbol.svg" alt="" width={22} height={22} />
-          카카오톡 공유
+          친구에게 카카오톡 공유
         </button>
       </div>
       <p className="small muted" role="status">

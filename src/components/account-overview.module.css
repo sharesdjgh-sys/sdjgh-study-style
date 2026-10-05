@@ -41,12 +41,67 @@
   gap: 24px;
 }
 .card {
+  --action-bg: #dce9d7;
+  --action-ink: #365b48;
+  --action-border: #b8cfae;
+  --action-shadow: #c4d6bc;
+  --action-hover: #cfe0c8;
   min-width: 0;
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: 22px;
   background: var(--white);
   box-shadow: 0 5px 0 #dce4d955;
+}
+.card > :global(.button),
+.setting > :global(.button),
+.records :global(.saved-results > .button) {
+  background: var(--action-bg);
+  color: var(--action-ink);
+  border-color: var(--action-border);
+  box-shadow: 0 3px 0 var(--action-shadow);
+  min-height: 48px;
+}
+.card > :global(.button):hover:not(:disabled),
+.setting > :global(.button):hover:not(:disabled),
+.records :global(.saved-results > .button):hover:not(:disabled) {
+  background: var(--action-hover);
+}
+.card > :global(.button):disabled,
+.setting > :global(.button):disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.login > .kakaoAction {
+  --action-bg: #fee500;
+  --action-ink: #191919;
+  --action-border: #e5ce00;
+  --action-shadow: #dcc600;
+  --action-hover: #f5dc00;
+}
+.kakaoAction img {
+  flex-shrink: 0;
+}
+.records {
+  --action-bg: #eee3f5;
+  --action-ink: #6a4c83;
+  --action-border: #d5bddf;
+  --action-shadow: #ddcde6;
+  --action-hover: #e4d4ee;
+}
+.records :global(.saved-results-list a) {
+  background: #f2ebf7;
+  color: #634c77;
+  border-color: #ddcde6;
+  box-shadow: 0 2px 0 #e5d9ec;
+}
+.records :global(.saved-results-list a:hover) {
+  background: #e8dcf0;
+  border-color: #c3a8d2;
+}
+.records :global(.saved-results-list small) {
+  color: #756383;
 }
 .card h2 {
   display: flex;
@@ -158,12 +213,24 @@
   font-size: 13px;
 }
 .setting {
+  --action-bg: #f4ead5;
+  --action-ink: #785d32;
+  --action-border: #decca7;
+  --action-shadow: #e4d5b8;
+  --action-hover: #ecdfc2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   padding: 24px 0;
   border-top: 1px solid var(--line);
+}
+.dangerSetting {
+  --action-bg: #f8e6e2;
+  --action-ink: #984e48;
+  --action-border: #e3beb7;
+  --action-shadow: #ebcec8;
+  --action-hover: #f0d7d1;
 }
 .setting h3 {
   font-size: 17px;

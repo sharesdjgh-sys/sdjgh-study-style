@@ -2412,6 +2412,28 @@ legend {
 .next-review h3 {
   font-size: 17px;
 }
+.next-review > img,
+.method-links a > img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.method-links a > span {
+  min-width: 0;
+}
+.mission-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0 12px;
+}
+.mission-heading > img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.mission-heading h2 {
+  margin: 0;
+  min-width: 0;
+}
 .next-review p {
   font-size: var(--text-secondary);
   margin-top: 10px;
@@ -4772,15 +4794,6 @@ legend {
   border-left: 3px solid var(--accent);
   padding-left: 15px;
 }
-.collection-account-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-top: 30px;
-  border-top: 1px solid #ddd8ca;
-  padding-top: 20px;
-  font-size: 14px;
-}
 .collection-nudge {
   display: flex;
   align-items: center;
@@ -6583,6 +6596,23 @@ body {
   font-weight: 750;
   color: var(--family-deep);
 }
+.toolkit-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.toolkit-title > span {
+  min-width: 0;
+}
+.toolkit-title .toolkit-kind,
+.toolkit-title .toolkit-name {
+  display: block;
+}
+.toolkit-method-icon {
+  flex-shrink: 0;
+  object-fit: contain;
+}
 .toolkit-name {
   font-size: 19px;
   font-weight: 750;
@@ -7236,7 +7266,17 @@ body:has(.method-quick-menu) {
   }
   .toolkit-card:not(.is-signature) .method-meta {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+  }
+  .toolkit-title {
+    gap: 9px;
+  }
+  .toolkit-method-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .toolkit-card:not(.is-signature) .toolkit-title {
+    grid-column: 1;
   }
   .toolkit-card:not(.is-signature) .toolkit-line,
   .toolkit-card:not(.is-signature) .toolkit-go,
