@@ -98,6 +98,7 @@ beforeAll(async () => {
   await db.exec(await readFile("db/004_saved_results.sql", "utf8"));
   await db.exec(await readFile("db/005_account_lifecycle.sql", "utf8"));
   await db.exec(await readFile("db/006_skill_hearts.sql", "utf8"));
+  await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -133,6 +134,35 @@ afterEach(() => {
 });
 afterAll(async () => {
   await db.close();
+});
+it("바로가기 완료 확인 후 1개와 설치 추가 2개를 계정에 기록한다", async () => {
+  const claim = (payload: object) => skillPost(request("/api/skills", payload));
+  expect((await claim({ action: "shortcut" })).status).toBe(400);
+  expect((await claim({ action: "shortcut", confirmed: false })).status).toBe(
+    400,
+  );
+  mocks.jar.clear();
+  expect((await claim({ action: "shortcut", confirmed: true })).status).toBe(
+    401,
+  );
+  mocks.jar.set("study-collection", "session");
+  const first = await (
+    await claim({ action: "shortcut", confirmed: true, amount: 99 })
+  ).json();
+  expect(first.awarded).toBe(1);
+  expect(first.progress.shortcutClaimed).toBe(true);
+  expect(first.progress.installClaimed).toBe(false);
+  expect(
+    (await (await claim({ action: "shortcut", confirmed: true })).json())
+      .awarded,
+  ).toBe(0);
+  const installed = await (
+    await claim({ action: "install", standalone: true, mobile: true })
+  ).json();
+  expect(installed.awarded).toBe(2);
+  expect(installed.progress.balance).toBe(3);
+  expect(installed.progress.installClaimed).toBe(true);
+  expect((await (await skillGet()).json()).progress.shortcutClaimed).toBe(true);
 });
 it("하트 API는 인증·출처·설치 실행 신호를 검사하고 중복 선물을 막는다", async () => {
   expect(

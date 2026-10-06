@@ -12,14 +12,14 @@
 <header><img id="logo" class="logo" alt="StudyCrew"><span class="preview-label">SKILLBOOK PREVIEW</span></header>
 <main>
 <section class="intro"><div><span class="eyebrow">작은 하트로 여는, 나만의 공부 공략집</span><h1>모으는 재미 다음엔,<br><em>내 스킬로 만드는 재미.</em></h1><p>공부캐를 만나 시그니처 스킬을 열고,<br>차곡차곡 모은 하트로 새로운 공부법을 발견해요.</p><p class="note">디자인 체험용 미리보기예요. 실제 계정과 하트에는 영향을 주지 않아요.</p></div><div class="lock-lineup" id="locks" aria-label="하트 1개, 2개, 3개 자물쇠"></div></section>
-<section class="desk" aria-label="미리보기 체험 도구"><div class="desk-top"><div class="wallet"><img class="heart" data-icon="heart" alt="하트"><div><small>미리보기 하트</small><strong id="balance">3</strong><span> 개</span></div></div><button class="quiet" id="reset">처음부터 다시</button></div><div class="controls"><label for="character">만나 볼 공부캐</label><select id="character"></select><button class="primary" id="draw">캐릭터 카드 획득 체험</button><button class="rose" id="add">하트 3개 더 받기</button><button class="purple" id="install">앱 설치 선물 체험 +3</button></div><p class="status" id="status" role="status" aria-live="polite">하트 3개로 시작해요. 아래에서 마음에 드는 스킬을 눌러 보세요.</p></section>
+<section class="desk" aria-label="미리보기 체험 도구"><div class="desk-top"><div class="wallet"><img class="heart" data-icon="heart" alt="하트"><div><small>미리보기 하트</small><strong id="balance">3</strong><span> 개</span></div></div><button class="quiet" id="reset">처음부터 다시</button></div><div class="controls"><label for="character">만나 볼 공부캐</label><select id="character"></select><button class="primary" id="draw">캐릭터 카드 획득 체험</button><button class="rose" id="add">하트 3개 더 받기</button><button class="purple" id="shortcut">바로가기 선물 체험 +1</button><button class="purple" id="install">앱 설치 선물 체험 +3</button></div><p class="status" id="status" role="status" aria-live="polite">하트 3개로 시작해요. 아래에서 마음에 드는 스킬을 눌러 보세요.</p></section>
 <section aria-labelledby="catalog-title"><div class="catalog-head"><div><h2 id="catalog-title">나의 공부 스킬북</h2><p id="count"></p></div><div class="view-switch" aria-label="미리보기 방식"><button class="view" data-view="play" aria-pressed="true">잠금 해제 체험</button><button class="view" data-view="gallery" aria-pressed="false">전체 그림 보기</button></div></div><div class="toolbar"><button class="filter" data-filter="all" aria-pressed="true">전체 28</button><button class="filter" data-filter="signature" aria-pressed="false">시그니처 16</button><button class="filter" data-filter="general" aria-pressed="false">기본 스킬 12</button><input class="search" id="search" type="search" placeholder="스킬 이름 검색" aria-label="스킬 이름 검색"></div><div class="grid" id="grid"></div></section>
 </main><footer>StudyCrew · 공부 스킬북 디자인 미리보기<br>새로고침하면 체험 기록이 초기화됩니다.</footer>
 <dialog class="modal" id="modal" aria-labelledby="detail-title"><div class="modal-head"><span id="modal-label">숨겨진 공부 스킬</span><button class="close" id="close" aria-label="닫기">×</button></div><div id="detail"></div></dialog><div class="toast" id="toast" role="status"></div>
 <script>
 const DATA=/*__PREVIEW_DATA__*/;
 const $=id=>document.getElementById(id);
-const state={balance:3,unlocked:new Set(),owned:new Set(),paid:new Set(),practiced:new Set(),installed:false,view:'play',filter:'all',query:'',selected:null,busy:false};
+const state={balance:3,unlocked:new Set(),owned:new Set(),paid:new Set(),practiced:new Set(),installed:false,shortcut:false,view:'play',filter:'all',query:'',selected:null,busy:false};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let revealTimer,toastTimer;
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -27,7 +27,7 @@ const icon=(id,cls='heart',alt='')=>`<img class="${cls}" src="${DATA.icons[id]}"
 function notify(text){$('status').textContent=text;$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3200)}
 function render(){
  $('balance').textContent=state.balance;$('count').textContent=`스킬 ${state.unlocked.size} / 28 해제 · 시그니처는 해당 캐릭터 또는 하트 3개로 열어요.`;
- $('install').disabled=state.installed;$('install').textContent=state.installed?'앱 설치 선물 받음':'앱 설치 선물 체험 +3';
+ $('shortcut').disabled=state.shortcut||state.installed;$('install').disabled=state.installed;$('install').textContent=state.installed?'앱 설치 선물 받음':`앱 설치 선물 체험 +${state.shortcut?2:3}`;
  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===state.view)));
  document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===state.filter)));
  const list=DATA.skills.filter(s=>(state.filter==='all'||(state.filter==='signature'?!!s.owner:!s.owner))&&(!state.query||(s.name+' '+(s.owner||'')+' '+s.id).toLowerCase().includes(state.query)));
@@ -53,9 +53,10 @@ document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{state.view=b.
 document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{state.filter=b.dataset.filter;render()});
 $('search').oninput=e=>{state.query=e.target.value.trim().toLowerCase();render()};
 $('add').onclick=()=>{state.balance+=3;render();notify('미리보기 하트 3개를 더 받았어요.')};
-$('install').onclick=()=>{if(state.installed)return;state.installed=true;state.balance+=3;render();notify('앱 설치 선물 체험! 하트 3개를 받았어요. 실제 설치는 진행하지 않아요.')};
+$('shortcut').onclick=()=>{if(state.shortcut||state.installed)return;state.shortcut=true;state.balance++;render();notify('바로가기 선물 체험! 하트 1개를 받았어요.')};
+$('install').onclick=()=>{if(state.installed)return;state.installed=true;const reward=state.shortcut?2:3;state.balance+=reward;render();notify(`앱 설치 선물 체험! 하트 ${reward}개를 받았어요. 실제 설치는 진행하지 않아요.`)};
 $('draw').onclick=()=>{const s=DATA.skills.find(s=>s.id===$('character').value);if(state.owned.has(s.id)){notify('이미 만난 캐릭터예요. 다른 친구를 골라 보세요.');return}const reward=1+Math.floor(Math.random()*3),refund=state.paid.has(s.id)?3:0;state.balance+=reward+refund;state.owned.add(s.id);state.unlocked.add(s.id);state.view='play';render();showDetail(s.id);notify(`${s.owner}를 만났어요! 하트 +${reward} · 시그니처 해제${refund?' · 사용한 하트 3개 반환':''}`)};
-$('reset').onclick=()=>{closeModal();Object.assign(state,{balance:3,installed:false,view:'play',filter:'all',query:'',selected:null});['unlocked','owned','paid','practiced'].forEach(k=>state[k].clear());$('search').value='';render();notify('처음으로 돌아왔어요. 하트 3개로 다시 시작해요.')};
+$('reset').onclick=()=>{closeModal();Object.assign(state,{balance:3,installed:false,shortcut:false,view:'play',filter:'all',query:'',selected:null});['unlocked','owned','paid','practiced'].forEach(k=>state[k].clear());$('search').value='';render();notify('처음으로 돌아왔어요. 하트 3개로 다시 시작해요.')};
 $('close').onclick=closeModal;$('modal').addEventListener('cancel',e=>{e.preventDefault();closeModal()});$('modal').addEventListener('click',e=>{if(e.target===$('modal')){const r=$('modal').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal()}});
 $('detail').addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(!action||state.busy)return;if(action==='unlock')unlock();if(action==='back')closeModal();if(action==='locked'){state.view='play';render();renderDetail();$('modal').scrollTop=0}if(action==='practice'&&!state.practiced.has(state.selected)){state.practiced.add(state.selected);state.balance++;render();renderDetail();notify('첫 실천 완료 체험! 하트 1개를 받았어요.')}});
 render();

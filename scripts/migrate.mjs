@@ -68,3 +68,15 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("하트·스킬 해제·10분 실천 보상 준비 완료");
+const homeRewards = await readFile(
+  new URL("../db/007_home_screen_rewards.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  homeRewards
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("홈 화면 바로가기 1개·앱 설치 합산 3개 보상 준비 완료");

@@ -128,7 +128,7 @@ test("설치된 모바일 앱은 설치 선물을 한 번만 받는다", async (
   await page.goto("/methods");
   await page.getByRole("button", { name: "설치 선물 받기" }).click();
   await expect(
-    page.getByText("설치 선물, 하트 3개가 도착했어요!"),
+    page.getByText("홈 화면 선물, 하트 3개가 도착했어요!"),
   ).toBeVisible();
   expect(state.progress.balance).toBe(6);
   expect(state.installs).toBe(1);

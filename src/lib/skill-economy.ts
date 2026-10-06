@@ -23,7 +23,7 @@ export type Practice = {
 export type HeartEntry = {
   id: string;
   amount: number;
-  reason: "card" | "unlock" | "refund" | "install" | "practice";
+  reason: "card" | "unlock" | "refund" | "install" | "shortcut" | "practice";
   reference: string;
   createdAt: string;
 };
@@ -32,6 +32,7 @@ export type SkillProgress = {
   unlocked: MethodId[];
   practiced: MethodId[];
   installClaimed: boolean;
+  shortcutClaimed: boolean;
   entries: HeartEntry[];
   practice: Practice | null;
 };
@@ -40,6 +41,7 @@ export const EMPTY_SKILLS: SkillProgress = {
   unlocked: [],
   practiced: [],
   installClaimed: false,
+  shortcutClaimed: false,
   entries: [],
   practice: null,
 };

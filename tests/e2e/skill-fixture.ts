@@ -18,6 +18,7 @@ export async function mockSkills(
     },
     unlocks: 0,
     installs: 0,
+    shortcuts: 0,
     completed: 0,
   };
   await page.route("**/api/auth/session", (r) =>
@@ -85,10 +86,21 @@ export async function mockSkills(
         }
       } else if (body.action === "install") {
         if (!state.progress.installClaimed) {
-          state.progress.balance += 3;
+          awarded = state.progress.shortcutClaimed ? 2 : 3;
+          state.progress.balance += awarded;
           state.progress.installClaimed = true;
           state.installs++;
-          awarded = 3;
+        }
+      } else if (body.action === "shortcut") {
+        if (
+          body.confirmed &&
+          !state.progress.shortcutClaimed &&
+          !state.progress.installClaimed
+        ) {
+          awarded = 1;
+          state.progress.balance++;
+          state.progress.shortcutClaimed = true;
+          state.shortcuts++;
         }
       } else if (body.action === "start") {
         state.progress.practice = {

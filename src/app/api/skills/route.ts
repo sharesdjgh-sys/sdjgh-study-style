@@ -13,6 +13,7 @@ import { skillProgress } from "@/lib/skill-server";
 export const runtime = "nodejs";
 const method = z.string().refine(isMethodId);
 const schema = z.discriminatedUnion("action", [
+  z.object({ action: z.literal("shortcut"), confirmed: z.literal(true) }),
   z.object({ action: z.literal("unlock"), method }),
   z.object({
     action: z.literal("install"),
@@ -60,10 +61,13 @@ export async function POST(request: Request) {
       outcome = String(rows[0].outcome);
       if (!["unlocked", "already_open"].includes(outcome))
         return json({ error: outcome }, 409);
-    } else if (input.action === "install") {
-      // Display mode is a browser claim, not cryptographic installation proof.
+    } else if (input.action === "install" || input.action === "shortcut") {
+      // Browser signals / user confirmation are not installation attestation.
+      // The DB serializes claims and caps both rewards at 3 per account.
+      const reference =
+        input.action === "install" ? "mobile-pwa" : "home-shortcut";
       const rows =
-        await sql`SELECT credit_hearts(${owner.id}::uuid,'install','mobile-pwa',3) AS awarded`;
+        await sql`SELECT credit_hearts(${owner.id}::uuid,${input.action},${reference},3) AS awarded`;
       awarded = Number(rows[0].awarded);
     } else {
       const methodId = "method" in input ? input.method : null;

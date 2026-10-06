@@ -91,6 +91,82 @@
   padding-top: 10px;
   max-width: 600px;
 }
+.shortcut-claim label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+.shortcut-claim input {
+  width: 20px;
+  height: 20px;
+  accent-color: #a25d78;
+}
+.shortcut-claim .button {
+  margin-top: 8px;
+}
+.install-reward-content {
+  min-width: 0;
+  flex: 1;
+}
+.install-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.install-actions .button {
+  margin-top: 4px;
+}
+.install-availability {
+  font-size: 0.76rem !important;
+  color: #77756d;
+}
+.install-shortcut {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #735388;
+  text-align: left;
+}
+.install-claimed {
+  display: block;
+  margin-top: 10px;
+}
+.install-help {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid #e3d6c4;
+  border-radius: 14px;
+  background: #fffdf7;
+}
+.install-help ol {
+  padding-left: 22px;
+  margin: 12px 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.install-help li + li {
+  margin-top: 8px;
+}
+.install-help > .text-link {
+  display: inline-block;
+  margin: 5px 12px 0 0;
+  font-size: 0.78rem;
+}
+.install-warning {
+  border-top: 1px solid #e6ddcd;
+  margin-top: 16px;
+  padding-top: 12px;
+  font-size: 0.8rem;
+}
+.install-warning summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #805d42;
+}
 .skill-earned {
   display: inline-block;
   color: #27785d;

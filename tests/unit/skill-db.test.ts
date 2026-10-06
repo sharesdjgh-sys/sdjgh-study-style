@@ -18,6 +18,7 @@ afterAll(async () => {
 });
 beforeEach(async () => {
   await db.exec("TRUNCATE collection_accounts CASCADE");
+  await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
 });
 async function account() {
   const id = randomUUID();
@@ -45,6 +46,47 @@ async function card(id: string, code = "visual-solo-planned", opened = true) {
 async function fund(id: string) {
   await db.query("SELECT credit_hearts($1,'install','mobile-pwa',3)", [id]);
 }
+it("바로가기 1개 후 설치 2개, 사용 후에도 중복 지급하지 않는다", async () => {
+  const id = await account();
+  const claim = (reason: string, reference = "arbitrary") =>
+    scalar<number>("SELECT credit_hearts($1,$2,$3,99) AS v", [
+      id,
+      reason,
+      reference,
+    ]);
+  expect(await claim("shortcut")).toBe(1);
+  expect(await claim("shortcut", "retry")).toBe(0);
+  await db.query("SELECT unlock_skill($1,'blank-page')", [id]);
+  expect(await balance(id)).toBe(0);
+  expect(await claim("install")).toBe(2);
+  expect(await claim("install", "retry")).toBe(0);
+  expect(await claim("shortcut")).toBe(0);
+  expect(await balance(id)).toBe(2);
+  await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
+  expect(await claim("install")).toBe(0);
+});
+it("기존 설치 보상 3개와 설치 먼저 받기는 바로가기로 중복 보상하지 않는다", async () => {
+  const id = await account();
+  await db.exec(migration);
+  await fund(id);
+  await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
+  expect(
+    await scalar<number>(
+      "SELECT credit_hearts($1,'shortcut','home-shortcut',1) AS v",
+      [id],
+    ),
+  ).toBe(0);
+  expect(await balance(id)).toBe(3);
+  const other = await account();
+  await fund(other);
+  expect(
+    await scalar<number>(
+      "SELECT credit_hearts($1,'shortcut','home-shortcut',1) AS v",
+      [other],
+    ),
+  ).toBe(0);
+  expect(await balance(other)).toBe(3);
+});
 it("DB 비용표와 28개 스킬·효과 질문이 일치한다", async () => {
   const rows = (
     await db.query<{

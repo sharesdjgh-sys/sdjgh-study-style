@@ -24,7 +24,13 @@ declare global {
     };
   }
 }
-export function Share({ type }: { type?: StudyType }) {
+export function Share({
+  type,
+  kakaoLabel = "친구에게 카카오톡 공유",
+}: {
+  type?: StudyType;
+  kakaoLabel?: string;
+}) {
   const { data } = useCollection();
   const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
   const [ready, setReady] = useState(false);
@@ -120,7 +126,7 @@ export function Share({ type }: { type?: StudyType }) {
         </button>
         <button className={`button secondary ${styles.kakao}`} onClick={kakao}>
           <Image src="/kakao-symbol.svg" alt="" width={22} height={22} />
-          친구에게 카카오톡 공유
+          {kakaoLabel}
         </button>
       </div>
       <p className="small muted" role="status">

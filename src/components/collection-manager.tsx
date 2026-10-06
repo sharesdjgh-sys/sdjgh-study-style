@@ -419,7 +419,7 @@ export function CollectionManager() {
               <strong>{data.inviteCode}</strong>
               <p>링크에 자동으로 담겨요. 친구가 직접 입력해도 돼요.</p>
             </div>
-            <Share type={ownType!} />
+            <Share type={ownType!} kakaoLabel="내 공부캐 카카오톡 공유" />
             <p className={`small muted ${styles.conditions}`}>
               새 친구의{" "}
               <strong>첫 검사 완료 + 카카오 로그인 + 도감 저장</strong>까지

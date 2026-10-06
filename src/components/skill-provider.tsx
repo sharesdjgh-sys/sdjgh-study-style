@@ -17,6 +17,7 @@ type Action = {
   answers?: number[];
   standalone?: boolean;
   mobile?: boolean;
+  confirmed?: boolean;
 };
 type State = {
   owner?: string;

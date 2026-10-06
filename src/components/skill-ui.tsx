@@ -45,6 +45,7 @@ export function SkillWallet({ history = false }: { history?: boolean }) {
     unlock: "스킬 열기",
     refund: "시그니처 하트 돌려받기",
     install: "앱 설치 선물",
+    shortcut: "홈 화면 바로가기 선물",
     practice: "첫 실천 완료",
   };
   return (
