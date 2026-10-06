@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { getType, type Modality } from "@/lib/content";
 import {
   CATEGORIES,
   METHOD_IDS,
@@ -10,155 +9,125 @@ import {
   type MethodCategory,
   type MethodId,
 } from "@/lib/methods";
-import { Icon } from "./icon";
-import { MethodMeta } from "./method-meta";
+import { skillPrice } from "@/lib/skill-economy";
+import { CHARACTERS } from "@/lib/characters";
+import { useSkills } from "./skill-provider";
 import { MethodIcon } from "./method-icon";
-import { ownerLabel, useVisibleCodes } from "./method-owner";
-
-const CATEGORY_KEYS = Object.keys(CATEGORIES) as MethodCategory[];
-const idsOf = (category: MethodCategory) =>
-  METHOD_IDS.filter((id) => getMethod(id).category === category);
-const familyOf = (id: MethodId): Modality => {
-  const owner = methodOwner(id);
-  return owner.kind === "family"
-    ? owner.modality
-    : getType(owner.code)!.modality;
-};
-const MOBILE = "(max-width: 767px)";
-
-/**
- * 공부법 28가지를 과제별로 묶어 보여 줘요.
- * 데스크톱은 카드, 모바일은 아이콘 타일이고 누르면 아래에서 설명 팝업이 올라와요.
- */
+import { Heart, SkillWallet } from "./skill-ui";
+import { Mission } from "./mission";
 export function MethodCatalog() {
+  const { progress } = useSkills();
   const [open, setOpen] = useState<MethodId | null>(null);
   const sheet = useRef<HTMLDialogElement>(null);
-  const visible = useVisibleCodes();
+  const trigger = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (open && !sheet.current?.open) sheet.current?.showModal();
   }, [open]);
-  function preview(event: MouseEvent, id: MethodId) {
-    if (!window.matchMedia(MOBILE).matches) return;
-    event.preventDefault();
-    setOpen(id);
-  }
   function close() {
     sheet.current?.close();
     setOpen(null);
+    trigger.current?.focus();
   }
-  const method = open ? getMethod(open) : null;
-  const label = open ? ownerLabel(open, visible) : null;
+  function preview(e: MouseEvent<HTMLAnchorElement>, id: MethodId) {
+    if (!matchMedia("(max-width: 767px)").matches) return;
+    e.preventDefault();
+    trigger.current = e.currentTarget;
+    setOpen(id);
+  }
   return (
     <>
-      {CATEGORY_KEYS.map((category) => (
+      <div id="skill-wallet">
+        <SkillWallet />
+      </div>
+      {(Object.keys(CATEGORIES) as MethodCategory[]).map((category) => (
         <section
           className="catalog-group"
           data-category={category}
           key={category}
-          aria-labelledby={`catalog-${category}`}
+          aria-labelledby={"catalog-" + category}
         >
           <div className="catalog-group-head">
-            <h2 id={`catalog-${category}`}>
-              <MethodIcon
-                id={category}
-                size={44}
-                sizes="(max-width: 767px) 36px, 44px"
-              />
-              {CATEGORIES[category].label} <span>{idsOf(category).length}</span>
+            <h2 id={"catalog-" + category}>
+              <MethodIcon id={category} size={44} />
+              {CATEGORIES[category].label}
+              <span>
+                {
+                  METHOD_IDS.filter((id) => getMethod(id).category === category)
+                    .length
+                }
+              </span>
             </h2>
           </div>
-          <div className="catalog-grid">
-            {idsOf(category).map((id, index) => {
-              const m = getMethod(id);
-              const owner = ownerLabel(id, visible);
-              const family = familyOf(id);
-              return (
-                <Link
-                  className="method-preview-card catalog-card"
-                  data-family={family}
-                  data-signature={owner.signature ? "true" : undefined}
-                  href={`/methods/${id}`}
-                  key={id}
-                  onClick={(event) => preview(event, id)}
-                >
-                  <span className="catalog-icon" aria-hidden="true">
-                    <MethodIcon
-                      id={id}
-                      size={88}
-                      sizes="(max-width: 767px) 64px, 88px"
-                      loading={
-                        category === CATEGORY_KEYS[0] && index === 0
-                          ? "eager"
-                          : "lazy"
-                      }
-                    />
-                  </span>
-                  {owner.signature && (
-                    <span className="catalog-signature" aria-hidden="true">
-                      ★
+          <div className="catalog-grid skill-card-grid">
+            {METHOD_IDS.filter((id) => getMethod(id).category === category).map(
+              (id) => {
+                const m = getMethod(id);
+                const owner = methodOwner(id);
+                const unlocked = progress.unlocked.includes(id);
+                return (
+                  <Link
+                    href={"/methods/" + id}
+                    onClick={(e) => preview(e, id)}
+                    className="skill-tile"
+                    data-unlocked={unlocked}
+                    data-signature={owner.kind === "signature"}
+                    key={id}
+                  >
+                    <span className="skill-tile-kind">
+                      {owner.kind === "signature" ? "시그니처" : "기본 스킬"}
                     </span>
-                  )}
-                  <span className="method-preview-family">
-                    {owner.signature && <span aria-hidden="true">★</span>}
-                    {owner.short}
-                  </span>
-                  <h3>{m.name}</h3>
-                  <span className="catalog-aka">{m.aka[0]}</span>
-                  <p>{m.oneLine}</p>
-                  <MethodMeta method={m} />
-                  <span className="method-preview-go">
-                    <Icon name="clock-circle-linear" size={16} />
-                    10분 해보기
-                    <Icon name="arrow-right-linear" size={18} />
-                  </span>
-                </Link>
-              );
-            })}
+                    <span className="skill-tile-art">
+                      <MethodIcon id={id} size={112} />
+                    </span>
+                    <h3>{m.name}</h3>
+                    <p>{m.oneLine}</p>
+                    <span className="skill-tile-bottom">
+                      {unlocked ? (
+                        <>
+                          <span>
+                            {owner.kind === "signature"
+                              ? CHARACTERS[owner.code].name + "의 스킬"
+                              : "펼쳐 보기"}
+                          </span>
+                          <b>열림 →</b>
+                        </>
+                      ) : (
+                        <>
+                          <Heart size={20} />
+                          <b>{skillPrice(id)}</b>
+                          <span>하트로 열기</span>
+                        </>
+                      )}
+                    </span>
+                    {unlocked && progress.practiced.includes(id) && (
+                      <span className="skill-practiced">첫 실천 완료</span>
+                    )}
+                  </Link>
+                );
+              },
+            )}
           </div>
         </section>
       ))}
       <dialog
         ref={sheet}
-        className="method-sheet"
-        data-family={open ? familyOf(open) : undefined}
-        aria-labelledby="method-sheet-title"
-        onCancel={(event) => {
-          event.preventDefault();
+        className="skill-sheet"
+        aria-label={open ? getMethod(open).name : "스킬 상세"}
+        onCancel={(e) => {
+          e.preventDefault();
           close();
         }}
-        onClick={(event) => {
-          // 팝업 바깥(어두운 배경)을 누르면 닫아요.
-          if (event.target === event.currentTarget) close();
+        onClick={(e) => {
+          if (e.target === e.currentTarget) close();
         }}
       >
-        {open && method && label && (
-          <div className="method-sheet-body">
-            <span className="method-sheet-handle" aria-hidden="true" />
-            <MethodIcon id={open} size={80} className="method-sheet-icon" />
-            <p className="method-sheet-owner">
-              {label.signature && <span aria-hidden="true">★ </span>}
-              {label.short}
-            </p>
-            <h2 id="method-sheet-title">{method.name}</h2>
-            <p className="method-aka">{method.aka.join(" · ")}</p>
-            <p className="method-sheet-line">{method.oneLine}</p>
-            <MethodMeta method={method} />
-            <ol className="method-sheet-steps">
-              {method.steps.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-            <div className="method-sheet-actions">
-              <Link className="button primary" href={`/methods/${open}`}>
-                <Icon name="clock-circle-linear" size={18} />
-                10분 해보기
-              </Link>
-              <button className="button secondary" onClick={close}>
-                닫기
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="skill-sheet-top">
+          <span>나의 공부 스킬북</span>
+          <button type="button" className="button secondary" onClick={close}>
+            닫기
+          </button>
+        </div>
+        {open && <Mission key={open} methodId={open} />}
       </dialog>
     </>
   );

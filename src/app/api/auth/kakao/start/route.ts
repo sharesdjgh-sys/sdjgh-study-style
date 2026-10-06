@@ -27,11 +27,17 @@ export async function POST(request: Request) {
   try {
     const state = token();
     const browser = token();
+    const requested = new URL(request.url).searchParams.get("returnTo") ?? "";
+    const returnPath =
+      /^\/methods(?:\/[a-z-]+)?(?:\?[a-zA-Z0-9=&%-]*)?$/.test(requested) &&
+      requested.length < 300
+        ? requested
+        : "/collection";
     const sql = database();
     await timedAuth(
       "start_db",
-      async () => sql`INSERT INTO collection_oauth_states(state_hash,browser_hash,expires_at)
-      VALUES(${hash(state)},${hash(browser)},now()+interval '10 minutes')`,
+      async () => sql`INSERT INTO collection_oauth_states(state_hash,browser_hash,expires_at,return_path)
+      VALUES(${hash(state)},${hash(browser)},now()+interval '10 minutes',${returnPath})`,
     );
     (await cookies()).set(OAUTH_COOKIE, browser, cookieOptions(600));
     const url = new URL("https://kauth.kakao.com/oauth/authorize");

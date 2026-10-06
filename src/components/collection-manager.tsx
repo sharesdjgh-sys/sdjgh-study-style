@@ -13,6 +13,8 @@ import { SavedResults } from "./saved-results";
 import { useAccountResults } from "./account-results-provider";
 import { notifyAuthChange, useAuth } from "./auth-provider";
 import styles from "./collection-manager.module.css";
+import { useSkills } from "./skill-provider";
+import { SkillWallet } from "./skill-ui";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -28,7 +30,7 @@ export function CollectionNudge() {
         <p>
           {data.firstType
             ? "새 친구가 첫 검사 결과를 계정에 저장하면, 아직 만나지 않은 캐릭터 한 명이 찾아와요."
-            : "첫 캐릭터는 로그인 없이 만날 수 있어요. 저장하고 다른 친구들도 모으려면 카카오 로그인이 필요해요."}
+            : "첫 캐릭터는 로그인 없이 만날 수 있어요. 카카오 로그인 후 처음 도감에 저장하면 하트 1~3개와 이 친구의 시그니처 스킬을 받아요."}
         </p>
       </div>
       <Link className="button primary" href="/collection">
@@ -49,6 +51,7 @@ const ERRORS: Record<string, string> = {
   rate_limit: "요청이 많아 잠시 쉬고 있어요. 조금 뒤 다시 시도해 주세요.",
 };
 export function CollectionManager() {
+  const skills = useSkills();
   const authState = useAuth();
   const completionShown = useRef(false);
   const { data, loaded, error, refresh } = useCollection();
@@ -139,6 +142,11 @@ export function CollectionManager() {
             "저장하지 못했어요. 연결을 확인하고 다시 시도해 주세요.",
         );
       await refresh();
+      await skills.refresh();
+      if (result.hearts?.length)
+        setNotice(
+          `카드를 저장했어요! 하트 ${result.hearts.reduce((sum: number, h: { amount: number }) => sum + h.amount, 0)}개와 시그니처 스킬을 받았어요.`,
+        );
       return result;
     } catch (failure) {
       setNotice(
@@ -433,7 +441,12 @@ export function CollectionManager() {
           </p>
         )}
       </section>
-      {data.signedIn && <SavedResults history />}
+      {data.signedIn && (
+        <>
+          <SkillWallet />
+          <SavedResults history />
+        </>
+      )}
       {reward && (
         <RewardReveal
           key={reward.code}

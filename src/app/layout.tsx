@@ -10,6 +10,8 @@ import { AccountResultsProvider } from "@/components/account-results-provider";
 import { QUESTIONS } from "@/lib/content";
 import { shareImagePath } from "@/lib/share-image";
 import "./globals.css";
+import { SkillProvider } from "@/components/skill-provider";
+import "./skills.css";
 export const viewport: Viewport = {
   themeColor: "#27785d",
 };
@@ -43,19 +45,21 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <CollectionProvider>
-            <AccountResultsProvider>
-              <SourceCapture />
-              <a className="skip-link" href="#main">
-                본문으로 바로가기
-              </a>
-              <div className="site-shell">
-                <Header />
-                <GiftNotice />
-                {children}
-                <Footer />
-              </div>
-              <QuickMenu />
-            </AccountResultsProvider>
+            <SkillProvider>
+              <AccountResultsProvider>
+                <SourceCapture />
+                <a className="skip-link" href="#main">
+                  본문으로 바로가기
+                </a>
+                <div className="site-shell">
+                  <Header />
+                  <GiftNotice />
+                  {children}
+                  <Footer />
+                </div>
+                <QuickMenu />
+              </AccountResultsProvider>
+            </SkillProvider>
           </CollectionProvider>
         </AuthProvider>
       </body>

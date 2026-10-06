@@ -7,7 +7,9 @@ import { Icon } from "./icon";
 import { TASK_KEYS, TaskTabs } from "./task-tabs";
 import { MethodMeta } from "./method-meta";
 import { MethodIcon } from "./method-icon";
+import { useSkills } from "./skill-provider";
 export function MethodPreview() {
+  const skills = useSkills();
   const [task, setTask] = useState<Task>(TASK_KEYS[0]);
   return (
     <section
@@ -56,10 +58,14 @@ export function MethodPreview() {
               </span>
               <h3>{method.name}</h3>
               <p>{method.oneLine}</p>
-              <MethodMeta method={method} />
+              {skills.progress.unlocked.includes(methodId) && (
+                <MethodMeta method={method} />
+              )}
               <span className="method-preview-go">
                 <Icon name="clock-circle-linear" size={16} />
-                10분 스킬 연습
+                {skills.progress.unlocked.includes(methodId)
+                  ? "10분 스킬 연습"
+                  : "스킬 잠금 열기"}
                 <Icon name="arrow-right-linear" size={18} />
               </span>
             </Link>

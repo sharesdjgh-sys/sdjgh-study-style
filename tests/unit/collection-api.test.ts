@@ -44,6 +44,10 @@ import {
 } from "../../src/app/api/referrals/route";
 import { GET as collection } from "../../src/app/api/collection/route";
 import { GET as authSession } from "../../src/app/api/auth/session/route";
+import {
+  GET as skillGet,
+  POST as skillPost,
+} from "../../src/app/api/skills/route";
 import { identityHash } from "../../src/lib/auth-server";
 import { POST as start } from "../../src/app/api/auth/kakao/start/route";
 import { GET as callback } from "../../src/app/api/auth/kakao/callback/route";
@@ -93,6 +97,7 @@ beforeAll(async () => {
   await db.exec(await readFile("db/003_collections.sql", "utf8"));
   await db.exec(await readFile("db/004_saved_results.sql", "utf8"));
   await db.exec(await readFile("db/005_account_lifecycle.sql", "utf8"));
+  await db.exec(await readFile("db/006_skill_hearts.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -128,6 +133,157 @@ afterEach(() => {
 });
 afterAll(async () => {
   await db.close();
+});
+it("하트 API는 인증·출처·설치 실행 신호를 검사하고 중복 선물을 막는다", async () => {
+  expect(
+    (
+      await skillPost(
+        request(
+          "/api/skills",
+          { action: "install", standalone: true, mobile: true },
+          "POST",
+          "https://evil.example",
+        ),
+      )
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", {
+          action: "install",
+          standalone: false,
+          mobile: true,
+        }),
+      )
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", {
+          action: "install",
+          standalone: true,
+          mobile: false,
+        }),
+      )
+    ).status,
+  ).toBe(400);
+  mocks.jar.clear();
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", { action: "unlock", method: "cornell" }),
+      )
+    ).status,
+  ).toBe(401);
+  expect((await (await skillGet()).json()).progress.balance).toBe(0);
+  mocks.jar.set("study-collection", "session");
+  expect(
+    (
+      await (
+        await skillPost(
+          request("/api/skills", {
+            action: "install",
+            standalone: true,
+            mobile: true,
+          }),
+        )
+      ).json()
+    ).awarded,
+  ).toBe(3);
+  expect(
+    (
+      await (
+        await skillPost(
+          request("/api/skills", {
+            action: "install",
+            standalone: true,
+            mobile: true,
+          }),
+        )
+      ).json()
+    ).awarded,
+  ).toBe(0);
+  const opened = await skillPost(
+    request("/api/skills", { action: "unlock", method: "cornell" }),
+  );
+  expect(opened.status).toBe(200);
+  expect((await opened.json()).progress.balance).toBe(1);
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", { action: "unlock", method: "feynman" }),
+      )
+    ).status,
+  ).toBe(409);
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", { action: "unlock", method: "not-a-skill" }),
+      )
+    ).status,
+  ).toBe(400);
+});
+it("실천 API는 세 질문과 서버의 10분 경과를 확인한 뒤 하트를 한 번만 지급한다", async () => {
+  await register(request("/api/collection/register", { session: session() }));
+  const started = await skillPost(
+    request("/api/skills", { action: "start", method: "outline" }),
+  );
+  expect(started.status).toBe(200);
+  const run = (await started.json()).progress.practice.id;
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", {
+          action: "complete",
+          id: run,
+          answers: [0, 0],
+        }),
+      )
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await skillPost(
+        request("/api/skills", {
+          action: "complete",
+          id: run,
+          answers: [0, 0, 0],
+        }),
+      )
+    ).status,
+  ).toBe(409);
+  await db.query(
+    "UPDATE skill_practices SET updated_at=now()-interval '601 seconds' WHERE id=$1",
+    [run],
+  );
+  expect(
+    (
+      await (
+        await skillPost(
+          request("/api/skills", {
+            action: "complete",
+            id: run,
+            answers: [3, 3, 3],
+          }),
+        )
+      ).json()
+    ).awarded,
+  ).toBe(1);
+  expect(
+    (
+      await (
+        await skillPost(
+          request("/api/skills", {
+            action: "complete",
+            id: run,
+            answers: [3, 3, 3],
+          }),
+        )
+      ).json()
+    ).awarded,
+  ).toBe(0);
 });
 it("스페셜 사진은 16종 선물을 모두 개봉한 계정만 보고 PNG로 저장한다", async () => {
   const photograph = () =>
@@ -634,7 +790,10 @@ it("7일 이후 재가입은 새 계정이며 과거 검사·도감과 신규 �
       inviteCode: "BBBBBBBBBB",
     }),
   );
-  expect(await response.json()).toEqual({ outcome: "registered" });
+  expect(await response.json()).toMatchObject({
+    outcome: "registered",
+    hearts: [{ code: "visual-solo-planned", amount: expect.any(Number) }],
+  });
   expect(
     (await db.query("SELECT * FROM collection_referrals")).rows,
   ).toHaveLength(0);

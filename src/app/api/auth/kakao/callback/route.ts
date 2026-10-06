@@ -14,8 +14,12 @@ import { database } from "@/lib/db";
 import { siteUrl } from "@/lib/site";
 import { identityHash, timedAuth } from "@/lib/auth-server";
 export const runtime = "nodejs";
-const finish = (status: string, retryAt?: string) => {
-  const url = new URL("/collection", siteUrl());
+const finish = (
+  status: string,
+  retryAt?: string,
+  returnPath = "/collection",
+) => {
+  const url = new URL(returnPath, siteUrl());
   url.searchParams.set("auth", status);
   if (retryAt) url.searchParams.set("retryAt", retryAt);
   return NextResponse.redirect(url, 303);
@@ -31,7 +35,7 @@ export async function GET(request: Request) {
     const sql = database();
     const rows =
       await sql`DELETE FROM collection_oauth_states WHERE state_hash=${hash(state)}
-      AND browser_hash=${hash(browser)} AND expires_at>now() RETURNING state_hash`;
+      AND browser_hash=${hash(browser)} AND expires_at>now() RETURNING state_hash,return_path`;
     jar.set(OAUTH_COOKIE, "", cookieOptions(0));
     if (!rows.length) return finish("expired");
     if (params.has("error")) return finish("cancelled");
@@ -86,7 +90,14 @@ export async function GET(request: Request) {
     }
     if (!accounts[0]?.account_id) return finish("failed");
     jar.set(AUTH_COOKIE, value, cookieOptions(30 * 86400));
-    return finish("success");
+    const target = String(rows[0].return_path ?? "");
+    return finish(
+      "success",
+      undefined,
+      /^\/methods(?:\/[a-z-]+)?(?:\?[a-zA-Z0-9=&%-]*)?$/.test(target)
+        ? target
+        : "/collection",
+    );
   } catch {
     return finish("failed");
   }

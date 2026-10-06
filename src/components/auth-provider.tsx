@@ -122,11 +122,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       message: "카카오 로그인 화면으로 이동하고 있어요…",
     }));
     try {
-      const response = await fetch("/api/auth/kakao/start", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(10000),
-      });
+      const response = await fetch(
+        `/api/auth/kakao/start?returnTo=${encodeURIComponent(location.pathname + location.search)}`,
+        {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          signal: AbortSignal.timeout(10000),
+        },
+      );
       if (!response.ok) throw new Error("login_unavailable");
       const payload = await response.json();
       const url = new URL(payload.authorizationUrl);

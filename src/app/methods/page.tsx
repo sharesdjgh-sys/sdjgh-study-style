@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CharacterMotion } from "@/components/character-motion";
 import { FAMILIES, MODALITIES } from "@/lib/content";
 import { StudyArt } from "@/components/study-art";
@@ -16,7 +17,12 @@ export default function Page() {
       >
         <header className="methods-page-heading">
           <span className="methods-heading-icon" aria-hidden="true">
-            <Icon name="book-bookmark-linear" size={26} />
+            <Image
+              src="/ui-icons/nav-skills.webp"
+              width={44}
+              height={44}
+              alt=""
+            />
           </span>
           <div>
             <h1 id="methods-title">

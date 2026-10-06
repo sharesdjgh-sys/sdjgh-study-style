@@ -57,10 +57,14 @@ export async function POST(request: Request) {
     if (["run_claimed", "self_invite", "invalid_invite"].includes(outcome))
       return json({ error: outcome }, 409);
     (await cookies()).set(INVITE_COOKIE, "", cookieOptions(0));
+    const hearts =
+      outcome === "already_registered"
+        ? []
+        : await sql`SELECT type_code AS code,heart_reward AS amount FROM collection_cards WHERE account_id=${owner.id}::uuid AND opened_at IS NOT NULL AND heart_reward>0`;
     return json(
       outcome === "referred"
-        ? { outcome, bonus: await latestBonus(owner.id) }
-        : { outcome },
+        ? { outcome, bonus: await latestBonus(owner.id), hearts }
+        : { outcome, hearts },
     );
   } catch (error) {
     // A racing claim of the same run by a different account hits the UNIQUE key.

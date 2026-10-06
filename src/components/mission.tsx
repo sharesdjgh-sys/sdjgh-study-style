@@ -1,301 +1,353 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { StudyType } from "@/lib/content";
+import { CHARACTERS } from "@/lib/characters";
 import {
-  ROUTINES,
   getMethod,
-  missionMethod,
+  methodOwner,
+  lineupFor,
   type MethodId,
 } from "@/lib/methods";
-import { readSession, saveSession } from "@/lib/storage";
-import { track } from "@/lib/telemetry";
-import { Icon } from "./icon";
-import { MethodIcon } from "./method-icon";
+import { EFFECT_QUESTIONS, PRACTICE_SECONDS } from "@/lib/skill-economy";
+import { useSkills, SKILL_ERRORS } from "./skill-provider";
+import { Heart, SkillGate } from "./skill-ui";
 import { MethodMeta } from "./method-meta";
-const TIMER_MS = 10 * 60 * 1000;
-type Timer =
-  | { state: "running"; endsAt: number }
-  | { state: "paused"; left: number }
-  | { state: "done" };
-const pad = (n: number) => String(n).padStart(2, "0");
-/** 공부법 하나를 10분 동안 해 보는 패널. 공부법을 바꿀 때는 key로 새로 그려요. */
+
 export function Mission({
   methodId,
-  type,
   tabs,
-  resultRunId,
+  type,
 }: {
   methodId: MethodId;
   type?: StudyType;
-  resultRunId?: string;
-  /** 공부법을 고르는 탭(방식별 공부법 페이지의 과제 탭) */
   tabs?: ReactNode;
+  resultRunId?: string;
 }) {
-  const [selected, setSelected] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [feedback, setFeedback] = useState<string>();
-  const [message, setMessage] = useState("");
-  const [timer, setTimer] = useState<Timer | null>(null);
-  const [now, setNow] = useState(0);
-  const method = getMethod(methodId);
-  useEffect(() => {
-    if (timer?.state !== "running") return;
-    // 백그라운드 탭에서 interval이 늦어져도 끝나는 시각 기준으로 계산해요.
-    const id = setInterval(() => {
-      const t = Date.now();
-      setNow(t);
-      if (t >= timer.endsAt) setTimer({ state: "done" });
-    }, 250);
-    return () => clearInterval(id);
-  }, [timer]);
-  const left =
-    timer?.state === "running"
-      ? Math.max(0, timer.endsAt - now)
-      : timer?.state === "paused"
-        ? timer.left
-        : 0;
-  const seconds = Math.ceil(left / 1000);
-  const clock = `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
-  useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      const local = readSession();
-      const m =
-        !resultRunId || local?.runId === resultRunId
-          ? local?.mission
-          : undefined;
-      if (m && missionMethod(m) === methodId) {
-        setSelected(true);
-        setStarted(m.started);
-        setFeedback(m.feedback);
-      }
-    });
-    return () => cancelAnimationFrame(id);
-  }, [methodId, resultRunId]);
-  function persist(
-    action: "select" | "start" | "feedback",
-    value?: "helpful" | "mixed" | "not-yet",
-  ) {
-    if (action === "select") setSelected(true);
-    if (action === "start") {
-      setSelected(true);
-      setStarted(true);
-    }
-    if (value) setFeedback(value);
-    const s = readSession();
-    if (resultRunId && s?.runId !== resultRunId) {
-      setMessage(
-        "이 기록의 공부법을 바로 시도할 수 있어요. 다른 검사의 활동 기록은 바꾸지 않아요.",
-      );
-      return;
-    }
-    if (!s?.result) {
-      setMessage(
-        "이 페이지에서는 바로 시도할 수 있어요. 검사 후에는 활동 기록도 기기에 남길 수 있어요.",
-      );
-      return;
-    }
-    const next = {
-      ...s,
-      mission: {
-        method: methodId,
-        started: action === "start" || started,
-        feedback:
-          value ?? (feedback as "helpful" | "mixed" | "not-yet" | undefined),
-      },
-    };
-    if (!saveSession(next)) setMessage("활동 기록은 이 창에서만 유지돼요.");
-    track(
-      s,
-      action === "select"
-        ? "mission_select"
-        : action === "start"
-          ? "mission_start"
-          : "feedback",
-      value ?? "",
-    );
-  }
-  function runTimer(ms: number) {
-    const t = Date.now();
-    setNow(t);
-    setTimer({ state: "running", endsAt: t + ms });
-  }
-  function startTimer() {
-    if (!started) persist("start");
-    runTimer(TIMER_MS);
-  }
-  function pauseTimer() {
-    if (timer?.state !== "running") return;
-    setTimer({ state: "paused", left: Math.max(0, timer.endsAt - Date.now()) });
-  }
   return (
-    <section className="mission-panel">
-      <div className="mission-header">
-        <span className="eyebrow">오늘의 작은 실험</span>
-        <span className="time-pill">
-          <Icon name="clock-circle-linear" size={16} />
-          10분
+    <>
+      {tabs}
+      <SkillGate id={methodId}>
+        <OpenMission key={methodId} methodId={methodId} type={type} />
+      </SkillGate>
+    </>
+  );
+}
+function OpenMission({
+  methodId,
+  type,
+}: {
+  methodId: MethodId;
+  type?: StudyType;
+}) {
+  const skills = useSkills();
+  const method = getMethod(methodId);
+  const owner = methodOwner(methodId);
+  const practice = skills.progress.practice;
+  const mine = practice?.method === methodId ? practice : null;
+  const rewarded = skills.progress.practiced.includes(methodId);
+  const [seconds, setSeconds] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([-1, -1, -1]);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [completed, setCompleted] = useState(false);
+  const actionLock = useRef(false);
+  useEffect(() => {
+    const began = Date.now();
+    const initial = Number(mine?.elapsed ?? 0);
+    const tick = () =>
+      setSeconds(
+        Math.min(
+          PRACTICE_SECONDS,
+          initial +
+            (mine?.status === "running" ? (Date.now() - began) / 1000 : 0),
+        ),
+      );
+    const frame = requestAnimationFrame(tick);
+    const timer = setInterval(tick, 250);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearInterval(timer);
+    };
+  }, [mine]);
+  async function action(action: string, id = mine?.id) {
+    if (actionLock.current) return;
+    actionLock.current = true;
+    setBusy(true);
+    setMessage("");
+    try {
+      const result = await skills.act({
+        action,
+        method: methodId,
+        id,
+        ...(action === "complete" ? { answers } : {}),
+      });
+      if (action === "complete") {
+        setCompleted(true);
+        setMessage(
+          result.awarded
+            ? "첫 실천 완료! 하트 1개를 받았어요."
+            : "오늘의 실천을 기록했어요. 이 스킬의 첫 실천 하트는 이미 받았어요.",
+        );
+      }
+      if (action === "start") {
+        setCompleted(false);
+        setAnswers([-1, -1, -1]);
+      }
+    } catch (e) {
+      setMessage(
+        SKILL_ERRORS[(e as Error).message] ??
+          "연결을 확인하고 다시 시도해 주세요.",
+      );
+    } finally {
+      actionLock.current = false;
+      setBusy(false);
+    }
+  }
+  const left = Math.max(0, Math.ceil(PRACTICE_SECONDS - seconds));
+  const done = !!mine && left === 0;
+  const questions = [
+    EFFECT_QUESTIONS[methodId],
+    "직접 써 보니, 나에게 얼마나 도움이 됐나요?",
+    "다음 공부에도 이 스킬을 써 보고 싶나요?",
+  ];
+  const choices = [
+    [
+      "확실히 그랬어요",
+      "조금 그랬어요",
+      "아직 잘 모르겠어요",
+      "이번에는 아니었어요",
+    ],
+    [
+      "많이 도움 됐어요",
+      "조금 도움 됐어요",
+      "아직 모르겠어요",
+      "도움이 되지 않았어요",
+    ],
+    [
+      "또 쓰고 싶어요",
+      "상황에 맞으면 쓸래요",
+      "조금 더 해볼래요",
+      "다른 방법을 찾아볼래요",
+    ],
+  ];
+  return (
+    <section className="mission-panel skill-mission">
+      <div className="skill-art-frame">
+        <Image
+          src={"/skills/" + methodId + ".webp"}
+          alt={
+            (owner.kind === "signature"
+              ? CHARACTERS[owner.code].name + "의 "
+              : "") +
+            method.name +
+            " 사용 장면"
+          }
+          width={960}
+          height={640}
+          sizes="(max-width: 767px) 100vw, 800px"
+          className="skill-scene"
+        />
+        <span className="skill-art-badge">
+          {owner.kind === "signature"
+            ? CHARACTERS[owner.code].name + "의 시그니처"
+            : "나의 공부 스킬"}
         </span>
       </div>
-      <div className="mission-heading">
-        <MethodIcon id={methodId} size={64} />
+      <div className="skill-detail-copy">
+        <span className="eyebrow">나만의 공부 공략집</span>
         <h2>{method.name}</h2>
-      </div>
-      <p className="method-aka">{method.aka.join(" · ")}</p>
-      <p className="mission-lead">{method.oneLine}</p>
-      <MethodMeta method={method} />
-      <p className="muted">
-        완벽하게 하려 하지 말고, 한 가지 내용으로 가볍게 시작해 보세요.
-      </p>
-      {tabs}
-      <ol className="mission-steps">
-        {method.steps.map((step, i) => (
-          <li key={step}>
-            <span>{i + 1}</span>
-            <p>{step}</p>
-          </li>
-        ))}
-      </ol>
-      <div className="level-tip">
-        <strong>내 수준에 맞추기</strong>
-        <p>{method.level}</p>
-      </div>
-      {method.alone && (
+        <p className="mission-lead">{method.oneLine}</p>
+        <MethodMeta method={method} />
+        <h3>이렇게 써 봐요</h3>
+        <ol className="mission-steps">
+          {method.steps.map((step, i) => (
+            <li key={step}>
+              <span>{i + 1}</span>
+              <p>{step}</p>
+            </li>
+          ))}
+        </ol>
         <div className="level-tip">
-          <strong>혼자 할 때</strong>
-          <p>{method.alone}</p>
+          <strong>내 수준에 맞추기</strong>
+          <p>{method.level}</p>
         </div>
-      )}
-      {method.tip && (
-        <div className="level-tip">
-          <strong>{method.tip.name}</strong>
-          <p>{method.tip.text}</p>
-        </div>
-      )}
-      {type && (
-        <div className="personal-tip">
-          <Icon name="stars-linear" />
-          <div>
-            {[ROUTINES.social[type.social], ROUTINES.pace[type.pace]].map(
-              (routine) => (
-                <p key={routine.title}>
-                  <strong>{routine.title}</strong> {routine.text}
-                </p>
-              ),
-            )}
+        {method.alone && (
+          <div className="level-tip">
+            <strong>혼자 해도 괜찮아요</strong>
+            <p>{method.alone}</p>
           </div>
-        </div>
-      )}
-      {timer ? (
-        <div className="mission-timer" data-state={timer.state}>
-          <p className="mission-timer-clock" role="timer">
-            <span className="sr-only">남은 시간 </span>
-            {clock}
-          </p>
-          <div className="mission-timer-copy" role="status">
-            <strong>
-              {timer.state === "done"
-                ? "10분 끝! 잘했어요."
-                : timer.state === "paused"
-                  ? "잠시 멈췄어요"
-                  : "타이머가 돌아가고 있어요"}
-            </strong>
-            <span>
-              {timer.state === "done"
-                ? "해 보니 어땠는지 아래에 남겨 주세요."
-                : "1번부터 차근차근 해 보세요."}
+        )}
+        {method.tip && (
+          <div className="level-tip">
+            <strong>{method.tip.name}</strong>
+            <p>{method.tip.text}</p>
+          </div>
+        )}
+        {type &&
+          lineupFor(type).tips.map((tip) => (
+            <div className="level-tip" key={tip.title}>
+              <strong>{tip.title}</strong>
+              <p>{tip.text}</p>
+            </div>
+          ))}
+        <div className="skill-practice" aria-busy={busy}>
+          <div className="skill-practice-head">
+            <div>
+              <span className="eyebrow">10 MINUTE QUEST</span>
+              <h3>읽었다면, 이제 내 스킬로!</h3>
+            </div>
+            <span className="practice-prize">
+              <Heart />
+              {rewarded ? "첫 보상 받음" : "+1"}
             </span>
           </div>
-          <div className="mission-timer-actions">
-            {timer.state === "running" && (
-              <button className="button secondary" onClick={pauseTimer}>
-                <Icon name="pause-linear" size={18} />
-                잠시 멈추기
-              </button>
-            )}
-            {timer.state === "paused" && (
-              <button
-                className="button primary"
-                onClick={() => runTimer(timer.left)}
-              >
-                <Icon name="play-linear" size={18} />
-                이어서 하기
-              </button>
-            )}
-            {timer.state === "done" && (
-              <button
-                className="button secondary"
-                onClick={() => runTimer(TIMER_MS)}
-              >
-                <Icon name="restart-linear" size={18} />
-                10분 더 하기
-              </button>
-            )}
-            <button className="button ghost" onClick={() => setTimer(null)}>
-              {timer.state === "done" ? "타이머 닫기" : "그만하기"}
-            </button>
-          </div>
-          <div className="mission-timer-bar" aria-hidden="true">
-            <span style={{ width: `${(1 - left / TIMER_MS) * 100}%` }} />
-          </div>
-        </div>
-      ) : (
-        <div className="button-row">
-          <button className="button primary" onClick={startTimer}>
-            <Icon name="play-linear" />
-            {started ? "다시 10분 해보기" : "지금 10분 해보기"}
-          </button>
-          <button
-            className="button secondary"
-            disabled={selected}
-            onClick={() => persist("select")}
-          >
-            {selected ? "이 공부법을 골랐어요" : "나중에 해볼게요"}
-          </button>
-        </div>
-      )}
-      <div className="feedback-block">
-        <h3>직접 해보니 어땠나요?</h3>
-        <p className="small muted">
-          시작 버튼과 별개로, 실제로 해봤는지 알려주세요.
-        </p>
-        <div className="feedback-options">
-          {[
-            ["helpful", "해봤어요 · 도움 됐어요"],
-            ["mixed", "해봤어요 · 조금 어려웠어요"],
-            ["not-yet", "아직 안 해봤어요"],
-          ].map(([value, label]) => (
-            <button
-              key={value}
-              aria-pressed={feedback === value}
-              className={feedback === value ? "selected" : ""}
-              onClick={() =>
-                persist("feedback", value as "helpful" | "mixed" | "not-yet")
-              }
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        {feedback && (
-          <p role="status" className="feedback-thanks">
-            {feedback === "not-yet"
-              ? "괜찮아요. 시간이 날 때 작은 내용 하나로 시작해 보세요."
-              : feedback === "mixed"
-                ? "어려웠던 부분을 줄여 다시 해보거나, 다른 공부법을 골라도 좋아요."
-                : "좋아요. 내일 같은 내용을 짧게 떠올려 보세요."}
+          <p>
+            한 가지 내용으로 10분 실천하고, 어땠는지 세 질문에 답해 주세요.
+            스킬마다 처음 한 번 하트를 받아요.
           </p>
-        )}
+          {practice && !mine ? (
+            <div className="notice">
+              <p>
+                <strong>{getMethod(practice.method).name}</strong> 실천이 진행
+                중이에요.
+              </p>
+              <Link
+                className="button secondary"
+                href={"/methods/" + practice.method}
+              >
+                이어서 하기
+              </Link>
+              <button
+                className="button ghost"
+                disabled={busy}
+                onClick={() => void action("cancel", practice.id)}
+              >
+                이전 실천 중단
+              </button>
+            </div>
+          ) : mine ? (
+            <>
+              <div
+                className="mission-timer"
+                data-state={done ? "done" : mine.status}
+              >
+                <p
+                  className="mission-timer-clock"
+                  role="timer"
+                  aria-label="남은 시간"
+                >
+                  {String(Math.floor(left / 60)).padStart(2, "0")}:
+                  {String(left % 60).padStart(2, "0")}
+                </p>
+                <p role="status">
+                  {done
+                    ? "10분 끝! 내 경험을 남겨 볼까요?"
+                    : mine.status === "paused"
+                      ? "잠시 멈췄어요"
+                      : "화면을 꺼도 실천 시간은 이어져요."}
+                </p>
+                <progress
+                  value={seconds}
+                  max={PRACTICE_SECONDS}
+                  aria-label="실천 진행률"
+                />
+                {!done && (
+                  <button
+                    className="button secondary"
+                    disabled={busy}
+                    onClick={() =>
+                      void action(
+                        mine.status === "running" ? "pause" : "resume",
+                      )
+                    }
+                  >
+                    {mine.status === "running" ? "잠시 멈추기" : "이어서 하기"}
+                  </button>
+                )}
+                <button
+                  className="button ghost"
+                  disabled={busy}
+                  onClick={() => void action("cancel")}
+                >
+                  실천 중단
+                </button>
+              </div>
+              {done && (
+                <form
+                  className="skill-feedback"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    void action("complete");
+                  }}
+                >
+                  <h3>해 보니, 나에게 어땠나요?</h3>
+                  <p>정답은 없어요. 도움이 안 됐어도 솔직하게 답하면 돼요.</p>
+                  {questions.map((question, index) => (
+                    <fieldset key={question}>
+                      <legend>
+                        <span>{index + 1}</span> {question}
+                      </legend>
+                      {choices[index].map((choice, value) => (
+                        <label
+                          key={choice}
+                          data-selected={answers[index] === value}
+                        >
+                          <input
+                            type="radio"
+                            name={"effect-" + index}
+                            value={value}
+                            required
+                            checked={answers[index] === value}
+                            onChange={() =>
+                              setAnswers((old) =>
+                                old.map((a, i) => (i === index ? value : a)),
+                              )
+                            }
+                          />
+                          {choice}
+                        </label>
+                      ))}
+                    </fieldset>
+                  ))}
+                  <button
+                    className="button primary"
+                    disabled={busy || answers.some((a) => a < 0)}
+                  >
+                    {busy
+                      ? "기록하는 중…"
+                      : rewarded
+                        ? "실천 기록 남기기"
+                        : "실천 완료하고 하트 1개 받기"}
+                  </button>
+                </form>
+              )}
+            </>
+          ) : (
+            <button
+              className="button primary"
+              disabled={busy || skills.error}
+              onClick={() => void action("start")}
+            >
+              {busy
+                ? "준비 중…"
+                : completed
+                  ? "다시 10분 해보기"
+                  : "지금 10분 해보기"}
+            </button>
+          )}
+          {message && (
+            <p role="status" className={completed ? "skill-success" : "notice"}>
+              {completed && <Heart />}
+              {message}
+            </p>
+          )}
+        </div>
+        <Link className="text-link small" href="/about#evidence">
+          이 공부법의 근거와 한계 →
+        </Link>
       </div>
-      {message && (
-        <p role="status" className="notice">
-          {message}
-        </p>
-      )}
-      <Link className="text-link small" href="/about#evidence">
-        이 공부법의 근거와 한계
-        <Icon name="arrow-right-up-linear" size={16} />
-      </Link>
     </section>
   );
 }

@@ -13,6 +13,7 @@ import { SavedResults } from "./saved-results";
 import { ClearRecords } from "./clear-records";
 import { useConfirm } from "./ui/confirm-dialog";
 import styles from "./account-overview.module.css";
+import { SkillWallet } from "./skill-ui";
 
 function dateLabel(value?: number) {
   return value ? new Date(value).toLocaleDateString("ko-KR") : "아직 없어요";
@@ -48,7 +49,7 @@ export function AccountOverview() {
     const accepted = await confirm({
       title: "계정과 도감을 삭제할까요?",
       description:
-        "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 초대 코드와 모든 로그인 세션을 삭제해요.",
+        "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 하트·열린 스킬·실천 기록, 초대 코드와 모든 로그인 세션을 삭제해요.",
       note: "탈퇴 후 7일간 재가입할 수 없고, 기존 데이터는 복원되지 않아요. 재가입해도 신규 초대 보상은 받을 수 없어요. 이를 확인하는 최소 식별값과 탈퇴 시각은 서비스 운영 기간 동안 별도로 보관해요. 친구에게 이미 지급된 캐릭터는 유지되고 이 브라우저의 검사 기록은 지워요. 카카오 계정 자체는 삭제되지 않아요.",
       confirmLabel: "계정·도감 삭제",
       tone: "danger",
@@ -80,6 +81,7 @@ export function AccountOverview() {
 
   return (
     <main id="main" className={`catalog-shell ${styles.page}`}>
+      <SkillWallet history />
       <header className={`page-intro ${styles.intro}`}>
         <div>
           <span className="eyebrow">나의 공부 공간</span>

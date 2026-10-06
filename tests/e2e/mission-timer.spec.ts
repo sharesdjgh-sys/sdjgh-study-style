@@ -1,40 +1,48 @@
 import { test, expect } from "@playwright/test";
-
-test("홈에서 고른 과제로 공부법이 열리고 10분 타이머를 멈췄다 이어 끝낼 수 있음", async ({
+import { mockSkills } from "./skill-fixture";
+test("10분 타이머를 멈췄다 이어 끝내고 세 질문에 답해야 최초 하트를 받는다", async ({
   page,
 }) => {
   await page.clock.install();
-  await page.goto("/");
-  await page.getByRole("button", { name: "용어 암기", exact: true }).click();
-  await page.locator('.method-preview-card[data-family="visual"]').click();
-  await expect(page).toHaveURL(/\/methods\/visual\?task=memory$/);
-  await expect(page.locator(".mission-panel h2")).toHaveText("코넬 노트");
-  await expect(
-    page.getByRole("button", { name: "용어 암기", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-
-  const timer = page.getByRole("timer");
+  const state = await mockSkills(page);
+  await page.goto("/methods/outline");
   await page.getByRole("button", { name: "지금 10분 해보기" }).click();
-  await page.clock.runFor(20_000);
+  const timer = page.getByRole("timer");
+  await page.clock.runFor(20000);
   await expect(timer).toContainText("09:40");
-
   await page.getByRole("button", { name: "잠시 멈추기" }).click();
-  await expect(page.locator(".mission-timer")).toContainText("잠시 멈췄어요");
-  await page.clock.runFor(30_000);
-  await expect(timer).toContainText("09:40");
-
+  await expect(page.getByRole("button", { name: "이어서 하기" })).toBeVisible();
+  const paused = await timer.textContent();
+  await page.clock.runFor(30000);
+  await expect(timer).toHaveText(paused!);
   await page.getByRole("button", { name: "이어서 하기" }).click();
-  // 끝나는 시각 기준으로 계산하므로 10분을 한 번에 건너뛰어도 끝나야 해요.
-  await page.clock.fastForward(10 * 60_000);
+  await page.clock.fastForward(600000);
   await expect(timer).toContainText("00:00");
-  await expect(page.locator(".mission-timer")).toContainText("10분 끝!");
-
-  await page.getByRole("button", { name: "10분 더 하기" }).click();
-  await page.clock.runFor(1_000);
-  await expect(timer).toContainText("09:59");
-  await page.getByRole("button", { name: "그만하기" }).click();
-  await expect(timer).toHaveCount(0);
+  const submit = page.getByRole("button", {
+    name: "실천 완료하고 하트 1개 받기",
+  });
+  await expect(submit).toBeDisabled();
+  for (const field of await page.locator(".skill-feedback fieldset").all())
+    await field.getByRole("radio").last().check();
+  await submit.click();
   await expect(
-    page.getByRole("button", { name: "다시 10분 해보기" }),
+    page.getByText("첫 실천 완료! 하트 1개를 받았어요."),
   ).toBeVisible();
+  expect(state.progress.balance).toBe(4);
+  expect(state.completed).toBe(1);
+  await page.reload();
+  await expect(page.getByText("첫 보상 받음", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "지금 10분 해보기" }).click();
+  await page.clock.fastForward(600000);
+  await expect(timer).toContainText("00:00");
+  for (const field of await page.locator(".skill-feedback fieldset").all())
+    await field.getByRole("radio").last().check();
+  await page.getByRole("button", { name: "실천 기록 남기기" }).click();
+  await expect(
+    page.getByText(
+      "오늘의 실천을 기록했어요. 이 스킬의 첫 실천 하트는 이미 받았어요.",
+    ),
+  ).toBeVisible();
+  expect(state.progress.balance).toBe(4);
+  expect(state.completed).toBe(2);
 });

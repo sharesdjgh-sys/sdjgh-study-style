@@ -56,3 +56,15 @@ await sql.transaction(
     .map((statement) => sql.query(statement)),
 );
 console.log("7일 재가입 제한·최초 가입 보상 정책 준비 완료");
+const skills = await readFile(
+  new URL("../db/006_skill_hearts.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  skills
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("하트·스킬 해제·10분 실천 보상 준비 완료");

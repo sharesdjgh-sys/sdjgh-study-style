@@ -5,6 +5,7 @@ import { methodOwner, type MethodId } from "@/lib/methods";
 import { collectionProgress } from "@/lib/collection-progress";
 import { useCollection } from "./collection-provider";
 import { useSavedSession } from "./use-saved-session";
+import { useSkills } from "./skill-provider";
 
 /** 만난 캐릭터 코드. 불러오기 전에는 아무도 공개하지 않아요. */
 export function useVisibleCodes() {
@@ -41,7 +42,13 @@ export function ownerLabel(id: MethodId, visible: Set<string>) {
 }
 
 export function MethodOwner({ id }: { id: MethodId }) {
-  const label = ownerLabel(id, useVisibleCodes());
+  const { progress } = useSkills();
+  if (!progress.unlocked.includes(id)) return null;
+  const owner = methodOwner(id);
+  const label = ownerLabel(
+    id,
+    new Set(owner.kind === "signature" ? [owner.code] : []),
+  );
   return (
     <p className="method-owner">
       {label.signature && <span aria-hidden="true">★ </span>}

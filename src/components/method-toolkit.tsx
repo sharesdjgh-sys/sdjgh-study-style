@@ -15,6 +15,7 @@ import { Icon } from "./icon";
 import { MethodIcon } from "./method-icon";
 import { Mission } from "./mission";
 import { BasicsNote, MethodMeta } from "./method-meta";
+import { useSkills } from "./skill-provider";
 
 /** 받침이 있으면 "이", 없으면 "가" */
 const subject = (word: string) => {
@@ -33,6 +34,7 @@ export function MethodToolkit({
   resultRunId?: string;
 }) {
   const lineup = lineupFor(type);
+  const skills = useSkills();
   const cards: { id: MethodId; kind: string; signature?: boolean }[] = [
     { id: lineup.signature, kind: "시그니처", signature: true },
     ...lineup.byTask.map(({ task, method }) => ({
@@ -121,9 +123,15 @@ export function MethodToolkit({
                   </span>
                 </span>
                 <span className="toolkit-line">{method.oneLine}</span>
-                <MethodMeta method={method} />
+                {skills.progress.unlocked.includes(id) && (
+                  <MethodMeta method={method} />
+                )}
                 <span className="toolkit-go">
-                  {selected === id ? "아래에서 해 보는 중" : "이 공부법 해보기"}
+                  {!skills.progress.unlocked.includes(id)
+                    ? "스킬 잠금 열기"
+                    : selected === id
+                      ? "아래에서 해 보는 중"
+                      : "이 공부법 해보기"}
                 </span>
               </button>
             );

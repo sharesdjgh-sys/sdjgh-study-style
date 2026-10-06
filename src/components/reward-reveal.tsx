@@ -6,6 +6,9 @@ import Image from "next/image";
 import { getType, STUDY_TYPES } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
 import styles from "./reward-reveal.module.css";
+import { useSkills } from "./skill-provider";
+import { Heart } from "./skill-ui";
+import { SIGNATURE_METHODS } from "@/lib/methods";
 import {
   REWARD_FRAME_DELAYS,
   rewardRevealSequence,
@@ -47,6 +50,13 @@ export function RewardReveal({
   ownedCodes: string[];
   close: () => void;
 }) {
+  const { progress: skillProgress } = useSkills();
+  const hearts = skillProgress.entries.find(
+    (e) => e.reason === "card" && e.reference === code,
+  )?.amount;
+  const refund = skillProgress.entries.find(
+    (e) => e.reason === "refund" && e.reference === SIGNATURE_METHODS[code],
+  )?.amount;
   const [phase, setPhase] = useState<
     "wrapped" | "opening" | "rolling" | "revealed"
   >("wrapped");
@@ -272,6 +282,13 @@ export function RewardReveal({
               <p>{type.name}</p>
             </div>
           </div>
+          <p className="skill-success">
+            <Heart size={30} />
+            {hearts
+              ? `하트 ${hearts}개도 함께 도착했어요!`
+              : "이 친구의 시그니처 스킬이 열렸어요!"}
+            {refund ? ` 먼저 사용한 ${refund}개도 돌려받았어요.` : ""}
+          </p>
           <section
             className={styles.progress}
             aria-label="선물 개봉 후 도감 진행도"
