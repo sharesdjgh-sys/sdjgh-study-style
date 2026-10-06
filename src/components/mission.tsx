@@ -12,7 +12,8 @@ import {
 } from "@/lib/methods";
 import { EFFECT_QUESTIONS, PRACTICE_SECONDS } from "@/lib/skill-economy";
 import { useSkills, SKILL_ERRORS } from "./skill-provider";
-import { Heart, SkillGate } from "./skill-ui";
+import { SkillGate } from "./skill-ui";
+import { Star } from "./star-wallet";
 import { MethodMeta } from "./method-meta";
 import { SignatureBadge, SkillModality } from "./skill-badges";
 
@@ -90,8 +91,8 @@ function OpenMission({
         setCompleted(true);
         setMessage(
           result.awarded
-            ? "첫 실천 완료! 하트 1개를 받았어요."
-            : "오늘의 실천을 기록했어요. 이 스킬의 첫 실천 하트는 이미 받았어요.",
+            ? "첫 실천 완료! 별 1개를 받았어요. 굿즈를 골라볼까요?"
+            : "오늘의 실천을 기록했어요. 이 스킬의 첫 실천 별은 이미 받았어요.",
         );
       }
       if (action === "start") {
@@ -214,13 +215,14 @@ function OpenMission({
               <h3>읽었다면, 이제 내 스킬로!</h3>
             </div>
             <span className="practice-prize">
-              <Heart />
+              <Star />
               {rewarded ? "첫 보상 받음" : "+1"}
             </span>
           </div>
           <p>
             한 가지 내용으로 10분 실천하고, 어땠는지 세 질문에 답해 주세요.
-            스킬마다 처음 한 번 하트를 받아요.
+            스킬마다 처음 한 번 별 1개를 받아요. 별로 내 공부캐의 굿즈를 교환할
+            수 있어요.
           </p>
           {practice && !mine ? (
             <div className="notice">
@@ -334,7 +336,7 @@ function OpenMission({
                       ? "기록하는 중…"
                       : rewarded
                         ? "실천 기록 남기기"
-                        : "실천 완료하고 하트 1개 받기"}
+                        : "실천 완료하고 별 1개 받기"}
                   </button>
                 </form>
               )}
@@ -354,11 +356,16 @@ function OpenMission({
           )}
           {message && (
             <p role="status" className={completed ? "skill-success" : "notice"}>
-              {completed && <Heart />}
+              {completed && <Star />}
               {message}
             </p>
           )}
         </div>
+        {completed && (
+          <Link className="button star-button" href="/goods">
+            별로 굿즈 고르러 가기 →
+          </Link>
+        )}
         <Link className="text-link small" href="/about#evidence">
           이 공부법의 근거와 한계 →
         </Link>

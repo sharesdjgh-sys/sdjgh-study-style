@@ -22,7 +22,10 @@ export function useNavigationItems() {
         href: "/types",
         label: "공부캐 도감",
         icon: "nav-collection",
-        active: path.startsWith("/types") || path.startsWith("/collection"),
+        active:
+          path.startsWith("/types") ||
+          path.startsWith("/collection") ||
+          path.startsWith("/goods"),
       },
       {
         href: "/methods",

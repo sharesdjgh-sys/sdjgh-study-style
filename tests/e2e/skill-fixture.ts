@@ -3,6 +3,7 @@ import { EMPTY_COLLECTION } from "../../src/lib/collection-contract";
 import { EMPTY_SKILLS, type SkillProgress } from "../../src/lib/skill-economy";
 import { skillPrice } from "../../src/lib/skill-economy";
 import type { MethodId } from "../../src/lib/methods";
+import { EMPTY_GOODS } from "../../src/lib/goods";
 export async function mockSkills(
   page: Page,
   overrides: Partial<SkillProgress> = {},
@@ -10,6 +11,7 @@ export async function mockSkills(
   const owner = "e1dcbb36-9c6e-4de6-8f57-f11b43765a7c";
   const state = {
     signedIn: true,
+    goods: structuredClone(EMPTY_GOODS),
     progress: {
       ...structuredClone(EMPTY_SKILLS),
       balance: 3,
@@ -118,7 +120,7 @@ export async function mockSkills(
           return r.fulfill({ status: 409, json: { error: "too_early" } });
         if (!state.progress.practiced.includes(p.method)) {
           state.progress.practiced.push(p.method);
-          state.progress.balance++;
+          state.goods.balance++;
           awarded = 1;
         }
         state.completed++;
@@ -134,5 +136,13 @@ export async function mockSkills(
       },
     });
   });
+  await page.route("**/api/goods", (r) =>
+    r.fulfill({
+      json: {
+        accountId: state.signedIn ? owner : null,
+        progress: state.signedIn ? state.goods : EMPTY_GOODS,
+      },
+    }),
+  );
   return state;
 }

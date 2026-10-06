@@ -3,6 +3,11 @@ const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   outputFileTracingIncludes: {
+    "/api/goods/image": [
+      "./art/goods/*.webp",
+      "./public/characters/thumbs/*.png",
+      "./public/fonts/Pretendard-Medium.woff",
+    ],
     "/api/result-card": [
       "./public/result-cards/*-fixed-v2.webp",
       "./public/fonts/Pretendard-Medium.woff",

@@ -1,0 +1,121 @@
+.star-wallet {
+  margin: 22px 0;
+  padding: 24px;
+  border: 1px solid #dcc68f;
+  border-radius: 22px;
+  background: linear-gradient(125deg, #fff7d9, #fcf7ed 65%, #f0e8f5);
+  color: #554a2e;
+}
+.star-wallet-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+.star-wallet h2 {
+  font-size: 22px;
+  line-height: 1.4;
+  margin: 8px 0;
+}
+.star-wallet p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.star-wallet p strong {
+  color: #8a5709;
+}
+.star-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  border: 1px solid #dfc38e;
+  background: #fffdf5;
+  padding: 10px 14px;
+  border-radius: 15px;
+}
+.star-balance strong {
+  font-size: 27px;
+}
+.star-balance span {
+  font-size: 13px;
+}
+.button.star-button {
+  background: #f4d379;
+  border-color: #c89d45;
+  color: #624718;
+}
+.star-wallet .heart-history {
+  margin-top: 18px;
+}
+.star-wallet .button-row {
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .star-wallet {
+    padding: 18px;
+  }
+  .star-wallet h2 {
+    font-size: 19px;
+  }
+  .star-wallet-heading {
+    align-items: flex-start;
+  }
+  .star-balance {
+    gap: 5px;
+    padding: 8px;
+  }
+  .star-balance img {
+    width: 28px;
+    height: 28px;
+  }
+  .star-balance strong {
+    font-size: 23px;
+  }
+  .star-wallet .button-row {
+    display: flex;
+    flex-direction: column;
+  }
+  .star-wallet p {
+    font-size: 13px;
+  }
+}
+.goods-actions {
+  margin-top: 22px;
+  border-top: 1px solid #ded2bd;
+  padding-top: 18px;
+}
+.goods-actions > p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.goods-actions > .button {
+  width: 100%;
+}
+.goods-earned {
+  color: #805915;
+  font-weight: 700;
+}
+.goods-download {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.goods-download p {
+  margin: 4px 0;
+}
+.goods-save {
+  background: #e8eff9 !important;
+  color: #385c8b !important;
+  border-color: #c9d8ed !important;
+}
+.goods-open {
+  background: #eee5f5 !important;
+  color: #725189 !important;
+  border-color: #d9c5e7 !important;
+}
+.goods-share {
+  background: #e5f1e8 !important;
+  color: #3b704a !important;
+  border-color: #bed8c4 !important;
+}

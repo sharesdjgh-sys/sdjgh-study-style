@@ -49,7 +49,7 @@ export function AccountOverview() {
     const accepted = await confirm({
       title: "계정과 도감을 삭제할까요?",
       description:
-        "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 하트·열린 스킬·실천 기록, 초대 코드와 모든 로그인 세션을 삭제해요.",
+        "이 서비스의 계정, 검사 답변·점수, 수집한 캐릭터, 하트·별·굿즈·열린 스킬·실천 기록, 초대 코드와 모든 로그인 세션을 삭제해요.",
       note: "탈퇴 후 7일간 재가입할 수 없고, 기존 데이터는 복원되지 않아요. 재가입해도 신규 초대 보상은 받을 수 없어요. 이를 확인하는 최소 식별값과 탈퇴 시각은 서비스 운영 기간 동안 별도로 보관해요. 친구에게 이미 지급된 캐릭터는 유지되고 이 브라우저의 검사 기록은 지워요. 카카오 계정 자체는 삭제되지 않아요.",
       confirmLabel: "계정·도감 삭제",
       tone: "danger",
@@ -103,6 +103,19 @@ export function AccountOverview() {
         />
       </header>
       <div className={styles.grid}>
+        <section
+          className={`${styles.card} ${styles.wide}`}
+          aria-labelledby="account-goods-title"
+        >
+          <h2 id="account-goods-title">공부캐 굿즈 컬렉션</h2>
+          <p>
+            일상 포토카드부터 특별 의상까지, 16명 친구의 새로운 모습과 뒷면
+            이야기를 만나 보세요.
+          </p>
+          <Link className="button secondary" href="/goods">
+            굿즈 128장 둘러보기 →
+          </Link>
+        </section>
         <section
           className={`${styles.card} ${styles.login} ${styles.wide}`}
           aria-labelledby="account-login-title"

@@ -122,7 +122,23 @@ ImageGen으로 제작한 투명 배경 캐릭터 16장을 `public/characters/`�
 
 아이콘은 Solar, 글꼴은 Pretendard를 자체 호스팅합니다. 글꼴 라이선스는 `public/fonts/LICENSE.txt`에 포함했습니다. Solar 아이콘은 CC BY 4.0 라이선스이며 [Solar Icons](https://github.com/480-Design/Solar-Icon-Set)에서 제공됩니다. `node scripts/assets.mjs`로 npm 패키지의 선별 아이콘과 글꼴 파일을 다시 준비할 수 있습니다. 카카오 로그인은 [카카오 공식 디자인 리소스](https://developers.kakao.com/tool/resource/login)의 버튼 SVG를 `public/kakao-login.svg`로 저장해 사용합니다.
 
-## 검증
+## 공부캐 굿즈
+
+`/goods`에서 16명 × 8종(일상 3종·특별 의상 5종), 총 128장의 앞면과 고유한 뒷면 이야기를 볼 수 있습니다. 내 정보, 공부 스킬북의 지갑, 로그인한 수집노트에서 연결됩니다. 캐릭터·카드 종류·계정 도감의 보유 캐릭터 필터를 지원합니다.
+
+일상 굿즈는 별 1개, 특별 의상은 별 2개로 직접 선택해 교환합니다. 계정 도감에 개봉한 캐릭터의 굿즈만 교환 가능하며, 중복 교환은 다시 차감하지 않습니다. `/goods?view=owned`에서 내 굿즈만 모아 볼 수 있고, 앞면·뒷면 각각 JPG 저장·이미지 열기·지원 기기에서 사진 공유를 제공합니다. 이미지 API는 매 요청마다 로그인과 해당 굿즈 소유권을 검사합니다.
+
+`db/008_goods_stars.sql`은 스킬별 첫 10분 실천과 3개 설문 완료에 별 1개, 유형별 4명 개봉 완료에 최초 1회 별 3개를 지급합니다. 하루 단위 반복 보상은 없습니다. 이전 실천 완료 기록과 완성한 유형도 동일하게 한 번 소급 지급하며 기존 하트는 회수하지 않습니다. 카드·설치 하트 보상은 유지되고 이후 실천 보상만 별로 바뀝니다. 계정 행 잠금과 고유 원장 키로 중복·동시 차감을 방지하고, 별·굿즈 데이터는 계정 삭제에 함께 삭제됩니다. 배포 전에 `npm run db:migrate`를 실행합니다.
+
+공개 썸네일은 `public/goods`, 고해상도 이미지는 `art/goods`, 카드별 이야기는 `src/lib/goods-catalog.json`에 있습니다. 별 아이콘은 내장 ImageGen으로 제작했으며 프롬프트는 `art/goods-star.json`에 보관합니다.
+
+디자인 원본을 보유한 작업 환경에서는 `node scripts/prepare-goods.mjs`로 `ref/goods-collection`의 승인본을 다시 준비할 수 있습니다. 일반 빌드에는 Git에 포함된 결과 파일만 필요합니다.
+
+## 굿즈 검증
+
+`npx vitest run tests/unit/goods.test.ts`와 로컬 서버에서 `npx playwright test tests/e2e/goods.spec.ts`를 실행합니다. 128장 구성·고유한 문구·이미지 파일, 로그인/비로그인 필터, 모바일·PC 팝업과 포커스 복귀를 확인합니다.
+
+## 전체 검증
 
 ```powershell
 npm.cmd run typecheck

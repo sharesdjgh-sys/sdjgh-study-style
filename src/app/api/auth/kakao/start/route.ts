@@ -13,6 +13,7 @@ import {
 import { database } from "@/lib/db";
 import { siteUrl } from "@/lib/site";
 import { timedAuth } from "@/lib/auth-server";
+import { authReturnPath } from "@/lib/auth-contract";
 export const runtime = "nodejs";
 export async function POST(request: Request) {
   const wantsJson = request.headers.get("accept")?.includes("application/json");
@@ -28,11 +29,7 @@ export async function POST(request: Request) {
     const state = token();
     const browser = token();
     const requested = new URL(request.url).searchParams.get("returnTo") ?? "";
-    const returnPath =
-      /^\/methods(?:\/[a-z-]+)?(?:\?[a-zA-Z0-9=&%-]*)?$/.test(requested) &&
-      requested.length < 300
-        ? requested
-        : "/collection";
+    const returnPath = authReturnPath(requested);
     const sql = database();
     await timedAuth(
       "start_db",

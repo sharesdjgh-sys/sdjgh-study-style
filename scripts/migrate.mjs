@@ -80,3 +80,15 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("홈 화면 바로가기 1개·앱 설치 합산 3개 보상 준비 완료");
+const goods = await readFile(
+  new URL("../db/008_goods_stars.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  goods
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("별 보상·굿즈 128종 교환 및 기존 완료 보상 준비 완료");

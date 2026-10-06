@@ -56,6 +56,11 @@ import { DELETE as remove } from "../../src/app/api/collection/account/route";
 import { POST as open } from "../../src/app/api/collection/rewards/open/route";
 import { GET as specialCard } from "../../src/app/api/collection/special-card/route";
 import {
+  GET as goodsGet,
+  POST as goodsPost,
+} from "../../src/app/api/goods/route";
+import { GET as goodsImage } from "../../src/app/api/goods/image/route";
+import {
   GET as results,
   POST as saveResult,
 } from "../../src/app/api/results/route";
@@ -99,6 +104,7 @@ beforeAll(async () => {
   await db.exec(await readFile("db/005_account_lifecycle.sql", "utf8"));
   await db.exec(await readFile("db/006_skill_hearts.sql", "utf8"));
   await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
+  await db.exec(await readFile("db/008_goods_stars.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -255,7 +261,7 @@ it("하트 API는 인증·출처·설치 실행 신호를 검사하고 중복 �
     ).status,
   ).toBe(400);
 });
-it("실천 API는 세 질문과 서버의 10분 경과를 확인한 뒤 하트를 한 번만 지급한다", async () => {
+it("실천 API는 세 질문과 서버의 10분 경과를 확인한 뒤 별을 한 번만 지급한다", async () => {
   await register(request("/api/collection/register", { session: session() }));
   const started = await skillPost(
     request("/api/skills", { action: "start", method: "outline" }),
@@ -315,6 +321,66 @@ it("실천 API는 세 질문과 서버의 10분 경과를 확인한 뒤 하트�
     ).awarded,
   ).toBe(0);
 });
+it("굿즈 API는 인증·출처·캐릭터 보유·별 잔액을 검사하고 구매자만 앞뒤 JPG를 저장한다", async () => {
+  const id = "visual-solo-planned--special-01";
+  expect(
+    (
+      await goodsPost(
+        request("/api/goods", { id }, "POST", "https://evil.example"),
+      )
+    ).status,
+  ).toBe(403);
+  mocks.jar.clear();
+  expect((await goodsPost(request("/api/goods", { id }))).status).toBe(401);
+  expect(
+    (await goodsImage(new Request(origin + `/api/goods/image?id=${id}`)))
+      .status,
+  ).toBe(401);
+  mocks.jar.set("study-collection", "session");
+  expect(
+    (await goodsPost(request("/api/goods", { id: "../invalid" }))).status,
+  ).toBe(400);
+  expect(
+    (await (await goodsPost(request("/api/goods", { id }))).json()).error,
+  ).toBe("character_required");
+  await register(request("/api/collection/register", { session: session() }));
+  expect(
+    (await (await goodsPost(request("/api/goods", { id }))).json()).error,
+  ).toBe("insufficient_stars");
+  expect(
+    (await goodsImage(new Request(origin + `/api/goods/image?id=${id}`)))
+      .status,
+  ).toBe(403);
+  await db.query("SELECT credit_stars($1,'practice','outline',1)", [owner]);
+  await db.query("SELECT credit_stars($1,'practice','cornell',1)", [owner]);
+  const result = await (
+    await goodsPost(
+      request("/api/goods", { id, cost: 0, accountId: randomUUID() }),
+    )
+  ).json();
+  expect(result.progress.balance).toBe(0);
+  expect(result.progress.owned).toContain(id);
+  expect(
+    (await (await goodsPost(request("/api/goods", { id }))).json()).outcome,
+  ).toBe("already_owned");
+  expect((await (await goodsGet()).json()).progress.balance).toBe(0);
+  for (const side of ["front", "back"]) {
+    const response = await goodsImage(
+      new Request(origin + `/api/goods/image?id=${id}&side=${side}&download=1`),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/jpeg");
+    expect(response.headers.get("cache-control")).toBe("private, no-store");
+    expect(response.headers.get("content-disposition")).toContain("attachment");
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    expect([...bytes.slice(0, 3)]).toEqual([255, 216, 255]);
+  }
+  mocks.jar.clear();
+  expect(
+    (await goodsImage(new Request(origin + `/api/goods/image?id=${id}`)))
+      .status,
+  ).toBe(401);
+}, 30000);
 it("스페셜 사진은 16종 선물을 모두 개봉한 계정만 보고 PNG로 저장한다", async () => {
   const photograph = () =>
     specialCard(new Request(origin + "/api/collection/special-card"));

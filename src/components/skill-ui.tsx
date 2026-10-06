@@ -7,6 +7,7 @@ import { skillPrice } from "@/lib/skill-economy";
 import { useSkills, SKILL_ERRORS } from "./skill-provider";
 import { useAuth } from "./auth-provider";
 import { InstallReward } from "./install-reward";
+import { StarWallet } from "./star-wallet";
 
 export function Heart({ size = 24 }: { size?: number }) {
   return (
@@ -84,11 +85,12 @@ export function SkillWallet({ history = false }: { history?: boolean }) {
         </p>
       ) : (
         <p>
-          새 카드마다 <strong>1~3개</strong> · 스킬별 첫 10분 실천과 응답 완료
-          시 <strong>1개</strong>
+          새 캐릭터 카드마다 하트 <strong>1~3개</strong>를 받아요. 첫 실천
+          보상은 굿즈를 모으는 <strong>별 1개</strong>예요.
         </p>
       )}
       <InstallReward />
+      <StarWallet history={history} />
       {history && signedIn && (
         <details className="heart-history">
           <summary>하트 적립·사용 내역</summary>
@@ -263,8 +265,8 @@ export function SkillGate({
               </p>
               {skills.progress.balance < price && (
                 <p className="small">
-                  열린 스킬을 처음 실천하거나, 새 카드·앱 설치 선물로 하트를
-                  모아 보세요.
+                  새 캐릭터 카드·홈 화면 바로가기·앱 설치 선물로 하트를 모아
+                  보세요.
                 </p>
               )}
               {skills.error && (

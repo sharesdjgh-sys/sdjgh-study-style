@@ -12,6 +12,8 @@ import { shareImagePath } from "@/lib/share-image";
 import "./globals.css";
 import { SkillProvider } from "@/components/skill-provider";
 import "./skills.css";
+import { GoodsProvider } from "@/components/goods-provider";
+import "./goods.css";
 export const viewport: Viewport = {
   themeColor: "#27785d",
 };
@@ -46,19 +48,21 @@ export default function RootLayout({
         <AuthProvider>
           <CollectionProvider>
             <SkillProvider>
-              <AccountResultsProvider>
-                <SourceCapture />
-                <a className="skip-link" href="#main">
-                  본문으로 바로가기
-                </a>
-                <div className="site-shell">
-                  <Header />
-                  <GiftNotice />
-                  {children}
-                  <Footer />
-                </div>
-                <QuickMenu />
-              </AccountResultsProvider>
+              <GoodsProvider>
+                <AccountResultsProvider>
+                  <SourceCapture />
+                  <a className="skip-link" href="#main">
+                    본문으로 바로가기
+                  </a>
+                  <div className="site-shell">
+                    <Header />
+                    <GiftNotice />
+                    {children}
+                    <Footer />
+                  </div>
+                  <QuickMenu />
+                </AccountResultsProvider>
+              </GoodsProvider>
             </SkillProvider>
           </CollectionProvider>
         </AuthProvider>

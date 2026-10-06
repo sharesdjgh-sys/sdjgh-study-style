@@ -36,8 +36,8 @@ export function FamilyCollectionCard({ modality }: { modality: Modality }) {
         <h2>{unlocked ? photo.title : `${label} 네 친구의 기념사진`}</h2>
         <p>
           {unlocked
-            ? "네 친구를 모두 모았어요. 단체사진을 선물로 받아보세요!"
-            : `${label} 캐릭터 ${total}명을 계정 도감에 모으면 사진이 열려요. 도착한 선물도 개봉해 주세요.`}
+            ? "네 친구를 모두 모았어요. 단체사진과 최초 완성 선물 별 3개를 받았어요!"
+            : `${label} 캐릭터 ${total}명을 계정 도감에 모으면 단체사진과 별 3개를 받아요. 유형마다 최초 1회예요. 도착한 선물도 개봉해 주세요.`}
         </p>
         <div className="special-card-progress">
           <strong>

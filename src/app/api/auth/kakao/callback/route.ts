@@ -13,6 +13,7 @@ import {
 import { database } from "@/lib/db";
 import { siteUrl } from "@/lib/site";
 import { identityHash, timedAuth } from "@/lib/auth-server";
+import { authReturnPath } from "@/lib/auth-contract";
 export const runtime = "nodejs";
 const finish = (
   status: string,
@@ -91,13 +92,7 @@ export async function GET(request: Request) {
     if (!accounts[0]?.account_id) return finish("failed");
     jar.set(AUTH_COOKIE, value, cookieOptions(30 * 86400));
     const target = String(rows[0].return_path ?? "");
-    return finish(
-      "success",
-      undefined,
-      /^\/methods(?:\/[a-z-]+)?(?:\?[a-zA-Z0-9=&%-]*)?$/.test(target)
-        ? target
-        : "/collection",
-    );
+    return finish("success", undefined, authReturnPath(target));
   } catch {
     return finish("failed");
   }

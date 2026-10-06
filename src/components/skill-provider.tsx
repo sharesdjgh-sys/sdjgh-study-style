@@ -113,6 +113,8 @@ export function SkillProvider({ children }: { children: ReactNode }) {
         loaded: true,
         error: false,
       });
+      if (input.action === "complete")
+        window.dispatchEvent(new Event("study:stars"));
       return {
         awarded: result.awarded as number,
         outcome: result.outcome as string,
@@ -139,7 +141,7 @@ export function SkillProvider({ children }: { children: ReactNode }) {
 export const useSkills = () => useContext(Context);
 export const SKILL_ERRORS: Record<string, string> = {
   insufficient_hearts:
-    "하트가 조금 부족해요. 열린 스킬을 실천하거나 새 카드를 만나 보세요.",
+    "하트가 조금 부족해요. 새 카드나 홈 화면 추가 선물로 모아 보세요.",
   unauthorized: "로그인 후 이용해 주세요.",
   active_practice: "진행 중인 실천을 마치거나 중단한 뒤 시작해 주세요.",
   too_early: "아직 10분이 지나지 않았어요. 타이머를 이어가 주세요.",

@@ -1,0 +1,1794 @@
+[
+  {
+    "id": "visual-solo-planned--daily-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "책장을 넘기던 루미가 햇살이 닿는 문장에서 잠시 멈췄어요.",
+      "quote": "이 장면은 마음속에 밑줄 쳐둘래.",
+      "signature": "루미",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "visual-solo-planned--daily-02",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "창문을 타고 내려오는 빗방울을 눈으로 잇다 보니, 루미만의 작은 지도가 생겼어요.",
+      "quote": "오늘의 도착지는 따뜻한 코코아야.",
+      "signature": "루미",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "visual-solo-planned--daily-03",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "루미는 정원의 초록과 딸기의 빨강을 오래 바라봤어요. 기억하고 싶은 색이 하나 늘었죠.",
+      "quote": "이 색깔을 보면 오늘이 떠오르겠지?",
+      "signature": "루미",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "visual-solo-planned--special-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "흩어진 별을 차례로 이어 보던 루미가 아무도 이름 붙이지 않은 길을 찾았어요.",
+      "quote": "여기 봐, 우리만의 별자리가 생겼어.",
+      "signature": "루미",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "visual-solo-planned--special-02",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "오래된 돌문 앞에서 루미가 지도를 접었어요. 이제는 작은 이끼의 무늬를 살펴볼 차례예요.",
+      "quote": "큰 지도에 없는 힌트도 있거든.",
+      "signature": "루미",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "visual-solo-planned--special-03",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "구름 사이로 지붕들이 나타나자 루미는 편지의 도착지를 다시 확인했어요.",
+      "quote": "네 창가에 가장 먼저 닿고 싶었어.",
+      "signature": "루미",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "visual-solo-planned--special-04",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "루미는 타르트 위의 딸기들을 작은 별자리처럼 바라봤어요. 첫 조각은 누구에게 줄까요?",
+      "quote": "먹기 전에 잠깐만, 이 모습도 기억할래.",
+      "signature": "루미",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "visual-solo-planned--special-05",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "루미가 악기를 펼치자 축제의 불빛이 안경에 반짝였어요. 오늘의 별지도에는 음악도 담겨요.",
+      "quote": "이 밤은 눈을 감아도 보일 것 같아.",
+      "signature": "루미",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--daily-01",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "모아는 책 속 숲을 읽다가 창밖 나뭇잎으로 눈길을 돌렸어요. 이야기의 다음 장이 밖에 있나 봐요.",
+      "quote": "책을 덮어도 모험은 계속이야.",
+      "signature": "모아",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--daily-02",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "유리창의 빗방울 모양마다 모아는 다른 이름을 붙였어요. 가장 동그란 건 코코아 별이에요.",
+      "quote": "비 오는 날에만 보이는 게 있어.",
+      "signature": "모아",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--daily-03",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "모아가 고른 딸기는 꼭 작은 하트 같았어요. 소풍 바구니에 뜻밖의 발견이 쌓여요.",
+      "quote": "오늘 찾은 보물, 너한테 먼저 보여줄게.",
+      "signature": "모아",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--special-01",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "모아는 별지도의 빈칸에 눈길이 갔어요. 아직 아무도 그리지 않은 곳이라니 더 궁금해요.",
+      "quote": "빈칸은 새로운 모험의 초대장이야.",
+      "signature": "모아",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--special-02",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "돋보기 너머 작은 잎맥이 커다란 숲길처럼 펼쳐졌어요. 모아의 탐험은 작아질수록 넓어져요.",
+      "quote": "이 작은 잎에도 길이 이렇게 많아!",
+      "signature": "모아",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--special-03",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "배달을 나선 모아가 처음 보는 구름 섬을 발견했어요. 편지를 전한 뒤 살짝 둘러볼 생각이에요.",
+      "quote": "돌아오는 길엔 새 이야기도 챙겨올게.",
+      "signature": "모아",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--special-04",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "모아는 딸기 타르트를 보고 다음에는 어떤 과일을 올릴지 상상했어요. 한입마다 아이디어가 톡 터져요.",
+      "quote": "맛있는 발견은 나눠야 더 신나지.",
+      "signature": "모아",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--special-05",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "축제 골목을 구경하던 모아가 음악 앞에 멈춰 섰어요. 오늘은 관객 대신 연주자가 되어 봐요.",
+      "quote": "처음 해보는 일이라 더 두근거려.",
+      "signature": "모아",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "visual-team-planned--daily-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "루트는 함께 읽고 싶은 대목을 찾았어요. 친구가 오면 바로 펼칠 수 있도록 그 장을 기억해 둬요.",
+      "quote": "네가 좋아할 이야기가 여기 있어.",
+      "signature": "루트",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "visual-team-planned--daily-02",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "비를 피할 자리를 찾던 루트가 창가에 앉았어요. 친구에게 알려주고 싶은 포근한 쉼터예요.",
+      "quote": "비가 그칠 때까지 여기서 쉬어 가자.",
+      "signature": "루트",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "visual-team-planned--daily-03",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "루트는 정원에서 모두가 편히 앉을 만한 자리를 골랐어요. 소풍의 시작은 좋은 그늘 찾기예요.",
+      "quote": "네 자리도 이쪽에 비워 뒀어.",
+      "signature": "루트",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "visual-team-planned--special-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "루트가 펼친 별지도에는 돌아오는 길도 또렷해요. 함께 떠나는 모험이라 더 세심해졌죠.",
+      "quote": "멀리 가도 함께 돌아오면 돼.",
+      "signature": "루트",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "visual-team-planned--special-02",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "갈림길에 선 루트는 숲의 표정을 천천히 살폈어요. 뒤따르는 친구에게 길을 설명해 줄 생각이에요.",
+      "quote": "어느 길로 갈지 같이 보고 정하자.",
+      "signature": "루트",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "visual-team-planned--special-03",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "구름 우체국의 루트는 편지 한 장도 서두르지 않아요. 기다리는 마음까지 안전하게 전하고 싶거든요.",
+      "quote": "도착할 때까지 내가 잘 챙길게.",
+      "signature": "루트",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "visual-team-planned--special-04",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "루트가 내민 타르트는 오늘 티룸의 환영 인사예요. 낯선 손님도 금세 편안해질 것 같아요.",
+      "quote": "어서 와, 가장 좋은 자리에 앉아.",
+      "signature": "루트",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "visual-team-planned--special-05",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "루트는 축제의 첫 음을 조심스럽게 열었어요. 모두가 따라올 수 있게 익숙한 가락부터 시작해요.",
+      "quote": "우리 노래는 천천히 시작해도 좋아.",
+      "signature": "루트",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "visual-team-flexible--daily-01",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "피코는 책 속의 장면보다 창가에 번지는 색에 잠깐 마음을 빼앗겼어요. 둘을 섞으면 어떤 그림이 될까요?",
+      "quote": "이 이야기에 햇살색을 조금 넣어볼까?",
+      "signature": "피코",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "visual-team-flexible--daily-02",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "푸른 빗빛과 갈색 코코아가 나란히 놓였어요. 피코에게는 오늘의 새로운 색 조합이에요.",
+      "quote": "흐린 날도 이렇게 알록달록한데!",
+      "signature": "피코",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "visual-team-flexible--daily-03",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "꽃과 과일 사이에서 피코의 눈이 반짝였어요. 정원 전체가 커다란 팔레트 같아요.",
+      "quote": "마음에 드는 색을 하나씩 골라보자.",
+      "signature": "피코",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "visual-team-flexible--special-01",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "피코는 별빛에도 서로 다른 색이 있다고 믿어요. 지도를 펼칠 때마다 새 조합이 떠올라요.",
+      "quote": "우리 별자리엔 무슨 색을 칠할까?",
+      "signature": "피코",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "visual-team-flexible--special-02",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "초록이 다 같은 초록인 줄 알았는데, 피코의 돋보기 속 숲은 수십 가지 색이었어요.",
+      "quote": "가까이 보면 완전히 달라 보여!",
+      "signature": "피코",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "visual-team-flexible--special-03",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "분홍빛 구름 위에서 피코는 편지를 들어 봤어요. 오늘 배달에는 하늘의 색도 묻어갈 것 같아요.",
+      "quote": "봉투를 열면 이 하늘도 떠올려 줘.",
+      "signature": "피코",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "visual-team-flexible--special-04",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "피코는 붉은 딸기와 하얀 크림 사이의 조화를 즐겼어요. 접시 위에 작은 전시회가 열렸네요.",
+      "quote": "제목은 달콤한 한입으로 할래.",
+      "signature": "피코",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "visual-team-flexible--special-05",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "축제의 빨강과 금빛 사이로 피코의 연주가 번져요. 소리에도 색이 있다면 오늘은 무지개예요.",
+      "quote": "네가 들은 색깔은 어떤 색이야?",
+      "signature": "피코",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--daily-01",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "소리는 책의 한 문장을 마음속으로 천천히 읽었어요. 조용한 도서관에서도 이야기는 또렷하게 들려요.",
+      "quote": "이 문장은 오래 기억하고 싶어.",
+      "signature": "소리",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--daily-02",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "빗소리에 귀를 기울이던 소리가 코코아를 한 모금 마셨어요. 오늘은 대답 없이 들어도 좋은 날이에요.",
+      "quote": "조용히 듣고 있으니 마음이 편해져.",
+      "signature": "소리",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--daily-03",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "정원에 앉은 소리는 바람과 잎이 나누는 이야기를 들었어요. 소풍의 배경음은 이미 준비됐네요.",
+      "quote": "쉿, 방금 바람이 지나갔어.",
+      "signature": "소리",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--special-01",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "소리는 별들의 이름을 하나씩 불러 봤어요. 입에 익은 이름마다 지도 위 길이 가까워져요.",
+      "quote": "네 이름도 별처럼 불러줄게.",
+      "signature": "소리",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--special-02",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "숲에 들어선 소리는 걸음을 잠깐 멈췄어요. 눈보다 먼저 귀에 닿는 작은 소식들이 있어요.",
+      "quote": "잠깐 들어봐, 숲이 먼저 말하고 있어.",
+      "signature": "소리",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--special-03",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "소리는 편지 속 첫 인사가 어떤 목소리일지 상상했어요. 봉투 하나에 다정한 말이 담겨 있겠죠.",
+      "quote": "말로 다 못 한 마음도 전해줄게.",
+      "signature": "소리",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--special-04",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "타르트를 내놓기 전 소리는 환영 인사를 작게 연습했어요. 달콤한 맛에 따뜻한 목소리를 더해요.",
+      "quote": "오늘 와줘서 참 기뻐.",
+      "signature": "소리",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--special-05",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "소리는 축제의 소란 속에서도 자기 가락을 차분히 이어갔어요. 작은 소리도 누군가에게는 선명해요.",
+      "quote": "가까이 와, 너에게 들려줄 곡이야.",
+      "signature": "소리",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--daily-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "멜로는 책을 읽다가 문장에 어울리는 멜로디를 떠올렸어요. 이야기 속 산책이 노래가 되었네요.",
+      "quote": "이 장면은 조금 느리게 흘러가면 좋겠어.",
+      "signature": "멜로",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--daily-02",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "빗방울이 창문을 두드리자 멜로는 속으로 박자를 맞췄어요. 코코아가 식기 전에 한 곡이 완성될까요?",
+      "quote": "오늘의 노래는 비가 먼저 시작했어.",
+      "signature": "멜로",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--daily-03",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "멜로는 정원에서 흥얼거리다 가사를 잊어버렸어요. 대신 딸기와 햇살을 새 가사에 넣었죠.",
+      "quote": "정해진 노래가 아니어도 괜찮아.",
+      "signature": "멜로",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--special-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "멜로가 별지도를 펼치자 별들이 음표처럼 보였어요. 밤하늘을 읽는 멜로만의 방식이에요.",
+      "quote": "이 별은 어떤 소리를 낼까?",
+      "signature": "멜로",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--special-02",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "숲길을 걷던 멜로는 바스락 소리에 걸음을 바꿨어요. 예상 못 한 방향에서 재미가 들려와요.",
+      "quote": "궁금한 소리가 나면 잠깐 따라가 볼래.",
+      "signature": "멜로",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--special-03",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "멜로는 구름을 지날 때마다 다른 가락을 흥얼거렸어요. 편지와 함께 작은 콧노래도 도착하겠네요.",
+      "quote": "배달 오는 소리, 벌써 들렸어?",
+      "signature": "멜로",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--special-04",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "멜로는 크림을 바라보다 부드러운 노래를 떠올렸어요. 오늘의 디저트에는 느긋한 기분이 잘 어울려요.",
+      "quote": "한입 먹고, 한 소절 쉬어 가자.",
+      "signature": "멜로",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--special-05",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "멜로의 연주는 눈송이가 날릴 때마다 살짝 달라져요. 오늘 밤에만 들을 수 있는 곡이에요.",
+      "quote": "같은 곡이어도 오늘은 오늘의 느낌으로.",
+      "signature": "멜로",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "auditory-team-planned--daily-01",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "토크는 재미있는 장면을 만나자 누군가에게 말하고 싶어졌어요. 도서관 밖에서 나눌 이야기가 생겼네요.",
+      "quote": "다 읽으면 네 생각도 들려줘.",
+      "signature": "토크",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "auditory-team-planned--daily-02",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "토크는 코코아 앞에 앉아 친구의 하루를 떠올렸어요. 긴 이야기를 듣기 좋은 날씨예요.",
+      "quote": "오늘 무슨 일이 있었는지 궁금해.",
+      "signature": "토크",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "auditory-team-planned--daily-03",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "토크는 정원의 한적한 자리가 마음에 들었어요. 간식보다 먼저 다정한 인사를 꺼낼 준비가 됐죠.",
+      "quote": "우리 여기서 한참 얘기하자.",
+      "signature": "토크",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "auditory-team-planned--special-01",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "토크는 별지도에서 찾은 길을 이야기로 풀었어요. 어려운 별 이름도 친구와 나누니 가까워져요.",
+      "quote": "내가 본 별 이야기부터 들려줄게.",
+      "signature": "토크",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "auditory-team-planned--special-02",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "토크는 숲에서 발견한 것을 어떻게 소개할지 생각했어요. 탐험의 절반은 돌아와 나누는 즐거움이에요.",
+      "quote": "네가 궁금해할 만한 걸 찾았어.",
+      "signature": "토크",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "auditory-team-planned--special-03",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "편지를 건네는 순간이 토크는 가장 좋아요. 짧은 인사에도 기다리던 기쁨이 묻어나거든요.",
+      "quote": "반가운 소식이 도착했어요!",
+      "signature": "토크",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "auditory-team-planned--special-04",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "토크는 손님이 좋아하는 맛을 먼저 묻고 싶었어요. 티룸의 특별 메뉴는 대화에서 시작돼요.",
+      "quote": "딸기 좋아해? 다음엔 네 취향도 알려줘.",
+      "signature": "토크",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "auditory-team-planned--special-05",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "토크는 연주를 시작하기 전 관객에게 눈인사를 보냈어요. 함께 듣는 순간 음악도 대화가 돼요.",
+      "quote": "이 노래가 끝나면 네 이야기도 듣고 싶어.",
+      "signature": "토크",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--daily-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "책 속의 반전 앞에서 리프가 입을 꾹 다물었어요. 도서관이 아니었다면 벌써 감탄했을 거예요.",
+      "quote": "나중에 이 장면 얘기 꼭 하자!",
+      "signature": "리프",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--daily-02",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "톡톡 떨어지는 빗소리에 리프가 새 리듬을 찾았어요. 평범한 창가가 작은 연습실이 됐네요.",
+      "quote": "비가 드럼을 치고 있잖아?",
+      "signature": "리프",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--daily-03",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "리프는 정원의 소리들을 하나씩 골라 들었어요. 바람과 새소리가 오늘의 즉흥 밴드예요.",
+      "quote": "여기에 우리 웃음도 넣자!",
+      "signature": "리프",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--special-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "리프는 별자리를 보고 엉뚱한 질문을 떠올렸어요. 별들이 합주한다면 누가 첫 음을 낼까요?",
+      "quote": "가장 반짝이는 별이 솔로 맡을까?",
+      "signature": "리프",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--special-02",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "리프는 숲의 메아리가 궁금해졌어요. 작은 소리 하나가 다른 모습으로 돌아오는 게 신기해요.",
+      "quote": "방금 숲이 내 말에 대답한 거야?",
+      "signature": "리프",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--special-03",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "리프의 배달 소식은 밝은 인사와 함께 도착해요. 봉투를 받기도 전에 입가에 미소가 번질 거예요.",
+      "quote": "짜잔, 오늘의 반가운 소식입니다!",
+      "signature": "리프",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--special-04",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "리프는 타르트가 너무 예뻐 짧은 축하곡을 붙이고 싶었어요. 디저트 등장에도 무대가 필요하죠.",
+      "quote": "박수 부탁해, 오늘의 주인공이야!",
+      "signature": "리프",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--special-05",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "리프는 축제의 박수 소리를 듣고 리듬을 바꿨어요. 무대와 객석이 함께 만드는 연주예요.",
+      "quote": "좋아, 이번 박자는 다 같이!",
+      "signature": "리프",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--daily-01",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "토리는 책의 모서리를 조심히 받치고 읽었어요. 오래 아끼고 싶은 물건은 다루는 손길부터 달라져요.",
+      "quote": "이 책은 천천히 오래 읽을래.",
+      "signature": "토리",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--daily-02",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "토리는 따뜻한 머그의 감촉을 느끼며 쉬었어요. 분주했던 손에도 포근한 휴식이 필요하니까요.",
+      "quote": "지금은 아무것도 만들지 않아도 좋아.",
+      "signature": "토리",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--daily-03",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "토리는 소풍 자리에 앉아 바구니의 짜임을 살펴봤어요. 잘 만들어진 물건에는 작은 정성이 보여요.",
+      "quote": "이 촘촘한 무늬, 참 정성스럽다.",
+      "signature": "토리",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--special-01",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "토리는 별지도의 선들을 하나씩 짚어 봤어요. 복잡한 하늘도 작은 연결이 모여 완성되네요.",
+      "quote": "한 줄씩 이어가면 길이 만들어져.",
+      "signature": "토리",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--special-02",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "토리는 돌문과 이끼가 맞닿은 틈을 살폈어요. 오래된 숲에도 섬세한 구조가 숨어 있어요.",
+      "quote": "작은 부분부터 보면 더 잘 보여.",
+      "signature": "토리",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--special-03",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "토리는 편지가 구겨지지 않도록 소중히 챙겼어요. 받는 순간까지 처음의 정성을 지키고 싶어요.",
+      "quote": "모서리 하나까지 잘 도착했으면 해.",
+      "signature": "토리",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--special-04",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "토리가 만든 타르트에는 차근차근 쌓은 시간이 담겼어요. 마지막 딸기를 올린 뒤에야 미소가 나요.",
+      "quote": "하나씩 정성껏 올렸어. 맛있게 먹어줘.",
+      "signature": "토리",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--special-05",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "토리는 악기의 버튼을 익숙하게 눌렀어요. 조금씩 연습한 손끝이 축제의 한 곡을 완성해요.",
+      "quote": "오늘은 어제보다 한 음 더 편안해.",
+      "signature": "토리",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--daily-01",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "몽은 책 속 물건을 보며 어떻게 만들었을지 궁금해졌어요. 읽던 이야기가 작은 실험으로 이어질 것 같아요.",
+      "quote": "직접 만들어 보면 알 수 있지 않을까?",
+      "signature": "몽",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--daily-02",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "몽은 머그에서 올라오는 김을 신기하게 바라봤어요. 쉬는 시간에도 호기심은 잘 식지 않네요.",
+      "quote": "따뜻함이 눈에 보이는 것 같아.",
+      "signature": "몽",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--daily-03",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "몽은 딸기의 작은 씨앗을 유심히 봤어요. 평범한 간식에서도 궁금한 게 자꾸 생겨요.",
+      "quote": "이 작은 것들에서 뭐가 시작될까?",
+      "signature": "몽",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--special-01",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "몽은 별지도를 접었다 펼치며 새로운 길을 상상했어요. 마법도 직접 해봐야 재미있죠.",
+      "quote": "이 길로 연결하면 어떻게 될까?",
+      "signature": "몽",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--special-02",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "몽에게 돋보기는 숲을 새롭게 만드는 도구예요. 가까이 가져갈 때마다 세상이 달라 보여요.",
+      "quote": "한 번만 더 가까이 볼래!",
+      "signature": "몽",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--special-03",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "몽은 하늘을 나는 배달 길이 마냥 신기했어요. 다음에는 구름 우체국의 장치도 살펴보고 싶어요.",
+      "quote": "편지 배달 뒤에 구경해도 될까?",
+      "signature": "몽",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--special-04",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "몽은 타르트를 완성하고 다음 실험을 떠올렸어요. 바삭함과 부드러움은 얼마나 다르게 만날까요?",
+      "quote": "다음엔 조금 바꿔 만들어 볼까?",
+      "signature": "몽",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--special-05",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "몽은 악기를 펼치고 접을 때 바뀌는 소리가 재미있어요. 연주하는 동안에도 발견이 계속돼요.",
+      "quote": "손을 움직이니까 소리가 달라졌어!",
+      "signature": "몽",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "tactile-team-planned--daily-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "블록은 책을 안정적으로 받쳐 들었어요. 편안한 독서 시간에는 든든한 자리가 잘 어울리죠.",
+      "quote": "여긴 오래 앉아 있어도 좋겠어.",
+      "signature": "블록",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "tactile-team-planned--daily-02",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "블록은 비가 잦아들 때까지 느긋하게 기다렸어요. 서두르지 않고 쉬어 가는 것도 좋은 선택이에요.",
+      "quote": "따뜻하게 쉬고 나서 출발하자.",
+      "signature": "블록",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "tactile-team-planned--daily-03",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "블록은 소풍 자리가 편안한지 둘러봤어요. 모두가 느긋하게 머무를 수 있으면 그걸로 충분해요.",
+      "quote": "불편한 건 없어? 같이 편하게 쉬자.",
+      "signature": "블록",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "tactile-team-planned--special-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "블록은 별지도의 길을 차례로 확인했어요. 함께 떠날 모험에 든든한 준비가 하나씩 쌓여요.",
+      "quote": "우리 길은 차근차근 만들어 가자.",
+      "signature": "블록",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "tactile-team-planned--special-02",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "블록은 오래된 돌문을 바라보며 감탄했어요. 작은 돌들이 함께 서서 커다란 입구가 되었네요.",
+      "quote": "혼자서는 못 해도 함께라면 이렇게 커져.",
+      "signature": "블록",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "tactile-team-planned--special-03",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "블록은 구름길에서도 편지를 단단히 챙겼어요. 믿고 맡긴 마음에 믿음으로 답하고 싶어요.",
+      "quote": "걱정 마, 끝까지 잘 전해줄게.",
+      "signature": "블록",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "tactile-team-planned--special-04",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "블록이 타르트 접시를 든 모습은 어딘가 든든해요. 정성껏 만든 것을 함께 나눌 시간이 왔네요.",
+      "quote": "다 같이 먹을 때가 제일 기다려졌어.",
+      "signature": "블록",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "tactile-team-planned--special-05",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "블록의 일정한 박자가 축제의 음악을 받쳐줘요. 눈에 띄지 않는 순간에도 곡은 단단히 이어져요.",
+      "quote": "내가 박자를 지킬게. 편하게 따라와.",
+      "signature": "블록",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--daily-01",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "조이는 책 속 장면을 친구들과 해보면 어떨지 상상했어요. 혼자 읽어도 즐거움의 자리는 여럿이에요.",
+      "quote": "이건 같이 해보면 더 재밌겠다!",
+      "signature": "조이",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--daily-02",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "조이는 코코아를 보며 따뜻한 얼굴들을 떠올렸어요. 비 오는 날 모이면 무슨 놀이를 할까요?",
+      "quote": "오늘은 실내 소풍도 괜찮겠는데?",
+      "signature": "조이",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--daily-03",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "조이는 딸기를 고르며 친구들 반응부터 상상했어요. 맛있는 걸 발견하면 나누고 싶어져요.",
+      "quote": "제일 마음에 드는 걸 먼저 골라봐!",
+      "signature": "조이",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--special-01",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "조이는 별지도를 보다가 친구마다 별 하나씩 맡자고 생각했어요. 함께라면 더 큰 그림을 그릴 수 있죠.",
+      "quote": "우리 별을 이어서 멋진 모양을 만들자.",
+      "signature": "조이",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--special-02",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "조이는 숲에서 발견한 힌트를 혼자 간직할 수 없었어요. 보여줄 친구가 있으면 탐험도 더 신나요.",
+      "quote": "이쪽에 재미있는 거 있어! 같이 보자.",
+      "signature": "조이",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--special-03",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "조이는 편지를 건넬 순간을 생각하며 웃었어요. 선물을 전하는 역할은 언제나 설레니까요.",
+      "quote": "네가 웃을 생각을 하니까 나도 신나.",
+      "signature": "조이",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--special-04",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "조이는 타르트 장식을 보며 친구와 만들던 시간을 떠올렸어요. 완성품에는 웃음도 조금 들어 있어요.",
+      "quote": "같이 만들면 맛도 더 특별해지는 것 같아.",
+      "signature": "조이",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--special-05",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "조이는 축제의 연주에 모두를 초대하고 싶어요. 잘하는 것보다 함께 즐기는 게 먼저니까요.",
+      "quote": "틀려도 웃으면서 끝까지 같이 하자!",
+      "signature": "조이",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "motion-solo-planned--daily-01",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "페이스는 산책 끝에 도서관 창가에 앉았어요. 걸음을 쉬니 책 속 풍경이 천천히 다가와요.",
+      "quote": "오늘은 여기서 잠깐 속도를 낮출래.",
+      "signature": "페이스",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "motion-solo-planned--daily-02",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "페이스는 비가 내리는 동안 코코아와 쉬어 가기로 했어요. 멈춤도 자기 속도의 일부니까요.",
+      "quote": "조금 쉬어도 내 길은 사라지지 않아.",
+      "signature": "페이스",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "motion-solo-planned--daily-03",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "정원까지 걸어온 페이스가 편안히 자리를 잡았어요. 도착한 뒤의 느긋함도 소풍의 즐거움이에요.",
+      "quote": "여기까지 온 것만으로 기분이 좋아.",
+      "signature": "페이스",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "motion-solo-planned--special-01",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "페이스는 별지도에서 오늘 갈 만큼의 길을 골랐어요. 멀리 있는 별도 한 걸음씩 가까워질 거예요.",
+      "quote": "오늘의 한 걸음부터 시작할게.",
+      "signature": "페이스",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "motion-solo-planned--special-02",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "페이스는 숲길에서 서두르지 않았어요. 일정한 걸음 덕분에 지나칠 풍경도 눈에 들어와요.",
+      "quote": "천천히 가니까 이 풍경을 만났네.",
+      "signature": "페이스",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "motion-solo-planned--special-03",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "페이스는 구름 우체국에서 자기 배달 길을 확인했어요. 한 곳씩 들르면 모든 편지가 집을 찾겠죠.",
+      "quote": "다음 한 곳까지 차분히 가볼게.",
+      "signature": "페이스",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "motion-solo-planned--special-04",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "페이스는 완성된 타르트를 잠시 바라봤어요. 기다린 뒤 만나는 달콤함이 더 반가워요.",
+      "quote": "서두르지 않아서 더 맛있을 것 같아.",
+      "signature": "페이스",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "motion-solo-planned--special-05",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "페이스는 일정한 호흡으로 축제의 곡을 이어갔어요. 끝까지 자기 리듬을 지키는 밤이에요.",
+      "quote": "빠르지 않아도 내 박자로 연주할래.",
+      "signature": "페이스",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--daily-01",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "바니는 책 속 모험에 마음이 들썩였어요. 조금 더 읽고 나면 그 길을 걸어보고 싶어질 것 같아요.",
+      "quote": "다음 장에는 어디로 가게 될까?",
+      "signature": "바니",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--daily-02",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "바니는 창밖을 보다가 오늘만큼은 느긋하게 앉았어요. 비가 만들어 준 뜻밖의 쉬는 시간이에요.",
+      "quote": "이런 날엔 가만히 있는 것도 재밌네.",
+      "signature": "바니",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--daily-03",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "바니는 정원에 앉아 다음 산책길을 눈으로 골랐어요. 딸기를 다 먹으면 새 길로 가볼 참이에요.",
+      "quote": "저 꽃길 끝에는 뭐가 있을까?",
+      "signature": "바니",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--special-01",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "바니는 별지도의 먼 모퉁이를 먼저 봤어요. 처음 보는 곳으로 향하는 상상에 귀가 쫑긋해져요.",
+      "quote": "가장 궁금한 별부터 가보자!",
+      "signature": "바니",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--special-02",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "바니는 숲의 작은 갈림길에 설렜어요. 계획에 없던 발견이 기다릴지도 모르니까요.",
+      "quote": "오늘은 이쪽 길이 끌려.",
+      "signature": "바니",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--special-03",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "바니는 구름 배달 길을 여행처럼 즐겼어요. 다음 정거장마다 다른 하늘이 펼쳐져요.",
+      "quote": "다음 구름은 어떤 모양일까?",
+      "signature": "바니",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--special-04",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "바니는 타르트를 내놓으며 눈을 반짝였어요. 오늘 처음 도전한 의외의 역할이 제법 마음에 들어요.",
+      "quote": "나, 파티시에 의상도 꽤 잘 어울리지?",
+      "signature": "바니",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--special-05",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "바니는 축제 음악에 맞춰 발끝이 들썩였어요. 악기를 연주하는 동안에도 마음은 춤을 춰요.",
+      "quote": "가만히 듣기엔 너무 신나는 곡이야!",
+      "signature": "바니",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "motion-team-planned--daily-01",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "루카는 책을 읽으며 다음 모험의 힌트를 찾았어요. 출발 전 조용한 시간도 여정의 일부예요.",
+      "quote": "준비가 되면 함께 출발하자.",
+      "signature": "루카",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "motion-team-planned--daily-02",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "루카는 비를 피하며 돌아갈 길을 떠올렸어요. 지금은 모두가 쉬어갈 시간을 챙기고 싶어요.",
+      "quote": "비가 잦아들면 내가 먼저 길을 볼게.",
+      "signature": "루카",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "motion-team-planned--daily-03",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "루카는 정원의 편안한 자리에 앉아 미소 지었어요. 함께 도착한 뒤 누리는 휴식이 가장 반가워요.",
+      "quote": "여기까지 잘 왔어. 이제 쉬자.",
+      "signature": "루카",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "motion-team-planned--special-01",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "루카는 별지도를 펼쳐 동행할 길을 살폈어요. 낯선 밤하늘도 함께라면 든든한 모험이 돼요.",
+      "quote": "내가 앞을 볼게. 우리 같이 가자.",
+      "signature": "루카",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "motion-team-planned--special-02",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "루카는 숲의 돌문 앞에서 주변을 둘러봤어요. 새로운 길을 열기 전 친구들이 따라오는지 확인해요.",
+      "quote": "모두 준비됐어? 다음 풍경을 만나러 가자.",
+      "signature": "루카",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "motion-team-planned--special-03",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "루카는 구름길 너머 기다리는 사람들을 떠올렸어요. 오늘의 임무는 반가운 마음을 끝까지 전하는 거예요.",
+      "quote": "조금 멀어도 꼭 도착할게.",
+      "signature": "루카",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "motion-team-planned--special-04",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "루카는 타르트를 자랑스럽게 내밀었어요. 오늘은 길 안내 대신 티룸의 하루를 책임져요.",
+      "quote": "오늘의 달콤한 시간은 나한테 맡겨.",
+      "signature": "루카",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "motion-team-planned--special-05",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "루카는 축제의 시작을 힘차게 열었어요. 함께 박자를 맞추는 순간 모두가 한 팀 같아져요.",
+      "quote": "준비됐지? 첫 박자부터 같이 가자!",
+      "signature": "루카",
+      "edition": "의상 이야기 05"
+    }
+  },
+  {
+    "id": "motion-team-flexible--daily-01",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "도서관의 작은 쉼표",
+    "back": {
+      "story": "스킵은 책의 재미있는 대목에서 웃음을 참았어요. 조용한 도서관 밖으로 나가면 바로 얘기할 거예요.",
+      "quote": "잠깐만, 이 부분 정말 웃겨!",
+      "signature": "스킵",
+      "edition": "일상 기록 01"
+    }
+  },
+  {
+    "id": "motion-team-flexible--daily-02",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비 오는 날의 코코아",
+    "back": {
+      "story": "비 때문에 쉬게 된 스킵은 금세 코코아 시간이 좋아졌어요. 계획이 바뀌어도 즐거움은 찾을 수 있죠.",
+      "quote": "오늘의 깜짝 일정은 코코아 파티야.",
+      "signature": "스킵",
+      "edition": "일상 기록 02"
+    }
+  },
+  {
+    "id": "motion-team-flexible--daily-03",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "초록 정원의 소풍",
+    "back": {
+      "story": "스킵은 정원에 앉자마자 소풍 기분이 났어요. 특별한 계획 없이도 웃을 일이 가득한 날이에요.",
+      "quote": "여기 앉으니까 벌써 신나는데?",
+      "signature": "스킵",
+      "edition": "일상 기록 03"
+    }
+  },
+  {
+    "id": "motion-team-flexible--special-01",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "별지도를 펼치는 마법사",
+    "back": {
+      "story": "스킵은 별지도를 보다가 재미있는 모양부터 찾았어요. 진지한 마법에도 장난스러운 상상이 필요하죠.",
+      "quote": "저 별들, 웃는 얼굴처럼 보이지 않아?",
+      "signature": "스킵",
+      "edition": "의상 이야기 01"
+    }
+  },
+  {
+    "id": "motion-team-flexible--special-02",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "비밀 숲의 탐험가",
+    "back": {
+      "story": "스킵은 돋보기 속 숲을 보고 감탄했어요. 작은 발견 하나로 탐험대의 분위기가 밝아져요.",
+      "quote": "우와, 이건 꼭 다 같이 봐야 해!",
+      "signature": "스킵",
+      "edition": "의상 이야기 02"
+    }
+  },
+  {
+    "id": "motion-team-flexible--special-03",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 우체국의 배달부",
+    "back": {
+      "story": "스킵의 구름 배달에는 환한 미소가 따라와요. 봉투 속 소식만큼 전하는 순간도 즐거워야죠.",
+      "quote": "편지 왔어! 무슨 소식인지 나도 두근거려.",
+      "signature": "스킵",
+      "edition": "의상 이야기 03"
+    }
+  },
+  {
+    "id": "motion-team-flexible--special-04",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "왕실 티룸의 파티시에",
+    "back": {
+      "story": "스킵은 타르트를 들고 작은 등장 인사를 했어요. 맛보기 전부터 티룸에 웃음이 퍼질 것 같아요.",
+      "quote": "짜잔! 오늘의 달콤함을 가져왔어.",
+      "signature": "스킵",
+      "edition": "의상 이야기 04"
+    }
+  },
+  {
+    "id": "motion-team-flexible--special-05",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "겨울 축제의 음악가",
+    "back": {
+      "story": "스킵의 연주가 시작되자 축제가 한층 들썩였어요. 멋진 공연보다 모두가 웃는 시간이 목표예요.",
+      "quote": "앉아 있어도 좋아, 어깨만 같이 흔들자!",
+      "signature": "스킵",
+      "edition": "의상 이야기 05"
+    }
+  }
+]

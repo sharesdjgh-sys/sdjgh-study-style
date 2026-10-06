@@ -1,5 +1,19 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { sameOrigin } from "../../src/lib/site";
+import { authReturnPath } from "../../src/lib/auth-contract";
+it("로그인 뒤 굿즈·내 굿즈·스킬로 복귀하고 외부 주소와 경로 변형은 거절한다", () => {
+  for (const path of ["/goods", "/goods?view=owned", "/methods/outline"])
+    expect(authReturnPath(path)).toBe(path);
+  for (const path of [
+    "//evil.example",
+    "https://evil.example",
+    "/goods/../account",
+    "/goods\\evil",
+    "/goods%2f..",
+    "/goods?" + "a".repeat(300),
+  ])
+    expect(authReturnPath(path)).toBe("/collection");
+});
 
 afterEach(() => vi.unstubAllEnvs());
 
