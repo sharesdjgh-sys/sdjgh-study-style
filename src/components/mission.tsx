@@ -19,16 +19,18 @@ export function Mission({
   methodId,
   tabs,
   type,
+  onClose,
 }: {
   methodId: MethodId;
   type?: StudyType;
   tabs?: ReactNode;
   resultRunId?: string;
+  onClose?: () => void;
 }) {
   return (
     <>
       {tabs}
-      <SkillGate id={methodId}>
+      <SkillGate id={methodId} onCancel={onClose}>
         <OpenMission key={methodId} methodId={methodId} type={type} />
       </SkillGate>
     </>

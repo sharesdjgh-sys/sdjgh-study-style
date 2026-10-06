@@ -102,14 +102,44 @@
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   gap: 20px !important;
 }
+.method-icon-frame {
+  position: relative;
+  display: inline-block;
+  width: var(--method-size);
+  height: var(--method-size);
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.method-icon-frame .method-original-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.25s;
+}
+.method-icon-frame[data-locked="true"] .method-original-icon {
+  filter: blur(1.5px) saturate(0.7);
+  opacity: 0.48;
+}
+.method-icon-frame .method-mini-lock {
+  position: absolute;
+  right: -3%;
+  bottom: -2%;
+  width: 35%;
+  height: 43%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 3px #5b3a3830);
+}
 .skill-tile {
+  font: inherit;
+  cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   text-decoration: none !important;
-  padding: 20px 16px 15px;
+  padding: 18px 16px 14px;
   border: 1px solid #e0d3b9;
   border-radius: 21px;
   background: linear-gradient(160deg, #fffdf6, #f4ecdf);
@@ -171,14 +201,12 @@
 .skill-tile-art {
   display: grid;
   place-items: center;
-  height: 132px;
-  margin: 12px 0 6px;
+  height: 122px;
+  margin: 0 0 6px;
 }
-.skill-tile-art img {
+.skill-tile-art .method-icon-frame {
   height: 112px;
   width: 112px;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 5px #69504120);
 }
 .skill-tile h3 {
   font-size: 1.07rem;
@@ -199,11 +227,11 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
-  border-top: 1px solid #e4d7c7;
-  padding-top: 13px;
-  margin-top: auto;
+  min-height: 25px;
+  padding: 3px 10px;
+  margin-top: 2px;
   font-size: 0.77rem;
+  color: #98788b;
 }
 .skill-tile-bottom b {
   color: #a34f66;
@@ -235,8 +263,19 @@
   position: relative;
   display: grid;
   place-items: center;
-  margin: 24px auto;
-  min-height: 170px;
+  margin: 18px auto;
+  min-height: 125px;
+}
+.skill-unlock-video {
+  display: block;
+  width: min(320px, 100%);
+  aspect-ratio: 1;
+  border-radius: 22px;
+  object-fit: contain;
+}
+.skill-unlock-cancel {
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .skill-lock-stage > img {
   filter: drop-shadow(0 10px 8px #97784c26);
@@ -308,12 +347,12 @@
 }
 .skill-sheet {
   border: 0;
-  border-radius: 24px 24px 0 0;
+  border-radius: 24px;
   padding: 0;
-  width: 100%;
-  max-width: 680px;
+  width: calc(100% - 32px);
+  max-width: 760px;
   max-height: 92dvh;
-  margin: auto auto 0;
+  margin: auto;
   background: #faf7f0;
   overscroll-behavior: contain;
   box-shadow: 0 -10px 50px #29233130;
@@ -608,9 +647,9 @@
     height: 104px;
     margin: 10px 0 3px;
   }
-  .skill-tile-art img {
+  .skill-tile-art .method-icon-frame {
     width: 88px;
-    height: 96px;
+    height: 88px;
   }
   .skill-tile h3 {
     font-size: 0.92rem;
@@ -639,6 +678,15 @@
   .skill-gate-links {
     gap: 13px;
     font-size: 0.77rem;
+  }
+  .skill-sheet {
+    width: calc(100% - 20px);
+    max-height: 94dvh;
+    border-radius: 20px;
+  }
+  .skill-unlock-cancel {
+    display: block;
+    margin: 12px auto 0;
   }
   .skill-detail-copy {
     padding: 22px 18px;

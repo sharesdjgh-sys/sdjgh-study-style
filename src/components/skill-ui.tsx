@@ -122,9 +122,11 @@ export function SkillWallet({ history = false }: { history?: boolean }) {
 export function SkillGate({
   id,
   children,
+  onCancel,
 }: {
   id: MethodId;
   children: ReactNode;
+  onCancel?: () => void;
 }) {
   const skills = useSkills();
   const auth = useAuth();
@@ -134,11 +136,19 @@ export function SkillGate({
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
   const [revealing, setRevealing] = useState(false);
+  const video = useRef<HTMLVideoElement>(null);
   const [message, setMessage] = useState("");
   useEffect(() => {
     if (!revealing) return;
-    const timer = setTimeout(() => setRevealing(false), 1000);
-    return () => clearTimeout(timer);
+    const clip = video.current;
+    const finish = () => setRevealing(false);
+    const timer = setTimeout(finish, 12000);
+    if (clip) void clip.play().catch(finish);
+    else finish();
+    return () => {
+      clearTimeout(timer);
+      clip?.pause();
+    };
   }, [revealing]);
   async function unlock() {
     if (lock.current) return;
@@ -146,8 +156,11 @@ export function SkillGate({
     setBusy(true);
     setMessage("");
     try {
-      await skills.act({ action: "unlock", method: id });
-      setRevealing(true);
+      const result = await skills.act({ action: "unlock", method: id });
+      setRevealing(
+        result.outcome !== "already_open" &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      );
       setMessage("새 스킬이 열렸어요! 이제 나만의 방법으로 익혀 보세요.");
     } catch (e) {
       setMessage(
@@ -159,7 +172,7 @@ export function SkillGate({
       setBusy(false);
     }
   }
-  if (opened && !revealing)
+  if (opened && !revealing && !busy)
     return (
       <div className="skill-open-content">
         {message && (
@@ -173,31 +186,42 @@ export function SkillGate({
   return (
     <section
       className={`skill-gate${revealing ? " is-unlocking" : ""}`}
-      aria-busy={busy}
+      aria-busy={busy || revealing}
     >
       <span className="eyebrow">
-        {revealing ? "SKILL UNLOCKED" : "아직 펼치지 않은 스킬"}
+        {revealing ? "나의 스킬이 되는 순간" : "새로운 공부법을 열어 볼까요?"}
       </span>
       <div className="skill-lock-stage">
-        <SkillLock cost={price} size={156} open={revealing} />
-        {revealing && (
-          <div className="unlock-hearts">
-            {Array.from({ length: price }, (_, i) => (
-              <Heart key={i} size={30} />
-            ))}
-          </div>
+        {revealing ? (
+          <video
+            ref={video}
+            className="skill-unlock-video"
+            src={`/skills/unlock-${price}.mp4`}
+            poster={`/skills/unlock-${price}-poster.webp`}
+            muted
+            playsInline
+            autoPlay
+            preload="auto"
+            aria-label={`하트 ${price}개가 빈 칸을 채우고 자물쇠가 열리는 영상`}
+            onEnded={() => setRevealing(false)}
+            onError={() => setRevealing(false)}
+          />
+        ) : (
+          <SkillLock cost={price} size={116} />
         )}
       </div>
       <h2>{method.name}</h2>
-      <p className="skill-gate-description">{method.oneLine}</p>
       {revealing ? (
-        <p role="status">하트가 전해졌어요. 새로운 스킬을 펼치는 중!</p>
+        <>
+          <p role="status">하트가 쏙! 새로운 스킬이 열리고 있어요.</p>
+          <button className="text-link" onClick={() => setRevealing(false)}>
+            바로 카드 보기
+          </button>
+        </>
       ) : (
         <>
-          <p>
-            {methodOwner(id).kind === "signature"
-              ? "이 스킬의 캐릭터 카드를 만나거나 하트 3개로 열어요."
-              : "하트로 열면 언제든 꺼내 쓸 수 있어요."}
+          <p className="skill-gate-description">
+            하트 <strong>{price}개</strong>를 사용해 이 스킬을 열까요?
           </p>
           {!skills.signedIn ? (
             <button
@@ -222,6 +246,15 @@ export function SkillGate({
                 <Heart />
                 {busy ? "자물쇠 여는 중…" : `하트 ${price}개 사용해 열기`}
               </button>
+              {onCancel && (
+                <button
+                  className="button secondary skill-unlock-cancel"
+                  disabled={busy}
+                  onClick={onCancel}
+                >
+                  다음에 할게요
+                </button>
+              )}
               <p className="small">
                 보유 {skills.progress.balance}개
                 {skills.progress.balance >= price &&
@@ -248,8 +281,9 @@ export function SkillGate({
           )}
           {methodOwner(id).kind === "signature" && (
             <p className="small muted">
-              하트로 먼저 열어도 괜찮아요. 나중에 해당 카드를 만나면 3개를
-              돌려드려요.
+              해당 캐릭터 카드가 있어도 열려요.
+              <br />
+              하트로 먼저 열었다면 카드를 만날 때 3개를 돌려드려요.
             </p>
           )}
           <div className="skill-gate-links">

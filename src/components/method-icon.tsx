@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { isMethodId } from "@/lib/methods";
 import { skillPrice } from "@/lib/skill-economy";
 import { useSkills } from "./skill-provider";
@@ -22,18 +23,29 @@ export function MethodIcon({
   const { progress } = useSkills();
   const locked = isMethodId(id) && !progress.unlocked.includes(id);
   return (
-    <Image
-      className={className}
-      src={
-        locked
-          ? `/skills/lock-${skillPrice(id)}.webp`
-          : `/study-methods/${id}.webp`
-      }
-      alt=""
-      width={size}
-      height={size}
-      sizes={sizes}
-      loading={loading}
-    />
+    <span
+      className={`method-icon-frame ${className ?? ""}`}
+      data-locked={locked}
+      style={{ "--method-size": `${size}px` } as CSSProperties}
+    >
+      <Image
+        className="method-original-icon"
+        src={`/study-methods/${id}.webp`}
+        alt=""
+        width={size}
+        height={size}
+        sizes={sizes}
+        loading={loading}
+      />
+      {locked && (
+        <Image
+          className="method-mini-lock"
+          src={`/skills/lock-${skillPrice(id)}.webp`}
+          width={40}
+          height={48}
+          alt=""
+        />
+      )}
+    </span>
   );
 }

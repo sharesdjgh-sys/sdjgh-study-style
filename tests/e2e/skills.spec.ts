@@ -33,14 +33,20 @@ test("하트로 잠금을 열고 재방문해도 유지하며 로그아웃하면
   await expect(page.locator(".skill-gate")).toBeVisible();
   await expect(page.locator(".skill-scene")).toHaveCount(0);
 });
-test("카탈로그의 잠긴 카드와 모바일 상세 시트가 그림을 숨긴다", async ({
+test("기존 아이콘과 이름만 표시하고 PC·모바일 모두 확인 팝업을 연다", async ({
   page,
-  isMobile,
 }, info) => {
-  await mockSkills(page);
+  const state = await mockSkills(page);
   await page.goto("/methods");
   await expect(page.locator(".skill-tile")).toHaveCount(28);
   await expect(page.locator(".skill-tile[data-unlocked=true]")).toHaveCount(1);
+  const card = page.locator(".skill-tile", { hasText: "코넬 노트" });
+  await expect(card.locator(".method-original-icon")).toHaveAttribute(
+    "src",
+    /study-methods%2Fcornell|study-methods\/cornell/,
+  );
+  await expect(card.locator(".method-mini-lock")).toBeVisible();
+  await expect(card.locator("p,.skill-tile-kind")).toHaveCount(0);
   await page.locator("#catalog-memory").scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath("skill-catalog.png"),
@@ -52,16 +58,63 @@ test("카탈로그의 잠긴 카드와 모바일 상세 시트가 그림을 숨�
     ),
   ).toBe(true);
   await page.locator(".skill-tile", { hasText: "코넬 노트" }).click();
-  if (isMobile) {
-    const sheet = page.getByRole("dialog", { name: "코넬 노트" });
-    await expect(sheet).toBeVisible();
-    await expect(sheet.locator(".skill-scene")).toHaveCount(0);
-    await sheet.getByRole("button", { name: "닫기", exact: true }).click();
-    await expect(sheet).toBeHidden();
-  } else {
-    await expect(page).toHaveURL(/\/methods\/cornell$/);
-    await expect(page.locator(".skill-gate")).toBeVisible();
-  }
+  const sheet = page.getByRole("dialog", { name: "코넬 노트" });
+  await expect(sheet).toBeVisible();
+  await expect(
+    sheet.getByText("하트 2개를 사용해 이 스킬을 열까요?"),
+  ).toBeVisible();
+  await expect(sheet.locator(".skill-scene")).toHaveCount(0);
+  await sheet
+    .getByRole("button", { name: "다음에 할게요", exact: true })
+    .click();
+  await expect(sheet).toBeHidden();
+  expect(state.unlocks).toBe(0);
+  expect(state.progress.balance).toBe(3);
+  await expect(card).toBeFocused();
+});
+
+for (const [id, cost] of [
+  ["blank-page", 1],
+  ["cornell", 2],
+  ["sq3r", 3],
+] as const) {
+  test(`하트 ${cost}개 사용 확인 뒤 해당 영상을 재생하고 카드를 공개한다`, async ({
+    page,
+  }) => {
+    const state = await mockSkills(page);
+    await page.goto(`/methods/${id}`);
+    await expect(page.locator("video.skill-unlock-video")).toHaveCount(0);
+    await page
+      .getByRole("button", { name: `하트 ${cost}개 사용해 열기` })
+      .click();
+    const video = page.locator("video.skill-unlock-video");
+    await expect(video).toBeVisible();
+    await expect(video).toHaveAttribute("src", `/skills/unlock-${cost}.mp4`);
+    await expect(page.locator(".skill-scene")).toHaveCount(0);
+    await expect
+      .poll(() => video.evaluate((el: HTMLVideoElement) => el.currentTime))
+      .toBeGreaterThan(0.1);
+    await expect(page.locator(".skill-scene")).toBeVisible({ timeout: 10000 });
+    expect(state.unlocks).toBe(1);
+    expect(state.progress.balance).toBe(3 - cost);
+  });
+}
+
+test("영상 오류와 모션 줄이기에서도 이미 해제한 카드는 정상 공개된다", async ({
+  page,
+}) => {
+  const state = await mockSkills(page);
+  await page.route("**/skills/unlock-2.mp4", (r) => r.abort());
+  await page.goto("/methods/cornell");
+  await page.getByRole("button", { name: "하트 2개 사용해 열기" }).click();
+  await expect(page.locator(".skill-scene")).toBeVisible();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/methods/blank-page");
+  await page.getByRole("button", { name: "하트 1개 사용해 열기" }).click();
+  await expect(page.locator(".skill-scene")).toBeVisible();
+  await expect(page.locator("video.skill-unlock-video")).toHaveCount(0);
+  expect(state.unlocks).toBe(2);
+  expect(state.progress.balance).toBe(0);
 });
 test("설치된 모바일 앱은 설치 선물을 한 번만 받는다", async ({
   page,
