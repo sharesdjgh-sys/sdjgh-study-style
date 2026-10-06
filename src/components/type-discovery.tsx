@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { QUESTIONS, STUDY_TYPES, type StudyType } from "@/lib/content";
 import { CHARACTERS, characterThumbnail } from "@/lib/characters";
+import {
+  CHARACTER_REVEAL_TIMING,
+  characterShuffleDelay,
+} from "@/lib/character-reveal";
 
 export function TypeDiscovery({
   type,
@@ -35,15 +39,21 @@ export function TypeDiscovery({
         STUDY_TYPES.length;
       setCurrent(previous);
       tick++;
-      timer = setTimeout(shuffle, tick < 23 ? 85 : tick < 29 ? 150 : 280);
+      timer = setTimeout(shuffle, characterShuffleDelay(tick));
     }
-    if (!reduced) timer = setTimeout(shuffle, 85);
+    if (!reduced) timer = setTimeout(shuffle, characterShuffleDelay(0));
     const pause = setTimeout(() => {
       clearTimeout(timer);
       setStage(2);
-    }, 3300);
-    const reveal = setTimeout(() => setStage(3), 3800);
-    const finish = setTimeout(() => complete.current(), 6000);
+    }, CHARACTER_REVEAL_TIMING.shuffleEnd);
+    const reveal = setTimeout(
+      () => setStage(3),
+      CHARACTER_REVEAL_TIMING.reveal,
+    );
+    const finish = setTimeout(
+      () => complete.current(),
+      CHARACTER_REVEAL_TIMING.complete,
+    );
     return () => {
       clearTimeout(timer);
       clearTimeout(pause);

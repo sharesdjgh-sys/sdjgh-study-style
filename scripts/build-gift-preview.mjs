@@ -36,6 +36,20 @@ const giftArt = {
   video: `data:video/mp4;base64,${(await fs.readFile("public/rewards/card-pack-opening-v1.mp4")).toString("base64")}`,
 };
 const output = template
+  .replace(
+    "/* REVEAL_LOGIC */",
+    ts
+      .transpileModule(
+        await fs.readFile("src/lib/character-reveal.ts", "utf8"),
+        {
+          compilerOptions: {
+            module: ts.ModuleKind.ESNext,
+            target: ts.ScriptTarget.ES2022,
+          },
+        },
+      )
+      .outputText.replace(/^export /gm, ""),
+  )
   .replace("/* APP_STYLES */", css)
   .replace("/* CARD_DATA */", JSON.stringify(cards))
   .replace("/* GIFT_ART */", JSON.stringify(giftArt));

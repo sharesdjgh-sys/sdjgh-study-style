@@ -444,6 +444,12 @@ export function CollectionManager() {
           }
           total={progress.total}
           pending={data.pending.length}
+          ownedCodes={[
+            ...data.cards.map((card) => card.code),
+            ...(data.firstType || first?.result
+              ? [data.firstType || first!.result!]
+              : []),
+          ]}
           close={() => setReward(null)}
         />
       )}

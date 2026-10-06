@@ -375,8 +375,14 @@ test("계정 도감 복원과 선물 개봉, 수집한 캐릭터만 공개하고
   await expect(page.locator(".mystery-card")).toHaveCount(1);
 });
 
-for (const mode of ["video", "reduced", "failed", "skip"] as const) {
-  const bonus = mode === "reduced";
+for (const mode of [
+  "video",
+  "friend-video",
+  "reduced",
+  "failed",
+  "skip",
+] as const) {
+  const bonus = mode === "reduced" || mode === "friend-video";
   test(`${bonus ? "초대받은 친구" : "초대한 사용자"}가 선물 포장을 열고 새 카드와 다음 선물을 확인한다 (${mode})`, async ({
     page,
   }, testInfo) => {
@@ -444,13 +450,14 @@ for (const mode of ["video", "reduced", "failed", "skip"] as const) {
     await dialog.screenshot({
       path: testInfo.outputPath(`gift-wrapped-${bonus}.png`),
     });
-    if (bonus) await page.emulateMedia({ reducedMotion: "reduce" });
+    if (mode === "reduced")
+      await page.emulateMedia({ reducedMotion: "reduce" });
     if (mode === "failed")
       await page.route("**/rewards/card-pack-opening-v1.mp4", (route) =>
         route.abort(),
       );
     await dialog.getByRole("button", { name: "선물 포장 열기" }).click();
-    if (mode === "video" || mode === "skip") {
+    if (mode === "video" || mode === "friend-video" || mode === "skip") {
       await expect(dialog).toHaveAttribute("data-phase", "opening");
       await expect
         .poll(() =>
@@ -465,8 +472,35 @@ for (const mode of ["video", "reduced", "failed", "skip"] as const) {
     }
     if (mode === "skip")
       await dialog.getByRole("button", { name: "바로 공개하기" }).click();
-    if (!bonus && mode !== "skip") {
+    if (mode !== "reduced" && mode !== "skip") {
       await expect(dialog).toHaveAttribute("data-phase", "rolling");
+      // Already owned first character must not even be mounted in the reel.
+      await expect(
+        dialog.locator(`[data-frame] img[src*="${base}"]`),
+      ).toHaveCount(0);
+      const candidates = await dialog
+        .locator("[data-frame]")
+        .evaluate(async (reel) => {
+          const seen = new Set<string>();
+          const read = () => {
+            const code = reel.getAttribute("data-candidate");
+            if (code) seen.add(code);
+          };
+          read();
+          return await new Promise<string[]>((resolve) => {
+            const observer = new MutationObserver(read);
+            observer.observe(reel, {
+              attributes: true,
+              attributeFilter: ["data-candidate"],
+            });
+            setTimeout(() => {
+              observer.disconnect();
+              resolve([...seen]);
+            }, 500);
+          });
+        });
+      expect(candidates.length).toBeGreaterThan(1);
+      expect(candidates).not.toContain(base);
       await expect
         .poll(async () =>
           Number(

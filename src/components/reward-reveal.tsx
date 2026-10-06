@@ -6,6 +6,10 @@ import Image from "next/image";
 import { getType, STUDY_TYPES } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
 import styles from "./reward-reveal.module.css";
+import {
+  REWARD_FRAME_DELAYS,
+  rewardRevealSequence,
+} from "@/lib/character-reveal";
 
 export function GiftBox({ small = false }: { small?: boolean }) {
   return (
@@ -32,6 +36,7 @@ export function RewardReveal({
   collected,
   total,
   pending,
+  ownedCodes,
   close,
 }: {
   code: string;
@@ -39,6 +44,7 @@ export function RewardReveal({
   collected: number;
   total: number;
   pending: number;
+  ownedCodes: string[];
   close: () => void;
 }) {
   const [phase, setPhase] = useState<
@@ -89,18 +95,24 @@ export function RewardReveal({
   useEffect(() => {
     if (phase !== "rolling") return;
     // Fast silhouettes slow down before holding the actual awarded card.
-    const delays = [80, 80, 90, 100, 110, 130, 160, 200, 260, 340, 460, 700];
+    const delays = REWARD_FRAME_DELAYS;
     let current = 0;
+    const started = performance.now();
+    let elapsed = 0;
     let timer: ReturnType<typeof setTimeout>;
     const next = () => {
-      timer = setTimeout(() => {
-        current++;
-        if (current === delays.length) setPhase("revealed");
-        else {
-          setFrame(current);
-          next();
-        }
-      }, delays[current]);
+      elapsed += delays[current];
+      timer = setTimeout(
+        () => {
+          current++;
+          if (current === delays.length) setPhase("revealed");
+          else {
+            setFrame(current);
+            next();
+          }
+        },
+        Math.max(0, started + elapsed - performance.now()),
+      );
     };
     next();
     return () => clearTimeout(timer);
@@ -110,15 +122,14 @@ export function RewardReveal({
       setPhase("revealed");
       return;
     }
-    const pool = STUDY_TYPES.filter((item) => item.code !== code).map(
-      (item) => item.code,
-    );
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
     // This is only the reveal animation; the server-issued reward never changes.
-    setSequence([...pool.slice(0, 11), code]);
+    setSequence(
+      rewardRevealSequence(
+        STUDY_TYPES.map((item) => item.code),
+        ownedCodes,
+        code,
+      ),
+    );
     setFrame(0);
     setPhase("opening");
   }
@@ -168,12 +179,18 @@ export function RewardReveal({
           hidden={phase !== "rolling"}
           aria-hidden="true"
           data-frame={frame}
+          data-candidate={sequence[frame]}
         >
           <span className={styles.reelLabel}>
-            {frame >= 9 ? "이제 곧…!" : "어떤 공부 친구일까?"}
+            {frame === REWARD_FRAME_DELAYS.length - 1
+              ? "이제 곧…!"
+              : "어떤 공부 친구일까?"}
           </span>
           <div className={styles.reelPortrait}>
-            {STUDY_TYPES.map((candidate) => (
+            {STUDY_TYPES.filter(
+              (candidate) =>
+                candidate.code === code || !ownedCodes.includes(candidate.code),
+            ).map((candidate) => (
               <Image
                 key={candidate.code}
                 src={candidate.asset!}
