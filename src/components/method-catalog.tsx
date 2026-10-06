@@ -13,6 +13,8 @@ import { useSkills } from "./skill-provider";
 import { MethodIcon } from "./method-icon";
 import { Heart, SkillWallet } from "./skill-ui";
 import { Mission } from "./mission";
+import { CHARACTERS } from "@/lib/characters";
+import { SignatureBadge, SkillModality } from "./skill-badges";
 export function MethodCatalog() {
   const { progress } = useSkills();
   const [open, setOpen] = useState<MethodId | null>(null);
@@ -31,6 +33,10 @@ export function MethodCatalog() {
       <div id="skill-wallet" tabIndex={-1}>
         <SkillWallet />
       </div>
+      <p className="skill-catalog-guide">
+        왼쪽 위는 공부 방식, 캐릭터 배지는 내가 연 시그니처예요. 다른 유형의
+        스킬도 자유롭게 써 보세요.
+      </p>
       {(Object.keys(CATEGORIES) as MethodCategory[]).map((category) => (
         <section
           className="catalog-group"
@@ -63,22 +69,31 @@ export function MethodCatalog() {
                       trigger.current = e.currentTarget;
                       setOpen(id);
                     }}
-                    aria-label={`${m.name}${unlocked ? " · 열림" : ` · 하트 ${skillPrice(id)}개로 열기`}`}
+                    aria-label={`${m.name}${unlocked ? " · 열림" : ` · 하트 ${skillPrice(id)}개로 열기`}${unlocked && owner.kind === "signature" ? ` · ${CHARACTERS[owner.code].name} 시그니처 배지 획득` : ""}`}
                     aria-haspopup="dialog"
                     className="skill-tile"
                     data-unlocked={unlocked}
                     data-signature={owner.kind === "signature"}
                     key={id}
                   >
+                    <SkillModality id={id} />
                     <span className="skill-tile-art">
                       <MethodIcon id={id} size={112} />
                     </span>
                     <h3>{m.name}</h3>
                     <span className="skill-tile-bottom">
                       {unlocked ? (
-                        <>
-                          <span aria-hidden="true">↗</span>
-                        </>
+                        owner.kind === "signature" ? (
+                          <span className="skill-signature-earned">
+                            <SignatureBadge code={owner.code} />
+                            <span>
+                              <strong>{CHARACTERS[owner.code].name}</strong>
+                              <small>시그니처 획득</small>
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="skill-earned-label">스킬 획득</span>
+                        )
                       ) : (
                         <>
                           <Heart size={20} />

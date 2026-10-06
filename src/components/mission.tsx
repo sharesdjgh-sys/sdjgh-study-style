@@ -14,6 +14,7 @@ import { EFFECT_QUESTIONS, PRACTICE_SECONDS } from "@/lib/skill-economy";
 import { useSkills, SKILL_ERRORS } from "./skill-provider";
 import { Heart, SkillGate } from "./skill-ui";
 import { MethodMeta } from "./method-meta";
+import { SignatureBadge, SkillModality } from "./skill-badges";
 
 export function Mission({
   methodId,
@@ -158,6 +159,18 @@ function OpenMission({
         </span>
       </div>
       <div className="skill-detail-copy">
+        <div className="skill-detail-badges">
+          <SkillModality id={methodId} />
+          {owner.kind === "signature" && (
+            <span className="skill-signature-earned">
+              <SignatureBadge code={owner.code} />
+              <span>
+                <strong>{CHARACTERS[owner.code].name}</strong>
+                <small>시그니처 배지 획득</small>
+              </span>
+            </span>
+          )}
+        </div>
         <span className="eyebrow">나만의 공부 공략집</span>
         <h2>{method.name}</h2>
         <p className="mission-lead">{method.oneLine}</p>

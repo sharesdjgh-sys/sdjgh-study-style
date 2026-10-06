@@ -1,0 +1,9 @@
+{
+  "asset": "public/skills/signature-badge-frame.webp",
+  "master": "art/skills/signature-badge-frame.png",
+  "generator": "built-in image_gen",
+  "purpose": "Shared collectible frame for all 16 signature badges. Existing characterThumbnail portraits are composed in CSS to preserve mascot identity.",
+  "prompt": "Charming collectible portrait badge frame for a cozy study game. Champagne gold enamel medallion, muted lavender ribbon, tiny star, transparent central opening and outer background. Soft hand-painted 3D style, readable at 48px, no character, no lettering.",
+  "webSize": [192, 192],
+  "transparency": true
+}

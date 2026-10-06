@@ -280,6 +280,112 @@
   height: 122px;
   margin: 0 0 6px;
 }
+.skill-catalog-guide {
+  color: #736858;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin: 20px 2px 0;
+  word-break: keep-all;
+}
+.skill-modality {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 5px;
+  border: 1px solid #c8d9e4;
+  background: #edf5fa;
+  color: #386079;
+  border-radius: 8px;
+  padding: 4px 7px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.skill-modality > svg {
+  flex-shrink: 0;
+}
+.skill-modality[data-modality="auditory"] {
+  color: #95602e;
+  background: #fff2df;
+  border-color: #e8d2b5;
+}
+.skill-modality[data-modality="tactile"] {
+  color: #78548d;
+  background: #f4eafa;
+  border-color: #ddcbe7;
+}
+.skill-modality[data-modality="motion"] {
+  color: #427252;
+  background: #edf5e6;
+  border-color: #c8ddbe;
+}
+.signature-badge {
+  display: inline-block;
+  position: relative;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+}
+.signature-badge-portrait {
+  position: absolute;
+  inset: 14% 14% 15%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 40% 30%, #fff8e5, #e2d3ed);
+}
+.signature-badge .signature-badge-face {
+  position: absolute;
+  width: 180%;
+  max-width: none;
+  height: 180%;
+  left: -40%;
+  top: -8%;
+  object-fit: contain;
+}
+.signature-badge .signature-badge-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.skill-signature-earned {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-align: left;
+  color: #715185;
+}
+.skill-signature-earned strong {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.skill-signature-earned small {
+  display: block;
+  font-size: 0.62rem;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+.skill-earned-label {
+  color: #416846;
+  background: #e5efdd;
+  border: 1px solid #c4d6b8;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+.skill-detail-badges {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.skill-detail-badges .skill-modality {
+  align-self: center;
+}
 .skill-tile-art .method-icon-frame {
   height: 112px;
   width: 112px;
@@ -303,8 +409,8 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 25px;
-  padding: 3px 10px;
+  min-height: 54px;
+  padding: 0;
   margin-top: 2px;
   font-size: 0.77rem;
   color: #98788b;
@@ -738,6 +844,13 @@
     font-size: 0.7rem;
     flex-wrap: wrap;
     gap: 4px;
+  }
+  .skill-tile .signature-badge {
+    width: 44px;
+    height: 44px;
+  }
+  .skill-tile .skill-signature-earned small {
+    font-size: 0.59rem;
   }
   .skill-tile-kind {
     font-size: 0.63rem;

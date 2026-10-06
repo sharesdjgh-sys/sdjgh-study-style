@@ -652,6 +652,13 @@ export function methodOwner(
   )!;
   return { kind: "family", modality };
 }
+/** 기존 공부캐 라인업의 방식 분류. 학습 능력이나 효과를 판정하는 등급은 아니에요. */
+export function methodModality(id: MethodId): Modality {
+  const owner = methodOwner(id);
+  return owner.kind === "family"
+    ? owner.modality
+    : (owner.code.split("-")[0] as Modality);
+}
 /** 저장된 활동 기록에서 공부법을 찾아요. 예전 기록은 방식·과제로 저장돼 있어요. */
 export function missionMethod(mission: {
   method?: string;
