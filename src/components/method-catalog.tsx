@@ -28,7 +28,7 @@ export function MethodCatalog() {
   }
   return (
     <>
-      <div id="skill-wallet">
+      <div id="skill-wallet" tabIndex={-1}>
         <SkillWallet />
       </div>
       {(Object.keys(CATEGORIES) as MethodCategory[]).map((category) => (

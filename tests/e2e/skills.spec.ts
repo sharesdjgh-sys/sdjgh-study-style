@@ -73,6 +73,26 @@ test("기존 아이콘과 이름만 표시하고 PC·모바일 모두 확인 팝
   await expect(card).toBeFocused();
 });
 
+test("하트 모으는 방법은 팝업을 닫고 안내로 이동하며 반복해도 동작한다", async ({
+  page,
+}) => {
+  const state = await mockSkills(page);
+  await page.goto("/methods");
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await page.locator(".skill-tile", { hasText: "코넬 노트" }).click();
+    const sheet = page.getByRole("dialog", { name: "코넬 노트" });
+    await expect(sheet).toBeVisible();
+    await sheet.getByRole("link", { name: "하트 모으는 방법" }).click();
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+    await expect(page).toHaveURL(/\/methods#skill-wallet$/);
+    await expect(
+      page.getByRole("heading", { name: "하트로 여는 나의 가능성" }),
+    ).toBeInViewport();
+  }
+  expect(state.unlocks).toBe(0);
+  expect(state.progress.balance).toBe(3);
+});
+
 for (const [id, cost] of [
   ["blank-page", 1],
   ["cornell", 2],

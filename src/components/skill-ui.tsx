@@ -288,8 +288,24 @@ export function SkillGate({
             </p>
           )}
           <div className="skill-gate-links">
-            <Link href="/collection">캐릭터 만나러 가기 →</Link>
-            <Link href="/methods#skill-wallet">하트 모으는 방법 →</Link>
+            <Link href="/collection" onNavigate={onCancel}>
+              캐릭터 만나러 가기 →
+            </Link>
+            <Link
+              href="/methods#skill-wallet"
+              onNavigate={() => {
+                onCancel?.();
+                // Repeated navigation to the same hash must still reveal the wallet.
+                const wallet = document.getElementById("skill-wallet");
+                if (wallet)
+                  requestAnimationFrame(() => {
+                    wallet.focus({ preventScroll: true });
+                    wallet.scrollIntoView({ block: "start" });
+                  });
+              }}
+            >
+              하트 모으는 방법 →
+            </Link>
           </div>
         </>
       )}
