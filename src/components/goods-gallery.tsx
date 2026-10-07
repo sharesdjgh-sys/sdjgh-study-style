@@ -275,7 +275,7 @@ export function GoodsFace({
       ) : (
         <>
           <Image
-            src={`/goods/${card.id}.webp`}
+            src={`/goods/${card.id}.webp?v=${card.imageVersion}`}
             alt={`${card.name} · ${card.title}`}
             width={384}
             height={576}

@@ -22,18 +22,18 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
     .click();
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(3);
   const open = page.getByRole("button", {
-    name: "루미 도서관의 작은 쉼표 카드 보기",
+    name: "루미 산책을 접어 둔 지도 카드 보기",
   });
   await open.click();
   const dialog = page.getByRole("dialog");
   await page.getByRole("button", { name: "뒷면 보기" }).click();
   await expect(
-    dialog.getByText("“이 장면은 마음속에 밑줄 쳐둘래.”"),
+    dialog.getByText("“걸었던 길을 이으면 발견도 이어져.”"),
   ).toBeVisible();
   await page.getByRole("button", { name: "다음 카드 →" }).click();
   await page.getByRole("button", { name: "뒷면 보기" }).click();
   await expect(
-    dialog.getByText("“오늘의 도착지는 따뜻한 코코아야.”"),
+    dialog.getByText("“책장 밖에서 만나니 더 잘 보이네.”"),
   ).toBeVisible();
   expect(await dialog.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(
     true,
@@ -115,7 +115,7 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   );
   await page.goto("/goods");
   await page
-    .getByRole("button", { name: "루미 별지도를 펼치는 마법사 카드 보기" })
+    .getByRole("button", { name: "루미 잊힌 별길의 지도 제작자 카드 보기" })
     .click();
   await expect(page.getByRole("button", { name: "뒷면 보기" })).toHaveCount(0);
   await expect(
@@ -158,7 +158,7 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   await expect(page.getByLabel("내 굿즈만")).not.toBeChecked();
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
   await page
-    .getByRole("button", { name: "루미 비 오는 날의 코코아 카드 보기" })
+    .getByRole("button", { name: "루미 책장이 비어 있는 이유 카드 보기" })
     .click();
   await expect(
     page.getByRole("button", { name: "별 1개로 교환하기" }),

@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
+  images: {
+    localPatterns: [
+      { pathname: "/**", search: "" },
+      // Content hashes let reviewed goods replace cached artwork immediately.
+      { pathname: "/goods/*.webp" },
+    ],
+  },
   outputFileTracingIncludes: {
     "/api/goods/image": [
       "./art/goods/*.webp",
