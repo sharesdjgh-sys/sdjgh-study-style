@@ -71,7 +71,7 @@ export function GoodsGallery() {
           </div>
         </div>
       </header>
-      <StarWallet history />
+      <StarWallet history compact />
       <div className={styles.tabs}>
         <Link href="/collection">공부친구 수집노트</Link>
         <span aria-current="page">공부캐 굿즈</span>

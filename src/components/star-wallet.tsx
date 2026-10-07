@@ -6,6 +6,8 @@ import { getGoods } from "@/lib/goods";
 import { getMethod, type MethodId } from "@/lib/methods";
 import { FAMILIES, type Modality } from "@/lib/content";
 import { CHARACTERS } from "@/lib/characters";
+import styles from "./star-wallet.module.css";
+import { Icon } from "./icon";
 export function Star({ size = 24 }: { size?: number }) {
   return (
     <Image
@@ -17,15 +19,41 @@ export function Star({ size = 24 }: { size?: number }) {
     />
   );
 }
-export function StarWallet({ history = false }: { history?: boolean }) {
+export function StarWallet({
+  history = false,
+  compact = false,
+}: {
+  history?: boolean;
+  compact?: boolean;
+}) {
   const goods = useGoods();
   return (
-    <section className="star-wallet" aria-label="나의 별과 굿즈">
+    <section
+      className={`star-wallet ${compact ? styles.compact : styles.full}`}
+      aria-label="나의 별과 굿즈"
+    >
       <div className="star-wallet-heading">
-        <div>
-          <span className="eyebrow">MY GOODS COLLECTION</span>
-          <h2>작은 실천이, 소장하고 싶은 한 장으로.</h2>
-        </div>
+        {compact ? (
+          <div className={styles.summary}>
+            <span>
+              소장 굿즈{" "}
+              <strong>
+                {!goods.loaded || goods.error
+                  ? "—"
+                  : goods.progress.owned.length}
+                장
+              </strong>
+            </span>
+            <p>
+              일상 <b>1별</b> · 특별 의상 <b>2별</b>
+            </p>
+          </div>
+        ) : (
+          <div>
+            <span className="eyebrow">MY GOODS COLLECTION</span>
+            <h2>작은 실천이, 소장하고 싶은 한 장으로.</h2>
+          </div>
+        )}
         <div className="star-balance">
           <Star size={38} />
           <strong>
@@ -34,23 +62,48 @@ export function StarWallet({ history = false }: { history?: boolean }) {
           <span>별</span>
         </div>
       </div>
-      <p>
-        새 카드 개봉 <strong>1~2별</strong> · 스킬별 첫 10분 실천 + 설문{" "}
-        <strong>1별</strong> · 유형별 4명 완성 <strong>3별</strong>
-        <br />
-        <small>
-          각 카드·스킬·유형마다 최초 1회예요. 카드 보상은 랜덤이며 매일 반복
-          지급되지 않아요.
-        </small>
-      </p>
-      <div className="button-row">
-        <Link className="button star-button" href="/goods">
-          굿즈 둘러보기 · 일상 1별 / 특별 의상 2별
-        </Link>
-        <Link className="button secondary" href="/goods">
-          내 굿즈 {goods.progress.owned.length}장 →
-        </Link>
-      </div>
+      {!compact && (
+        <>
+          <p>
+            새 카드 개봉 <strong>1~2별</strong> · 스킬별 첫 10분 실천 + 설문{" "}
+            <strong>1별</strong> · 유형별 4명 완성 <strong>3별</strong>
+            <br />
+            <small>
+              각 카드·스킬·유형마다 최초 1회예요. 카드 보상은 랜덤이며 매일 반복
+              지급되지 않아요.
+            </small>
+          </p>
+          <Link className={styles.goodsLink} href="/goods">
+            <div className={styles.cards} aria-hidden="true">
+              <span>
+                <Star size={24} />
+              </span>
+              <span>
+                <Star size={28} />
+              </span>
+            </div>
+            <div className={styles.goodsCopy}>
+              <strong>내 공부캐 굿즈 고르기</strong>
+              <span>
+                일상 포토카드 <b>1별</b>
+                <i aria-hidden="true">·</i>특별 의상 <b>2별</b>
+              </span>
+              <small>
+                소장한 굿즈{" "}
+                <b>
+                  {!goods.loaded || goods.error
+                    ? "—"
+                    : goods.progress.owned.length}
+                  장
+                </b>
+              </small>
+            </div>
+            <span className={styles.arrow} aria-hidden="true">
+              <Icon name="arrow-right-linear" size={22} />
+            </span>
+          </Link>
+        </>
+      )}
       {goods.error && (
         <p role="status">
           별을 불러오지 못했어요.{" "}
