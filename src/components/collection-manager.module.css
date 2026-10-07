@@ -1,3 +1,11 @@
+.notebook:global(.collection-panel) {
+  padding: 36px;
+  background: #fffdf7;
+  border-color: #d5ddcb;
+  box-shadow: 0 6px 24px #344d3510;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
 .notebook :global(.collection-panel-heading > .eyebrow) {
   padding: 7px 12px;
   border-radius: 10px;
@@ -7,7 +15,14 @@
   font-weight: 800;
 }
 .notebook > h2 {
-  color: #365b48;
+  margin: 22px 0 16px;
+  color: #294b37;
+  text-wrap: balance;
+  text-decoration: underline;
+  text-decoration-color: #f3df72;
+  text-decoration-thickness: 0.35em;
+  text-underline-offset: -0.2em;
+  text-decoration-skip-ink: none;
 }
 .notebook :global(.collection-count) {
   padding: 5px 14px;
@@ -21,7 +36,9 @@
   color: #7d7156;
 }
 .notebook .intro {
-  color: #596755;
+  max-width: 60ch;
+  margin-bottom: 28px;
+  color: #4d5b46;
   line-height: 1.9;
 }
 .notebook .intro strong,
@@ -42,12 +59,12 @@
   padding: 4px 0 12px;
 }
 .notebook :global(.collection-summary > span) {
-  padding: 15px 12px;
+  padding: 18px 20px;
   border: 1px solid #d5dfc9;
   border-radius: 14px;
   background: #eaf0e2;
   color: #57674d;
-  font-size: 13px;
+  font-size: 14px;
 }
 .notebook :global(.collection-summary > span:nth-child(2)) {
   background: #eee6f4;
@@ -70,9 +87,10 @@
   color: #896224;
 }
 .notebook :global(.collection-invite-progress) {
-  padding: 16px 18px;
-  margin: 8px 0 20px;
-  border-left: 4px solid #a48bb9;
+  max-width: none;
+  padding: 18px 20px;
+  margin: 12px 0 24px;
+  border-left: 3px solid #a48bb9;
   border-radius: 0 12px 12px 0;
   background: #f1ebf6;
   color: #655774;
@@ -84,10 +102,11 @@
   font-weight: 750;
 }
 .notebook :global(.invite-code-box) {
-  padding: 18px 20px;
-  border: 1px dashed #c4b38d;
+  padding: 20px 22px;
+  border: 1px solid #dcd8c9;
   border-radius: 14px;
-  background: #fff9e9;
+  background: #f7f6ee;
+  gap: 10px 24px;
 }
 .notebook :global(.invite-code-box > span) {
   color: #78623d;
@@ -95,15 +114,70 @@
 }
 .notebook :global(.invite-code-box strong) {
   color: #365b48;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+}
+.notebook :global(.invite-code-box p) {
+  color: #5e6556;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.notebook :global(.invite-next-gift) {
+  padding: 24px;
+  border-style: solid;
+  border-color: #dfd6e5;
+  background: #f8f4fa;
+}
+.notebook :global(.invite-next-gift p) {
+  max-width: 60ch;
+  color: #514b58;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.notebook :global(.invite-next-gift > div > span) {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #59654f;
+}
+.notebook :global(.share-block) {
+  margin-top: 22px;
+}
+.notebook :global(.share-block .button) {
+  min-height: 52px;
+  padding: 14px 22px;
+  font-size: 15px;
+}
+.notebook :global(.share-block .button:first-child) {
+  background: #fffdf7;
+  border-color: #b6c2aa;
+  color: #3d5437;
+  box-shadow: 0 3px 0 #d8dece;
+}
+.notebook :global(.share-block .button:first-child:hover) {
+  background: #eef2e7;
+}
+.notebook :global(.share-block p:empty) {
+  display: none;
+}
+.notebook :global(.share-block .button:focus-visible),
+.records > summary:focus-visible {
+  outline: 3px solid #517b42;
+  outline-offset: 5px;
 }
 .notebook .conditions {
-  padding: 16px 18px;
-  border-radius: 12px;
-  background: #eaf0e3;
-  color: #5c6855;
+  max-width: 80ch;
+  margin: 22px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid #e1e5d9;
+  color: #5a6451;
   line-height: 1.85;
 }
 @media (max-width: 767px) {
+  .notebook:global(.collection-panel) {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
   .notebook :global(.collection-panel-heading) {
     gap: 8px;
   }
@@ -118,14 +192,64 @@
   .notebook .intro {
     font-size: 15px;
   }
+  .notebook > h2 {
+    font-size: 25px;
+    line-height: 1.5;
+    margin-top: 20px;
+  }
   .notebook :global(.collection-summary) {
     gap: 6px;
   }
   .notebook :global(.collection-summary > span) {
-    padding: 12px 8px;
+    padding: 14px 9px;
     font-size: 12px;
   }
   .notebook :global(.collection-summary strong) {
     font-size: 21px;
   }
+  .notebook :global(.collection-invite-progress) {
+    padding: 16px;
+    font-size: 14px;
+  }
+  .notebook :global(.invite-next-gift) {
+    padding: 18px 14px;
+    gap: 12px;
+  }
+  .notebook :global(.invite-next-gift strong) {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .notebook :global(.invite-next-gift p) {
+    font-size: 14px;
+  }
+  .notebook :global(.invite-code-box) {
+    padding: 18px 16px;
+    gap: 10px 16px;
+  }
+  .notebook .conditions {
+    font-size: 13px;
+    line-height: 1.9;
+  }
+}
+
+.records {
+  border-block: 1px solid #dce3d4;
+  margin-bottom: 36px;
+  color: #42583b;
+}
+.records > summary {
+  cursor: pointer;
+  padding: 18px 4px;
+  font-size: 15px;
+  font-weight: 650;
+}
+.records > summary span {
+  margin-left: 12px;
+  color: #6a7661;
+  font-size: 12px;
+  font-weight: 400;
+}
+.records :global(.saved-results) {
+  margin: 0 0 18px;
+  background: #fffdf7;
 }

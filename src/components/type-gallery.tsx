@@ -16,8 +16,10 @@ import { collectionProgress } from "@/lib/collection-progress";
 import { Icon } from "./icon";
 export function TypeGallery({
   initial = "all",
+  showOverview = true,
 }: {
   initial?: Modality | "all";
+  showOverview?: boolean;
 }) {
   const [filter, setFilter] = useState<Modality | "all">(initial);
   const { first } = useSavedSession();
@@ -30,63 +32,65 @@ export function TypeGallery({
   );
   return (
     <>
-      <div className="catalog-discovery-note">
-        <div className="catalog-progress-copy">
-          <div className="catalog-progress-heading">
-            <h2>
-              {ownCode
-                ? "한 장씩, 내 도감이 자라요!"
-                : "첫 친구를 만나면, 수집 시작!"}
-            </h2>
-            <span
-              className="catalog-progress-count"
-              aria-label={
-                loaded
-                  ? `발견한 친구 ${progress.collected}명, 전체 ${progress.total}명`
-                  : "도감 불러오는 중"
-              }
-            >
-              {loaded ? progress.collected : "—"}
-              <small> / {progress.total}</small>
-            </span>
-          </div>
-          <div className="catalog-progress-slots" aria-hidden="true">
-            {STUDY_TYPES.map((type) => (
+      {showOverview && (
+        <div className="catalog-discovery-note">
+          <div className="catalog-progress-copy">
+            <div className="catalog-progress-heading">
+              <h2>
+                {ownCode
+                  ? "한 장씩, 내 도감이 자라요!"
+                  : "첫 친구를 만나면, 수집 시작!"}
+              </h2>
               <span
-                key={type.code}
-                data-family={type.modality}
-                className={visibleCodes.has(type.code) ? "is-found" : ""}
-              />
-            ))}
-          </div>
-          {progress.previewOnly && (
-            <span className="catalog-preview-label">
-              첫 친구 미리보기 · 아직 저장 전
-            </span>
-          )}
-          <p>
-            {ownCode ? (
-              <>
-                내 공부캐 <strong>1명</strong> + 친구 초대로{" "}
-                <strong>{progress.inviteGoal}명</strong>
-              </>
-            ) : (
-              <>
-                첫 만남은 <strong>검사로</strong>, 도감 저장은{" "}
-                <strong>로그인 후</strong>.
-              </>
+                className="catalog-progress-count"
+                aria-label={
+                  loaded
+                    ? `발견한 친구 ${progress.collected}명, 전체 ${progress.total}명`
+                    : "도감 불러오는 중"
+                }
+              >
+                {loaded ? progress.collected : "—"}
+                <small> / {progress.total}</small>
+              </span>
+            </div>
+            <div className="catalog-progress-slots" aria-hidden="true">
+              {STUDY_TYPES.map((type) => (
+                <span
+                  key={type.code}
+                  data-family={type.modality}
+                  className={visibleCodes.has(type.code) ? "is-found" : ""}
+                />
+              ))}
+            </div>
+            {progress.previewOnly && (
+              <span className="catalog-preview-label">
+                첫 친구 미리보기 · 아직 저장 전
+              </span>
             )}
-          </p>
+            <p>
+              {ownCode ? (
+                <>
+                  내 공부캐 <strong>1명</strong> + 친구 초대로{" "}
+                  <strong>{progress.inviteGoal}명</strong>
+                </>
+              ) : (
+                <>
+                  첫 만남은 <strong>검사로</strong>, 도감 저장은{" "}
+                  <strong>로그인 후</strong>.
+                </>
+              )}
+            </p>
+          </div>
+          <Link
+            className="button primary"
+            href={ownCode || data.signedIn ? "/collection" : "/quiz"}
+          >
+            {ownCode || data.signedIn
+              ? "내 도감 저장·초대하기 ↗"
+              : "내 캐릭터 만나기 →"}
+          </Link>
         </div>
-        <Link
-          className="button primary"
-          href={ownCode || data.signedIn ? "/collection" : "/quiz"}
-        >
-          {ownCode || data.signedIn
-            ? "내 도감 저장·초대하기 ↗"
-            : "내 캐릭터 만나기 →"}
-        </Link>
-      </div>
+      )}
       <div className="filter-tabs catalog-family-tabs" aria-label="유형 필터">
         <button
           className={filter === "all" ? "active" : ""}

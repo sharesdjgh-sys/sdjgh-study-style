@@ -157,6 +157,7 @@ export function SpecialCollectionCard() {
   return (
     <section
       className={`special-collection-card ${unlocked ? "is-unlocked" : "is-locked"}`}
+      id="collection-completion"
       aria-label="도감 완성 스페셜 카드"
     >
       <div className="special-card-copy">

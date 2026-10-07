@@ -14,7 +14,6 @@ import { useAccountResults } from "./account-results-provider";
 import { notifyAuthChange, useAuth } from "./auth-provider";
 import styles from "./collection-manager.module.css";
 import { useSkills } from "./skill-provider";
-import { SkillWallet } from "./skill-ui";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -442,23 +441,12 @@ export function CollectionManager() {
         )}
       </section>
       {data.signedIn && (
-        <>
-          <SkillWallet />
-          <section className="collection-nudge">
-            <div>
-              <span className="eyebrow">STUDYCREW GOODS</span>
-              <h2>친구들의 새로운 순간을 만나봐요.</h2>
-              <p>
-                일상 포토카드 3종과 특별 의상 5종, 카드마다 다른 이야기가
-                기다려요.
-              </p>
-            </div>
-            <Link className="button secondary" href="/goods">
-              공부캐 굿즈 둘러보기 →
-            </Link>
-          </section>
+        <details className={styles.records}>
+          <summary>
+            내 검사 기록 <span>필요할 때 펼쳐보기</span>
+          </summary>
           <SavedResults history />
-        </>
+        </details>
       )}
       {reward && (
         <RewardReveal

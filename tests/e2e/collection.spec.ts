@@ -336,6 +336,25 @@ test("계정 도감 복원과 선물 개봉, 수집한 캐릭터만 공개하고
     return route.fulfill({ json: { code: third } });
   });
   await page.goto("/collection");
+  await expect(
+    page.locator(".skill-wallet, .star-wallet, .catalog-discovery-note"),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("main").getByRole("link", { name: /굿즈/ }),
+  ).toHaveCount(0);
+  const history = page
+    .locator("details")
+    .filter({ has: page.locator(".saved-results") });
+  await expect(history).not.toHaveAttribute("open");
+  await expect(history.locator(".saved-results")).not.toBeVisible();
+  await history.locator("summary").click();
+  await expect(history.locator(".saved-results")).toBeVisible();
+  await history.locator("summary").click();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
   await expect(page.locator(".character-gallery .character-card")).toHaveCount(
     2,
   );
