@@ -5,11 +5,13 @@ import sharp from "sharp";
 test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배치", async ({
   page,
 }) => {
-  await mockSkills(page);
+  const state = await mockSkills(page);
+  state.goods.owned = [
+    "visual-solo-planned--daily-01",
+    "visual-solo-planned--daily-02",
+  ];
   await page.goto("/goods");
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(
-    128,
-  );
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
   await page
     .getByRole("navigation", { name: "굿즈 캐릭터" })
     .getByRole("button", { name: /루미/ })
@@ -45,9 +47,8 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
   await page.getByRole("button", { name: "전체", exact: true }).click();
   await page
     .getByRole("navigation", { name: "굿즈 캐릭터" })
-    .getByRole("button", { name: /모든 친구/ })
+    .getByRole("button", { name: /내 공부캐 전체/ })
     .click();
-  await page.getByLabel("내 공부캐만").check();
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
   expect(
     await page.evaluate(
@@ -59,17 +60,17 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
     fullPage: true,
   });
 });
-test("비로그인도 전체 굿즈를 둘러보고 내 공부캐 필터의 안내를 볼 수 있다", async ({
+test("비로그인은 굿즈를 노출하지 않고 도감 안내를 보여준다", async ({
   page,
 }) => {
   await page.route("**/api/auth/session", (r) =>
     r.fulfill({ json: { signedIn: false, configured: true } }),
   );
   await page.goto("/goods");
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(
-    128,
-  );
-  await page.getByLabel("내 공부캐만").check();
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(0);
+  await expect(
+    page.locator('img[src*="--daily"], img[src*="--special"]'),
+  ).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "첫 공부 친구를 만나볼까요?" }),
   ).toBeVisible();
@@ -116,6 +117,15 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   await page
     .getByRole("button", { name: "루미 별지도를 펼치는 마법사 카드 보기" })
     .click();
+  await expect(page.getByRole("button", { name: "뒷면 보기" })).toHaveCount(0);
+  await expect(
+    page.getByRole("dialog").locator('img[src*="--special"]'),
+  ).toHaveCount(0);
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByText(getGoods("visual-solo-planned--special-01")!.back.story),
+  ).toHaveCount(0);
   await page.getByRole("button", { name: "별 2개로 교환하기" }).click();
   await page.getByRole("button", { name: "취소", exact: true }).click();
   expect(purchases).toBe(0);
@@ -128,6 +138,9 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   ).toBeVisible();
   expect(purchases).toBe(1);
   expect(state.goods.balance).toBe(0);
+  await expect(
+    page.getByRole("dialog").locator('img[src*="--special"]'),
+  ).toHaveCount(1);
   const download = page.waitForEvent("download");
   await page.getByRole("link", { name: "이미지 저장", exact: true }).click();
   expect((await download).suggestedFilename()).toMatch(/\.jpg$/);
@@ -148,13 +161,59 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
     page.getByRole("button", { name: "별 1개로 교환하기" }),
   ).toBeDisabled();
   await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: /모아 .*카드 보기/ }),
+  ).toHaveCount(0);
+  await expect(
+    page
+      .getByRole("navigation", { name: "굿즈 캐릭터" })
+      .getByRole("button", { name: /모아/ }),
+  ).toHaveCount(0);
+});
+
+test("미교환 굿즈는 그림을 요청하지 않고 봉인된 상태로 표시한다", async ({
+  page,
+}) => {
+  await mockSkills(page);
+  const artwork: string[] = [];
+  page.on("request", (request) => {
+    if (/--(?:daily|special)-/.test(decodeURIComponent(request.url())))
+      artwork.push(request.url());
+  });
+  await page.goto("/goods");
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
   await page
-    .getByRole("button", { name: "모아 도서관의 작은 쉼표 카드 보기" })
+    .getByRole("button", { name: /카드 보기$/ })
+    .first()
     .click();
   await expect(
-    page.getByText(/먼저 캐릭터 카드를 도감에 모아 주세요/),
+    page.getByRole("dialog").getByText("아직 열리지 않은 순간"),
   ).toBeVisible();
-  await expect(page.getByRole("button", { name: /별 .*교환하기/ })).toHaveCount(
-    0,
+  await expect(page.getByRole("button", { name: "뒷면 보기" })).toHaveCount(0);
+  expect(artwork).toEqual([]);
+});
+
+test("소장 정보 조회 실패 시 굿즈를 숨기고 재시도한다", async ({ page }) => {
+  await mockSkills(page);
+  let failed = true;
+  await page.route("**/api/goods", (route) =>
+    route.fulfill(
+      failed
+        ? { status: 503, json: { error: "unavailable" } }
+        : {
+            json: {
+              accountId: "e1dcbb36-9c6e-4de6-8f57-f11b43765a7c",
+              progress: { balance: 0, owned: [], entries: [], families: [] },
+            },
+          },
+    ),
   );
+  await page.goto("/goods");
+  await expect(
+    page.getByRole("button", { name: "다시 불러오기" }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(0);
+  failed = false;
+  await page.getByRole("button", { name: "다시 불러오기" }).click();
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
 });

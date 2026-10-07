@@ -74,8 +74,8 @@ export function GoodsActions({
       ) : !goods.signedIn ? (
         <>
           <p>
-            모든 카드는 미리 볼 수 있어요. 로그인하면 내 공부캐의 굿즈를 별로
-            교환할 수 있어요.
+            로그인하면 내 공부캐의 굿즈를 별로 교환하고 그림과 이야기를 열어 볼
+            수 있어요.
           </p>
           <button
             className="button star-button"

@@ -32,19 +32,28 @@
   padding: 12px 28px;
   flex-shrink: 0;
 }
-.heroCards img {
+.heroPack {
   width: 150px;
   height: 225px;
-  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: radial-gradient(ellipse at top, #fffdf5, #ede8d8);
+  color: #765887;
+  font-size: 9px;
   border: 7px solid #fffdf6;
   box-shadow: 0 10px 25px #51452d24;
   transform: rotate(-10deg);
   border-radius: 8px;
 }
-.heroCards img + img {
+.heroPack + .heroPack {
   margin-left: -35px;
   transform: rotate(10deg);
   border-color: #c6a164;
+  background: radial-gradient(ellipse at top, #34455c, #152137);
+  color: #f6e4b7;
 }
 .tabs {
   display: flex;
@@ -387,6 +396,13 @@
   font-size: 11px;
   color: #8b7650;
 }
+.locked {
+  padding: 18px 12px;
+}
+.locked h3 {
+  font-size: clamp(14px, 1.5vw, 18px);
+  word-break: keep-all;
+}
 .special .back {
   border: 6px solid #c5a366;
   background: radial-gradient(ellipse at top, #34455c, #152137);
@@ -409,7 +425,7 @@
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .heroCards img {
+  .heroPack {
     width: 120px;
     height: 180px;
   }
@@ -457,29 +473,47 @@
     font-size: 19px;
   }
   .card {
-    padding: 6px 6px 37px;
+    padding: 6px;
+    aspect-ratio: auto;
+  }
+  .card > img {
+    display: block;
+    height: auto;
+    aspect-ratio: 2/3;
+  }
+  .card:has(.back) {
+    aspect-ratio: 2/3;
   }
   .caption {
-    left: 8px;
-    right: 8px;
-    bottom: 7px;
+    position: static;
+    padding: 14px 6px 10px;
     display: block;
   }
   .caption strong {
     display: block;
-    font-size: 9px;
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: keep-all;
   }
   .caption small {
-    font-size: 6px;
+    display: block;
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.5;
   }
   .special {
     padding: 4px;
   }
   .special .caption strong {
-    font-size: 11px;
+    font-size: 13px;
   }
   .special .caption small {
-    font-size: 6px;
+    font-size: 10px;
+  }
+  .special .caption {
+    padding: 14px 8px 12px;
+    background: #172439;
+    margin-top: 8px;
   }
   .seal {
     font-size: 6px;
@@ -487,10 +521,14 @@
     left: 9px;
   }
   .itemInfo strong {
-    font-size: 12px;
+    font-size: 13px;
+  }
+  .itemInfo {
+    padding-top: 16px;
+    line-height: 1.6;
   }
   .itemInfo small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .itemInfo > span {
     font-size: 10px;
@@ -505,10 +543,10 @@
     max-width: 280px;
   }
   .large .caption strong {
-    font-size: 12px;
+    font-size: 15px;
   }
   .large .caption small {
-    font-size: 8px;
+    font-size: 11px;
   }
   .copy h2 {
     font-size: 23px;

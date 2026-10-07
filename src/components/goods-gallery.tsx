@@ -25,15 +25,21 @@ export function GoodsGallery({
   const [ownedOnly, setOwnedOnly] = useState(initialOwned);
   const [character, setCharacter] = useState("all");
   const [kind, setKind] = useState("all");
-  const [mine, setMine] = useState(false);
   const [active, setActive] = useState<GoodsCard | null>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
-  const ownedCharacters = new Set(collection.data.cards.map((c) => c.code));
-  const visible = GOODS.filter(
+  const ready =
+    collection.loaded && goods.loaded && !collection.error && !goods.error;
+  const ownedCharacters = new Set(
+    ready && collection.data.signedIn
+      ? collection.data.cards.map((c) => c.code)
+      : [],
+  );
+  const available = GOODS.filter((c) => ownedCharacters.has(c.code));
+  const selectedCharacter = ownedCharacters.has(character) ? character : "all";
+  const visible = available.filter(
     (c) =>
-      (character === "all" || c.code === character) &&
+      (selectedCharacter === "all" || c.code === selectedCharacter) &&
       (kind === "all" || c.kind === kind) &&
-      (!mine || ownedCharacters.has(c.code)) &&
       (!ownedOnly || goods.progress.owned.includes(c.id)),
   );
   function close() {
@@ -55,23 +61,18 @@ export function GoodsGallery({
           </h1>
           <p>
             포근한 일상 3장, 상상 속 의상 5장.
-            <br />
-            카드를 뒤집으면 나에게 들려주는 이야기가 있어요.
+            <br />내 공부캐의 카드를 모으면 그림과 비밀 이야기가 열려요.
           </p>
         </div>
         <div className={styles.heroCards} aria-hidden="true">
-          <Image
-            src="/goods/visual-solo-planned--daily-02.webp"
-            alt=""
-            width={180}
-            height={270}
-          />
-          <Image
-            src="/goods/visual-solo-planned--special-01.webp"
-            alt=""
-            width={180}
-            height={270}
-          />
+          <div className={styles.heroPack}>
+            <Star size={36} />
+            <span>DAILY MOMENT</span>
+          </div>
+          <div className={styles.heroPack}>
+            <Star size={36} />
+            <span>SPECIAL COLLECTION</span>
+          </div>
         </div>
       </header>
       <StarWallet history />
@@ -82,25 +83,25 @@ export function GoodsGallery({
       </div>
       <nav className={styles.characters} aria-label="굿즈 캐릭터">
         <button
-          aria-pressed={character === "all"}
+          aria-pressed={selectedCharacter === "all"}
           onClick={() => setCharacter("all")}
         >
-          <strong>모든 친구</strong>
-          <small>128가지 순간</small>
+          <strong>내 공부캐 전체</strong>
+          <small>{available.length}가지 순간</small>
         </button>
-        {characters.map(([code, c]) => (
-          <button
-            key={code}
-            aria-pressed={character === code}
-            onClick={() => setCharacter(code)}
-          >
-            <Image src={avatar(code)} alt="" width={44} height={44} />
-            <strong>{c.name}</strong>
-            <small>
-              {ownedCharacters.has(code) ? "함께하는 친구" : "8장의 이야기"}
-            </small>
-          </button>
-        ))}
+        {characters
+          .filter(([code]) => ownedCharacters.has(code))
+          .map(([code, c]) => (
+            <button
+              key={code}
+              aria-pressed={selectedCharacter === code}
+              onClick={() => setCharacter(code)}
+            >
+              <Image src={avatar(code)} alt="" width={44} height={44} />
+              <strong>{c.name}</strong>
+              <small>함께하는 친구</small>
+            </button>
+          ))}
       </nav>
       <section aria-label="굿즈 목록">
         <div className={styles.filters}>
@@ -127,26 +128,20 @@ export function GoodsGallery({
             />
             내 굿즈만
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={mine}
-              onChange={(e) => setMine(e.target.checked)}
-            />
-            내 공부캐만
-          </label>
         </div>
         <div className={styles.heading}>
           <h2>
-            {character === "all"
-              ? "모든 친구의 컬렉션"
-              : `${CHARACTERS[character].name}의 컬렉션`}
+            {selectedCharacter === "all"
+              ? "내 공부캐의 컬렉션"
+              : `${CHARACTERS[selectedCharacter].name}의 컬렉션`}
           </h2>
-          <span>{visible.length}장 / 128장</span>
+          <span>
+            {visible.length}장 / {available.length}장
+          </span>
         </div>
-        {(mine && !collection.loaded) || (ownedOnly && !goods.loaded) ? (
+        {!collection.loaded || !goods.loaded ? (
           <p role="status">내 공부캐를 불러오고 있어요…</p>
-        ) : (mine && collection.error) || (ownedOnly && goods.error) ? (
+        ) : collection.error || goods.error ? (
           <div className="notice">
             <p>내 공부캐를 불러오지 못했어요.</p>
             <button
@@ -171,7 +166,10 @@ export function GoodsGallery({
                   }}
                   aria-label={`${card.name} ${card.title} 카드 보기`}
                 >
-                  <GoodsFace card={card} />
+                  <GoodsFace
+                    card={card}
+                    locked={!goods.progress.owned.includes(card.id)}
+                  />
                 </button>
                 <div className={styles.itemInfo}>
                   <div>
@@ -198,8 +196,8 @@ export function GoodsGallery({
           </div>
         )}
         {!visible.length &&
-          (!mine || collection.loaded) &&
-          (!ownedOnly || goods.loaded) &&
+          collection.loaded &&
+          goods.loaded &&
           !goods.error &&
           !collection.error && (
             <div className={styles.empty}>
@@ -220,7 +218,6 @@ export function GoodsGallery({
                     setOwnedOnly(false);
                     setCharacter("all");
                     setKind("all");
-                    setMine(false);
                   }}
                 >
                   전체 굿즈 둘러보기
@@ -232,9 +229,9 @@ export function GoodsGallery({
             </div>
           )}
       </section>
-      {active && (
+      {active && ready && visible.some((card) => card.id === active.id) && (
         <GoodsDialog
-          key={active.id}
+          key={`${collection.data.accountId}-${active.id}`}
           card={active}
           close={close}
           previous={visible[visible.findIndex((i) => i.id === active.id) - 1]}
@@ -248,15 +245,27 @@ export function GoodsGallery({
 export function GoodsFace({
   card,
   back = false,
+  locked = false,
 }: {
   card: GoodsCard;
   back?: boolean;
+  locked?: boolean;
 }) {
   return (
     <div
       className={`${styles.card} ${card.kind === "special" ? styles.special : ""}`}
     >
-      {back ? (
+      {locked ? (
+        <div className={`${styles.back} ${styles.locked}`}>
+          <span>
+            {card.kind === "daily" ? "DAILY MOMENT" : "SPECIAL COLLECTION"}
+          </span>
+          <Star size={36} />
+          <h3>{card.title}</h3>
+          <p>아직 열리지 않은 순간</p>
+          <small>소장하면 그림과 이야기가 열려요</small>
+        </div>
+      ) : back ? (
         <div className={styles.back}>
           <span>
             {card.back.edition} · {card.name}
@@ -305,6 +314,9 @@ function GoodsDialog({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [back, setBack] = useState(false);
+  const goods = useGoods();
+  const owned =
+    goods.loaded && !goods.error && goods.progress.owned.includes(card.id);
   useEffect(() => {
     dialog.current?.showModal();
     const old = document.body.style.overflow;
@@ -334,26 +346,32 @@ function GoodsDialog({
       </div>
       <div className={styles.detail}>
         <div className={styles.large}>
-          <GoodsFace card={card} back={back} />
+          <GoodsFace card={card} back={back} locked={!owned} />
         </div>
         <div className={styles.copy}>
           <span className="eyebrow">
             {card.kind === "daily" ? "DAILY MOMENT" : "SPECIAL COSTUME"}
           </span>
           <h2 id="goods-title">{card.title}</h2>
-          <p>{card.back.story}</p>
-          <div className={styles.actions}>
-            <button
-              className="button secondary"
-              aria-pressed={back}
-              onClick={() => {
-                setBack((v) => !v);
-                dialog.current?.scrollTo({ top: 0 });
-              }}
-            >
-              {back ? "앞면 보기" : "뒷면 보기"}
-            </button>
-          </div>
+          <p>
+            {owned
+              ? card.back.story
+              : "어떤 순간이 담겨 있을까요? 별로 이 카드를 소장하면 그림과 나에게 전하는 이야기를 볼 수 있어요."}
+          </p>
+          {owned && (
+            <div className={styles.actions}>
+              <button
+                className="button secondary"
+                aria-pressed={back}
+                onClick={() => {
+                  setBack((v) => !v);
+                  dialog.current?.scrollTo({ top: 0 });
+                }}
+              >
+                {back ? "앞면 보기" : "뒷면 보기"}
+              </button>
+            </div>
+          )}
           <div className={styles.paging}>
             <button
               className="button secondary"

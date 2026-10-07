@@ -26,3 +26,12 @@
 .palette :global(.mystery-card-top) {
   color: var(--card-ink);
 }
+@media (max-width: 767px) {
+  .palette :global(.character-front-copy) {
+    margin-top: 24px;
+  }
+  .palette :global(.character-front-copy .character-type-title) {
+    line-height: 1.65;
+    word-break: keep-all;
+  }
+}
