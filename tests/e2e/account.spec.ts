@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { EMPTY_COLLECTION } from "../../src/lib/collection-contract";
+import { EMPTY_SKILLS } from "../../src/lib/skill-economy";
+import { EMPTY_GOODS } from "../../src/lib/goods";
 
 test("내 정보 메뉴는 모바일과 PC에서 연결되고 비로그인 안내를 표시한다", async ({
   page,
@@ -24,6 +26,13 @@ test("내 정보 메뉴는 모바일과 PC에서 연결되고 비로그인 안�
     page.getByRole("heading", { name: "내 정보", exact: true }),
   ).toBeVisible();
   const main = page.getByRole("main");
+  const balances = main.getByRole("region", { name: "보유 하트와 별" });
+  await expect(balances).toBeVisible();
+  await expect(balances.locator("dt")).toHaveText(["하트", "별"]);
+  await expect(balances.locator("strong")).toHaveText(["—", "—"]);
+  await expect(
+    main.locator(".skill-wallet, .star-wallet, .heart-history"),
+  ).toHaveCount(0);
   await expect(
     main.getByRole("button", { name: "카카오 로그인", exact: true }),
   ).toBeEnabled();
@@ -53,6 +62,22 @@ test("내 정보의 계정 삭제는 취소·실패 시 계정을 유지하고 �
     configured: true,
     accountId: "account-overview-test",
   };
+  await page.route("**/api/skills", (route) =>
+    route.fulfill({
+      json: {
+        accountId: identity.accountId,
+        progress: { ...EMPTY_SKILLS, balance: 7 },
+      },
+    }),
+  );
+  await page.route("**/api/goods", (route) =>
+    route.fulfill({
+      json: {
+        accountId: identity.accountId,
+        progress: { ...EMPTY_GOODS, balance: 4 },
+      },
+    }),
+  );
   await page.route("**/api/auth/session", (route) =>
     route.fulfill({
       json: authenticated ? identity : { signedIn: false, configured: true },
@@ -81,6 +106,9 @@ test("내 정보의 계정 삭제는 취소·실패 시 계정을 유지하고 �
   await page.goto("/account", { waitUntil: "domcontentloaded" });
   const main = page.getByRole("main");
   await expect(main).toContainText("루미");
+  await expect(
+    main.getByRole("region", { name: "보유 하트와 별" }).locator("strong"),
+  ).toHaveText(["7", "4"]);
   const remove = main.getByRole("button", {
     name: "계정·도감 삭제",
     exact: true,

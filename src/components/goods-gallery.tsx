@@ -15,14 +15,10 @@ const characters = Object.entries(CHARACTERS);
 function avatar(code: string) {
   return `/characters/thumbs/${code}${code === "auditory-solo-flexible" ? "-v2" : ""}.png`;
 }
-export function GoodsGallery({
-  initialOwned = false,
-}: {
-  initialOwned?: boolean;
-}) {
+export function GoodsGallery() {
   const collection = useCollection();
   const goods = useGoods();
-  const [ownedOnly, setOwnedOnly] = useState(initialOwned);
+  const [ownedOnly, setOwnedOnly] = useState(false);
   const [character, setCharacter] = useState("all");
   const [kind, setKind] = useState("all");
   const [active, setActive] = useState<GoodsCard | null>(null);

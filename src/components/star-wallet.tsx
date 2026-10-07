@@ -43,7 +43,7 @@ export function StarWallet({ history = false }: { history?: boolean }) {
         <Link className="button star-button" href="/goods">
           굿즈 둘러보기 · 일상 1별 / 특별 의상 2별
         </Link>
-        <Link className="button secondary" href="/goods?view=owned">
+        <Link className="button secondary" href="/goods">
           내 굿즈 {goods.progress.owned.length}장 →
         </Link>
       </div>

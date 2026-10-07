@@ -13,7 +13,10 @@ import { SavedResults } from "./saved-results";
 import { ClearRecords } from "./clear-records";
 import { useConfirm } from "./ui/confirm-dialog";
 import styles from "./account-overview.module.css";
-import { SkillWallet } from "./skill-ui";
+import { Heart } from "./skill-ui";
+import { Star } from "./star-wallet";
+import { useSkills } from "./skill-provider";
+import { useGoods } from "./goods-provider";
 
 function dateLabel(value?: number) {
   return value ? new Date(value).toLocaleDateString("ko-KR") : "아직 없어요";
@@ -24,6 +27,8 @@ export function AccountOverview() {
   const collection = useCollection();
   const local = useSavedSession();
   const saved = useAccountResults();
+  const skills = useSkills();
+  const goods = useGoods();
   const [confirm, dialog] = useConfirm();
   const [deleting, setDeleting] = useState(false);
   const deletionLock = useRef(false);
@@ -81,7 +86,6 @@ export function AccountOverview() {
 
   return (
     <main id="main" className={`catalog-shell ${styles.page}`}>
-      <SkillWallet history />
       <header className={`page-intro ${styles.intro}`}>
         <div>
           <span className="eyebrow">나의 공부 공간</span>
@@ -102,6 +106,37 @@ export function AccountOverview() {
           priority
         />
       </header>
+      <section className={styles.balances} aria-label="보유 하트와 별">
+        <dl>
+          {[
+            { label: "하트", wallet: skills, icon: <Heart size={28} /> },
+            { label: "별", wallet: goods, icon: <Star size={28} /> },
+          ].map(({ label, wallet, icon }) => (
+            <div key={label}>
+              <dt>
+                {icon}
+                {label}
+              </dt>
+              <dd>
+                <strong>
+                  {signedIn && wallet.signedIn && wallet.loaded && !wallet.error
+                    ? wallet.progress.balance
+                    : "—"}
+                </strong>
+                <span>개</span>
+              </dd>
+              {signedIn && wallet.error && (
+                <button
+                  className="text-link"
+                  onClick={() => void wallet.refresh()}
+                >
+                  {label} 다시 확인
+                </button>
+              )}
+            </div>
+          ))}
+        </dl>
+      </section>
       <div className={styles.grid}>
         <section
           className={`${styles.card} ${styles.wide}`}
@@ -109,11 +144,11 @@ export function AccountOverview() {
         >
           <h2 id="account-goods-title">공부캐 굿즈 컬렉션</h2>
           <p>
-            일상 포토카드부터 특별 의상까지, 16명 친구의 새로운 모습과 뒷면
-            이야기를 만나 보세요.
+            내가 모은 공부캐의 굿즈를 소장하고 새로운 모습과 뒷면 이야기를 열어
+            보세요.
           </p>
           <Link className="button secondary" href="/goods">
-            굿즈 128장 둘러보기 →
+            내 공부캐 굿즈 둘러보기 →
           </Link>
         </section>
         <section

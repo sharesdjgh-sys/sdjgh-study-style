@@ -150,10 +150,13 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   ).toHaveAttribute("href", /side=back/);
   await page.keyboard.press("Escape");
   await page.goto("/goods?view=owned");
+  await expect(page.getByLabel("내 굿즈만")).not.toBeChecked();
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await page.getByLabel("내 굿즈만").check();
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(1);
   await page.reload();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(1);
-  await page.getByLabel("내 굿즈만").uncheck();
+  await expect(page.getByLabel("내 굿즈만")).not.toBeChecked();
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
   await page
     .getByRole("button", { name: "루미 비 오는 날의 코코아 카드 보기" })
     .click();
