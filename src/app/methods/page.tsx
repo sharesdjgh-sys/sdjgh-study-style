@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { CharacterMotion } from "@/components/character-motion";
 import { FAMILIES, MODALITIES } from "@/lib/content";
-import { StudyArt } from "@/components/study-art";
 import { Icon } from "@/components/icon";
 import { BasicsNote } from "@/components/method-meta";
 import { MethodCatalog } from "@/components/method-catalog";
@@ -64,28 +63,60 @@ export default function Page() {
       <BasicsNote />
       <MethodCatalog />
       <section
-        className="catalog-group family-links"
+        className={`catalog-group family-links ${styles.experiments}`}
         aria-labelledby="family-methods"
       >
-        <h2 id="family-methods">방식별로 10분 실험하기</h2>
-        <div className="method-catalog">
+        <div className={styles.experimentHeading}>
+          <div>
+            <span className={styles.experimentEyebrow}>
+              오늘은 다른 방식으로
+            </span>
+            <h2 id="family-methods">
+              방식별로 <span>10분 실험하기</span>
+            </h2>
+          </div>
+          <p>
+            내 유형에 얽매이지 않고,
+            <br />
+            지금 해 보고 싶은 방법을 골라요.
+          </p>
+        </div>
+        <div className={styles.experimentGrid}>
           {MODALITIES.map((m, i) => (
             <Link
-              className="method-feature"
+              className={styles.experimentCard}
               data-family={m}
               href={`/methods/${m}`}
               key={m}
             >
-              <StudyArt modality={m} compact />
-              <div>
-                <span className="eyebrow">
-                  실험 0{i + 1} · {FAMILIES[m].verb}
+              <div className={styles.experimentTop}>
+                <span className={styles.experimentFamily}>
+                  <Icon name={FAMILIES[m].icon} size={20} />
+                  {FAMILIES[m].label} · {FAMILIES[m].verb}
                 </span>
-                <h2>{FAMILIES[m].label} 공부법 3가지</h2>
-                <p>{FAMILIES[m].detail}</p>
-                <span className="text-link">
-                  과제별로 해 보기
-                  <Icon name="arrow-right-linear" />
+                <span className={styles.experimentNumber}>0{i + 1}</span>
+              </div>
+              <div className={styles.experimentBody}>
+                <div className={styles.experimentArt} aria-hidden="true">
+                  <Image
+                    src={`/study-methods/${{ visual: "flowchart", auditory: "feynman", tactile: "card-sort", motion: "spaced-retry" }[m]}.webp`}
+                    alt=""
+                    width={96}
+                    height={96}
+                    sizes="(max-width: 767px) 72px, 96px"
+                  />
+                </div>
+                <div>
+                  <h3>{FAMILIES[m].activity}</h3>
+                  <p>{FAMILIES[m].detail}</p>
+                </div>
+              </div>
+              <div className={styles.experimentFooter}>
+                <span>
+                  공부법 <b>3가지</b> · <b>10분</b> 실험
+                </span>
+                <span className={styles.experimentGo}>
+                  과제별로 해 보기 <Icon name="arrow-right-linear" size={18} />
                 </span>
               </div>
             </Link>

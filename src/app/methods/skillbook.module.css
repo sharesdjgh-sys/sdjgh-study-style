@@ -3,6 +3,202 @@
   --skill-green: #32644f;
 }
 
+.experiments {
+  padding-top: 28px;
+  border-top: 1px solid #d7dfce;
+  word-break: keep-all;
+}
+.experimentHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+.experimentEyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6a775b;
+}
+.experimentHeading h2 {
+  margin: 10px 0 0;
+  font-size: clamp(25px, 3vw, 34px);
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+  color: #354f3c;
+}
+.experimentHeading h2 span {
+  background: linear-gradient(
+    transparent 65%,
+    #efdd91 65%,
+    #efdd91 92%,
+    transparent 92%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.experimentHeading > p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #596450;
+}
+.experimentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.experimentCard {
+  --experiment-color: #46623a;
+  --experiment-tint: #eaf1df;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px 24px 0;
+  border: 1px solid #d6ddcd;
+  border-radius: 18px;
+  background: #fffdf7;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.experimentCard[data-family="auditory"] {
+  --experiment-color: #975026;
+  --experiment-tint: #faeadb;
+}
+.experimentCard[data-family="tactile"] {
+  --experiment-color: #74528c;
+  --experiment-tint: #efe6f5;
+}
+.experimentCard[data-family="motion"] {
+  --experiment-color: #326b78;
+  --experiment-tint: #e1eff0;
+}
+.experimentTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.experimentFamily {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: var(--experiment-tint);
+  color: var(--experiment-color);
+  font-size: 12px;
+  font-weight: 700;
+}
+.experimentNumber {
+  font-size: 23px;
+  font-weight: 700;
+  color: #89917f;
+  font-variant-numeric: tabular-nums;
+}
+.experimentBody {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
+  flex: 1;
+  padding: 22px 0 24px;
+}
+.experimentArt {
+  display: grid;
+  place-items: center;
+  background: var(--experiment-tint);
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+.experimentArt img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 3px #57482e15);
+}
+.experimentBody h3 {
+  margin: 0 0 10px;
+  font-size: 21px;
+  line-height: 1.5;
+  color: #344832;
+  letter-spacing: -0.025em;
+}
+.experimentBody p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #58634f;
+}
+.experimentFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px 0 18px;
+  border-top: 1px solid #e2e5da;
+  color: #646d5a;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.experimentGo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--experiment-color);
+}
+.experimentCard:hover {
+  border-color: var(--experiment-color);
+  box-shadow: 0 5px 18px #34483212;
+}
+.experimentCard:hover .experimentGo {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.experimentCard:focus-visible {
+  outline: 3px solid var(--experiment-color);
+  outline-offset: 4px;
+}
+@media (max-width: 900px) {
+  .experimentHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .experimentGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .experimentCard {
+    padding: 18px 18px 0;
+  }
+  .experimentBody {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+  }
+  .experimentBody h3 {
+    font-size: 18px;
+  }
+  .experimentBody p {
+    font-size: 13px;
+  }
+  .experimentHeading > p br {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experimentCard {
+    transition: none;
+  }
+}
+
 .page :global(.methods-heading-icon) {
   color: var(--skill-purple);
   background: #eee4f5;
