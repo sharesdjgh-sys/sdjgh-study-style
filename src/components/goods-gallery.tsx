@@ -10,6 +10,7 @@ import { useGoods } from "./goods-provider";
 import { Star, StarWallet } from "./star-wallet";
 import { goodsPrice } from "@/lib/goods";
 import { GoodsActions } from "./goods-actions";
+import { GoodsReveal } from "./goods-reveal";
 
 const characters = Object.entries(CHARACTERS);
 function avatar(code: string) {
@@ -315,6 +316,8 @@ function GoodsDialog({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [back, setBack] = useState(false);
+  const [revealing, setRevealing] = useState(false);
+  const closeButton = useRef<HTMLButtonElement>(null);
   const goods = useGoods();
   const owned =
     goods.loaded && !goods.error && goods.progress.owned.includes(card.id);
@@ -341,11 +344,15 @@ function GoodsDialog({
     >
       <div className={styles.dialogHead}>
         <strong>{card.name} · COLLECTION</strong>
-        <button className="button secondary" onClick={close}>
+        <button ref={closeButton} className="button secondary" onClick={close}>
           닫기
         </button>
       </div>
-      <div className={styles.detail}>
+      <div
+        className={styles.detail}
+        inert={revealing}
+        style={revealing ? { visibility: "hidden" } : undefined}
+      >
         <div className={styles.large}>
           <GoodsFace card={card} back={back} locked={!owned} />
         </div>
@@ -389,9 +396,26 @@ function GoodsDialog({
               다음 카드 →
             </button>
           </div>
-          <GoodsActions card={card} back={back} />
+          <GoodsActions
+            card={card}
+            back={back}
+            onRedeemed={() => {
+              setBack(false);
+              dialog.current?.scrollTo({ top: 0 });
+              setRevealing(true);
+            }}
+          />
         </div>
       </div>
+      {revealing && (
+        <GoodsReveal
+          card={card}
+          onFinish={() => {
+            setRevealing(false);
+            closeButton.current?.focus();
+          }}
+        />
+      )}
     </dialog>
   );
 }

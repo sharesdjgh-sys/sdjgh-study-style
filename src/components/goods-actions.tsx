@@ -19,9 +19,11 @@ const errors: Record<string, string> = {
 export function GoodsActions({
   card,
   back,
+  onRedeemed,
 }: {
   card: GoodsCard;
   back: boolean;
+  onRedeemed?: () => void;
 }) {
   const goods = useGoods(),
     collection = useCollection(),
@@ -47,6 +49,7 @@ export function GoodsActions({
       setBusy(true);
       setMessage("");
       const outcome = await goods.redeem(card.id);
+      if (outcome === "redeemed") onRedeemed?.();
       setMessage(
         outcome === "already_owned"
           ? "이미 내 굿즈에 보관한 카드예요."

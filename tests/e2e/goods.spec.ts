@@ -134,6 +134,18 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
     .getByRole("button", { name: "별 2개로 교환", exact: true })
     .click();
   await expect(
+    page.getByRole("region", { name: "굿즈 해금 연출" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `test-results/goods-reveal-${test.info().project.name}.png`,
+  });
+  if (test.info().project.name === "desktop") {
+    await page.getByRole("button", { name: "연출 건너뛰기" }).click();
+  }
+  await expect(
+    page.getByRole("region", { name: "굿즈 해금 연출" }),
+  ).toHaveCount(0);
+  await expect(
     page.getByText("새로운 한 장이 내 굿즈에 들어왔어요!"),
   ).toBeVisible();
   expect(purchases).toBe(1);
