@@ -51,9 +51,11 @@ export function GoodsGallery() {
             STUDYCREW COLLECTION
           </span>
           <h1>
-            우리 공부캐의
+            내가 찾은 공부캐의
             <br />
-            <em>새로운 순간을 모아요.</em>
+            <em>
+              <mark className={styles.highlight}>새로운 순간</mark>을 모아요.
+            </em>
           </h1>
           <p>
             포근한 일상 3장, 상상 속 의상 5장.
@@ -72,11 +74,6 @@ export function GoodsGallery() {
         </div>
       </header>
       <StarWallet history compact />
-      <div className={styles.tabs}>
-        <Link href="/collection">공부친구 수집노트</Link>
-        <span aria-current="page">공부캐 굿즈</span>
-        <Link href="/methods">공부 스킬북</Link>
-      </div>
       <nav className={styles.characters} aria-label="굿즈 캐릭터">
         <button
           aria-pressed={selectedCharacter === "all"}
@@ -112,6 +109,14 @@ export function GoodsGallery() {
                 aria-pressed={kind === value}
                 onClick={() => setKind(value)}
               >
+                {value !== "all" && (
+                  <Image
+                    src={`/ui-icons/goods-${value}-v1.webp`}
+                    alt=""
+                    width={36}
+                    height={36}
+                  />
+                )}
                 {label}
               </button>
             ))}

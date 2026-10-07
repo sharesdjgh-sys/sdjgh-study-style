@@ -23,6 +23,20 @@
   font-style: normal;
   color: #79578e;
 }
+.highlight {
+  color: inherit;
+  background: linear-gradient(
+    177deg,
+    transparent 52%,
+    #f5df87 53%,
+    #f5df87 89%,
+    transparent 90%
+  );
+  padding: 0 0.06em 0.06em;
+  margin-inline: -0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 .intro p {
   color: #746f60;
   line-height: 1.8;
@@ -55,20 +69,8 @@
   background: radial-gradient(ellipse at top, #34455c, #152137);
   color: #f6e4b7;
 }
-.tabs {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #ddd4c0;
-  padding: 16px 0;
-  margin-bottom: 25px;
-  font-size: 14px;
-}
-.tabs span {
-  color: #745486;
-  font-weight: 800;
-}
 .characters {
+  margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 8px;
@@ -116,6 +118,11 @@
   gap: 8px;
 }
 .filters button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 48px;
   background: #fffdf7;
   color: #5b6655;
   border: 1px solid #d5c9b3;
@@ -124,6 +131,23 @@
   font: inherit;
   font-size: 13px;
   cursor: pointer;
+}
+.filters button img {
+  object-fit: contain;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .filters > div {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 6px;
+  }
+  .filters button {
+    flex-direction: column;
+    gap: 4px;
+    white-space: nowrap;
+  }
 }
 .filters button[aria-pressed="true"] {
   background: #725781;
@@ -443,10 +467,6 @@
   }
   .heroCards {
     display: none;
-  }
-  .tabs {
-    gap: 18px;
-    font-size: 12px;
   }
   .characters {
     grid-template-columns: repeat(4, minmax(0, 1fr));
