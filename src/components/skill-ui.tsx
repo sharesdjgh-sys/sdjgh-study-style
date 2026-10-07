@@ -81,7 +81,7 @@ export function SkillWallet({ history = false }: { history?: boolean }) {
       ) : !signedIn ? (
         <p>
           로그인하고 첫 카드를 저장하면{" "}
-          <strong>하트 1~3개와 나의 시그니처 스킬</strong>을 받아요.
+          <strong>하트 1~3개, 별 1~2개와 나의 시그니처 스킬</strong>을 받아요.
         </p>
       ) : (
         <p>

@@ -8,6 +8,8 @@ import { CHARACTERS } from "@/lib/characters";
 import styles from "./reward-reveal.module.css";
 import { useSkills } from "./skill-provider";
 import { Heart } from "./skill-ui";
+import { Star } from "./star-wallet";
+import { useGoods } from "./goods-provider";
 import { SIGNATURE_METHODS } from "@/lib/methods";
 import {
   REWARD_FRAME_DELAYS,
@@ -51,6 +53,10 @@ export function RewardReveal({
   close: () => void;
 }) {
   const { progress: skillProgress } = useSkills();
+  const { progress: goodsProgress } = useGoods();
+  const stars = goodsProgress.entries.find(
+    (e) => e.reason === "card" && e.reference === code,
+  )?.amount;
   const hearts = skillProgress.entries.find(
     (e) => e.reason === "card" && e.reference === code,
   )?.amount;
@@ -289,6 +295,12 @@ export function RewardReveal({
               : "이 친구의 시그니처 스킬이 열렸어요!"}
             {refund ? ` 먼저 사용한 ${refund}개도 돌려받았어요.` : ""}
           </p>
+          {stars && (
+            <p className="skill-success">
+              <Star size={30} />별 {stars}개도 받았어요! 이 친구의 굿즈를
+              모아보세요.
+            </p>
+          )}
           <section
             className={styles.progress}
             aria-label="선물 개봉 후 도감 진행도"

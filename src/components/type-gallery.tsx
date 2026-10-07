@@ -14,6 +14,7 @@ import { SpecialCollectionCard } from "./special-collection-card";
 import { FamilyCollectionCard } from "./family-collection-card";
 import { collectionProgress } from "@/lib/collection-progress";
 import { Icon } from "./icon";
+import styles from "./type-gallery.module.css";
 export function TypeGallery({
   initial = "all",
   showOverview = true,
@@ -82,12 +83,14 @@ export function TypeGallery({
             </p>
           </div>
           <Link
-            className="button primary"
+            className={`button primary ${ownCode || data.signedIn ? styles.invitation : ""}`}
             href={ownCode || data.signedIn ? "/collection" : "/quiz"}
           >
-            {ownCode || data.signedIn
-              ? "내 도감 저장·초대하기 ↗"
-              : "내 캐릭터 만나기 →"}
+            {data.signedIn && data.firstType
+              ? "친구 초대하고 선물 받기 ↗"
+              : ownCode || data.signedIn
+                ? "내 공부캐 도감에 저장하기 ↗"
+                : "내 캐릭터 만나기 →"}
           </Link>
         </div>
       )}

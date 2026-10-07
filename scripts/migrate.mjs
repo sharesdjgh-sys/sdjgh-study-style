@@ -92,3 +92,15 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("별 보상·굿즈 128종 교환 및 기존 완료 보상 준비 완료");
+const cardStars = await readFile(
+  new URL("../db/009_card_stars.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  cardStars
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("카드 개봉 시 별 1~2개 최초 1회 보상 준비 완료");

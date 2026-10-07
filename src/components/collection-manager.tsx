@@ -14,6 +14,7 @@ import { useAccountResults } from "./account-results-provider";
 import { notifyAuthChange, useAuth } from "./auth-provider";
 import styles from "./collection-manager.module.css";
 import { useSkills } from "./skill-provider";
+import { useGoods } from "./goods-provider";
 
 export function CollectionNudge() {
   const { data } = useCollection();
@@ -29,7 +30,7 @@ export function CollectionNudge() {
         <p>
           {data.firstType
             ? "새 친구가 첫 검사 결과를 계정에 저장하면, 아직 만나지 않은 캐릭터 한 명이 찾아와요."
-            : "첫 캐릭터는 로그인 없이 만날 수 있어요. 카카오 로그인 후 처음 도감에 저장하면 하트 1~3개와 이 친구의 시그니처 스킬을 받아요."}
+            : "첫 캐릭터는 로그인 없이 만날 수 있어요. 카카오 로그인 후 처음 도감에 저장하면 하트 1~3개, 별 1~2개와 이 친구의 시그니처 스킬을 받아요."}
         </p>
       </div>
       <Link className="button primary" href="/collection">
@@ -51,6 +52,7 @@ const ERRORS: Record<string, string> = {
 };
 export function CollectionManager() {
   const skills = useSkills();
+  const goods = useGoods();
   const authState = useAuth();
   const completionShown = useRef(false);
   const { data, loaded, error, refresh } = useCollection();
@@ -142,6 +144,7 @@ export function CollectionManager() {
         );
       await refresh();
       await skills.refresh();
+      await goods.refresh();
       if (result.hearts?.length)
         setNotice(
           `카드를 저장했어요! 하트 ${result.hearts.reduce((sum: number, h: { amount: number }) => sum + h.amount, 0)}개와 시그니처 스킬을 받았어요.`,

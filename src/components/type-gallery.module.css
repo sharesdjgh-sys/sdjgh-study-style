@@ -1,0 +1,15 @@
+.invitation:global(.button.primary) {
+  background: #e9def3;
+  color: #56366b;
+  border-color: #b49bc5;
+  box-shadow: 0 4px 0 #c5afd5;
+}
+.invitation:global(.button.primary):hover:not(:disabled) {
+  background: #dfceed;
+  border-color: #9477a8;
+  color: #472b5a;
+}
+.invitation:global(.button.primary):focus-visible {
+  outline: 3px solid #79568f;
+  outline-offset: 5px;
+}

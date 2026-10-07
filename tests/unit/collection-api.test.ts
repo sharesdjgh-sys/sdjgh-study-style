@@ -105,6 +105,7 @@ beforeAll(async () => {
   await db.exec(await readFile("db/006_skill_hearts.sql", "utf8"));
   await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
   await db.exec(await readFile("db/008_goods_stars.sql", "utf8"));
+  await db.exec(await readFile("db/009_card_stars.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -344,6 +345,10 @@ it("굿즈 API는 인증·출처·캐릭터 보유·별 잔액을 검사하고 �
     (await (await goodsPost(request("/api/goods", { id }))).json()).error,
   ).toBe("character_required");
   await register(request("/api/collection/register", { session: session() }));
+  // Explicitly model a wallet whose registration stars have already been spent.
+  await db.query("UPDATE collection_accounts SET star_balance=0 WHERE id=$1", [
+    owner,
+  ]);
   expect(
     (await (await goodsPost(request("/api/goods", { id }))).json()).error,
   ).toBe("insufficient_stars");

@@ -8,7 +8,8 @@ import { useAuth } from "./auth-provider";
 import { useConfirm } from "./ui/confirm-dialog";
 import { Star } from "./star-wallet";
 const errors: Record<string, string> = {
-  insufficient_stars: "별이 부족해요. 첫 실천이나 유형 완성으로 모아 보세요.",
+  insufficient_stars:
+    "별이 부족해요. 새 카드 개봉, 첫 실천이나 유형 완성으로 모아 보세요.",
   character_required: "먼저 이 공부캐를 계정 도감에 모아 주세요.",
   unauthorized: "로그인 상태를 확인해 주세요.",
   rate_limit: "잠시 후 다시 시도해 주세요.",

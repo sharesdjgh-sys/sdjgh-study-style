@@ -1,0 +1,51 @@
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 680px;
+  margin-bottom: 20px;
+}
+.heading h1 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+.badge {
+  flex-shrink: 0;
+  width: 136px;
+  transform: rotate(7deg);
+  filter: drop-shadow(0 6px 5px #43533920);
+}
+.badge :global(.signature-badge) {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+.badge .mystery {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 40% 30%, #fff9e7, #e4ddcb);
+  color: #7e745b;
+  font-size: 56px;
+  font-weight: 750;
+  line-height: 1;
+  padding-bottom: 4%;
+}
+@media (max-width: 767px) {
+  .heading {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .heading h1 {
+    font-size: clamp(27px, 7vw, 42px);
+  }
+  .badge {
+    width: clamp(68px, 20vw, 96px);
+  }
+  .badge .mystery {
+    font-size: clamp(30px, 8vw, 40px);
+  }
+}

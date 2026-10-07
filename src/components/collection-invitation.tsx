@@ -1,10 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CHARACTERS } from "@/lib/characters";
 import { getType } from "@/lib/content";
 import { collectionProgress } from "@/lib/collection-progress";
 import { useCollection } from "./collection-provider";
+import { Heart } from "./skill-ui";
+import { Star } from "./star-wallet";
+import { SignatureBadge } from "./skill-badges";
+import { GroupPhotoSilhouette } from "./group-photo-silhouette";
 import styles from "./collection-invitation.module.css";
 
 export function CollectionInvitation() {
@@ -21,32 +26,44 @@ export function CollectionInvitation() {
     <header className={styles.hero} id="invite-friends">
       <div className={styles.copy}>
         <span className={styles.eyebrow}>공부캐 도감 · 친구와 함께 모아요</span>
-        <h1>
-          {complete ? (
-            <>
-              열여섯 친구를 다 모았어.
-              <br />
-              <em>너의 공부캐도 궁금해!</em>
-            </>
-          ) : invitesDone ? (
-            <>
-              친구들이 보내준 선물,
-              <br />
-              <em>이제 열어볼까요?</em>
-            </>
-          ) : first ? (
-            <>
-              내 공부캐는 {CHARACTERS[first.code].name}.<br />
-              <em>너는 어떤 친구야?</em>
-            </>
-          ) : (
-            <>
-              너는 어떤 공부캐야?
-              <br />
-              <em>친구랑 같이 만나봐요.</em>
-            </>
+        <div
+          className={`${styles.headingRow} ${first ? styles.withBadge : ""}`}
+        >
+          <h1>
+            {complete ? (
+              <>
+                열여섯 친구를 다 모았어.
+                <br />
+                <em>너의 공부캐도 궁금해!</em>
+              </>
+            ) : invitesDone ? (
+              <>
+                친구들이 보내준 선물,
+                <br />
+                <em>이제 열어볼까요?</em>
+              </>
+            ) : first ? (
+              <>
+                내 공부캐는 {CHARACTERS[first.code].name}.<br />
+                <em>너는 어떤 친구야?</em>
+              </>
+            ) : (
+              <>
+                너는 어떤 공부캐야?
+                <br />
+                <em>친구랑 같이 만나봐요.</em>
+              </>
+            )}
+          </h1>
+          {first && (
+            <div className={styles.myBadge}>
+              <SignatureBadge
+                code={first.code}
+                imageSizes="(max-width: 767px) 96px, 160px"
+              />
+            </div>
           )}
-        </h1>
+        </div>
         <p className={styles.rewardCopy}>
           {complete ? (
             <>
@@ -187,23 +204,73 @@ export function CollectionInvitation() {
             </figcaption>
           </figure>
         </div>
+        {!complete && (
+          <div className={styles.packRewards}>
+            <strong>카드를 열면 시그니처 스킬도 함께!</strong>
+            <ul aria-label="카드 개봉 추가 보상">
+              <li>
+                <Heart size={22} />
+                <span>
+                  하트 <b>1~3개</b>
+                </span>
+              </li>
+              <li>
+                <Star size={22} />
+                <span>
+                  별 <b>1~2개</b>
+                </span>
+              </li>
+            </ul>
+            <small>카드마다 랜덤 지급 · 별로 굿즈를 모아요</small>
+          </div>
+        )}
         <p>
           {complete
             ? "친구의 도감은 어떤 모습일까요?"
             : "아직 만나지 못한 친구가 들어 있어요."}
         </p>
       </div>
-      <div className={styles.milestones}>
-        <span>
-          <b>모으는 재미는 계속돼요</b>
-          <small>같은 유형 4명을 모으면 유형별 기념사진</small>
-        </span>
-        <a href="#collection-completion">
-          <b>16명 모두 모으면?</b>
-          <small>
-            스페셜 단체사진이 열려요 <span aria-hidden="true">↗</span>
-          </small>
-        </a>
+      <div className={styles.milestones} aria-label="도감 수집 기념사진 보상">
+        <Link
+          className={styles.milestone}
+          href={`/types?style=${first?.modality ?? "visual"}#family-collection-photo`}
+        >
+          <div className={styles.photoPreview} aria-hidden="true">
+            <GroupPhotoSilhouette modality={first?.modality ?? "visual"} />
+            <span>유형별 기념사진</span>
+          </div>
+          <div className={styles.milestoneCopy}>
+            <span className={styles.milestoneLabel}>
+              모으는 재미는 계속돼요
+            </span>
+            <h2>
+              같은 유형 <b>4명</b>을 모으면
+            </h2>
+            <p>우리끼리, 유형별 기념사진</p>
+            <span className={styles.milestoneLink}>
+              기념사진 보러 가기 <span aria-hidden="true">↗</span>
+            </span>
+          </div>
+        </Link>
+        <Link
+          className={`${styles.milestone} ${styles.specialMilestone}`}
+          href="/types#collection-completion"
+        >
+          <div className={styles.photoPreview} aria-hidden="true">
+            <GroupPhotoSilhouette />
+            <span>스페셜 단체사진</span>
+          </div>
+          <div className={styles.milestoneCopy}>
+            <span className={styles.milestoneLabel}>도감을 완성한 순간</span>
+            <h2>
+              <b>16명</b> 모두 모으면?
+            </h2>
+            <p>스페셜 단체사진이 열려요</p>
+            <span className={styles.milestoneLink}>
+              완성 선물 보러 가기 <span aria-hidden="true">↗</span>
+            </span>
+          </div>
+        </Link>
       </div>
     </header>
   );

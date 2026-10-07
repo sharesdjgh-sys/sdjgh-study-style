@@ -10,7 +10,7 @@ export type GoodsProgress = {
   entries: {
     id: string;
     amount: number;
-    reason: "practice" | "family" | "goods";
+    reason: "practice" | "family" | "goods" | "card";
     reference: string;
     createdAt: string;
   }[];

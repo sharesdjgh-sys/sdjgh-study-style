@@ -27,6 +27,7 @@ export function FamilyCollectionCard({ modality }: { modality: Modality }) {
   if (!loaded || error) return null;
   return (
     <section
+      id="family-collection-photo"
       className={`family-collection-card ${unlocked ? "is-unlocked" : "is-locked"}`}
       aria-label={`${label} 완성 단체사진`}
       data-family={modality}

@@ -19,15 +19,23 @@ export function SkillModality({ id }: { id: MethodId }) {
 }
 
 /** Generated enamel frame + the original mascot portrait keep all 16 identities intact. */
-export function SignatureBadge({ code }: { code: string }) {
+export function SignatureBadge({
+  code,
+  imageSizes,
+  label,
+}: {
+  code: string;
+  imageSizes?: string;
+  label?: string;
+}) {
   const name = CHARACTERS[code].name;
   return (
     <span
       className="signature-badge"
       data-character={code}
       role="img"
-      aria-label={`${name} 시그니처 배지 · 획득`}
-      title={`${name} 시그니처 배지 · 획득`}
+      aria-label={label ?? `${name} 시그니처 배지 · 획득`}
+      title={label ?? `${name} 시그니처 배지 · 획득`}
     >
       <span className="signature-badge-portrait">
         <Image
@@ -36,7 +44,7 @@ export function SignatureBadge({ code }: { code: string }) {
           alt=""
           width={192}
           height={192}
-          sizes="96px"
+          sizes={imageSizes ?? "96px"}
         />
       </span>
       <Image
@@ -45,7 +53,7 @@ export function SignatureBadge({ code }: { code: string }) {
         alt=""
         width={192}
         height={192}
-        sizes="64px"
+        sizes={imageSizes ?? "64px"}
       />
     </span>
   );

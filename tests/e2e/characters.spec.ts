@@ -43,6 +43,12 @@ test("미검사 도감은 16명 이름과 고유 카드에 실루엣을 유지�
   page,
 }) => {
   await page.goto("/types");
+  await expect(
+    page.getByRole("img", {
+      name: "아직 발견하지 않은 나의 공부캐 배지",
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(page.locator(".mystery-card")).toHaveCount(16);
   await expect(page.locator(".character-card, .character-back")).toHaveCount(0);
   await expect(
@@ -82,6 +88,9 @@ test("검사 후 내 카드 한 장만 공개되고 키보드로 뒤집기와 �
 }) => {
   await seedOwn(page);
   await page.goto("/types");
+  await expect(
+    page.getByRole("img", { name: "루미 공부캐 배지", exact: true }),
+  ).toBeVisible();
   await expect(page.locator(".character-card")).toHaveCount(1);
   await expect(page.locator(".mystery-card")).toHaveCount(15);
   const card = page.locator(".character-card");

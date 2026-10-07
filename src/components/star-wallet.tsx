@@ -5,6 +5,7 @@ import { useGoods } from "./goods-provider";
 import { getGoods } from "@/lib/goods";
 import { getMethod, type MethodId } from "@/lib/methods";
 import { FAMILIES, type Modality } from "@/lib/content";
+import { CHARACTERS } from "@/lib/characters";
 export function Star({ size = 24 }: { size?: number }) {
   return (
     <Image
@@ -34,10 +35,13 @@ export function StarWallet({ history = false }: { history?: boolean }) {
         </div>
       </div>
       <p>
-        스킬별 첫 10분 실천 + 설문 <strong>1별</strong> · 유형별 4명 완성{" "}
-        <strong>3별</strong>
+        새 카드 개봉 <strong>1~2별</strong> · 스킬별 첫 10분 실천 + 설문{" "}
+        <strong>1별</strong> · 유형별 4명 완성 <strong>3별</strong>
         <br />
-        <small>각 스킬·유형마다 최초 1회예요. 매일 반복 지급되지 않아요.</small>
+        <small>
+          각 카드·스킬·유형마다 최초 1회예요. 카드 보상은 랜덤이며 매일 반복
+          지급되지 않아요.
+        </small>
       </p>
       <div className="button-row">
         <Link className="button star-button" href="/goods">
@@ -68,17 +72,21 @@ export function StarWallet({ history = false }: { history?: boolean }) {
               {goods.progress.entries.map((e) => (
                 <li key={e.id}>
                   <span>
-                    {e.reason === "practice"
-                      ? "첫 실천 완료"
-                      : e.reason === "family"
-                        ? "유형 완성 선물"
-                        : "굿즈 교환"}
+                    {e.reason === "card"
+                      ? "카드 개봉 선물"
+                      : e.reason === "practice"
+                        ? "첫 실천 완료"
+                        : e.reason === "family"
+                          ? "유형 완성 선물"
+                          : "굿즈 교환"}
                     <small>
-                      {e.reason === "goods"
-                        ? `${getGoods(e.reference)?.name ?? ""} · ${getGoods(e.reference)?.title ?? ""}`
-                        : e.reason === "practice"
-                          ? getMethod(e.reference as MethodId)?.name
-                          : FAMILIES[e.reference as Modality]?.label}
+                      {e.reason === "card"
+                        ? CHARACTERS[e.reference]?.name
+                        : e.reason === "goods"
+                          ? `${getGoods(e.reference)?.name ?? ""} · ${getGoods(e.reference)?.title ?? ""}`
+                          : e.reason === "practice"
+                            ? getMethod(e.reference as MethodId)?.name
+                            : FAMILIES[e.reference as Modality]?.label}
                     </small>
                     <small>
                       {new Date(e.createdAt).toLocaleString("ko-KR")}
