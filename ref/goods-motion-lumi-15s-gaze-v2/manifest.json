@@ -1,0 +1,22 @@
+{
+  "status": "ready-for-user-review",
+  "duration": 14.958333,
+  "join": 8,
+  "segments": [
+    {
+      "id": "outbound",
+      "requested": 8,
+      "actual": 8
+    },
+    {
+      "id": "return",
+      "requested": 7,
+      "actual": 7.018
+    }
+  ],
+  "width": 720,
+  "height": 1080,
+  "audio": false,
+  "bytes": 3678863,
+  "method": "Two generated segments concatenated; no reverse, crossfade, freeze extension or time stretching."
+}

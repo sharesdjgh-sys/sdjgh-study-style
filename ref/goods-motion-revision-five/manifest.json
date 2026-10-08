@@ -1,0 +1,151 @@
+{
+  "status": "generated-for-review",
+  "method": "8s action + 7s return, direct concatenation without reverse, crossfade or time stretching.",
+  "cards": [
+    {
+      "id": "leaf",
+      "name": "리프",
+      "code": "auditory-team-flexible",
+      "title": "잠깐, 그건 어떻게 움직여?",
+      "focus": "씨앗을 살펴보고 다람쥐와 눈 맞추기",
+      "reference": "ref/goods-motion-revision-five/frames/leaf.png",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "Leaf leans the upper body forward slightly to inspect the three seed bowls, making ONE small curious head tilt no more than 10 degrees. Then Leaf looks toward the squirrel at its real eye height. The squirrel responds with a small friendly nod, both paws resting on the counter the entire time. The cap, its brim, buckle and crest move together with the skull as ONE coherent shape, never flutter, stretch, flip, detach or change outline. Wings remain feathered at sides; seed bowls and tray stay absolutely still. Finish with Leaf and squirrel gently meeting eyes."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "Leaf glances once back at the seeds, then slowly straightens the upper body and returns the small head tilt to the exact initial orientation. Squirrel relaxes from the nod to the initial pose without moving either paw. Cap and crest remain the identical solid silhouette throughout, no animated crest or separate cap motion. All bowls remain fixed. Settle into the source frame naturally."
+        }
+      ],
+      "qa": "모자·볏 형태 고정. 다람쥐 두 앞발과 씨앗 그릇 고정. 회전 기구 없음.",
+      "sourceScene": "cream-yellow cockatiel Leaf in plum market coat, one solid coral backward cap firmly attached to the head behind a fixed feather crest; squirrel vendor behind seed tray",
+      "actualSeconds": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4426772
+    },
+    {
+      "id": "tori",
+      "name": "토리",
+      "code": "tactile-solo-planned",
+      "title": "마지막 톱니가 맞는 순간",
+      "focus": "완성한 시계의 달 진자 작동 확인하기",
+      "reference": "ref/goods-motion-revision-five/frames/tori.png",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "Tori gently presses and releases the single large brass button already under the viewer-right paw, then rests that paw beside the button. The crescent moon and its straight rod begin a SMALL pendulum swing together, around the fixed visible hinge at the TOP of the clock's lower opening, no more than 10 degrees either side. Moon is firmly bolted to the rod; the rod and crescent form ONE rigid component of constant length and shape, always within the clock housing. Tori leans the head slightly down and follows the small oscillation with attentive eyes, then smiles. All gears are enclosed and invisible; no detached or spinning gears. The clock face and housing stay still."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "Tori presses the same button once with the same paw, releases it, and rests the paw back in the original location. The connected rod-and-crescent pendulum gently loses amplitude and comes to rest VERTICAL under its unchanged top hinge. It cannot float, spin, detach, shorten or pass through the clock. Tori draws the head back into the exact initial pose while looking at the clock. Keep two paws and the monocle unchanged."
+        }
+      ],
+      "qa": "기어 조립 없음. 달과 막대가 축에 연결된 상태 유지. 시계와 단안경 형태 고정.",
+      "sourceScene": "brown beaver Tori with fixed brass monocle, navy apron and cream sweater; a fully assembled navy-and-brass mantel clock",
+      "actualSeconds": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3560869
+    },
+    {
+      "id": "block",
+      "name": "블록",
+      "code": "tactile-team-planned",
+      "title": "네 조각까지, 이제 완성",
+      "focus": "완성된 다리 위로 구슬 주고받기",
+      "reference": "ref/goods-motion-revision-five/frames/block.png",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "The bridge is a SINGLE rigid solid object fixed to the table and NEVER changes dimensions, arches, channel shape or position. Block gives the ONE brass marble at the left end a small gentle nudge with the paw already next to it, then withdraws that paw to its starting place. The marble rolls slowly along the EXISTING straight channel to the right stop, where it comes to rest beside Tori. Nobody touches, grabs, assembles or moves the bridge. Both characters follow the marble with their eyes at table level, then exchange a small pleased glance. Exactly four attached paws; one marble of constant diameter."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "Tori uses the nearest paw to give the SAME stationary marble a small nudge LEFT along the same fixed straight channel. The marble rolls slowly back to its original left starting location and stops at the left channel stop. Tori withdraws that paw; Block watches without grabbing the bridge. Both characters return their head and eye directions to the exact initial pose. Bridge remains one immutable solid body with two arches, no separable blocks, resize, bending, gaps or dissolving parts. Marble never teleports or duplicates."
+        }
+      ],
+      "qa": "다리 전체가 하나의 고정된 구조물. 블록 조립·크기 변화 없음. 구슬 하나와 앞발 네 개 유지.",
+      "sourceScene": "brown bear Block left in ochre cape and smaller beaver Tori right in lavender apron; one solid continuous wooden toy bridge with two arches and one brass marble",
+      "actualSeconds": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 2803395
+    },
+    {
+      "id": "joy",
+      "name": "조이",
+      "code": "tactile-team-flexible",
+      "title": "우리 반죽은 무슨 모양?",
+      "focus": "완성된 토끼 반죽을 친구에게 보여주기",
+      "reference": "ref/goods-motion-revision-five/frames/joy.png",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "This is a finished INANIMATE bunny-shaped pastry with exactly two upright ears and a fixed decorated face, not a living bunny. Its shape, ear length and spacing, face and size stay COMPLETELY CONSTANT, rigidly resting on the plate. Joy's visible viewer-left paw gently contacts the plate's left rim and slides the entire plate just a few centimeters toward Mong on the right, without lifting or rotating it. Pastry moves only with the plate. Both characters lean in a little to admire the finished bun and share a delighted glance. Mong keeps both paws on the counter. Nobody touches the pastry, kneads, adds ears, changes shape, inflates it or makes it come alive."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "Joy slides the same plate gently back LEFT to its exact starting location using the same paw on its rim, then returns that paw to the original resting place. The bun and exactly two upright ears remain rigid and identical all the time; no independent pastry motion, facial animation, inflation or disappearing parts. Both characters ease their heads and eyes back to the exact reference pose. Mong's two paws remain on the counter. No extra paws."
+        }
+      ],
+      "qa": "토끼 귀 두 개가 처음부터 완성된 형태. 반죽·귀·얼굴 형태 고정. 떼거나 붙이지 않음.",
+      "sourceScene": "brown otter Joy left in blue baker outfit and chef hat, gray raccoon Mong right in lavender outfit; one finished white bunny-shaped pastry with TWO pink-centered upright ears on one ivory plate",
+      "actualSeconds": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3170807
+    },
+    {
+      "id": "pace",
+      "name": "페이스",
+      "code": "motion-solo-planned",
+      "title": "오늘은 여기까지, 한 칸 더",
+      "focus": "신발을 신은 채 한 발 내딛고 돌아오기",
+      "reference": "ref/goods-motion-revision-five/frames/pace.png",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "Pace looks down at the nearby illuminated stone. Keeping the body facing its initial direction, lift ONLY the nearer orange-shod foot a small distance and set that SAME intact orange shoe onto the adjacent stone, keeping the other orange shoe planted on the starting stone. Pause with one shoe on each stone, shift the upper body slightly forward, and give a small satisfied breath as the second stone glows gently. Both CLOSED ORANGE SNEAKERS stay firmly worn throughout, each with unchanged orange upper, white laces and thick cream sole. Feet are completely inside shoes; NEVER expose toes, bare feet, flipper-shaped feet or change footwear. No big walk, jump, turn or spin."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "Without turning the torso or changing the facing direction, Pace lifts the orange shoe from the adjacent stone and deliberately steps it back alongside the other orange shoe on the starting stone. This is a natural small step back, not reversed video. Both orange shoes remain whole and firmly worn with identical orange uppers, white laces and cream soles in every frame; never bare feet. Relax the flippers and upper body into the exact initial posture. The adjacent stone glow returns to its original brightness. No turning, spinning or shoe removal."
+        }
+      ],
+      "qa": "주황색 신발 두 짝의 윗면·끈·밑창 유지. 맨발 노출과 몸 회전 없음.",
+      "sourceScene": "small penguin Pace wearing brown embroidered cape, travel pack and EXACTLY TWO CLOSED ORANGE SNEAKERS with cream soles and white laces, feet fully covered inside shoes",
+      "actualSeconds": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4691939
+    }
+  ]
+}

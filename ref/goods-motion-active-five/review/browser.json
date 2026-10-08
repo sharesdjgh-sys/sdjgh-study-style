@@ -1,0 +1,64 @@
+{
+  "cards": [
+    {
+      "id": "tori",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "leaf",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "block",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "joy",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "pace",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    }
+  ],
+  "download": "passed",
+  "oneActiveVideo": "passed",
+  "requests": 10,
+  "retries": 0,
+  "previousVersionComparison": "passed"
+}

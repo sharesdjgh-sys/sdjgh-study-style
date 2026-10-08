@@ -1,0 +1,91 @@
+{
+  "id": "pace-return",
+  "character": "pace",
+  "phase": "return",
+  "model": "gemini-omni-1.1-flash",
+  "requestedSeconds": 7,
+  "requests": 1,
+  "status": "completed",
+  "startedAt": "2026-10-08T01:14:23.817Z",
+  "httpStatus": 200,
+  "finishedAt": "2026-10-08T01:15:05.054Z",
+  "bytes": 2835405,
+  "actualSeconds": 7.018,
+  "usage": {
+    "total_tokens": 44222,
+    "total_input_tokens": 2470,
+    "input_tokens_by_modality": [
+      {
+        "modality": "text",
+        "tokens": 270
+      },
+      {
+        "modality": "image",
+        "tokens": 2200
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 41483,
+    "output_tokens_by_modality": [
+      {
+        "modality": "video",
+        "tokens": 40544
+      }
+    ],
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 269,
+    "raw_prompt_token": 35482,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2069
+          },
+          {
+            "modality": "image",
+            "tokens": 2200
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 945
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 269
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 2069
+          },
+          {
+            "modality": "image",
+            "tokens": 2200
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 945
+          }
+        ],
+        "thoughts_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 269
+          }
+        ]
+      }
+    ]
+  }
+}

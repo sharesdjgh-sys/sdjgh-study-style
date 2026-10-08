@@ -1,0 +1,192 @@
+{
+  "cards": [
+    {
+      "id": "root",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "moa",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "lumi",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "pico",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "sori",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "melo",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "talk",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "leaf",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "tori",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "mong",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "block",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "joy",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "pace",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "bani",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "luka",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    },
+    {
+      "id": "skip",
+      "loops": 3,
+      "normalSpeed": true,
+      "join": true,
+      "boundary": true,
+      "range": 206,
+      "mobileOverflow": false,
+      "notePersistence": true,
+      "pageErrors": []
+    }
+  ],
+  "download": "passed",
+  "oneActiveVideo": "passed",
+  "requests": 30,
+  "retries": 0,
+  "typecheck": "passed",
+  "visualSamplingSeconds": 0.25,
+  "requiresRevision": [
+    "talk",
+    "joy",
+    "pace"
+  ],
+  "preview": "http://127.0.0.1:3000/preview/goods-motion/series/index.html"
+}

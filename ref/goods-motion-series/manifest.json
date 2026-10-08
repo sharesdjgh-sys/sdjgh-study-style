@@ -1,0 +1,440 @@
+{
+  "status": "generated-for-review",
+  "method": "8s action + 7s return, direct concatenation without reverse, crossfade or time stretching; accepted Lumi copied unchanged.",
+  "cards": [
+    {
+      "id": "lumi",
+      "name": "루미",
+      "title": "내가 이어 찾은 첫 번째 별자리",
+      "focus": "별을 띄우고 바라본 뒤 제자리로",
+      "qa": "승인된 시선 수정본 유지",
+      "accepted": true,
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3678863
+    },
+    {
+      "id": "moa",
+      "name": "모아",
+      "code": "visual-solo-flexible",
+      "title": "낙서 뒤에 숨어 있던 정원",
+      "focus": "종이 정원문을 열어 발견하기",
+      "reference": "art/goods/visual-solo-flexible--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "문고리를 가볍게 짚고 종이문을 펼친 뒤, 눈을 뜬 채 몸을 기울여 안의 작은 정원을 살핀다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "문에서 고개를 빼고 앞발로 종이문을 천천히 접은 뒤 원래 자세로 돌아온다."
+        }
+      ],
+      "qa": "모아의 두 눈을 뜬 표정 유지. 문 안쪽이 시선 목표이며 문은 책에 붙어 있다.",
+      "sourceScene": "종이 장식 여행 코트를 입고 스케치북을 펼친 모아. 책 위 작은 종이문과 모아의 열린 눈이 중심.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3909626
+    },
+    {
+      "id": "root",
+      "name": "루트",
+      "code": "visual-team-planned",
+      "title": "우리의 길이 만나는 곳",
+      "focus": "두 길의 합류를 안내하기",
+      "reference": "art/goods/visual-team-planned--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "지도 위 두 길을 가리키고 합류 지점을 짚는다. 해당 숲길의 표지등이 차례로 켜지자 고개를 돌려 동료에게 보여 준다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "지도 쪽으로 돌아보며 손을 제자리로 가져온다. 안내등이 순서대로 잦아들어 원래 밝기로 돌아온다."
+        }
+      ],
+      "qa": "지도·배경 표지등 대응. 손가락·뿔 형태 유지. 동료는 배경에서 작게 반응한다.",
+      "sourceScene": "여행 안내자 차림의 루트가 펼친 지형도. 뒤편에 출발을 기다리는 작은 동료 두 명이 고정된 위치에 보인다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4739403
+    },
+    {
+      "id": "pico",
+      "name": "피코",
+      "code": "visual-team-flexible",
+      "title": "겹쳐 보니 다른 세상",
+      "focus": "색 천을 겹쳐 새로운 무늬 만들기",
+      "reference": "art/goods/visual-team-flexible--special-03.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "레일에 걸린 반투명 천 한 장을 앞발로 옆으로 밀어 겹친다. 몸을 옆으로 기울여 새 색 그림자를 감상한다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "천을 레일을 따라 원래 위치로 돌려 놓는다. 그림자가 원래 색으로 분리되며 몸과 시선도 돌아온다."
+        }
+      ],
+      "qa": "카멜레온 몸색은 고정. 천 두 장과 레일 유지. 천을 만지는 앞발은 하나.",
+      "sourceScene": "오로라 직물 작업복의 피코와 고정 프레임에 걸린 반투명 천 두 장. 얼굴을 가리지 않는 낮은 작업대.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3485252
+    },
+    {
+      "id": "sori",
+      "name": "소리",
+      "code": "auditory-solo-planned",
+      "title": "한 문장씩 깨어나는 책",
+      "focus": "세 그림의 이야기를 차례로 깨우기",
+      "reference": "art/goods/auditory-solo-planned--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "그림책 세 칸을 앞발로 차례대로 따라가며 고개를 끄덕인다. 그림들이 순서대로 색과 빛을 되찾고 작은 나무가 흔들린다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "마지막 그림을 감상한 뒤 앞발과 시선을 첫 칸으로 돌린다. 책 속 빛은 차례로 원래의 잔잔한 색으로 돌아온다."
+        }
+      ],
+      "qa": "사막여우의 큰 귀 유지. 새 문자 생성과 과장된 입동작 금지. 책을 따라 시선 이동.",
+      "sourceScene": "크림색 로브의 소리와 펼쳐진 그림책. 조용한 서재, 세 개의 비어 있는 그림 칸.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3638868
+    },
+    {
+      "id": "melo",
+      "name": "멜로",
+      "code": "auditory-solo-flexible",
+      "title": "코코아에서 태어난 질문",
+      "focus": "코코아의 질문이 고래가 되는 순간",
+      "reference": "art/goods/auditory-solo-flexible--daily-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "귀를 쫑긋하고 고개를 갸웃한다. 김이 물음표에서 작은 고래로 변하면 고개와 눈이 잔 위 고래를 따라 움직인다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "고래가 보통 김으로 풀리는 것을 바라본 뒤 고개를 자연스럽게 제자리로 돌린다."
+        }
+      ],
+      "qa": "앞발 두 개와 잔은 고정. 고래는 얼굴 옆 잔 위에만 머문다. 시선은 고래 높이에 일치.",
+      "sourceScene": "별 단추가 달린 밤보라 실내 케이프와 익숙한 헤드폰의 멜로. 코코아 잔은 책상에 고정하고 두 앞발이 보이는 구도.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 2700835
+    },
+    {
+      "id": "talk",
+      "name": "토크",
+      "code": "auditory-team-planned",
+      "title": "이번에는 네 이야기를 들을게",
+      "focus": "말할 차례를 건네고 귀 기울이기",
+      "reference": "art/goods/auditory-team-planned--special-03.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "자기 마이크 표시등을 전환하고 상체와 고개를 게스트에게 돌린다. 게스트의 반응을 보며 작게 고개를 끄덕인다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "게스트의 답이 끝나면 자기 쪽 표시등을 다시 켜고 진행 자세로 돌아온다."
+        }
+      ],
+      "qa": "마이크 두 개와 출연자 두 명의 위치 고정. 음성이나 글자 없이 차례가 보이게 한다.",
+      "sourceScene": "자주색 방송 정장의 토크와 별빛 방송국. 탁상 마이크 두 개, 맞은편 작은 게스트 한 명.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 2981307
+    },
+    {
+      "id": "leaf",
+      "name": "리프",
+      "code": "auditory-team-flexible",
+      "title": "잠깐, 그건 어떻게 움직여?",
+      "focus": "궁금한 씨앗 바람개비를 살펴보기",
+      "reference": "art/goods/auditory-team-flexible--special-02.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "몸을 앞으로 기울이며 고개를 갸웃한다. 작은 손잡이를 돌리는 상인 앞에서 씨앗 날개가 펴지고 돌아가면 볏을 세우며 반응한다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "상인이 손잡이를 놓자 회전이 잦아들고 기구의 접이식 날개가 닫힌다. 리프는 몸과 볏을 원래 자세로 돌린다."
+        }
+      ],
+      "qa": "왕관앵무 날개를 사람 손으로 바꾸지 않는다. 기구의 회전축과 부품 수 고정.",
+      "sourceScene": "자주색 시장 코트의 리프와 작은 가판대. 상인은 뒤편에 작게, 접힌 씨앗 바람개비 하나가 중앙에 놓인다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4499863
+    },
+    {
+      "id": "tori",
+      "name": "토리",
+      "code": "tactile-solo-planned",
+      "title": "마지막 톱니가 맞는 순간",
+      "focus": "톱니를 맞추고 작동을 확인하기",
+      "reference": "art/goods/tactile-solo-planned--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "작은 톱니를 홈에 끼우고 손을 떼어 작동을 지켜본다. 톱니들이 맞물려 돌아가며 달 장식이 올라온다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "작동이 멎고 달 장식이 내려오면 시험용 톱니를 같은 앞발로 조심히 꺼내 처음의 점검 자세로 돌아온다."
+        }
+      ],
+      "qa": "비버 토리 유지. 톱니가 완전히 멈춘 다음 잡는다. 톱니 수·축·앞발 형태 유지.",
+      "sourceScene": "남색 작업 앞치마의 비버 토리와 달빛 시계 장치. 세 톱니가 보이는 작은 작업면으로 단순화한다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3762953
+    },
+    {
+      "id": "mong",
+      "name": "몽",
+      "code": "tactile-solo-flexible",
+      "title": "어라, 화분이 떠오르네?",
+      "focus": "레버 하나로 화분 띄워 보기",
+      "reference": "art/goods/tactile-solo-flexible--special-02.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "앞발로 레버를 전환하고 화분이 낮게 떠오르자 몸을 가까이 기울여 아래를 살펴본다. 호기심 어린 눈으로 잎을 바라본다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "레버를 원위치로 돌리고 화분이 받침에 내려앉는 것을 지켜본 뒤 앞발과 시선을 돌린다."
+        }
+      ],
+      "qa": "화분 하나와 잎 모양 유지. 화분은 얼굴 아래. 고글을 만지는 추가 손동작 금지.",
+      "sourceScene": "청록 실험복과 이마 위 고글의 몽. 작은 레버와 화분 한 개가 놓인 공방 책상.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4348303
+    },
+    {
+      "id": "block",
+      "name": "블록",
+      "code": "tactile-team-planned",
+      "title": "네 조각까지, 이제 완성",
+      "focus": "함께 작은 다리를 시험하기",
+      "reference": "art/goods/tactile-team-planned--special-02.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "블록이 왼쪽 지지대를 받치는 동안 토리가 연결판을 끼운다. 블록이 구슬 하나를 굴리면 다리를 건너 반대쪽 받침에 멈춘다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "토리가 구슬을 집어 원래 출발 홈에 놓는다. 구슬이 멈춘 뒤 연결판을 다시 들고 둘이 점검 시작 자세로 돌아온다."
+        }
+      ],
+      "qa": "두 캐릭터 네 앞발의 담당 동작 분리. 구슬과 연결판을 동시에 잡지 않는다. 한 개의 구슬 유지.",
+      "sourceScene": "황토 작업 망토의 블록과 작업대 위 작은 다리 모형. 반대편에 조각을 맞추는 동료 토리 한 명만 등장.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3392626
+    },
+    {
+      "id": "joy",
+      "name": "조이",
+      "code": "tactile-team-flexible",
+      "title": "우리 반죽은 무슨 모양?",
+      "focus": "친구와 구름 반죽 모양 바꾸기",
+      "reference": "art/goods/tactile-team-flexible--special-03.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "몽이 작은 귀 모양 반죽 두 개를 둥근 반죽에 붙인다. 조이가 접시를 살짝 돌려 토끼 모양을 보고 함께 웃는다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "조이가 반죽을 부드럽게 눌러 둥글게 정리하고 몽이 귀 조각을 원래 접시 가장자리로 떼어 놓는다. 접시와 손이 돌아온다."
+        }
+      ],
+      "qa": "수달 조이·라쿤 몽 구분. 반죽은 손으로 바뀌며 순간 변형하지 않는다. 손 겹침 금지.",
+      "sourceScene": "하늘색 제빵 앞치마의 조이와 구름 반죽 작업대. 옆자리 동료 몽과 둥근 반죽 하나.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 3563248
+    },
+    {
+      "id": "pace",
+      "name": "페이스",
+      "code": "motion-solo-planned",
+      "title": "오늘은 여기까지, 한 칸 더",
+      "focus": "한 칸을 밟고 숨 고르기",
+      "reference": "art/goods/motion-solo-planned--special-05.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "짧은 다리로 바로 앞 돌 한 칸에 발을 올리고 체중을 옮긴다. 돌이 따뜻하게 빛나자 가슴을 펴고 만족스럽게 숨을 고른다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "고개를 돌려 출발 돌을 확인하고 작게 몸을 돌려 한 걸음 돌아온다. 조명이 원래 밝기로 잦아들고 처음 방향을 향한다."
+        }
+      ],
+      "qa": "펭귄 다리·지느러미 유지. 이동은 가까운 두 돌 사이만. 뒤로 재생하는 걷기 금지.",
+      "sourceScene": "밤색 여행 망토의 페이스와 짧은 돌길. 바로 앞 한 칸과 작은 쉼 표식이 보인다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 5350861
+    },
+    {
+      "id": "bani",
+      "name": "바니",
+      "code": "motion-solo-flexible",
+      "title": "바람이 바꿔 준 오늘의 길",
+      "focus": "바람 따라 꽃 곁에 다녀오기",
+      "reference": "art/goods/motion-solo-flexible--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "리본이 흔들리는 쪽으로 귀와 고개를 돌린 뒤 가까운 꽃 쪽으로 작게 한 번 뛴다. 꽃을 내려다보며 바람을 느낀다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "꽃에서 고개를 들고 몸을 돌려 출발 지점으로 작게 뛰어 돌아온다. 두 귀와 리본이 편안히 가라앉는다."
+        }
+      ],
+      "qa": "두 귀·착지 위치 유지. 화면 밖 이동과 큰 점프 금지. 두 번의 착지 확인.",
+      "sourceScene": "청록 여행 케이프의 바니와 초원의 작은 갈림길. 한쪽 길 끝에 가까운 꽃밭이 보인다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 5317079
+    },
+    {
+      "id": "luka",
+      "name": "루카",
+      "code": "motion-team-planned",
+      "title": "마지막 친구까지 도착하면",
+      "focus": "친구에게 자리를 내어 주기",
+      "reference": "art/goods/motion-team-planned--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "루카가 쉼터 문 옆에서 가까이 선 페이스에게 몸을 돌리고 옆으로 한 걸음 비켜 길을 안내한다. 둘이 눈을 맞추고 미소 짓는다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "페이스는 입구의 제자리에서 고개로 화답한다. 루카가 다시 원래 위치로 돌아서며 안내한 앞발을 내린다."
+        }
+      ],
+      "qa": "허스키 루카와 펭귄 페이스 두 명만. 동료를 도착시킨 뒤 순간 되돌리는 연출 금지.",
+      "sourceScene": "짙은 파랑 원정 코트의 루카와 따뜻한 쉼터 입구. 마지막 동료 페이스가 가까운 배경에서 걸어온다.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4976924
+    },
+    {
+      "id": "skip",
+      "name": "스킵",
+      "code": "motion-team-flexible",
+      "title": "멈춘 축제에 첫 박자",
+      "focus": "작은 두 박자로 다시 시작하기",
+      "reference": "art/goods/motion-team-flexible--special-01.webp",
+      "status": "generated-for-review",
+      "duration": 14.958333,
+      "segments": [
+        {
+          "id": "outbound",
+          "seconds": 8,
+          "action": "발로 두 박자를 밟고 몸을 좌우로 흔든다. 가까운 동료 두 명이 각자 한 번 호응하고 낮은 축제등이 차례로 빛난다."
+        },
+        {
+          "id": "return",
+          "seconds": 7,
+          "action": "작은 옆걸음으로 원래 발 위치에 돌아와 앞발을 내리고 숨을 고른다. 동료와 불빛도 처음의 편안한 상태로 돌아온다."
+        }
+      ],
+      "qa": "스킵의 원래 종·체형 유지. 군무나 카메라 이동 없이 주인공의 분명한 리듬을 살린다.",
+      "sourceScene": "산호색 축제 의상의 스킵과 작은 광장. 뒤편에 쉬던 친구 두 명과 꺼진 낮은 축제등.",
+      "join": 8,
+      "width": 720,
+      "height": 1080,
+      "bytes": 4315446
+    }
+  ]
+}

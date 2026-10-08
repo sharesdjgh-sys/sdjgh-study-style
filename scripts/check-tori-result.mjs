@@ -1,0 +1,31 @@
+import {chromium,expect} from '@playwright/test';
+import {writeFile} from 'node:fs/promises';
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--autoplay-policy=no-user-gesture-required']});
+const base='http://127.0.0.1:3000/preview/goods-motion/';
+try{
+ const page=await browser.newPage({viewport:{width:390,height:950}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'active5/index.html#tori');
+ await expect(page.locator('video')).toHaveCount(5);
+ for(const id of ['leaf','block','joy','pace'])await expect(page.locator(`#${id} video`)).toHaveAttribute('src',base.replace('http://127.0.0.1:3000','')+`active5/videos/${id}.mp4`);
+ const card=page.locator('#tori'),video=card.locator('video');
+ await expect(video).toHaveAttribute('src','/preview/goods-motion/toriresult/videos/tori.mp4');
+ await card.locator('[data-action="replay"]').click();
+ await expect.poll(()=>card.getAttribute('data-loops'),{timeout:65000}).toBe('3');
+ await video.evaluate(v=>v.pause());
+ await video.evaluate(v=>{v.currentTime=8;});
+ await expect.poll(()=>video.evaluate(v=>v.seeking)).toBe(false);
+ await card.screenshot({path:'.artifacts/tori-result-preview.png'});
+ const range=await page.request.get(base+'toriresult/videos/tori.mp4',{headers:{Range:'bytes=0-1023'}});
+ if(range.status()!==206||(await range.body()).length!==1024)throw Error('Range');
+ await card.locator('[data-action="compare"]').click();
+ await expect.poll(()=>video.evaluate(v=>v.currentTime),{timeout:20000}).toBeGreaterThan(.2);
+ if(!(await video.evaluate(v=>v.currentSrc)).includes('/active5/'))throw Error('Previous video comparison');
+ await card.locator('[data-action="compare"]').click();
+ await expect.poll(()=>video.evaluate(v=>v.currentTime),{timeout:20000}).toBeGreaterThan(.2);
+ if(!(await video.evaluate(v=>v.currentSrc)).includes('/toriresult/'))throw Error('New video return');
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Overflow');
+ if(errors.length)throw Error(errors.join(';'));
+ const report={loops:3,previousVersionComparison:'passed',range:206,mobileOverflow:false,pageErrors:errors,otherFourSources:'unchanged'};
+ await writeFile('ref/goods-motion-tori-result/review/browser.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+}finally{await browser.close();}

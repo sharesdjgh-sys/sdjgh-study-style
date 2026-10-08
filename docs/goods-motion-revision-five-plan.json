@@ -1,0 +1,111 @@
+{
+  "status": "rejected-by-user",
+  "requests": 10,
+  "provider": "Google Gemini API",
+  "model": "gemini-omni-1.1-flash",
+  "segments": [
+    8,
+    7
+  ],
+  "newImages": 4,
+  "reusedImages": [
+    "pace"
+  ],
+  "automaticRetries": 0,
+  "acceptedUnchanged": [
+    "lumi",
+    "moa",
+    "root",
+    "pico",
+    "sori",
+    "melo",
+    "talk",
+    "mong",
+    "bani",
+    "luka",
+    "skip"
+  ],
+  "cards": [
+    {
+      "id": "leaf",
+      "name": "리프",
+      "issue": "모자 형태와 다람쥐가 기구를 돌리는 동작",
+      "change": "회전 기구를 씨앗 진열대로 바꿉니다. 모자와 볏을 고정한 채 리프가 몸을 기울여 살펴보고 다람쥐와 눈을 맞춥니다.",
+      "reference": "ref/goods-motion-revision-five/frames/leaf.png"
+    },
+    {
+      "id": "tori",
+      "name": "토리",
+      "issue": "맞물리지 않은 기어 회전과 떠다니는 달",
+      "change": "조립이 끝난 시계로 바꿉니다. 달은 막대와 축에 붙은 진자로만 움직이고, 토리는 버튼을 눌러 작동을 확인합니다.",
+      "reference": "ref/goods-motion-revision-five/frames/tori.png"
+    },
+    {
+      "id": "block",
+      "name": "블록",
+      "issue": "다리 연결부와 블록 크기 변화",
+      "change": "틈이 없는 완성형 다리를 고정합니다. 조립 동작 없이 블록과 토리가 같은 구슬 하나를 다리 위로 주고받습니다.",
+      "reference": "ref/goods-motion-revision-five/frames/block.png"
+    },
+    {
+      "id": "joy",
+      "name": "조이",
+      "issue": "귀가 아닌 반죽 조각이 귀로 변하는 현상",
+      "change": "귀 두 개가 분명하게 완성된 토끼 반죽으로 시작합니다. 귀를 붙이거나 반죽을 변형하지 않고 접시째 친구에게 보여줍니다.",
+      "reference": "ref/goods-motion-revision-five/frames/joy.png"
+    },
+    {
+      "id": "pace",
+      "name": "페이스",
+      "issue": "걷는 중 주황색 신발이 사라지는 현상",
+      "change": "기존 장면을 유지합니다. 주황색 신발의 윗면·흰 끈·크림색 밑창을 고정하고 한 발을 내딛었다가 몸을 돌지 않고 돌아옵니다.",
+      "reference": "ref/goods-motion-revision-five/frames/pace.png"
+    }
+  ],
+  "approval": {
+    "userMessage": "네 승인합니다.",
+    "scope": "10 additional paid video requests and reference image transfer to Google Gemini",
+    "approved": true
+  },
+  "completedRequests": 10,
+  "visualReview": {
+    "method": "0.25-second sampled contact sheets",
+    "improved": [
+      "tori",
+      "block",
+      "joy"
+    ],
+    "needsRevision": [
+      "leaf",
+      "pace"
+    ],
+    "notes": {
+      "leaf": {
+        "issue": true,
+        "note": "재제작 검토 · 다람쥐의 회전 기구는 제거했지만, 초반과 후반에 모자 방향이 변하는 문제가 남았습니다. 추가 수정 대상입니다."
+      },
+      "tori": {
+        "issue": false,
+        "note": "수정 영상 · 완성된 시계의 버튼을 누릅니다. 달이 막대와 축에 연결된 채 움직이는 것을 표본 프레임에서 확인했습니다."
+      },
+      "block": {
+        "issue": false,
+        "note": "수정 영상 · 하나로 이어진 다리 위에서 구슬을 주고받습니다. 블록 조립과 크기 변형 문제를 줄인 장면입니다."
+      },
+      "joy": {
+        "issue": false,
+        "note": "수정 영상 · 처음부터 귀가 완성된 토끼 빵을 보여줍니다. 표본 프레임에서 귀 형태가 유지됩니다."
+      },
+      "pace": {
+        "issue": true,
+        "note": "재제작 검토 · 신발 색은 유지되지만 발을 옮기는 중 신발이 중복되거나 분리되는 문제가 남았습니다. 추가 수정 대상입니다."
+      }
+    }
+  },
+  "userReview": {
+    "allFiveRejected": true,
+    "reason": "기존 대비 액티브한 느낌이 사라짐. 없던 모자 생성, 신발 3개 등 형태 오류. 개선되었다는 내부 판단을 사용자 평가가 대체함.",
+    "nextDirection": "기존 영상의 역동적인 연출을 유지하고 문제 구간을 수정. 동작 축소를 해결책으로 삼지 않음.",
+    "preview": "Original five restored; rejected revision retained for comparison only."
+  }
+}

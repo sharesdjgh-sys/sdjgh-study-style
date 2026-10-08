@@ -1,0 +1,18 @@
+{
+  "source": "ref\\goods-motion-active-five\\videos\\tori.mp4",
+  "output": "ref\\goods-motion-tori-result\\videos\\tori.mp4",
+  "method": "Tracked local emission and reflected-light compositing on existing clock star engraving; original character animation preserved",
+  "frames": 360,
+  "fps": 24.066852903996722,
+  "duration": 14.958333,
+  "minimumTrackingConfidence": 0.9769,
+  "lightOnset": 5.65,
+  "steadyResult": [
+    6.5,
+    12.5
+  ],
+  "fadeComplete": 14.05,
+  "additionalPaidRequests": 0,
+  "preview": "/preview/goods-motion/active5/index.html#tori",
+  "otherFour": "unchanged"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "reviewed-and-published-to-local-preview",
+  "method": "0.25-second contact sheets across all five videos, plus first/join/last-frame comparisons. Browser playback is recorded separately in ref/goods-motion-active-five/review/browser.json.",
+  "scope": "Sampled visual review, not a guarantee of frame-perfect generative consistency or user acceptance.",
+  "cards": {
+    "leaf": "No hat appears in sampled frames. Upper-body lean and wing reaction restored. Seed wheel and squirrel remain visible; loop endpoint returns to bareheaded pose.",
+    "tori": "Visible forward lean, narrowed eye and screwdriver movement. Worn loupe remains attached. No exposed mismatched moving gears or floating moon apparatus. Original pose returns at endpoint.",
+    "block": "Clear lowering of torso and head to follow rolling marble, then celebratory reaction. Fixed bridge and single marble retained in sampled views.",
+    "joy": "Clear flour sprinkling and clapping. Finished bun remains inanimate with two ears across sampled frames.",
+    "pace": "Visible squat-and-rise and flipper extension. Two orange shoes stay on the stone in sampled frames; no third shoe seen. Walking is replaced with an energetic departure warm-up."
+  },
+  "selection": "Five new active5 files selected in both the full gallery and dedicated five-card gallery. Other eleven files unchanged."
+}
