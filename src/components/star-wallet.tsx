@@ -45,7 +45,7 @@ export function StarWallet({
               </strong>
             </span>
             <p>
-              일상 <b>1별</b> · 특별 의상 <b>2별</b>
+              일상 <b>1별</b> · 특별 의상 <b>2별</b> · 모션 <b>3별</b>
             </p>
           </div>
         ) : (
@@ -87,6 +87,7 @@ export function StarWallet({
               <span>
                 일상 포토카드 <b>1별</b>
                 <i aria-hidden="true">·</i>특별 의상 <b>2별</b>
+                <i aria-hidden="true">·</i>모션 <b>3별</b>
               </span>
               <small>
                 소장한 굿즈{" "}

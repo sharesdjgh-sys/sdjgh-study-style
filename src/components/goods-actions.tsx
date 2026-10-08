@@ -74,6 +74,15 @@ export function GoodsActions({
             card={card}
             back={back}
           />
+          {card.kind === "motion" && (
+            <a
+              className="button goods-save"
+              href={`${card.video}&download=1`}
+              download
+            >
+              영상 저장
+            </a>
+          )}
         </>
       ) : !goods.signedIn ? (
         <>
@@ -114,7 +123,8 @@ export function GoodsActions({
       ) : (
         <>
           <p>
-            일상 <strong>1별</strong> · 특별 의상 <strong>2별</strong>
+            일상 <strong>1별</strong> · 특별 의상 <strong>2별</strong> · 스페셜
+            모션 <strong>3별</strong>
             <br />
             보유한 별 {goods.progress.balance}개
           </p>

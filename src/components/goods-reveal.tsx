@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import type { GoodsCard } from "@/lib/goods";
+import { goodsPrice, goodsKindLabel, type GoodsCard } from "@/lib/goods";
 import { Star } from "./star-wallet";
 import styles from "./goods-reveal.module.css";
 
@@ -12,7 +12,8 @@ export function GoodsReveal({
   card: GoodsCard;
   onFinish: () => void;
 }) {
-  const special = card.kind === "special";
+  const special = card.kind !== "daily";
+  const motion = card.kind === "motion";
   const finish = useRef(onFinish);
   const skip = useRef<HTMLButtonElement>(null);
   const [phase, setPhase] = useState("gather");
@@ -48,14 +49,14 @@ export function GoodsReveal({
   const revealed = phase === "revealed";
   return (
     <section
-      className={`${styles.reveal} ${special ? styles.special : ""}`}
+      className={`${styles.reveal} ${special ? styles.special : ""} ${motion ? styles.motion : ""}`}
       data-running={ready}
       data-phase={phase}
       aria-label="굿즈 해금 연출"
     >
       <div className={styles.ambience} aria-hidden="true" />
       <div className={styles.topline}>
-        <span>{special ? "특별 의상 카드" : "일상 포토카드"}</span>
+        <span>{goodsKindLabel(card)}</span>
         <button ref={skip} className={styles.skip} onClick={onFinish}>
           연출 건너뛰기
         </button>
@@ -77,20 +78,22 @@ export function GoodsReveal({
             }
           />
         ))}
-        {[0, ...(special ? [1] : [])].map((index) => (
-          <span
-            key={index}
-            className={styles.offering}
-            style={
-              {
-                "--direction": index ? 1 : -1,
-                "--delay": `${index * 240}ms`,
-              } as CSSProperties
-            }
-          >
-            <Star size={48} />
-          </span>
-        ))}
+        {Array.from({ length: goodsPrice(card) }, (_, index) => index).map(
+          (index) => (
+            <span
+              key={index}
+              className={styles.offering}
+              style={
+                {
+                  "--direction": motion ? index - 1 : index ? 1 : -1,
+                  "--delay": `${index * 240}ms`,
+                } as CSSProperties
+              }
+            >
+              <Star size={48} />
+            </span>
+          ),
+        )}
         <div className={styles.cardFloat}>
           <div className={styles.card}>
             <div className={styles.cover}>
@@ -100,7 +103,11 @@ export function GoodsReveal({
                 <Star size={66} />
               </div>
               <span className={styles.coverBottom}>
-                {special ? "SPECIAL COSTUME" : "DAILY MOMENT"}
+                {motion
+                  ? "SPECIAL MOTION"
+                  : special
+                    ? "SPECIAL COSTUME"
+                    : "DAILY MOMENT"}
                 <small>아직 만나지 못한 순간</small>
               </span>
             </div>
@@ -114,6 +121,17 @@ export function GoodsReveal({
                 onLoad={() => setReady(true)}
                 onError={() => finish.current()}
               />
+              {motion && revealed && (
+                <video
+                  src={card.video}
+                  autoPlay
+                  muted
+                  playsInline
+                  loop
+                  preload="auto"
+                  aria-hidden="true"
+                />
+              )}
               <span className={styles.sheen} />
             </div>
           </div>
@@ -132,7 +150,9 @@ export function GoodsReveal({
         </h3>
         <p>
           {revealed
-            ? `${card.name}의 새로운 순간이 내 컬렉션에 들어왔어요.`
+            ? motion
+              ? `${card.name}의 순간이 움직이기 시작했어요. 이제 언제든 재생할 수 있어요.`
+              : `${card.name}의 새로운 순간이 내 컬렉션에 들어왔어요.`
             : "잠시 후, 나만의 한 장이 펼쳐집니다."}
         </p>
       </div>

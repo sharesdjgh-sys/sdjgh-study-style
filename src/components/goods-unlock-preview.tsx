@@ -10,7 +10,11 @@ export function GoodsUnlockPreview() {
   const [run, setRun] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [mobile, setMobile] = useState(false);
-  const card = GOODS.find((item) => item.kind === kind)!;
+  const selected = GOODS.find((item) => item.kind === kind)!;
+  const card =
+    kind === "motion"
+      ? { ...selected, video: "/preview/goods-motion/series/videos/lumi.mp4" }
+      : selected;
   function play(nextKind = kind) {
     setKind(nextKind);
     setRun((value) => value + 1);
@@ -35,6 +39,13 @@ export function GoodsUnlockPreview() {
           onClick={() => play("special")}
         >
           특별 의상 카드 재생
+        </button>
+        <button
+          className="button secondary"
+          aria-pressed={kind === "motion"}
+          onClick={() => play("motion")}
+        >
+          스페셜 모션 카드 재생
         </button>
         <label>
           <input

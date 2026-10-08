@@ -596,3 +596,19 @@
     transition: none;
   }
 }
+.motionPlayer video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border: 3px solid #cfb77e;
+  border-radius: 16px;
+  background: #191d32;
+}
+.motionPlayer > button {
+  margin-top: 12px;
+  width: 100%;
+}
+.motionPlayer > p {
+  text-align: center;
+}

@@ -10,6 +10,7 @@ const config: NextConfig = {
     ],
   },
   outputFileTracingIncludes: {
+    "/api/goods/video": ["./art/goods-motion/*.mp4"],
     "/api/goods/image": [
       "./art/goods/*.webp",
       "./public/characters/thumbs/*.png",

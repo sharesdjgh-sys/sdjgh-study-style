@@ -1,0 +1,258 @@
+[
+  {
+    "id": "visual-solo-planned--motion-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "내가 이어 찾은 첫 번째 별자리",
+    "imageVersion": "7252fd5ffe45",
+    "video": "/api/goods/video?id=visual-solo-planned--motion-01",
+    "back": {
+      "story": "루미의 특별한 순간. 별을 띄우고 바라본 뒤 제자리로 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "내가 이어 찾은 첫 번째 별자리, 우리 함께 만들어 가요.",
+      "signature": "루미",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "visual-solo-flexible--motion-01",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "낙서 뒤에 숨어 있던 정원",
+    "imageVersion": "d89bb825b8b8",
+    "video": "/api/goods/video?id=visual-solo-flexible--motion-01",
+    "back": {
+      "story": "모아의 특별한 순간. 종이 정원문을 열어 발견하기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "낙서 뒤에 숨어 있던 정원, 우리 함께 만들어 가요.",
+      "signature": "모아",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "visual-team-planned--motion-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "우리의 길이 만나는 곳",
+    "imageVersion": "b7019931c388",
+    "video": "/api/goods/video?id=visual-team-planned--motion-01",
+    "back": {
+      "story": "루트의 특별한 순간. 두 길의 합류를 안내하기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "우리의 길이 만나는 곳, 우리 함께 만들어 가요.",
+      "signature": "루트",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "visual-team-flexible--motion-01",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "겹쳐 보니 다른 세상",
+    "imageVersion": "d12130b48e16",
+    "video": "/api/goods/video?id=visual-team-flexible--motion-01",
+    "back": {
+      "story": "피코의 특별한 순간. 색 천을 겹쳐 새로운 무늬 만들기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "겹쳐 보니 다른 세상, 우리 함께 만들어 가요.",
+      "signature": "피코",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "auditory-solo-planned--motion-01",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "한 문장씩 깨어나는 책",
+    "imageVersion": "44226b85a07a",
+    "video": "/api/goods/video?id=auditory-solo-planned--motion-01",
+    "back": {
+      "story": "소리의 특별한 순간. 세 그림의 이야기를 차례로 깨우기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "한 문장씩 깨어나는 책, 우리 함께 만들어 가요.",
+      "signature": "소리",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "auditory-solo-flexible--motion-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "코코아에서 태어난 질문",
+    "imageVersion": "32b400d15377",
+    "video": "/api/goods/video?id=auditory-solo-flexible--motion-01",
+    "back": {
+      "story": "멜로의 특별한 순간. 코코아의 질문이 고래가 되는 순간 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "코코아에서 태어난 질문, 우리 함께 만들어 가요.",
+      "signature": "멜로",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "auditory-team-planned--motion-01",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "이번에는 네 이야기를 들을게",
+    "imageVersion": "ec02a5b5b39e",
+    "video": "/api/goods/video?id=auditory-team-planned--motion-01",
+    "back": {
+      "story": "토크의 특별한 순간. 말할 차례를 건네고 귀 기울이기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "이번에는 네 이야기를 들을게, 우리 함께 만들어 가요.",
+      "signature": "토크",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "auditory-team-flexible--motion-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "잠깐, 그건 어떻게 움직여?",
+    "imageVersion": "bc546e203da0",
+    "video": "/api/goods/video?id=auditory-team-flexible--motion-01",
+    "back": {
+      "story": "리프의 특별한 순간. 모자 없이 씨앗 바퀴를 따라 몸을 기울이며 놀라는 리프 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "잠깐, 그건 어떻게 움직여?, 우리 함께 만들어 가요.",
+      "signature": "리프",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "tactile-solo-planned--motion-01",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "작은 조정으로 다시 켜진 별빛",
+    "imageVersion": "1bedb17d59aa",
+    "video": "/api/goods/video?id=tactile-solo-planned--motion-01",
+    "back": {
+      "story": "토리의 특별한 순간. 돋보기로 조정한 뒤 시계의 별 표시등이 켜지는 결과 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "작은 조정으로 다시 켜진 별빛, 우리 함께 만들어 가요.",
+      "signature": "토리",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "tactile-solo-flexible--motion-01",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "어라, 화분이 떠오르네?",
+    "imageVersion": "625efbd2205e",
+    "video": "/api/goods/video?id=tactile-solo-flexible--motion-01",
+    "back": {
+      "story": "몽의 특별한 순간. 레버 하나로 화분 띄워 보기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "어라, 화분이 떠오르네?, 우리 함께 만들어 가요.",
+      "signature": "몽",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "tactile-team-planned--motion-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "네 조각까지, 이제 완성",
+    "imageVersion": "f93b79fb4fa7",
+    "video": "/api/goods/video?id=tactile-team-planned--motion-01",
+    "back": {
+      "story": "블록의 특별한 순간. 구슬을 굴려 다리를 시험하고 몸을 낮춰 따라보기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "네 조각까지, 이제 완성, 우리 함께 만들어 가요.",
+      "signature": "블록",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "tactile-team-flexible--motion-01",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "우리 반죽은 무슨 모양?",
+    "imageVersion": "c45279761610",
+    "video": "/api/goods/video?id=tactile-team-flexible--motion-01",
+    "back": {
+      "story": "조이의 특별한 순간. 토끼 빵에 가루를 뿌리고 손뼉 치며 기뻐하기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "우리 반죽은 무슨 모양?, 우리 함께 만들어 가요.",
+      "signature": "조이",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "motion-solo-planned--motion-01",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "오늘은 여기까지, 한 칸 더",
+    "imageVersion": "51fe05515028",
+    "video": "/api/goods/video?id=motion-solo-planned--motion-01",
+    "back": {
+      "story": "페이스의 특별한 순간. 출발 전 무릎을 굽혔다 펴며 날개를 크게 펴는 씩씩한 준비 동작 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "오늘은 여기까지, 한 칸 더, 우리 함께 만들어 가요.",
+      "signature": "페이스",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "motion-solo-flexible--motion-01",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "바람이 바꿔 준 오늘의 길",
+    "imageVersion": "36b43bde0fce",
+    "video": "/api/goods/video?id=motion-solo-flexible--motion-01",
+    "back": {
+      "story": "바니의 특별한 순간. 바람 따라 꽃 곁에 다녀오기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "바람이 바꿔 준 오늘의 길, 우리 함께 만들어 가요.",
+      "signature": "바니",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "motion-team-planned--motion-01",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "마지막 친구까지 도착하면",
+    "imageVersion": "fd6512995bd3",
+    "video": "/api/goods/video?id=motion-team-planned--motion-01",
+    "back": {
+      "story": "루카의 특별한 순간. 친구에게 자리를 내어 주기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "마지막 친구까지 도착하면, 우리 함께 만들어 가요.",
+      "signature": "루카",
+      "edition": "스페셜 모션 01"
+    }
+  },
+  {
+    "id": "motion-team-flexible--motion-01",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "motion",
+    "theme": "motion-01",
+    "title": "멈춘 축제에 첫 박자",
+    "imageVersion": "1f08d5218811",
+    "video": "/api/goods/video?id=motion-team-flexible--motion-01",
+    "back": {
+      "story": "스킵의 특별한 순간. 작은 두 박자로 다시 시작하기 속에 나만의 공부 리듬이 담겨 있어요.",
+      "quote": "멈춘 축제에 첫 박자, 우리 함께 만들어 가요.",
+      "signature": "스킵",
+      "edition": "스페셜 모션 01"
+    }
+  }
+]

@@ -104,3 +104,15 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("카드 개봉 시 별 1~2개 최초 1회 보상 준비 완료");
+const motionGoods = await readFile(
+  new URL("../db/010_motion_goods.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  motionGoods
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("스페셜 모션 카드 16종·별 3개 교환 준비 완료");

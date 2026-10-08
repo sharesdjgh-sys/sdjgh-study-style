@@ -11,12 +11,12 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
     "visual-solo-planned--daily-02",
   ];
   await page.goto("/goods");
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   await page
     .getByRole("navigation", { name: "굿즈 캐릭터" })
     .getByRole("button", { name: /루미/ })
     .click();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   await page
     .getByRole("button", { name: "일상 포토카드", exact: true })
     .click();
@@ -49,7 +49,7 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
     .getByRole("navigation", { name: "굿즈 캐릭터" })
     .getByRole("button", { name: /내 공부캐 전체/ })
     .click();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -163,12 +163,12 @@ test("특별 의상은 별 2개로 확인 후 교환하고 내 굿즈에서 앞�
   await page.keyboard.press("Escape");
   await page.goto("/goods?view=owned");
   await expect(page.getByLabel("내 굿즈만")).not.toBeChecked();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   await page.getByLabel("내 굿즈만").check();
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(1);
   await page.reload();
   await expect(page.getByLabel("내 굿즈만")).not.toBeChecked();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   await page
     .getByRole("button", { name: "루미 책장이 비어 있는 이유 카드 보기" })
     .click();
@@ -196,7 +196,7 @@ test("미교환 굿즈는 그림을 요청하지 않고 봉인된 상태로 표�
       artwork.push(request.url());
   });
   await page.goto("/goods");
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
   await page
     .getByRole("button", { name: /카드 보기$/ })
     .first()
@@ -230,5 +230,5 @@ test("소장 정보 조회 실패 시 굿즈를 숨기고 재시도한다", asyn
   await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(0);
   failed = false;
   await page.getByRole("button", { name: "다시 불러오기" }).click();
-  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(8);
+  await expect(page.getByRole("button", { name: /카드 보기$/ })).toHaveCount(9);
 });

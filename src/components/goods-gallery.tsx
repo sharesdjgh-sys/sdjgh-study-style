@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { GOODS, type GoodsCard } from "@/lib/goods";
+import { GOODS, goodsKindLabel, type GoodsCard } from "@/lib/goods";
 import { CHARACTERS } from "@/lib/characters";
 import { useCollection } from "./collection-provider";
 import styles from "./goods-gallery.module.css";
@@ -11,6 +11,7 @@ import { Star, StarWallet } from "./star-wallet";
 import { goodsPrice } from "@/lib/goods";
 import { GoodsActions } from "./goods-actions";
 import { GoodsReveal } from "./goods-reveal";
+import { GoodsMotionPlayer } from "./goods-motion-player";
 
 const characters = Object.entries(CHARACTERS);
 function avatar(code: string) {
@@ -59,8 +60,9 @@ export function GoodsGallery() {
             </em>
           </h1>
           <p>
-            포근한 일상 3장, 상상 속 의상 5장.
-            <br />내 공부캐의 카드를 모으면 그림과 비밀 이야기가 열려요.
+            포근한 일상 3장, 상상 속 의상 5장, 움직이는 스페셜 1장.
+            <br />
+            별로 소장하면 내 공부캐의 그림과 이야기, 특별한 영상이 열려요.
           </p>
         </div>
         <div className={styles.heroCards} aria-hidden="true">
@@ -104,19 +106,24 @@ export function GoodsGallery() {
               ["all", "전체"],
               ["daily", "일상 포토카드"],
               ["special", "특별 의상 카드"],
+              ["motion", "스페셜 모션 카드"],
             ].map(([value, label]) => (
               <button
                 key={value}
                 aria-pressed={kind === value}
                 onClick={() => setKind(value)}
               >
-                {value !== "all" && (
-                  <Image
-                    src={`/ui-icons/goods-${value}-v1.webp`}
-                    alt=""
-                    width={36}
-                    height={36}
-                  />
+                {value === "motion" ? (
+                  <Star size={30} />
+                ) : (
+                  value !== "all" && (
+                    <Image
+                      src={`/ui-icons/goods-${value}-v1.webp`}
+                      alt=""
+                      width={36}
+                      height={36}
+                    />
+                  )
                 )}
                 {label}
               </button>
@@ -177,10 +184,10 @@ export function GoodsGallery() {
                   <div>
                     <strong>{card.name}</strong>
                     <small>
-                      {card.kind === "daily"
-                        ? "일상 포토카드"
-                        : "특별 의상 카드"}{" "}
-                      {card.theme.slice(-2)}
+                      {goodsKindLabel(card)}{" "}
+                      {card.kind === "motion"
+                        ? "· 약 15초"
+                        : card.theme.slice(-2)}
                     </small>
                   </div>
                   <span>
@@ -255,17 +262,25 @@ export function GoodsFace({
 }) {
   return (
     <div
-      className={`${styles.card} ${card.kind === "special" ? styles.special : ""}`}
+      className={`${styles.card} ${card.kind !== "daily" ? styles.special : ""}`}
     >
       {locked ? (
         <div className={`${styles.back} ${styles.locked}`}>
           <span>
-            {card.kind === "daily" ? "DAILY MOMENT" : "SPECIAL COLLECTION"}
+            {card.kind === "motion"
+              ? "SPECIAL MOTION"
+              : card.kind === "daily"
+                ? "DAILY MOMENT"
+                : "SPECIAL COLLECTION"}
           </span>
           <Star size={36} />
           <h3>{card.title}</h3>
           <p>아직 열리지 않은 순간</p>
-          <small>소장하면 그림과 이야기가 열려요</small>
+          <small>
+            {card.kind === "motion"
+              ? "별 3개로 소장하면 움직이는 순간이 열려요"
+              : "소장하면 그림과 이야기가 열려요"}
+          </small>
         </div>
       ) : back ? (
         <div className={styles.back}>
@@ -287,8 +302,12 @@ export function GoodsFace({
             height={576}
             sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 280px"
           />
-          {card.kind === "special" && (
-            <span className={styles.seal}>SPECIAL COLLECTION</span>
+          {card.kind !== "daily" && (
+            <span className={styles.seal}>
+              {card.kind === "motion"
+                ? "▶ SPECIAL MOTION"
+                : "SPECIAL COLLECTION"}
+            </span>
           )}
           <div className={styles.caption}>
             <strong>{card.title}</strong>
@@ -317,6 +336,7 @@ function GoodsDialog({
   const dialog = useRef<HTMLDialogElement>(null);
   const [back, setBack] = useState(false);
   const [revealing, setRevealing] = useState(false);
+  const [playOnOpen, setPlayOnOpen] = useState(false);
   const closeButton = useRef<HTMLButtonElement>(null);
   const goods = useGoods();
   const owned =
@@ -354,17 +374,30 @@ function GoodsDialog({
         style={revealing ? { visibility: "hidden" } : undefined}
       >
         <div className={styles.large}>
-          <GoodsFace card={card} back={back} locked={!owned} />
+          {card.kind === "motion" && owned && !back ? (
+            <GoodsMotionPlayer
+              card={card}
+              autoPlay={playOnOpen && !revealing}
+            />
+          ) : (
+            <GoodsFace card={card} back={back} locked={!owned} />
+          )}
         </div>
         <div className={styles.copy}>
           <span className="eyebrow">
-            {card.kind === "daily" ? "DAILY MOMENT" : "SPECIAL COSTUME"}
+            {card.kind === "motion"
+              ? "SPECIAL MOTION · 약 15초"
+              : card.kind === "daily"
+                ? "DAILY MOMENT"
+                : "SPECIAL COSTUME"}
           </span>
           <h2 id="goods-title">{card.title}</h2>
           <p>
             {owned
               ? card.back.story
-              : "어떤 순간이 담겨 있을까요? 별로 이 카드를 소장하면 그림과 나에게 전하는 이야기를 볼 수 있어요."}
+              : card.kind === "motion"
+                ? "별 3개로 봉인을 열면 약 15초의 특별한 순간이 움직이기 시작해요. 한 번 소장하면 언제든 다시 재생할 수 있어요."
+                : "어떤 순간이 담겨 있을까요? 별로 이 카드를 소장하면 그림과 나에게 전하는 이야기를 볼 수 있어요."}
           </p>
           {owned && (
             <div className={styles.actions}>
@@ -378,6 +411,19 @@ function GoodsDialog({
               >
                 {back ? "앞면 보기" : "뒷면 보기"}
               </button>
+              {card.kind === "motion" && (
+                <button
+                  className="button secondary"
+                  onClick={() => {
+                    setBack(false);
+                    setPlayOnOpen(false);
+                    setRevealing(true);
+                    dialog.current?.scrollTo({ top: 0 });
+                  }}
+                >
+                  해금 연출 다시 보기
+                </button>
+              )}
             </div>
           )}
           <div className={styles.paging}>
@@ -412,6 +458,7 @@ function GoodsDialog({
           card={card}
           onFinish={() => {
             setRevealing(false);
+            setPlayOnOpen(true);
             closeButton.current?.focus();
           }}
         />

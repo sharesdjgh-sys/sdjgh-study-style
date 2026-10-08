@@ -4,7 +4,7 @@ import { join } from "node:path";
 import sharp from "sharp";
 import type { GoodsCard } from "./goods";
 export async function renderGoods(card: GoodsCard, back: boolean) {
-  const special = card.kind === "special";
+  const special = card.kind !== "daily";
   const [font, art] = await Promise.all([
     readFile(join(process.cwd(), "public/fonts/Pretendard-Medium.woff")),
     back

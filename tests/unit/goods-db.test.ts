@@ -16,6 +16,7 @@ beforeAll(async () => {
     await db.exec(await readFile("db/" + file, "utf8"));
   migration = await readFile("db/008_goods_stars.sql", "utf8");
   await db.exec(migration);
+  await db.exec(await readFile("db/010_motion_goods.sql", "utf8"));
 }, 60000);
 afterAll(async () => {
   await db.close();
@@ -30,7 +31,7 @@ async function account() {
   const id = randomUUID();
   await db.query(
     "INSERT INTO collection_accounts(id,kakao_id,invite_code) VALUES($1,$2,$3)",
-    [id,id,id],
+    [id, id, id],
   );
   return id;
 }
@@ -47,13 +48,44 @@ const balance = (id: string) =>
   );
 const redeem = (id: string, goods = "visual-solo-planned--daily-01") =>
   scalar("SELECT redeem_goods($1,$2) AS v", [id, goods]);
-it("128종 서버 비용은 일상 1별·특별 의상 2별이며 클라이언트 목록과 일치한다", async () => {
+it("모션은 3별을 한 번만 차감하고 소장하며 마이그레이션 재실행에도 보존한다", async () => {
+  const id = await account(),
+    motion = "visual-solo-planned--motion-01";
+  await db.query("SELECT credit_stars($1,'practice','motion-test',3)", [id]);
+  expect(await redeem(id, motion)).toBe("character_required");
+  await card(id);
+  expect(
+    (await Promise.all([redeem(id, motion), redeem(id, motion)])).sort(),
+  ).toEqual(["already_owned", "redeemed"]);
+  expect(await balance(id)).toBe(0);
+  expect(
+    await scalar<number>(
+      "SELECT paid AS v FROM goods_unlocks WHERE account_id=$1 AND goods_id=$2",
+      [id, motion],
+    ),
+  ).toBe(3);
+  await db.exec(await readFile("db/010_motion_goods.sql", "utf8"));
+  expect(await redeem(id, motion)).toBe("already_owned");
+  expect(await balance(id)).toBe(0);
+  const other = await account();
+  await card(other);
+  await db.query("SELECT credit_stars($1,'practice','motion-test',2)", [other]);
+  expect(await redeem(other, motion)).toBe("insufficient_stars");
+  expect(await balance(other)).toBe(2);
+  expect(
+    await scalar<number>(
+      "SELECT count(*)::int AS v FROM goods_unlocks WHERE account_id=$1",
+      [other],
+    ),
+  ).toBe(0);
+});
+it("144종 서버 비용은 일상 1별·특별 의상 2별·모션 3별이며 클라이언트 목록과 일치한다", async () => {
   const rows = (
     await db.query<{ id: string; cost: number; character_code: string }>(
       "SELECT * FROM goods_catalog",
     )
   ).rows;
-  expect(rows).toHaveLength(128);
+  expect(rows).toHaveLength(144);
   for (const c of GOODS)
     expect(rows.find((r) => r.id === c.id)).toMatchObject({
       cost: goodsPrice(c),
