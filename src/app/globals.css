@@ -7433,6 +7433,10 @@ body:has(.method-quick-menu) {
   text-align: left;
   font-weight: 750;
 }
+.catalog-family-tabs button:not([data-family]) {
+  --catalog-color: #79568f;
+  --catalog-tint: #eee5f5;
+}
 .catalog-family-tabs button small {
   display: block;
   font-size: 12px;

@@ -105,16 +105,22 @@
 }
 .filters {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 14px;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: stretch;
   margin: 28px 0 20px;
   padding: 16px 0;
   border-block: 1px solid #ded6c5;
 }
-.filters > div {
+.filterTop {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.kindFilters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 .filters button {
@@ -137,13 +143,14 @@
   flex-shrink: 0;
 }
 @media (max-width: 640px) {
-  .filters > div {
-    width: 100%;
+  .kindFilters {
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-width: 0;
     gap: 6px;
   }
-  .filters button {
+  .kindFilters button {
+    min-width: 0;
     flex-direction: column;
     gap: 4px;
     white-space: nowrap;
@@ -153,6 +160,32 @@
   background: #725781;
   color: white;
   border-color: #725781;
+}
+.filterTop > button {
+  flex: 1;
+  min-height: 50px;
+  background: #eee5f5;
+  border-color: #d2bce0;
+  color: #694580;
+  font-weight: 700;
+  box-shadow: 0 2px 0 #dac8e5;
+}
+.filterTop > button[aria-pressed="true"] {
+  background: linear-gradient(110deg, #78528f, #9467a4);
+  border-color: #78528f;
+  color: #fff;
+  box-shadow: 0 3px 0 #604173;
+}
+.filterTop > button:hover {
+  filter: brightness(1.05);
+}
+.filters button:focus-visible {
+  outline: 3px solid #ac85c2;
+  outline-offset: 3px;
+}
+.filterTop > label {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .filters label {
   font-size: 13px;
@@ -488,6 +521,11 @@
   .filters button {
     padding: 9px 10px;
     font-size: 12px;
+  }
+  .kindFilters button {
+    padding-inline: 4px;
+    font-size: clamp(11px, 3vw, 12px);
+    letter-spacing: -0.04em;
   }
   .heading h2 {
     font-size: 19px;

@@ -101,9 +101,24 @@ export function GoodsGallery() {
       </nav>
       <section aria-label="굿즈 목록">
         <div className={styles.filters}>
-          <div>
+          <div className={styles.filterTop}>
+            <button
+              aria-pressed={kind === "all"}
+              onClick={() => setKind("all")}
+            >
+              전체
+            </button>
+            <label>
+              <input
+                type="checkbox"
+                checked={ownedOnly}
+                onChange={(e) => setOwnedOnly(e.target.checked)}
+              />
+              내 굿즈만
+            </label>
+          </div>
+          <div className={styles.kindFilters}>
             {[
-              ["all", "전체"],
               ["daily", "일상 포토카드"],
               ["special", "특별 의상 카드"],
               ["motion", "스페셜 모션 카드"],
@@ -116,27 +131,17 @@ export function GoodsGallery() {
                 {value === "motion" ? (
                   <Star size={30} />
                 ) : (
-                  value !== "all" && (
-                    <Image
-                      src={`/ui-icons/goods-${value}-v1.webp`}
-                      alt=""
-                      width={36}
-                      height={36}
-                    />
-                  )
+                  <Image
+                    src={`/ui-icons/goods-${value}-v1.webp`}
+                    alt=""
+                    width={36}
+                    height={36}
+                  />
                 )}
                 {label}
               </button>
             ))}
           </div>
-          <label>
-            <input
-              type="checkbox"
-              checked={ownedOnly}
-              onChange={(e) => setOwnedOnly(e.target.checked)}
-            />
-            내 굿즈만
-          </label>
         </div>
         <div className={styles.heading}>
           <h2>
