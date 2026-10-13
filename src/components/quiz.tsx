@@ -524,10 +524,10 @@ export function Quiz() {
         )}
         <div className={`quiz-signature ${styles.signature}`}>
           <Image
-            src="/brand/sdj-logo.png"
-            alt="서대전여자고등학교"
-            width={2830}
-            height={449}
+            src="/brand/sdj-logo-ai-digital-v2.png"
+            alt="AI·디지털 선도학교 서대전여자고등학교"
+            width={2361}
+            height={413}
             sizes="132px"
             loading="eager"
           />
