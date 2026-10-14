@@ -55,6 +55,9 @@ it("실제 마이그레이션 실행기가 단일 명령 prepared query로 설�
       "INSERT INTO collection_withdrawals VALUES($1,now(),now()+interval '168 hours')",
       ["a".repeat(64)],
     );
+    await db.exec(
+      "INSERT INTO study_daily(day,version,source,metric,detail,total) VALUES(current_date-400,'history','direct','start','',7)",
+    );
     vi.resetModules();
     await import(runner);
     expect(
@@ -73,6 +76,10 @@ it("실제 마이그레이션 실행기가 단일 명령 prepared query로 설�
       ).rows[0].total,
     ).toBe(19);
     expect((await db.query("SELECT study_rollup()")).rows).toHaveLength(1);
+    expect(
+      (await db.query("SELECT total FROM study_daily WHERE version='history'"))
+        .rows,
+    ).toEqual([{ total: 7 }]);
     expect(
       (
         await db.query(

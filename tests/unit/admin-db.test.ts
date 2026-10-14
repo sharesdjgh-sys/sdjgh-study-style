@@ -42,6 +42,7 @@ beforeAll(async () => {
     "009_card_stars.sql",
     "010_motion_goods.sql",
     "011_admin_indexes.sql",
+    "012_analytics_history.sql",
   ])
     await db.exec(await readFile("db/" + file, "utf8"));
 }, 60000);
@@ -81,7 +82,7 @@ it("빈 DB에서도 16종·28스킬·144굿즈와 0 집계를 반환한다", asy
   expect(data.characters).toHaveLength(16);
   expect(data.skills).toHaveLength(28);
   expect(data.goods).toHaveLength(144);
-  expect(data.participation).toHaveLength(30);
+  expect(data.participation).toHaveLength(0);
 });
 it("통계 정리 전후 원본과 집계 합산 결과가 동일하다", async () => {
   for (const old of [true, false]) {
@@ -230,4 +231,44 @@ it("계정 필터·정렬·빈 페이지에서도 총수를 반환하고 상세�
     )
   ).rows[0].data;
   expect(filtered.total).toBe(1);
+});
+
+it("장기 조회는 월별 합계를 반환하고 부분 월·연도·한국 시간 경계를 지킨다", async () => {
+  await db.exec(`INSERT INTO study_daily(day,version,source,metric,detail,total) VALUES
+ ('2024-12-14','v1','qr','start','',100),
+ ('2024-12-15','v1','qr','start','',2),
+ ('2024-12-20','v1','qr','start','',8),
+ ('2024-12-20','v1','qr','complete','',2),
+ ('2025-01-01','v1','direct','start','',4),
+ ('2025-04-10','v1','qr','start','',3),
+ ('2025-04-11','v1','qr','start','',100)`);
+  const id = randomUUID();
+  await db.query(
+    "INSERT INTO study_sessions(run_id,version,source,created_at,expires_at) VALUES($1,'v1','qr','2024-12-31T15:00:00Z',now()+interval '1 day')",
+    [id],
+  );
+  await db.query(
+    "INSERT INTO study_events(run_id,name) VALUES($1,'start'),($1,'complete')",
+    [id],
+  );
+  const owner = await account();
+  await db.query(
+    "UPDATE collection_accounts SET created_at='2024-12-31T15:00:00Z' WHERE id=$1",
+    [owner],
+  );
+  const data = await snapshot("2024-12-15", "2025-04-10");
+  expect(data.participation).toEqual([
+    { day: "2024-12-01", starts: 10, completions: 2 },
+    { day: "2025-01-01", starts: 5, completions: 1 },
+    { day: "2025-04-01", starts: 3, completions: 0 },
+  ]);
+  expect(data.activity).toEqual([
+    { day: "2025-01-01", accounts: 1, registrations: 0, cards: 0, goods: 0 },
+  ]);
+  const all = await snapshot("0001-01-01", "2025-04-10");
+  expect(all.participation.reduce((n, row) => n + row.starts, 0)).toBe(118);
+  expect((await snapshot("2024-12-15", "2024-12-20")).participation).toEqual([
+    { day: "2024-12-15", starts: 2, completions: 0 },
+    { day: "2024-12-20", starts: 8, completions: 2 },
+  ]);
 });

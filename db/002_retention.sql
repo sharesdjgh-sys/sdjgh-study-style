@@ -28,6 +28,6 @@ BEGIN
   DO UPDATE SET total=study_daily.total+EXCLUDED.total;
 
   DELETE FROM study_sessions WHERE expires_at<=now();
-  DELETE FROM study_daily WHERE day<(now() AT TIME ZONE 'Asia/Seoul')::date-90;
+  -- Retain de-identified daily aggregates for long-term reporting.
 END;
 $$;

@@ -5,6 +5,7 @@ import { EMPTY_GOODS } from "../../src/lib/goods";
 import { CHARACTERS } from "../../src/lib/characters";
 import {
   defaultAdminRange,
+  daysBefore,
   type AdminStats,
   type AdminAccount,
 } from "../../src/lib/admin-contract";
@@ -58,7 +59,22 @@ const sample: AdminStats = {
         { key: "day", label: "날짜" },
         { key: "accounts", label: "신규 계정" },
       ],
-      rows: [{ day: defaultAdminRange(1).to, accounts: 2 }],
+      rows: [
+        ...[12, 10, 7, 5, 3, 1, 0].map((offset, i) => ({
+          day: daysBefore(defaultAdminRange(1).to, offset),
+          accounts: [3, 5, 2, 8, 4, 6, 2][i],
+          registrations: [2, 3, 1, 6, 3, 4, 2][i],
+          cards: [4, 8, 3, 12, 6, 10, 5][i],
+          goods: [0, 1, 0, 2, 1, 3, 1][i],
+        })),
+        {
+          day: daysBefore(defaultAdminRange(1).to, 2),
+          accounts: 0,
+          registrations: 0,
+          cards: 0,
+          goods: 0,
+        },
+      ],
     },
     {
       id: "characters",
@@ -68,8 +84,38 @@ const sample: AdminStats = {
         { key: "name", label: "캐릭터" },
         { key: "firsts", label: "첫 캐릭터 계정 수" },
       ],
-      rows: [{ name: CHARACTERS["visual-solo-planned"].name, firsts: 8 }],
+      rows: [
+        "visual-solo-planned",
+        "auditory-solo-flexible",
+        "motion-team-flexible",
+        "tactile-solo-planned",
+      ].map((code, i) => ({
+        code,
+        name: CHARACTERS[code].name,
+        firsts: [16, 12, 8, 4][i],
+        owners: [28, 20, 14, 10][i],
+        pending: [2, 0, 1, 0][i],
+        share: [40, 30, 20, 10][i],
+      })),
       chart: { label: "name", value: "firsts" },
+    },
+    {
+      id: "distribution",
+      title: "카드 수집량 분포",
+      basis: "현재 상태 · 도감 등록 계정 기준",
+      columns: [
+        { key: "cards", label: "카드 수" },
+        { key: "accounts", label: "계정 수" },
+      ],
+      rows: [
+        [0, 4],
+        [1, 12],
+        [2, 0],
+        [3, 16],
+        [4, 2],
+        [5, 4],
+        [16, 2],
+      ].map(([cards, accounts]) => ({ cards, accounts })),
     },
     {
       id: "skills",
@@ -79,7 +125,12 @@ const sample: AdminStats = {
         { key: "name", label: "스킬" },
         { key: "completions", label: "실천 완료" },
       ],
-      rows: [{ name: "빈 종이 회상법", completions: 12 }],
+      rows: [
+        { name: "빈 종이 회상법", completions: 12, starts: 18, owners: 24 },
+        { name: "간격 두고 복습하기", completions: 8, starts: 12, owners: 18 },
+        { name: "질문 만들기", completions: 5, starts: 9, owners: 12 },
+        { name: "미사용 스킬", completions: 0, starts: 0, owners: 0 },
+      ],
     },
     {
       id: "goods",
@@ -89,7 +140,16 @@ const sample: AdminStats = {
         { key: "kind", label: "종류" },
         { key: "exchanges", label: "기간 내 교환 수" },
       ],
-      rows: [{ kind: "모션", exchanges: 3 }],
+      rows: [
+        {
+          kind: "모션",
+          name: "루미의 공부 시간",
+          code: "visual-solo-planned",
+          character: "루미",
+          exchanges: 3,
+          owners: 5,
+        },
+      ],
     },
   ],
 };
@@ -187,6 +247,22 @@ test("관리자 화면의 지표·기간·탭을 조회하고 모바일에서도
   await expect(
     page.getByRole("heading", { name: "현재 전체 현황" }),
   ).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "빠른 메뉴" })).toHaveCount(
+    0,
+  );
+  await expect
+    .poll(() =>
+      page
+        .locator("main img")
+        .evaluateAll((images) =>
+          images.every(
+            (image) =>
+              (image as HTMLImageElement).complete &&
+              (image as HTMLImageElement).naturalWidth > 0,
+          ),
+        ),
+    )
+    .toBe(true);
   await page.screenshot({
     path: testInfo.outputPath("admin-overview.png"),
     fullPage: true,
@@ -205,6 +281,11 @@ test("관리자 화면의 지표·기간·탭을 조회하고 모바일에서도
   );
   await page.getByRole("button", { name: "7일", exact: true }).click();
   await request;
+  await expect(page.getByText("완료율 75%")).toBeVisible();
+  await expect(
+    page.getByRole("cell", { name: "75", exact: true }),
+  ).toBeHidden();
+  await page.getByText("상세 데이터 · 1개 항목", { exact: true }).click();
   await expect(
     page.getByRole("cell", { name: "75", exact: true }),
   ).toBeVisible();
@@ -212,10 +293,23 @@ test("관리자 화면의 지표·기간·탭을 조회하고 모바일에서도
   await expect(
     page.getByRole("heading", { name: "첫 캐릭터와 카드 보유" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "스킬·굿즈", exact: true }).click();
   await expect(
-    page.getByRole("cell", { name: "모션", exact: true }),
+    page.getByRole("img", {
+      name: CHARACTERS["visual-solo-planned"].name,
+      exact: true,
+    }),
   ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("admin-characters.png"),
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "스킬·굿즈", exact: true }).click();
+  await expect(page.getByText("루미 · 모션", { exact: true })).toBeVisible();
+  await expect(page.getByText("미사용 스킬", { exact: true })).toHaveCount(0);
+  await page.screenshot({
+    path: testInfo.outputPath("admin-skills.png"),
+    fullPage: true,
+  });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth + 1,
@@ -376,4 +470,128 @@ test("늦게 도착한 계정 상세 응답이 로그아웃 후 데이터를 복
     page.getByRole("region", { name: "선택 계정 상세" }),
   ).toHaveCount(0);
   await expect(page.getByRole("region", { name: "계정 목록" })).toHaveCount(0);
+});
+
+test("0건 날짜를 생략하고 의미 있는 0장 계정과 지표별 기록을 보존한다", async ({
+  page,
+}) => {
+  await setup(page);
+  const activity = page.getByRole("region", {
+    name: "가입·등록·수집 추이",
+    exact: true,
+  });
+  await expect(
+    activity.getByRole("region", { name: "가입·등록·수집 추이 그래프" }),
+  ).toBeVisible();
+  await expect(
+    activity.locator(
+      '[aria-label^="' + daysBefore(defaultAdminRange(1).to, 2) + ':"]',
+    ),
+  ).toHaveCount(0);
+  await activity
+    .getByRole("button", { name: "굿즈 교환", exact: true })
+    .click();
+  await expect(activity.getByText("기록이 있는")).toContainText("5일");
+  const distribution = page.getByRole("region", {
+    name: "카드 수집량 분포",
+    exact: true,
+  });
+  await expect(
+    distribution.getByLabel("0장: 4계정", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    distribution.getByLabel("2장: 0계정", { exact: true }),
+  ).toHaveCount(0);
+});
+test("빈 통계에는 빈 축과 순위 대신 안내를 표시한다", async ({
+  page,
+}, testInfo) => {
+  await setup(page);
+  await page.route("**/api/admin/stats?*", (route) =>
+    route.fulfill({
+      json: {
+        ...sample,
+        totals: sample.totals.map((m) => ({ ...m, value: 0 })),
+        reports: sample.reports.map((r) => ({ ...r, rows: [] })),
+      },
+    }),
+  );
+  await page.getByRole("button", { name: "새로고침", exact: true }).click();
+  await expect(
+    page.getByText("신규 가입 기록이 아직 없어요.", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("region", { name: "가입·등록·수집 추이 그래프" }),
+  ).toHaveCount(0);
+  await expect(page.getByText(/상세 데이터 ·/)).toHaveCount(0);
+  await page.screenshot({
+    path: testInfo.outputPath("admin-empty.png"),
+    fullPage: true,
+  });
+});
+
+test("1년·전체·90일 이전 직접 조회와 월별 차트를 지원한다", async ({
+  page,
+}, testInfo) => {
+  await setup(page);
+  const seen: string[] = [];
+  await page.route("**/api/admin/stats?*", (route) => {
+    const p = new URL(route.request().url()).searchParams;
+    seen.push(p.get("from")!);
+    return route.fulfill({
+      json: {
+        ...sample,
+        range: { from: p.get("from"), to: p.get("to") },
+        reports: sample.reports.map((r) =>
+          r.id === "activity"
+            ? {
+                ...r,
+                timeUnit: "month",
+                rows:
+                  p.get("from") === "2024-12-15"
+                    ? [
+                        { day: "2024-12-01", accounts: 4 },
+                        { day: "2025-01-01", accounts: 5 },
+                      ]
+                    : [
+                        { day: "2025-11-01", accounts: 4 },
+                        { day: "2026-01-01", accounts: 5 },
+                      ],
+              }
+            : r,
+        ),
+      },
+    });
+  });
+  await page.getByRole("button", { name: "1년", exact: true }).click();
+  const activity = page.getByRole("region", {
+    name: "가입·등록·수집 추이",
+    exact: true,
+  });
+  await expect(activity.getByText("월별 신규 가입 비교")).toBeVisible();
+  await expect(activity.getByText("2개월", { exact: true })).toBeVisible();
+  await expect(
+    activity.getByLabel("2025-11: 4계정", { exact: true }),
+  ).toBeVisible();
+  expect(seen).toContain(defaultAdminRange(365).from);
+  await page.getByRole("button", { name: "전체", exact: true }).click();
+  await expect(page.getByText(/보관된 전체 기간 —/)).toBeVisible();
+  await expect.poll(() => seen.includes("0001-01-01")).toBe(true);
+  await page.getByText("기간 직접 선택", { exact: true }).click();
+  await page.getByLabel("시작일", { exact: true }).fill("2024-12-15");
+  await page.getByLabel("종료일", { exact: true }).fill("2025-04-10");
+  await page.getByRole("button", { name: "기간 적용", exact: true }).click();
+  await expect.poll(() => seen.includes("2024-12-15")).toBe(true);
+  await expect(
+    activity.getByLabel("2024-12: 4계정", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("admin-monthly.png"),
+    fullPage: true,
+  });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+    ),
+  ).toBe(true);
 });

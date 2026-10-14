@@ -1,3 +1,4 @@
+import { ADMIN_ALL_FROM } from "@/lib/admin-contract";
 import {
   accountFilters,
   adminRange,
@@ -74,7 +75,9 @@ export async function GET(request: Request) {
       report.id,
     )
       ? "현재"
-      : range.from + " ~ " + range.to;
+      : (range.from === ADMIN_ALL_FROM ? "보관된 전체 기간" : range.from) +
+        " ~ " +
+        range.to;
     return csvResponse(
       csvDocument(report, data.generatedAt, period),
       "studycrew-" + report.id + ".csv",

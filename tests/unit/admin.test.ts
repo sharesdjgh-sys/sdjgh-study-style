@@ -1,3 +1,4 @@
+import { adminTimeUnit } from "../../src/lib/admin-contract";
 import { afterEach, expect, it, vi } from "vitest";
 import { isAdminAccount } from "../../src/lib/admin-access";
 import { accountFilters, adminRange } from "../../src/lib/admin-params";
@@ -14,7 +15,7 @@ it("관리자 UUID 허용 목록은 빈 값과 잘못된 항목을 거부한다"
   expect(isAdminAccount(undefined)).toBe(false);
   expect(isAdminAccount(id.replace(/0$/, "1"))).toBe(false);
 });
-it("한국 날짜와 90일 제한, 윤일, 역전 기간을 검증한다", () => {
+it("한국 날짜와 장기 조회, 윤일, 역전 기간을 검증한다", () => {
   const now = new Date("2026-10-13T15:00:00Z");
   expect(adminRange(new URLSearchParams(), now)).toEqual({
     from: "2026-09-15",
@@ -23,8 +24,17 @@ it("한국 날짜와 90일 제한, 윤일, 역전 기간을 검증한다", () =>
   expect(
     adminRange(new URLSearchParams("from=2026-07-17&to=2026-10-14"), now).from,
   ).toBe("2026-07-17");
+  expect(adminRange(new URLSearchParams("from=2020-01-01"), now).from).toBe(
+    "2020-01-01",
+  );
+  expect(adminRange(new URLSearchParams("from=0001-01-01"), now).from).toBe(
+    "0001-01-01",
+  );
+  expect(
+    adminRange(new URLSearchParams("from=2024-02-29&to=2024-03-01"), now).from,
+  ).toBe("2024-02-29");
   for (const text of [
-    "from=2026-07-16",
+    "from=0000-01-01",
     "to=2026-10-15",
     "from=2026-10-14&to=2026-10-13",
     "from=2026-02-30",
@@ -83,4 +93,10 @@ it("CSV는 BOM·따옴표·줄바꿈·수식 방어 및 숫자 타입을 보존�
   expect(csv.startsWith("\uFEFF")).toBe(true);
   expect(csv).toContain('"건수"\r\n"12"');
   expect(csv).toContain('"기준","시작일 기준"');
+});
+
+it("90일 이하는 일별, 91일 이상과 전체는 월별로 묶는다", () => {
+  expect(adminTimeUnit({ from: "2026-07-17", to: "2026-10-14" })).toBe("day");
+  expect(adminTimeUnit({ from: "2026-07-16", to: "2026-10-14" })).toBe("month");
+  expect(adminTimeUnit({ from: "0001-01-01", to: "2026-10-14" })).toBe("month");
 });

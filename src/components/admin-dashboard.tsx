@@ -12,6 +12,7 @@ import { STUDY_TYPES } from "@/lib/content";
 import { getMethod, type MethodId } from "@/lib/methods";
 import { getGoods } from "@/lib/goods";
 import {
+  ADMIN_ALL_FROM,
   daysBefore,
   defaultAdminRange,
   koreaDay,
@@ -20,6 +21,8 @@ import {
   type AdminReport,
   type AdminStats,
 } from "@/lib/admin-contract";
+import { CharacterFace, OverviewMetrics, ReportChart } from "./admin-charts";
+import { meaningfulRows } from "@/lib/admin-presentation";
 import styles from "./admin-dashboard.module.css";
 
 const tabs = [
@@ -64,7 +67,7 @@ function useResource<T>(url: string, revision: number) {
                 body.error === "not_found"
                   ? "계정이 삭제되었거나 존재하지 않아요. 목록을 새로고침해 주세요."
                   : body.error === "invalid_query"
-                    ? "검색 조건을 확인해 주세요. 기간은 최근 90일 안에서 선택할 수 있어요."
+                    ? "검색 조건을 확인해 주세요. 시작일은 종료일보다 늦을 수 없고, 미래 날짜는 조회할 수 없어요."
                     : "불러오지 못했어요. 잠시 후 다시 시도해 주세요.",
             });
           return;
@@ -191,18 +194,17 @@ function ExportButton({
   );
 }
 function Report({
+  compact = false,
   report,
   range,
   onDenied,
 }: {
+  compact?: boolean;
   report: AdminReport;
   range: { from: string; to: string };
   onDenied: () => void;
 }) {
-  const chart = report.chart;
-  const max = chart
-    ? Math.max(1, ...report.rows.map((r) => Number(r[chart.value])))
-    : 1;
+  const rows = meaningfulRows(report);
   return (
     <section className={styles.panel} aria-labelledby={"report-" + report.id}>
       <div className={styles.panelHead}>
@@ -215,58 +217,45 @@ function Report({
           onDenied={onDenied}
         />
       </div>
-      {chart && report.rows.length > 0 && (
-        <div className={styles.bars} aria-label={report.title + " 그래프"}>
-          {report.rows.map((row, i) => (
-            <div className={styles.barRow} key={i}>
-              <span>{String(row[chart.label])}</span>
-              <div className={styles.track}>
-                <div
-                  style={{
-                    width: (Number(row[chart.value]) / max) * 100 + "%",
-                  }}
-                />
-              </div>
-              <b>{number(Number(row[chart.value]))}</b>
-            </div>
-          ))}
-        </div>
-      )}
-      <div
-        className={styles.tableScroll}
-        tabIndex={0}
-        role="region"
-        aria-label={report.title + " 표"}
-      >
-        <table>
-          <caption className={styles.srOnly}>{report.title}</caption>
-          <thead>
-            <tr>
-              {report.columns.map((c) => (
-                <th scope="col" key={c.key}>
-                  {c.label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {report.rows.map((row, i) => (
-              <tr key={i}>
-                {report.columns.map((c) => (
-                  <td key={c.key}>
-                    {typeof row[c.key] === "number"
-                      ? number(row[c.key] as number)
-                      : (row[c.key] ?? "—")}
-                  </td>
+      <ReportChart report={report} compact={compact} />
+      {rows.length > 0 && (
+        <details className={styles.details}>
+          <summary>상세 데이터 · {rows.length}개 항목</summary>
+          <div
+            className={styles.tableScroll}
+            tabIndex={0}
+            role="region"
+            aria-label={report.title + " 표"}
+          >
+            <table>
+              <caption className={styles.srOnly}>{report.title}</caption>
+              <thead>
+                <tr>
+                  {report.columns.map((c) => (
+                    <th scope="col" key={c.key}>
+                      {c.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={i}>
+                    {report.columns.map((c) => (
+                      <td key={c.key}>
+                        {typeof row[c.key] === "number"
+                          ? number(row[c.key] as number)
+                          : (row[c.key] ?? "—")}
+                      </td>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {!report.rows.length && (
-          <Notice>이 조건에 해당하는 기록이 없어요.</Notice>
-        )}
-      </div>
+              </tbody>
+            </table>
+            {!rows.length && <Notice>이 조건에 해당하는 기록이 없어요.</Notice>}
+          </div>
+        </details>
+      )}
     </section>
   );
 }
@@ -364,7 +353,7 @@ function Workspace({ onRecheck }: { onRecheck: () => void }) {
   const selectedReports =
     stats.data?.reports.filter((r) =>
       tab === "overview"
-        ? r.id === "activity"
+        ? ["activity", "characters", "distribution"].includes(r.id)
         : tab === "participation"
           ? ["participation", "sources"].includes(r.id)
           : tab === "collection"
@@ -387,54 +376,72 @@ function Workspace({ onRecheck }: { onRecheck: () => void }) {
         <>
           <section className={styles.filters} aria-label="통계 기간">
             <div className={styles.presets}>
-              {[1, 7, 30, 90].map((days) => (
+              {[1, 7, 30, 90, 365, 0].map((days) => (
                 <button
                   key={days}
                   className="button secondary"
                   aria-pressed={
-                    range.from === daysBefore(today, days - 1) &&
+                    range.from ===
+                      (days ? daysBefore(today, days - 1) : ADMIN_ALL_FROM) &&
                     range.to === today
                   }
                   onClick={() => {
-                    const next = defaultAdminRange(days);
+                    const next = days
+                      ? defaultAdminRange(days)
+                      : { from: ADMIN_ALL_FROM, to: today };
                     setRange(next);
                     setDraft(next);
                   }}
                 >
-                  {days === 1 ? "오늘" : days + "일"}
+                  {days === 0
+                    ? "전체"
+                    : days === 365
+                      ? "1년"
+                      : days === 1
+                        ? "오늘"
+                        : days + "일"}
                 </button>
               ))}
             </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setRange(draft);
-              }}
-            >
-              <label>
-                시작일
-                <input
-                  type="date"
-                  required
-                  min={daysBefore(today, 89)}
-                  max={draft.to}
-                  value={draft.from}
-                  onChange={(e) => setDraft({ ...draft, from: e.target.value })}
-                />
-              </label>
-              <label>
-                종료일
-                <input
-                  type="date"
-                  required
-                  min={draft.from}
-                  max={today}
-                  value={draft.to}
-                  onChange={(e) => setDraft({ ...draft, to: e.target.value })}
-                />
-              </label>
-              <button className="button primary">기간 적용</button>
-            </form>
+            <details className={styles.customRange}>
+              <summary>기간 직접 선택</summary>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setRange(draft);
+                }}
+              >
+                <label>
+                  시작일
+                  <input
+                    type="date"
+                    required
+                    min={ADMIN_ALL_FROM}
+                    max={draft.to}
+                    value={draft.from}
+                    onChange={(e) =>
+                      setDraft({ ...draft, from: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  종료일
+                  <input
+                    type="date"
+                    required
+                    min={draft.from}
+                    max={today}
+                    value={draft.to}
+                    onChange={(e) => setDraft({ ...draft, to: e.target.value })}
+                  />
+                </label>
+                <button className="button primary">기간 적용</button>
+              </form>
+            </details>
+            <span className={styles.rangeLabel}>
+              {range.from === ADMIN_ALL_FROM ? "보관된 전체 기간" : range.from}{" "}
+              — {range.to}
+            </span>
             <button
               className="button secondary"
               onClick={() => setRevision((n) => n + 1)}
@@ -442,15 +449,17 @@ function Workspace({ onRecheck }: { onRecheck: () => void }) {
               새로고침
             </button>
           </section>
-          <p className={styles.context}>
-            한국 시간 기준 · 기간 필터는 활동 추이에 적용됩니다. 보유량과 첫
-            캐릭터 분포는 현재 상태입니다.
-          </p>
-          <p className={styles.context}>
-            검사 통계는 최근 90일의 수집된 기록입니다. 검사 건수는 고유 학생
-            수와 다르며, 비로그인 결과의 캐릭터 종류는 포함하지 않습니다. 계정
-            통계는 탈퇴자를 제외합니다.
-          </p>
+          <details className={styles.methodology}>
+            <summary>집계 기준 안내 · 한국 시간</summary>
+            <p>
+              기간은 활동 통계에 적용됩니다. 가입·보유·첫 캐릭터 분포는 현재
+              상태이며, 탈퇴 계정은 제외합니다. 검사 건수는 고유 학생 수가
+              아닙니다. 비로그인 검사 결과는 첫 캐릭터 분포에 포함되지 않습니다.
+              90일을 넘는 기간의 추이는 월별 합계이며, 첫 달과 마지막 달은
+              선택한 날짜만 포함합니다. 이전 보관 정책으로 이미 삭제된 검사
+              집계는 포함되지 않습니다.
+            </p>
+          </details>
           {!stats.data ? (
             <ResourceState
               error={stats.error}
@@ -466,10 +475,7 @@ function Workspace({ onRecheck }: { onRecheck: () => void }) {
                   <div className={styles.panelHead}>
                     <div>
                       <h2>현재 전체 현황</h2>
-                      <p>
-                        관리자 계정을 포함한 전체 계정 · 평균 수집량과 완성률은
-                        도감 등록 계정 기준
-                      </p>
+                      <p>현재 가입과 수집 상태</p>
                     </div>
                     <ExportButton
                       query={
@@ -478,27 +484,53 @@ function Workspace({ onRecheck }: { onRecheck: () => void }) {
                       onDenied={reject}
                     />
                   </div>
-                  <dl className={styles.metrics}>
-                    {stats.data.totals.map((m) => (
-                      <div key={m.label}>
-                        <dt>{m.label}</dt>
-                        <dd>
-                          {number(m.value)}
-                          <small>{m.unit}</small>
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
+                  <OverviewMetrics stats={stats.data} />
+                  <details className={styles.details}>
+                    <summary>추가 누적 지표 보기</summary>
+                    <dl className={styles.metrics}>
+                      {stats.data.totals
+                        .filter(
+                          (m) =>
+                            ![
+                              "전체 계정",
+                              "도감 등록",
+                              "평균 수집량",
+                              "16종 완성",
+                              "도감 완성률",
+                            ].includes(m.label),
+                        )
+                        .map((m) => (
+                          <div key={m.label}>
+                            <dt>{m.label}</dt>
+                            <dd>
+                              {number(m.value)}
+                              <small>{m.unit}</small>
+                            </dd>
+                          </div>
+                        ))}
+                    </dl>
+                  </details>
                 </section>
               )}
-              {selectedReports.map((report) => (
-                <Report
-                  key={report.id}
-                  report={report}
-                  range={stats.data!.range}
-                  onDenied={reject}
-                />
-              ))}
+              <div
+                className={
+                  tab === "overview"
+                    ? styles.overviewGrid
+                    : tab === "collection"
+                      ? styles.collectionGrid
+                      : styles.reportGrid
+                }
+              >
+                {selectedReports.map((report) => (
+                  <Report
+                    key={report.id}
+                    report={report}
+                    compact={tab === "overview" && report.id === "characters"}
+                    range={stats.data!.range}
+                    onDenied={reject}
+                  />
+                ))}
+              </div>
             </>
           )}
         </>
@@ -660,7 +692,12 @@ function Accounts({ onDenied }: { onDenied: () => void }) {
                     </td>
                     <td>{date(a.createdAt)}</td>
                     <td>{date(a.registeredAt)}</td>
-                    <td>{name(a.firstType)}</td>
+                    <td>
+                      <span className={styles.accountCharacter}>
+                        <CharacterFace code={a.firstType} size={36} />
+                        {name(a.firstType)}
+                      </span>
+                    </td>
                     {[
                       a.opened,
                       a.pending,
@@ -745,6 +782,7 @@ function Accounts({ onDenied }: { onDenied: () => void }) {
                   );
                   return (
                     <li key={t.code} data-owned={Boolean(card?.openedAt)}>
+                      <CharacterFace code={t.code} size={72} />
                       <strong>{name(t.code)}</strong>
                       <span>
                         {card

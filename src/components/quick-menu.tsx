@@ -4,10 +4,15 @@ import Image from "next/image";
 import { MethodQuickMenu } from "./method-quick-menu";
 import { useNavigationItems } from "./use-navigation-items";
 
-/** 모바일 하단 퀵메뉴. 검사 중에는 문항에 집중하도록 숨겨요. */
+/** 모바일 하단 퀵메뉴. 검사와 관리자 화면에서는 해당 작업에 집중하도록 숨겨요. */
 export function QuickMenu() {
   const { path, items } = useNavigationItems();
-  if (path.startsWith("/quiz")) return null;
+  if (
+    path.startsWith("/quiz") ||
+    path === "/admin" ||
+    path.startsWith("/admin/")
+  )
+    return null;
   if (path === "/methods") return <MethodQuickMenu />;
   return (
     <nav className="quick-menu" aria-label="빠른 메뉴">

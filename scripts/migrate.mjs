@@ -129,3 +129,11 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("관리자 통계 조회 인덱스 준비 완료");
+
+await sql.query(
+  await readFile(
+    new URL("../db/012_analytics_history.sql", import.meta.url),
+    "utf8",
+  ),
+);
+console.log("분석용 일별 집계 장기 보관 정책 적용 완료");

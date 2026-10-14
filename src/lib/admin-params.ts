@@ -1,6 +1,6 @@
 import { STUDY_TYPES } from "./content";
 import {
-  daysBefore,
+  ADMIN_ALL_FROM,
   defaultAdminRange,
   koreaDay,
   type AdminRange,
@@ -27,7 +27,7 @@ export function adminRange(
     )
       invalid();
   }
-  if (from > to || to > today || from < daysBefore(today, 89)) invalid();
+  if (from > to || to > today || from < ADMIN_ALL_FROM) invalid();
   return { from, to };
 }
 export type AccountFilters = {

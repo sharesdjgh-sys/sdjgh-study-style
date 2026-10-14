@@ -30,34 +30,33 @@ export const ADMIN_STATS_SQL =
   `,
 bounds AS (
  SELECT ($1::date::timestamp AT TIME ZONE 'Asia/Seoul') AS lo,
- (($2::date+1)::timestamp AT TIME ZONE 'Asia/Seoul') AS hi
-), days AS (
- SELECT d::date::text AS day FROM generate_series($1::date,$2::date,interval '1 day') d
+ (($2::date+1)::timestamp AT TIME ZONE 'Asia/Seoul') AS hi,
+ CASE WHEN $2::date-$1::date>=90 THEN 'month' ELSE 'day' END AS bucket
 ), analytics AS (
- SELECT (s.created_at AT TIME ZONE 'Asia/Seoul')::date::text AS day,s.source,
+ SELECT date_trunc((SELECT bucket FROM bounds),s.created_at AT TIME ZONE 'Asia/Seoul')::date::text AS day,s.source,
  count(*) FILTER(WHERE EXISTS(SELECT 1 FROM study_events e WHERE e.run_id=s.run_id AND e.name='start'))::int AS starts,
  count(*) FILTER(WHERE EXISTS(SELECT 1 FROM study_events e WHERE e.run_id=s.run_id AND e.name='complete'))::int AS completions
  FROM study_sessions s,bounds b WHERE s.created_at>=b.lo AND s.created_at<b.hi GROUP BY 1,2
  UNION ALL
- SELECT day::text,source,
+ SELECT date_trunc((SELECT bucket FROM bounds),day::timestamp)::date::text,source,
  COALESCE(sum(total) FILTER(WHERE metric='start'),0)::int,
  COALESCE(sum(total) FILTER(WHERE metric='complete'),0)::int
  FROM study_daily WHERE day BETWEEN $1::date AND $2::date AND metric IN ('start','complete')
  GROUP BY 1,2
 ), participation AS (
- SELECT d.day,COALESCE(sum(a.starts),0)::int AS starts,COALESCE(sum(a.completions),0)::int AS completions
- FROM days d LEFT JOIN analytics a ON a.day=d.day GROUP BY d.day
+ SELECT day,sum(starts)::int AS starts,sum(completions)::int AS completions
+ FROM analytics GROUP BY day
 ), events AS (
- SELECT (created_at AT TIME ZONE 'Asia/Seoul')::date::text AS day,'accounts' AS kind FROM collection_accounts,bounds WHERE created_at>=lo AND created_at<hi
- UNION ALL SELECT (registered_at AT TIME ZONE 'Asia/Seoul')::date::text,'registrations' FROM collection_accounts,bounds WHERE registered_at>=lo AND registered_at<hi
- UNION ALL SELECT (opened_at AT TIME ZONE 'Asia/Seoul')::date::text,'cards' FROM collection_cards,bounds WHERE opened_at>=lo AND opened_at<hi
- UNION ALL SELECT (created_at AT TIME ZONE 'Asia/Seoul')::date::text,'goods' FROM goods_unlocks,bounds WHERE created_at>=lo AND created_at<hi
+ SELECT date_trunc((SELECT bucket FROM bounds),created_at AT TIME ZONE 'Asia/Seoul')::date::text AS day,'accounts' AS kind FROM collection_accounts,bounds WHERE created_at>=lo AND created_at<hi
+ UNION ALL SELECT date_trunc((SELECT bucket FROM bounds),registered_at AT TIME ZONE 'Asia/Seoul')::date::text,'registrations' FROM collection_accounts,bounds WHERE registered_at>=lo AND registered_at<hi
+ UNION ALL SELECT date_trunc((SELECT bucket FROM bounds),opened_at AT TIME ZONE 'Asia/Seoul')::date::text,'cards' FROM collection_cards,bounds WHERE opened_at>=lo AND opened_at<hi
+ UNION ALL SELECT date_trunc((SELECT bucket FROM bounds),created_at AT TIME ZONE 'Asia/Seoul')::date::text,'goods' FROM goods_unlocks,bounds WHERE created_at>=lo AND created_at<hi
 ), activity AS (
- SELECT d.day,count(*) FILTER(WHERE e.kind='accounts')::int AS accounts,
+ SELECT e.day,count(*) FILTER(WHERE e.kind='accounts')::int AS accounts,
  count(*) FILTER(WHERE e.kind='registrations')::int AS registrations,
  count(*) FILTER(WHERE e.kind='cards')::int AS cards,
  count(*) FILTER(WHERE e.kind='goods')::int AS goods
- FROM days d LEFT JOIN events e ON e.day=d.day GROUP BY d.day
+ FROM events e GROUP BY e.day
 ), characters AS (
  SELECT s.character_code AS code,
  (SELECT count(*)::int FROM collection_accounts a WHERE a.first_type=s.character_code) AS firsts,

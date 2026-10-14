@@ -1,3 +1,5 @@
+import { adminTimeUnit } from "./admin-contract";
+import { meaningfulRows } from "./admin-presentation";
 import { account, json } from "./collection-server";
 import { database } from "./db";
 import { isAdminAccount } from "./admin-access";
@@ -71,7 +73,7 @@ function report(
     title,
     basis,
     columns: columns.map(([key, label]) => ({ key, label })),
-    rows,
+    rows: meaningfulRows({ id, title, basis, columns: [], rows }),
     ...(chart ? { chart } : {}),
   };
 }
@@ -244,7 +246,24 @@ export function describeStats(data: RawStats, range: AdminRange): AdminStats {
           kind: kindName(String(row.kind)),
         })),
       ),
-    ],
+    ].map((item) => {
+      if (!["participation", "activity"].includes(item.id)) return item;
+      const timeUnit = adminTimeUnit(range);
+      return {
+        ...item,
+        timeUnit,
+        basis:
+          item.basis +
+          (timeUnit === "month"
+            ? " · 월별 합계 (첫·마지막 달은 선택 기간만 포함)"
+            : " · 일별 합계"),
+        columns: item.columns.map((column) =>
+          column.key === "day" && timeUnit === "month"
+            ? { ...column, label: "집계월 (월 첫날 표기)" }
+            : column,
+        ),
+      };
+    }),
   };
 }
 export async function adminAccounts(

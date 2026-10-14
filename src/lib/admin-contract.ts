@@ -6,6 +6,7 @@ export type AdminReport = {
   basis: string;
   columns: { key: string; label: string }[];
   rows: AdminRow[];
+  timeUnit?: "day" | "month";
   chart?: { label: string; value: string };
 };
 export type AdminRange = { from: string; to: string };
@@ -55,4 +56,14 @@ export function daysBefore(day: string, days: number) {
 export function defaultAdminRange(days = 30, now = new Date()): AdminRange {
   const to = koreaDay(now);
   return { from: daysBefore(to, days - 1), to };
+}
+
+// An open lower bound; the SQL groups observed records without generating empty dates.
+export const ADMIN_ALL_FROM = "0001-01-01";
+export function adminTimeUnit(range: AdminRange): "day" | "month" {
+  return Date.parse(range.to + "T00:00:00Z") -
+    Date.parse(range.from + "T00:00:00Z") >=
+    90 * 86400000
+    ? "month"
+    : "day";
 }

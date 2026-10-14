@@ -179,3 +179,60 @@ it("인증 세션은 서버에서 확인한 관리자에게만 메뉴 권한을 
   });
   expect(mocks.query).not.toHaveBeenCalled();
 });
+
+it("통계 API와 CSV에서 빈 날짜를 제외하되 미완료 검사는 유지한다", async () => {
+  mocks.query.mockResolvedValue([
+    {
+      data: {
+        ...rawStats(),
+        participation: [
+          { day: "2026-10-12", starts: 0, completions: 0 },
+          { day: "2026-10-13", starts: 2, completions: 0 },
+          { day: "2026-10-14", starts: 2, completions: 1 },
+        ],
+      },
+    },
+  ]);
+  const response = await stats(request("/api/admin/stats"));
+  const data = await response.json();
+  expect(data.reports[0].rows.map((row: { day: string }) => row.day)).toEqual([
+    "2026-10-13",
+    "2026-10-14",
+  ]);
+  const csv = await (
+    await download(request("/api/admin/export?report=participation"))
+  ).text();
+  expect(csv).not.toContain('"2026-10-12","0","0","0"');
+  expect(csv).toContain('"2026-10-13","2","0","0"');
+});
+
+it("장기 기간은 화면과 CSV 모두 월별 합계·가중 완료율을 제공한다", async () => {
+  mocks.query.mockResolvedValue([
+    {
+      data: {
+        ...rawStats(),
+        participation: [
+          { day: "2024-12-01", starts: 10, completions: 2 },
+          { day: "2025-01-01", starts: 5, completions: 1 },
+        ],
+      },
+    },
+  ]);
+  const range = "from=2024-12-15&to=2025-04-10";
+  const data = await (await stats(request("/api/admin/stats?" + range))).json();
+  expect(data.reports[0].timeUnit).toBe("month");
+  expect(data.reports[0].rows[0].rate).toBe(20);
+  expect(data.reports[0].basis).toContain("첫·마지막 달은 선택 기간만 포함");
+  const csv = await (
+    await download(request("/api/admin/export?report=participation&" + range))
+  ).text();
+  expect(csv).toContain("집계월 (월 첫날 표기)");
+  expect(csv).toContain('"2024-12-01","10","2","20"');
+  const all = await (
+    await download(
+      request("/api/admin/export?report=participation&from=0001-01-01"),
+    )
+  ).text();
+  expect(all).toContain("보관된 전체 기간");
+  expect(all).not.toContain("0001-01-01");
+});
