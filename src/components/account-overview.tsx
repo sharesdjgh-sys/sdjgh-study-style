@@ -106,6 +106,11 @@ export function AccountOverview() {
           priority
         />
       </header>
+      {signedIn && auth.session.isAdmin && (
+        <Link className="button secondary" href="/admin">
+          관리자 통계 보기 →
+        </Link>
+      )}
       <section className={styles.balances} aria-label="보유 하트와 별">
         <dl>
           {[

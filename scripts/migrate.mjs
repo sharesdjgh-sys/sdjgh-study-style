@@ -116,3 +116,16 @@ await sql.transaction(
     .map((s) => sql.query(s)),
 );
 console.log("스페셜 모션 카드 16종·별 3개 교환 준비 완료");
+
+const adminIndexes = await readFile(
+  new URL("../db/011_admin_indexes.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  adminIndexes
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => sql.query(s)),
+);
+console.log("관리자 통계 조회 인덱스 준비 완료");
