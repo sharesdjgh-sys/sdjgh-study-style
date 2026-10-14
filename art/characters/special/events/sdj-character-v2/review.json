@@ -1,0 +1,290 @@
+[
+  {
+    "id": "visual-solo-planned--daily-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "산책을 접어 둔 지도",
+    "imageVersion": "877c22f51cd1",
+    "back": {
+      "story": "루미는 오늘 걸었던 길을 지도에 이으며 산책을 한 번 더 떠올렸어요.",
+      "quote": "걸었던 길을 이으면 발견도 이어져.",
+      "signature": "루미",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace only the existing leaf decoration on the cream mug at lower left with a small printed crest.",
+    "placementKo": "지도 옆 머그잔의 교표",
+    "reason": "머그잔 교표의 크기와 입체 테두리가 과함",
+    "change": "머그잔 교표를 줄이고 두꺼운 테두리를 완화했습니다.",
+    "focus": [
+      7.4,
+      71.2
+    ],
+    "short": "머그잔"
+  },
+  {
+    "id": "visual-team-planned--daily-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "소풍 전날의 큰 종이",
+    "imageVersion": "abc67db68889",
+    "back": {
+      "story": "루트는 친구들이 고른 소풍 장소를 큰 종이 위에서 이었어요.",
+      "quote": "가고 싶은 곳을 하나씩 이어 보자.",
+      "signature": "루트",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace the small decorative motif on the existing mug at the left edge with the crest printed on the ceramic.",
+    "placementKo": "책상 위 머그잔의 교표",
+    "reason": "머그잔 정면을 교표가 크게 차지함",
+    "change": "잔 표면에 여백을 늘리고 교표의 크기를 줄였습니다.",
+    "focus": [
+      5.8,
+      50.4
+    ],
+    "short": "머그잔"
+  },
+  {
+    "id": "auditory-solo-planned--daily-02",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "다시 말해 볼게",
+    "imageVersion": "eee5f2b18e63",
+    "back": {
+      "story": "소리는 자기 녹음을 멈추고 생각을 다시 정리했어요.",
+      "quote": "다시 말해 보니 더 또렷해졌어.",
+      "signature": "소리",
+      "edition": "일상 기록 02"
+    },
+    "placement": "Replace the tiny animal motif on the cream mug at the left of the desk with the school crest as a ceramic print.",
+    "placementKo": "기록 옆 머그잔의 교표",
+    "reason": "머그잔의 선명한 교표가 주변 소품보다 튐",
+    "change": "전경의 교표를 줄여 캐릭터와 기록 카드로 시선이 가도록 했습니다.",
+    "focus": [
+      9.5,
+      69.2
+    ],
+    "short": "머그잔"
+  },
+  {
+    "id": "auditory-solo-flexible--daily-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "코코아는 왜 식을까",
+    "imageVersion": "d43dbdeaf78c",
+    "back": {
+      "story": "멜로는 코코아의 김을 바라보다 새로운 질문에 빠졌어요.",
+      "quote": "따뜻함은 어디로 가는 걸까?",
+      "signature": "멜로",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace the cat-head silhouette on the cocoa mug with a small school crest, occupying less than half of the old motif's area.",
+    "placementKo": "코코아 머그잔의 교표",
+    "reason": "코코아잔의 교표가 두꺼운 스티커처럼 보임",
+    "change": "코코아잔 교표의 크기를 줄이고 돌출된 테두리를 다듬었습니다.",
+    "focus": [
+      79,
+      70.7
+    ],
+    "short": "코코아잔"
+  },
+  {
+    "id": "auditory-team-planned--daily-03",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "이번엔 내가 듣는 차례",
+    "imageVersion": "98ae6a0a564b",
+    "back": {
+      "story": "토크는 머그잔을 내려놓고 친구의 말에 귀를 기울였어요.",
+      "quote": "천천히 말해도 돼, 듣고 있어.",
+      "signature": "토크",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Replace the leaf motif on the existing mug at lower left with a small printed school crest.",
+    "placementKo": "소파 옆 머그잔의 교표",
+    "reason": "머그잔 중앙의 교표가 과하게 강조됨",
+    "change": "잔 중앙의 큰 교표를 작은 인쇄 크기로 줄였습니다.",
+    "focus": [
+      13.2,
+      71.7
+    ],
+    "short": "머그잔"
+  },
+  {
+    "id": "auditory-team-flexible--daily-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "잠깐 그다음은",
+    "imageVersion": "30b4ddcf5d7c",
+    "back": {
+      "story": "리프는 친구의 여행 이야기에 몸을 기울이며 물었어요.",
+      "quote": "잠깐, 그다음엔 어떻게 됐어?",
+      "signature": "리프",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Print a small school crest on the front of the existing coffee cup at lower left, retaining coffee and latte art.",
+    "placementKo": "라테 잔의 작은 인쇄",
+    "reason": "찻잔 곡면에 교표가 평평하게 붙어 있음",
+    "change": "라테 잔의 교표를 줄이고 윤곽을 가볍게 다듬었습니다.",
+    "focus": [
+      26.8,
+      75.7
+    ],
+    "short": "라테 잔"
+  },
+  {
+    "id": "motion-solo-flexible--special-03",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "이동하는 찻집의 방랑 주인",
+    "imageVersion": "976b7cf2f251",
+    "back": {
+      "story": "바니는 마음에 드는 언덕에 이동 찻집을 세웠어요.",
+      "quote": "오늘의 찻집 주소는 이 풍경이야.",
+      "signature": "바니",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Replace only the floral decoration on the cream teacup held by the rabbit with a small school crest ceramic print. Keep pouring tea, teapot flowers, apron carrots and all paws unchanged.",
+    "placementKo": "찻잔의 작은 교표",
+    "reason": "찻잔에 큰 배지를 붙인 듯한 인상",
+    "change": "찻잔을 가득 채우던 교표를 작은 인쇄로 줄였습니다.",
+    "focus": [
+      34,
+      57.8
+    ],
+    "short": "찻잔"
+  },
+  {
+    "id": "motion-team-planned--daily-03",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "모두 도착한 저녁",
+    "imageVersion": "85e6441ee82e",
+    "back": {
+      "story": "루카는 마지막으로 도착한 친구에게 따뜻한 음료를 건넸어요.",
+      "quote": "모두 왔으니 이제 편히 쉬자.",
+      "signature": "루카",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Replace the tree motif on the cream mug held by the husky with a small school crest ceramic print.",
+    "placementKo": "따뜻한 코코아 머그잔의 교표",
+    "reason": "코코아잔 교표가 시선의 중심을 차지함",
+    "change": "코코아잔 교표의 크기와 대비를 낮췄습니다.",
+    "focus": [
+      60.5,
+      63.7
+    ],
+    "short": "코코아잔"
+  },
+  {
+    "id": "tactile-team-planned--special-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "떠 있는 마을의 건축 대장",
+    "imageVersion": "3e960c7cbc78",
+    "back": {
+      "story": "블록은 동료들과 힘을 모아 공중 마을을 지었어요.",
+      "quote": "우리 손길이 모이면 마을이 돼.",
+      "signature": "블록",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Put a tiny printed school crest on the front of the bear's yellow hard hat, respecting the curved surface.",
+    "placementKo": "노란 안전모의 작은 교표",
+    "reason": "안전모 교표가 크고 정면 스티커처럼 보임",
+    "change": "안전모의 큰 배지를 작은 표면 인쇄로 바꿨습니다.",
+    "focus": [
+      65,
+      22
+    ],
+    "short": "안전모"
+  },
+  {
+    "id": "tactile-solo-flexible--daily-03",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "실패작도 쓸모 있어",
+    "imageVersion": "5c7bc072a5d1",
+    "back": {
+      "story": "몽은 실패한 발명품에 작은 싹이 자랄 자리를 만들었어요.",
+      "quote": "실패작의 새 이름은 화분이야.",
+      "signature": "몽",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Put one tiny embroidered school crest on the outside of the raccoon's lavender hoodie upper sleeve at viewer left. Keep the planter, both hands and drawstrings unchanged.",
+    "placementKo": "라벤더 후드 소매의 패치",
+    "reason": "후드 소매의 교표가 도톰한 부착물처럼 뜸",
+    "change": "소매 교표를 줄이고 두꺼운 테두리를 다듬었습니다.",
+    "focus": [
+      35,
+      46.2
+    ],
+    "short": "소매"
+  },
+  {
+    "id": "motion-team-planned--special-02",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "눈보라 구조대의 길잡이",
+    "imageVersion": "6c9a7e42cdf7",
+    "back": {
+      "story": "루카는 눈보라 속에서 동료들이 모일 안전한 길을 안내했어요.",
+      "quote": "불빛을 따라와, 여기서 기다릴게.",
+      "signature": "루카",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a small fabric school crest on the husky's orange rescue parka upper sleeve, preserving harness straps and all equipment.",
+    "placementKo": "구조대 외투 소매의 패치",
+    "reason": "구조복 소매 교표가 크고 딱딱하게 보임",
+    "change": "구조복 교표를 줄이고 가장자리와 색의 대비를 완화했습니다.",
+    "focus": [
+      31,
+      40.8
+    ],
+    "short": "구조복"
+  },
+  {
+    "id": "motion-team-flexible--special-02",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "폭풍 속 갑판의 응원단장",
+    "imageVersion": "841d9dec0849",
+    "back": {
+      "story": "스킵은 흔들리는 갑판에서 동료들에게 새로운 리듬을 보냈어요.",
+      "quote": "우리 박자를 맞춰 한 번 더 힘내자.",
+      "signature": "스킵",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a small embroidered school crest on the quokka's yellow sailor jacket chest, away from ropes and scarf.",
+    "placementKo": "노란 우비 가슴의 패치",
+    "reason": "우비 중앙 교표가 눈에 띄고 표면에서 뜸",
+    "change": "우비 교표를 줄이고 두꺼운 부착물 느낌을 완화했습니다.",
+    "focus": [
+      58.2,
+      54.9
+    ],
+    "short": "우비"
+  }
+]

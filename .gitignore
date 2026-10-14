@@ -67,3 +67,9 @@ test-results/
 !/ref/goods-motion-revision-five/
 /ref/goods-motion-revision-five/*
 !/ref/goods-motion-revision-five/manifest.json
+
+# Reviewed Seodaejeon school-event previews and supplied crest.
+!/ref/sdj-school-cards-preview.html
+!/ref/sdj-character-cards-preview.html
+!/ref/sdj-character-cards-review.html
+!/ref/서여고 로고.webp

@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-15T00:07:42+09:00",
+  "characterCards": 48,
+  "characters": 16,
+  "cardsPerCharacter": {
+    "special": 2,
+    "daily": 1
+  },
+  "groupCards": 5,
+  "finalPng": 53,
+  "finalWebp": 53,
+  "comparisonWebp": 12,
+  "checks": {
+    "originalCardSha256": "48 matched",
+    "originalSourceGitDiff": "unchanged",
+    "characterGallery": "48 event + 48 original images, modal, keyboard, PNG link, mobile overflow passed",
+    "groupGallery": "5 event + 5 original images, modal, keyboard, mobile overflow passed",
+    "revisionGallery": "12 pairs, detail zoom, keyboard, PNG link, mobile overflow passed",
+    "javascriptErrors": 0
+  },
+  "scope": "Static event assets and local HTML previews; no app feature or delivery logic changes"
+}

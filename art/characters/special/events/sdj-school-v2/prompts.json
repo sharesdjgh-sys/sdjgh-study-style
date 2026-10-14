@@ -1,0 +1,47 @@
+[
+  {
+    "key": "group-photo",
+    "target": "art/characters/special/group-photo.png",
+    "prompt": "Use case: compositing / precise-object-edit.\nCreate a separate event collectible card artwork by minimally editing Image 1 (the original illustration). Image 2 is the exact school crest to integrate; use ONLY its crest silhouette, excluding its white rectangular background.\nMake just ONE small, discreet crest physically part of an EXISTING prop as specified below. Preserve the distinctive blue rounded three-lobed upper shape, silver thin outline, white upward chevron and red bottom with cream vertical 女高. Adapt to material, scene lighting, perspective and softness; avoid a flat digital overlay. It must feel like a small school merchandise detail noticed on a second look. Crest width about 30–38 pixels in this 1664px wide composition, never large or dominant. No extra text, school name, plaque, banner, watermark, card frame or new props. Keep all original characters, exact faces, expressions, poses, clothing, hands, objects, background, warm light and wide full composition unchanged. No crop or rearrangement. Return one complete landscape image.\nSpecific local edit: Keep exactly all 16 original characters in the same two rows. Place the single tiny crest as embroidery on the center of the EXISTING lavender apron front pocket of the beaver at the far left in the front row. Approximate original image location (193,681), crest width 30px. Do not alter the apron shape or add a patch backing.",
+    "refs": [
+      "D:/Programming_study/sdjgh-study-style/art/characters/special/group-photo.png",
+      "D:/Programming_study/sdjgh-study-style/ref/서여고 로고.webp"
+    ]
+  },
+  {
+    "key": "visual",
+    "target": "art/characters/special/families/visual.png",
+    "prompt": "Use case: compositing / precise-object-edit.\nCreate a separate event collectible card artwork by minimally editing Image 1 (the original illustration). Image 2 is the exact school crest to integrate; use ONLY its crest silhouette, excluding its white rectangular background.\nMake just ONE small, discreet crest physically part of an EXISTING prop as specified below. Preserve the distinctive blue rounded three-lobed upper shape, silver thin outline, white upward chevron and red bottom with cream vertical 女高. Adapt to material, scene lighting, perspective and softness; avoid a flat digital overlay. It must feel like a small school merchandise detail noticed on a second look. Crest width about 30–38 pixels in this 1664px wide composition, never large or dominant. No extra text, school name, plaque, banner, watermark, card frame or new props. Keep all original characters, exact faces, expressions, poses, clothing, hands, objects, background, warm light and wide full composition unchanged. No crop or rearrangement. Return one complete landscape image.\nSpecific local edit: Keep exactly the owl, orange fox, deer and green chameleon. Place a tiny embroidered crest on the existing olive satchel flap carried by the chameleon at lower right, between the two brass buckle straps, about original location (1328,683), width 32px. Preserve bag buckles, charms and map notebook.",
+    "refs": [
+      "D:/Programming_study/sdjgh-study-style/art/characters/special/families/visual.png",
+      "D:/Programming_study/sdjgh-study-style/ref/서여고 로고.webp"
+    ]
+  },
+  {
+    "key": "auditory",
+    "target": "art/characters/special/families/auditory.png",
+    "prompt": "Use case: compositing / precise-object-edit.\nCreate a separate event collectible card artwork by minimally editing Image 1 (the original illustration). Image 2 is the exact school crest to integrate; use ONLY its crest silhouette, excluding its white rectangular background.\nMake just ONE small, discreet crest physically part of an EXISTING prop as specified below. Preserve the distinctive blue rounded three-lobed upper shape, silver thin outline, white upward chevron and red bottom with cream vertical 女高. Adapt to material, scene lighting, perspective and softness; avoid a flat digital overlay. It must feel like a small school merchandise detail noticed on a second look. Crest width about 30–38 pixels in this 1664px wide composition, never large or dominant. No extra text, school name, plaque, banner, watermark, card frame or new props. Keep all original characters, exact faces, expressions, poses, clothing, hands, objects, background, warm light and wide full composition unchanged. No crop or rearrangement. Return one complete landscape image.\nSpecific local edit: Keep exactly the fennec, cat, golden retriever and cockatiel. Replace ONLY the small leaf motif on the EXISTING green backpack flap at bottom left with this small embroidered school crest, at original location (270,805), width 36px. Keep backpack size, fabric, stitching, buckles, lighting and all other elements unchanged.",
+    "refs": [
+      "D:/Programming_study/sdjgh-study-style/art/characters/special/families/auditory.png",
+      "D:/Programming_study/sdjgh-study-style/ref/서여고 로고.webp"
+    ]
+  },
+  {
+    "key": "tactile",
+    "target": "art/characters/special/families/tactile.png",
+    "prompt": "Use case: compositing / precise-object-edit.\nCreate a separate event collectible card artwork by minimally editing Image 1 (the original illustration). Image 2 is the exact school crest to integrate; use ONLY its crest silhouette, excluding its white rectangular background.\nMake just ONE small, discreet crest physically part of an EXISTING prop as specified below. Preserve the distinctive blue rounded three-lobed upper shape, silver thin outline, white upward chevron and red bottom with cream vertical 女高. Adapt to material, scene lighting, perspective and softness; avoid a flat digital overlay. It must feel like a small school merchandise detail noticed on a second look. Crest width about 30–38 pixels in this 1664px wide composition, never large or dominant. No extra text, school name, plaque, banner, watermark, card frame or new props. Keep all original characters, exact faces, expressions, poses, clothing, hands, objects, background, warm light and wide full composition unchanged. No crop or rearrangement. Return one complete landscape image.\nSpecific local edit: Keep exactly the beaver, raccoon, bear and otter. Replace ONLY the leaf design on the EXISTING cream pencil mug on the table with the small school crest, printed onto ceramic, about original location (1106,643), width 34px. Respect mug curve and warm shadows; do not change mug, pencils or any objects.",
+    "refs": [
+      "D:/Programming_study/sdjgh-study-style/art/characters/special/families/tactile.png",
+      "D:/Programming_study/sdjgh-study-style/ref/서여고 로고.webp"
+    ]
+  },
+  {
+    "key": "motion",
+    "target": "art/characters/special/families/motion.png",
+    "prompt": "Use case: compositing / precise-object-edit.\nCreate a separate event collectible card artwork by minimally editing Image 1 (the original illustration). Image 2 is the exact school crest to integrate; use ONLY its crest silhouette, excluding its white rectangular background.\nMake just ONE small, discreet crest physically part of an EXISTING prop as specified below. Preserve the distinctive blue rounded three-lobed upper shape, silver thin outline, white upward chevron and red bottom with cream vertical 女高. Adapt to material, scene lighting, perspective and softness; avoid a flat digital overlay. It must feel like a small school merchandise detail noticed on a second look. Crest width about 30–38 pixels in this 1664px wide composition, never large or dominant. No extra text, school name, plaque, banner, watermark, card frame or new props. Keep all original characters, exact faces, expressions, poses, clothing, hands, objects, background, warm light and wide full composition unchanged. No crop or rearrangement. Return one complete landscape image.\nSpecific local edit: Keep exactly the penguin, white rabbit, husky and quokka. Print the single tiny crest on the EXISTING blank cream flashcard held by the quokka at right, centered neatly on that card, about original location (1303,493), width 30px. Match the tilted card plane and warm paper ink. Preserve card size, border, fingers and every character unchanged.",
+    "refs": [
+      "D:/Programming_study/sdjgh-study-style/art/characters/special/families/motion.png",
+      "D:/Programming_study/sdjgh-study-style/ref/서여고 로고.webp"
+    ]
+  }
+]

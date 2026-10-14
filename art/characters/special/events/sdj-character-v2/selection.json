@@ -1,0 +1,818 @@
+[
+  {
+    "id": "visual-solo-planned--special-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "잊힌 별길의 지도 제작자",
+    "imageVersion": "f92271891e57",
+    "back": {
+      "story": "루미가 끊어진 별길을 잇자 잊힌 항로가 다시 빛났어요.",
+      "quote": "별 하나씩 이어 보면 길이 보여.",
+      "signature": "루미",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Replace the small central star-shaped cloak clasp on the owl's chest with a small enamel crest clasp, preserving the cloak.",
+    "placementKo": "별지도 망토의 에나멜 여밈"
+  },
+  {
+    "id": "visual-solo-planned--special-05",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "새벽 도시의 조감도 화가",
+    "imageVersion": "2ce58a9b6532",
+    "back": {
+      "story": "루미는 새벽 옥상에서 도시의 길과 지붕을 한 장에 담았어요.",
+      "quote": "높이서 보니 우리 동네가 이어져 있어.",
+      "signature": "루미",
+      "edition": "특별 의상 05"
+    },
+    "placement": "Put one tiny embroidered crest on the owl's existing blue apron front tool pocket below the wing, leaving paint marks, brushes and palette unchanged.",
+    "placementKo": "화가 앞치마의 작은 자수"
+  },
+  {
+    "id": "visual-solo-planned--daily-01",
+    "code": "visual-solo-planned",
+    "name": "루미",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "산책을 접어 둔 지도",
+    "imageVersion": "877c22f51cd1",
+    "back": {
+      "story": "루미는 오늘 걸었던 길을 지도에 이으며 산책을 한 번 더 떠올렸어요.",
+      "quote": "걸었던 길을 이으면 발견도 이어져.",
+      "signature": "루미",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace only the existing leaf decoration on the cream mug at lower left with a small printed crest.",
+    "placementKo": "지도 옆 머그잔의 교표"
+  },
+  {
+    "id": "visual-solo-flexible--special-02",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "닮은 무늬의 유적 탐색가",
+    "imageVersion": "88e1b0c9f5b4",
+    "back": {
+      "story": "모아는 잎맥과 닮은 돌문 무늬에서 유적의 단서를 찾았어요.",
+      "quote": "이 잎이 문을 여는 힌트였어.",
+      "signature": "모아",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a tiny embroidered crest on the fox's existing explorer satchel flap.",
+    "placementKo": "탐험 가방 덮개의 패치"
+  },
+  {
+    "id": "visual-solo-flexible--special-04",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "꿈의 콜라주 수집가",
+    "imageVersion": "75499693d0fd",
+    "back": {
+      "story": "모아는 꿈에서 모은 풍경 조각을 새로운 장면으로 이었어요.",
+      "quote": "이 꿈과 저 꿈이 만나면 어떨까?",
+      "signature": "모아",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Replace the round brass button on the fox's existing cream side pouch with a tiny enamel school crest fastener. Preserve pouch and paper contents.",
+    "placementKo": "콜라주 파우치의 에나멜 단추"
+  },
+  {
+    "id": "visual-solo-flexible--daily-01",
+    "code": "visual-solo-flexible",
+    "name": "모아",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "영수증 뒤의 발견",
+    "imageVersion": "84f47b2c68a5",
+    "back": {
+      "story": "모아는 영수증 뒤에 낙서하다 새로운 모양을 발견했어요.",
+      "quote": "생각은 종이를 가리지 않나 봐.",
+      "signature": "모아",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Print one tiny crest on the front of the existing cream coffee mug at right. Keep the mug, latte art, flowers and all other details unchanged.",
+    "placementKo": "커피잔의 작은 인쇄"
+  },
+  {
+    "id": "visual-team-planned--special-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "흩어진 왕국을 잇는 길잡이",
+    "imageVersion": "548a42eb5623",
+    "back": {
+      "story": "루트는 흩어진 왕국의 깃발 사이에 만남의 길을 그렸어요.",
+      "quote": "멀리 있어도 만날 길은 만들 수 있어.",
+      "signature": "루트",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Replace the small clasp fastening the deer's green cloak with an enamel crest clasp.",
+    "placementKo": "초록 망토의 교표 브로치"
+  },
+  {
+    "id": "visual-team-planned--special-04",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "시간의 행렬을 이끄는 의전관",
+    "imageVersion": "cb216ad1f8fa",
+    "back": {
+      "story": "루트는 시간의 문 앞에서 축제 행렬의 순서를 안내했어요.",
+      "quote": "각자의 시간이 만나 하나의 행렬이 돼.",
+      "signature": "루트",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Place a tiny enamel crest pin on the deer's purple coat lapel, away from the scroll and face.",
+    "placementKo": "보랏빛 코트의 작은 핀"
+  },
+  {
+    "id": "visual-team-planned--daily-01",
+    "code": "visual-team-planned",
+    "name": "루트",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "소풍 전날의 큰 종이",
+    "imageVersion": "abc67db68889",
+    "back": {
+      "story": "루트는 친구들이 고른 소풍 장소를 큰 종이 위에서 이었어요.",
+      "quote": "가고 싶은 곳을 하나씩 이어 보자.",
+      "signature": "루트",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace the small decorative motif on the existing mug at the left edge with the crest printed on the ceramic.",
+    "placementKo": "책상 위 머그잔의 교표"
+  },
+  {
+    "id": "visual-team-flexible--special-03",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "오로라 직물 디자이너",
+    "imageVersion": "25028bd9738c",
+    "back": {
+      "story": "피코는 빛으로 짠 천을 겹쳐 새로운 오로라 무늬를 만들었어요.",
+      "quote": "빛도 겹치면 새로운 옷이 되는구나.",
+      "signature": "피코",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Put one tiny colored embossed crest on the chameleon's existing dark leather scissors pouch flap at the left hip. Keep the yarn-ball brooch and magical cloth unchanged.",
+    "placementKo": "가위 가죽 파우치의 장식"
+  },
+  {
+    "id": "visual-team-flexible--special-04",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "움직이는 벽화의 화가",
+    "imageVersion": "d772d614f6f3",
+    "back": {
+      "story": "피코가 벽화에 붓을 대자 그림 속 강이 흐르기 시작했어요.",
+      "quote": "이번엔 강이 산을 만나러 가 볼까?",
+      "signature": "피코",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Put one tiny embroidered crest on a clear small area of the chameleon's blue painter's coat near the lower lapel, leaving all paint splashes, palette and satchel unchanged.",
+    "placementKo": "화가 코트의 자수 패치"
+  },
+  {
+    "id": "visual-team-flexible--daily-03",
+    "code": "visual-team-flexible",
+    "name": "피코",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "얼룩에서 시작된 벽화",
+    "imageVersion": "a0b2602aa549",
+    "back": {
+      "story": "피코는 번진 물감에 선을 더해 새로운 생물로 바꾸었어요.",
+      "quote": "이 얼룩부터 시작해도 재미있겠어.",
+      "signature": "피코",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Put a tiny embroidered crest on the chameleon's existing olive belt satchel flap.",
+    "placementKo": "벽화 작업 가방의 교표"
+  },
+  {
+    "id": "auditory-solo-planned--special-01",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "잃어버린 이야기의 낭독사",
+    "imageVersion": "4261d9608b75",
+    "back": {
+      "story": "소리가 이야기를 읽자 책 속에서 사라진 그림이 돌아왔어요.",
+      "quote": "잊힌 이야기도 다시 불러 줄게.",
+      "signature": "소리",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Use the crest as a tiny enamel clasp fastening the fennec's cream cape at the chest, replacing only the existing clasp.",
+    "placementKo": "크림색 망토의 교표 브로치"
+  },
+  {
+    "id": "auditory-solo-planned--special-05",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "새벽을 여는 시보 방송관",
+    "imageVersion": "65371ce31612",
+    "back": {
+      "story": "소리는 새벽 탑에서 도시를 향해 아침 인사를 전했어요.",
+      "quote": "좋은 아침, 오늘도 차근차근 시작하자.",
+      "signature": "소리",
+      "edition": "특별 의상 05"
+    },
+    "placement": "Replace the small emblem on the fennec's cream cap with a small embroidered school crest. Keep the cap and clock mechanisms unchanged.",
+    "placementKo": "크림색 모자의 작은 배지"
+  },
+  {
+    "id": "auditory-solo-planned--daily-02",
+    "code": "auditory-solo-planned",
+    "name": "소리",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "다시 말해 볼게",
+    "imageVersion": "eee5f2b18e63",
+    "back": {
+      "story": "소리는 자기 녹음을 멈추고 생각을 다시 정리했어요.",
+      "quote": "다시 말해 보니 더 또렷해졌어.",
+      "signature": "소리",
+      "edition": "일상 기록 02"
+    },
+    "placement": "Replace the tiny animal motif on the cream mug at the left of the desk with the school crest as a ceramic print.",
+    "placementKo": "기록 옆 머그잔의 교표"
+  },
+  {
+    "id": "auditory-solo-flexible--special-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "물음표를 좇는 꿈 탐정",
+    "imageVersion": "034b722ed89b",
+    "back": {
+      "story": "멜로는 꿈속의 이상한 발자국을 따라 혼잣말로 추리했어요.",
+      "quote": "이 발자국은 왜 반대로 갔을까?",
+      "signature": "멜로",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Replace only the small paw-print ornament on the cat detective's existing brown satchel flap with a small colored embossed school crest. Keep bag and clasp hardware.",
+    "placementKo": "탐정 가방의 에나멜 장식"
+  },
+  {
+    "id": "auditory-solo-flexible--special-05",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "밤의 질문을 담는 속삭임 수집가",
+    "imageVersion": "92b42912edcf",
+    "back": {
+      "story": "멜로는 밤에 떠오른 질문을 작은 빛 구슬에 담았어요.",
+      "quote": "아침의 나에게 이 질문을 보내 둘게.",
+      "signature": "멜로",
+      "edition": "특별 의상 05"
+    },
+    "placement": "Replace the cat's small cloak fastening brooch with the school crest in enamel. Keep all purple cloak and star patterns.",
+    "placementKo": "보랏빛 망토의 교표 여밈"
+  },
+  {
+    "id": "auditory-solo-flexible--daily-01",
+    "code": "auditory-solo-flexible",
+    "name": "멜로",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "코코아는 왜 식을까",
+    "imageVersion": "d43dbdeaf78c",
+    "back": {
+      "story": "멜로는 코코아의 김을 바라보다 새로운 질문에 빠졌어요.",
+      "quote": "따뜻함은 어디로 가는 걸까?",
+      "signature": "멜로",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace the cat-head silhouette on the cocoa mug with a small school crest, occupying less than half of the old motif's area.",
+    "placementKo": "코코아 머그잔의 교표"
+  },
+  {
+    "id": "auditory-team-planned--special-01",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "모든 목소리에 차례를 주는 의장",
+    "imageVersion": "076a6f70d03c",
+    "back": {
+      "story": "토크는 원탁의 모두가 말할 수 있도록 차례를 나누었어요.",
+      "quote": "아직 듣지 못한 목소리도 기다릴게.",
+      "signature": "토크",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Replace the retriever's small circular teal cape clasp with a small enamel school crest.",
+    "placementKo": "청록색 망토의 교표 브로치"
+  },
+  {
+    "id": "auditory-team-planned--special-03",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "별빛 방송국의 진행자",
+    "imageVersion": "7add0c00d703",
+    "back": {
+      "story": "토크는 별빛 방송국에서 손님들의 이야기를 차례로 소개했어요.",
+      "quote": "오늘의 별은 너의 이야기야.",
+      "signature": "토크",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Print one tiny crest near the lower left corner of the retriever's existing purple clipboard back, leaving its large gold star intact. Preserve original clipboard shape and hand.",
+    "placementKo": "보라색 클립보드의 작은 인쇄"
+  },
+  {
+    "id": "auditory-team-planned--daily-03",
+    "code": "auditory-team-planned",
+    "name": "토크",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "이번엔 내가 듣는 차례",
+    "imageVersion": "98ae6a0a564b",
+    "back": {
+      "story": "토크는 머그잔을 내려놓고 친구의 말에 귀를 기울였어요.",
+      "quote": "천천히 말해도 돼, 듣고 있어.",
+      "signature": "토크",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Replace the leaf motif on the existing mug at lower left with a small printed school crest.",
+    "placementKo": "소파 옆 머그잔의 교표"
+  },
+  {
+    "id": "auditory-team-flexible--special-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "뜻밖의 답을 찾는 현장 기자",
+    "imageVersion": "9172579a22ca",
+    "back": {
+      "story": "리프는 새로운 발견 현장에서 한 가지 질문을 더 던졌어요.",
+      "quote": "그렇다면 이것도 물어봐야겠어.",
+      "signature": "리프",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Put a small embroidered crest on the cockatiel reporter's brown utility vest pocket. Do not add a hat or change crest feathers.",
+    "placementKo": "기자 조끼 주머니의 패치"
+  },
+  {
+    "id": "auditory-team-flexible--special-04",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "세계 끝의 소문 탐험가",
+    "imageVersion": "c4b8909311a5",
+    "back": {
+      "story": "리프는 세계 끝 찻집에서 낯선 바다의 소문을 들었어요.",
+      "quote": "그 바다 너머 이야기도 들려줘.",
+      "signature": "리프",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Put a tiny embossed and colored crest on the cockatiel's existing brown satchel flap. Do not change feathers or head.",
+    "placementKo": "탐험 가방의 작은 교표"
+  },
+  {
+    "id": "auditory-team-flexible--daily-01",
+    "code": "auditory-team-flexible",
+    "name": "리프",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "잠깐 그다음은",
+    "imageVersion": "30b4ddcf5d7c",
+    "back": {
+      "story": "리프는 친구의 여행 이야기에 몸을 기울이며 물었어요.",
+      "quote": "잠깐, 그다음엔 어떻게 됐어?",
+      "signature": "리프",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Print a small school crest on the front of the existing coffee cup at lower left, retaining coffee and latte art.",
+    "placementKo": "라테 잔의 작은 인쇄"
+  },
+  {
+    "id": "tactile-solo-planned--special-01",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "달빛 시계탑의 정밀 장인",
+    "imageVersion": "1f1c6545ad9e",
+    "back": {
+      "story": "토리는 달빛 시계탑의 기어를 정확한 홈에 맞추었어요.",
+      "quote": "작은 톱니 하나도 제자리가 있어.",
+      "signature": "토리",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Put a small stitched school crest on a clear corner of the beaver's dark blue apron front pocket, preserving watch and tools.",
+    "placementKo": "시계공 앞치마 주머니의 교표"
+  },
+  {
+    "id": "tactile-solo-planned--special-02",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "잃어버린 유물의 복원사",
+    "imageVersion": "cce20b993ec5",
+    "back": {
+      "story": "토리는 흩어진 유물 조각을 맞춰 옛 모습을 되살렸어요.",
+      "quote": "한 조각씩 맞추면 시간이 돌아와.",
+      "signature": "토리",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put one tiny stitched school crest on the beaver conservator's cream apron tool pocket below the raised paw. Preserve vessel, ceramic shard, ruler and tools.",
+    "placementKo": "복원 작업 앞치마의 작은 자수"
+  },
+  {
+    "id": "tactile-solo-planned--daily-01",
+    "code": "tactile-solo-planned",
+    "name": "토리",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "단추들의 새 주소",
+    "imageVersion": "d7c73653f0b2",
+    "back": {
+      "story": "토리는 단추마다 어울리는 작은 서랍을 찾아 주었어요.",
+      "quote": "같은 모양끼리 모이니 찾기 쉽네.",
+      "signature": "토리",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace only the small round brass fastener on the viewer-left lavender apron shoulder strap with a tiny enamel school crest fastener. Preserve the beaver's hand, held pink button and sorting box.",
+    "placementKo": "앞치마 어깨끈의 교표 단추"
+  },
+  {
+    "id": "tactile-solo-flexible--special-02",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "중력을 바꾸는 장치 실험가",
+    "imageVersion": "44304651164d",
+    "back": {
+      "story": "몽이 레버를 움직이자 공방의 부품들이 떠올랐어요.",
+      "quote": "어라, 이번에는 중력이 달라졌네!",
+      "signature": "몽",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a small fabric school crest on a clear teal patch of the raccoon's coat upper chest, away from device and straps.",
+    "placementKo": "청록색 코트의 자수 패치"
+  },
+  {
+    "id": "tactile-solo-flexible--special-04",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "주머니 기계 생물 제작자",
+    "imageVersion": "c54b8edc25f9",
+    "back": {
+      "story": "몽은 기계 생물의 마지막 부품을 바꾸며 반응을 살폈어요.",
+      "quote": "이 조각으로 바꾸면 어떤 친구가 될까?",
+      "signature": "몽",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Put a tiny school crest on the raccoon's brown leather apron pocket as a subtle colored embossed mark, keeping tools and mechanical creature.",
+    "placementKo": "가죽 앞치마 주머니의 장식"
+  },
+  {
+    "id": "tactile-solo-flexible--daily-03",
+    "code": "tactile-solo-flexible",
+    "name": "몽",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "실패작도 쓸모 있어",
+    "imageVersion": "5c7bc072a5d1",
+    "back": {
+      "story": "몽은 실패한 발명품에 작은 싹이 자랄 자리를 만들었어요.",
+      "quote": "실패작의 새 이름은 화분이야.",
+      "signature": "몽",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Put one tiny embroidered school crest on the outside of the raccoon's lavender hoodie upper sleeve at viewer left. Keep the planter, both hands and drawstrings unchanged.",
+    "placementKo": "라벤더 후드 소매의 패치"
+  },
+  {
+    "id": "tactile-team-planned--special-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "떠 있는 마을의 건축 대장",
+    "imageVersion": "3e960c7cbc78",
+    "back": {
+      "story": "블록은 동료들과 힘을 모아 공중 마을을 지었어요.",
+      "quote": "우리 손길이 모이면 마을이 돼.",
+      "signature": "블록",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Put a tiny printed school crest on the front of the bear's yellow hard hat, respecting the curved surface.",
+    "placementKo": "노란 안전모의 작은 교표"
+  },
+  {
+    "id": "tactile-team-planned--special-03",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "별 항해선의 공동 제작자",
+    "imageVersion": "35c4347ab4ec",
+    "back": {
+      "story": "블록은 친구들과 별 항해선의 튼튼한 기둥을 세웠어요.",
+      "quote": "함께 만든 배로 함께 떠나자.",
+      "signature": "블록",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Put a tiny school crest on the bear's existing brown leather belt pouch as a colored embossed mark.",
+    "placementKo": "별빛 비행선 도구 파우치의 장식"
+  },
+  {
+    "id": "tactile-team-planned--daily-01",
+    "code": "tactile-team-planned",
+    "name": "블록",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "우리 집 새 책장",
+    "imageVersion": "c007344f8116",
+    "back": {
+      "story": "블록은 친구와 역할을 나누어 새 책장을 조립했어요.",
+      "quote": "내가 받칠게, 너는 연결해 줘.",
+      "signature": "블록",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace only the small gold star pin on the bear's visible lavender vest chest with a tiny enamel school crest. Keep shelf, arm and rabbit unchanged.",
+    "placementKo": "라벤더 조끼의 교표 핀"
+  },
+  {
+    "id": "tactile-team-flexible--special-03",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "구름 반죽의 협업 제빵사",
+    "imageVersion": "a82a6d38c2a6",
+    "back": {
+      "story": "조이는 동료와 구름 반죽을 주고받으며 빵을 빚었어요.",
+      "quote": "네 구름과 내 구름을 한 덩이로!",
+      "signature": "조이",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Replace only the small gold button on the otter baker's cloud-shaped apron pocket with a tiny enamel school crest fastener. Keep the cloud pocket silhouette, other cloud patterns, dough and flour.",
+    "placementKo": "구름 앞치마 주머니의 교표 단추"
+  },
+  {
+    "id": "tactile-team-flexible--special-05",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "special",
+    "theme": "special-05",
+    "title": "변신 놀이 공원의 공동 발명가",
+    "imageVersion": "ff9a6255b4c0",
+    "back": {
+      "story": "조이는 동료와 부품을 바꿔 놀이 기구를 새롭게 만들었어요.",
+      "quote": "이번엔 다른 방식으로 놀아 보자.",
+      "signature": "조이",
+      "edition": "특별 의상 05"
+    },
+    "placement": "Replace only the little otter-face badge on the otter's existing leather tool pouch with a tiny colored embossed school crest. Preserve pouch, tools and belt.",
+    "placementKo": "놀이공원 도구 파우치의 장식"
+  },
+  {
+    "id": "tactile-team-flexible--daily-01",
+    "code": "tactile-team-flexible",
+    "name": "조이",
+    "kind": "daily",
+    "theme": "daily-01",
+    "title": "반죽 바꿔 볼래",
+    "imageVersion": "d925b6c9df5a",
+    "back": {
+      "story": "조이는 친구와 반죽을 바꿔 새로운 모양을 만들었어요.",
+      "quote": "네 반죽에 내 생각을 섞어 볼까?",
+      "signature": "조이",
+      "edition": "일상 기록 01"
+    },
+    "placement": "Replace only the little animal-face decoration on the otter's cream apron pocket with a small stitched school crest. Preserve apron, flour stains, dough, hands and rabbit.",
+    "placementKo": "베이킹 앞치마 주머니의 교표"
+  },
+  {
+    "id": "motion-solo-planned--special-01",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "하루 한 구간의 극지 탐험가",
+    "imageVersion": "3a26ce111261",
+    "back": {
+      "story": "페이스는 극지의 구간 표식을 지나 다음 걸음을 옮겼어요.",
+      "quote": "넓은 빙원도 한 구간씩 건너면 돼.",
+      "signature": "페이스",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Replace only the existing small patch on the penguin's blue polar parka upper sleeve at viewer left with a small embroidered school crest. Keep timer, straps, fur and snow.",
+    "placementKo": "극지 탐험복 소매의 패치"
+  },
+  {
+    "id": "motion-solo-planned--special-04",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "계절을 건너는 장거리 우편사",
+    "imageVersion": "c056caad494a",
+    "back": {
+      "story": "페이스는 계절이 바뀌는 길에서 편지 한 묶음을 전했어요.",
+      "quote": "오늘 맡은 편지는 여기까지 잘 왔어.",
+      "signature": "페이스",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Replace only the round envelope emblem on the penguin postman's existing brown mailbag flap with a small enamel school crest. Preserve bag, mail and buckles.",
+    "placementKo": "우편 가방의 에나멜 장식"
+  },
+  {
+    "id": "motion-solo-planned--daily-02",
+    "code": "motion-solo-planned",
+    "name": "페이스",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "끈을 고쳐 묶는 시간",
+    "imageVersion": "657b8eea40c8",
+    "back": {
+      "story": "페이스는 풀린 가방 끈을 차분히 고쳐 묶었어요.",
+      "quote": "잠깐 멈춰도 내 길은 이어져.",
+      "signature": "페이스",
+      "edition": "일상 기록 02"
+    },
+    "placement": "Replace only the little penguin-head keychain hanging from the bag's front pocket with a tiny school-crest charm on the same keyring. Preserve bag, cords and all other decorations.",
+    "placementKo": "산책 가방의 작은 교표 키링"
+  },
+  {
+    "id": "motion-solo-flexible--special-01",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-01",
+    "title": "바람 따라 길을 바꾸는 유랑자",
+    "imageVersion": "426a0fa04116",
+    "back": {
+      "story": "바니는 바람을 따라 새로운 여행길을 골랐어요.",
+      "quote": "길을 바꿔도 여행은 계속돼.",
+      "signature": "바니",
+      "edition": "특별 의상 01"
+    },
+    "placement": "Put a tiny embroidered school crest on the rabbit's existing green backpack side pocket, keeping all straps and carrot charm.",
+    "placementKo": "여행 배낭 옆면의 패치"
+  },
+  {
+    "id": "motion-solo-flexible--special-03",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "special",
+    "theme": "special-03",
+    "title": "이동하는 찻집의 방랑 주인",
+    "imageVersion": "976b7cf2f251",
+    "back": {
+      "story": "바니는 마음에 드는 언덕에 이동 찻집을 세웠어요.",
+      "quote": "오늘의 찻집 주소는 이 풍경이야.",
+      "signature": "바니",
+      "edition": "특별 의상 03"
+    },
+    "placement": "Replace only the floral decoration on the cream teacup held by the rabbit with a small school crest ceramic print. Keep pouring tea, teapot flowers, apron carrots and all paws unchanged.",
+    "placementKo": "찻잔의 작은 교표"
+  },
+  {
+    "id": "motion-solo-flexible--daily-02",
+    "code": "motion-solo-flexible",
+    "name": "바니",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "햇살 따라 자리 이동",
+    "imageVersion": "83af04aa9d60",
+    "back": {
+      "story": "바니는 쿠션과 책을 들고 햇살이 드는 자리로 옮겼어요.",
+      "quote": "자리를 바꾸니 마음도 가벼워졌어.",
+      "signature": "바니",
+      "edition": "일상 기록 02"
+    },
+    "placement": "Print a tiny school crest on an empty lower corner of the existing book cover the rabbit is carrying, matching its perspective.",
+    "placementKo": "품에 안은 책 표지의 교표"
+  },
+  {
+    "id": "motion-team-planned--special-02",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "눈보라 구조대의 길잡이",
+    "imageVersion": "6c9a7e42cdf7",
+    "back": {
+      "story": "루카는 눈보라 속에서 동료들이 모일 안전한 길을 안내했어요.",
+      "quote": "불빛을 따라와, 여기서 기다릴게.",
+      "signature": "루카",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a small fabric school crest on the husky's orange rescue parka upper sleeve, preserving harness straps and all equipment.",
+    "placementKo": "구조대 외투 소매의 패치"
+  },
+  {
+    "id": "motion-team-planned--special-04",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "사막 대상단의 이동 책임자",
+    "imageVersion": "333786e8e5be",
+    "back": {
+      "story": "루카는 사막의 그늘에서 일행의 출발 준비를 살폈어요.",
+      "quote": "물도 챙기고 서로도 챙기자.",
+      "signature": "루카",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Put a tiny colored embossed school crest on the husky's existing brown leather belt pouch.",
+    "placementKo": "사막 여행 도구 파우치의 장식"
+  },
+  {
+    "id": "motion-team-planned--daily-03",
+    "code": "motion-team-planned",
+    "name": "루카",
+    "kind": "daily",
+    "theme": "daily-03",
+    "title": "모두 도착한 저녁",
+    "imageVersion": "85e6441ee82e",
+    "back": {
+      "story": "루카는 마지막으로 도착한 친구에게 따뜻한 음료를 건넸어요.",
+      "quote": "모두 왔으니 이제 편히 쉬자.",
+      "signature": "루카",
+      "edition": "일상 기록 03"
+    },
+    "placement": "Replace the tree motif on the cream mug held by the husky with a small school crest ceramic print.",
+    "placementKo": "따뜻한 코코아 머그잔의 교표"
+  },
+  {
+    "id": "motion-team-flexible--special-02",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-02",
+    "title": "폭풍 속 갑판의 응원단장",
+    "imageVersion": "841d9dec0849",
+    "back": {
+      "story": "스킵은 흔들리는 갑판에서 동료들에게 새로운 리듬을 보냈어요.",
+      "quote": "우리 박자를 맞춰 한 번 더 힘내자.",
+      "signature": "스킵",
+      "edition": "특별 의상 02"
+    },
+    "placement": "Put a small embroidered school crest on the quokka's yellow sailor jacket chest, away from ropes and scarf.",
+    "placementKo": "노란 우비 가슴의 패치"
+  },
+  {
+    "id": "motion-team-flexible--special-04",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "special",
+    "theme": "special-04",
+    "title": "규칙이 바뀌는 운동회의 진행자",
+    "imageVersion": "3147079ae0fd",
+    "back": {
+      "story": "스킵은 장애물을 낮추어 모두가 다시 즐길 게임을 제안했어요.",
+      "quote": "규칙을 바꾸면 다시 재미있어질 거야.",
+      "signature": "스킵",
+      "edition": "특별 의상 04"
+    },
+    "placement": "Put a tiny embroidered school crest on the quokka's existing green-and-cream sports visor front band, keeping visor shape.",
+    "placementKo": "운동용 선캡의 작은 교표"
+  },
+  {
+    "id": "motion-team-flexible--daily-02",
+    "code": "motion-team-flexible",
+    "name": "스킵",
+    "kind": "daily",
+    "theme": "daily-02",
+    "title": "비가 오면 처마 파티",
+    "imageVersion": "ca16def11e88",
+    "back": {
+      "story": "스킵은 비를 피한 처마 아래에서 즉흥 놀이를 시작했어요.",
+      "quote": "비 오는 소리도 우리 파티 음악이야.",
+      "signature": "스킵",
+      "edition": "일상 기록 02"
+    },
+    "placement": "Put a tiny embroidered school crest on the quokka's existing small cream-and-teal crossbody pouch flap.",
+    "placementKo": "빗속 산책 가방의 패치"
+  }
+]

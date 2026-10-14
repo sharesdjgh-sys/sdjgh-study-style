@@ -1,0 +1,47 @@
+{
+  "edition": "sdj-school-v2",
+  "purpose": "event-only",
+  "generator": "built-in image_gen",
+  "cards": [
+    {
+      "id": "sdj-school-v2-group-photo",
+      "png": "group-photo.png",
+      "webp": "group-photo.webp",
+      "width": 1672,
+      "height": 941,
+      "characters": 16
+    },
+    {
+      "id": "sdj-school-v2-visual",
+      "png": "visual.png",
+      "webp": "visual.webp",
+      "width": 1672,
+      "height": 941,
+      "characters": 4
+    },
+    {
+      "id": "sdj-school-v2-auditory",
+      "png": "auditory.png",
+      "webp": "auditory.webp",
+      "width": 1672,
+      "height": 941,
+      "characters": 4
+    },
+    {
+      "id": "sdj-school-v2-tactile",
+      "png": "tactile.png",
+      "webp": "tactile.webp",
+      "width": 1672,
+      "height": 941,
+      "characters": 4
+    },
+    {
+      "id": "sdj-school-v2-motion",
+      "png": "motion.png",
+      "webp": "motion.webp",
+      "width": 1672,
+      "height": 941,
+      "characters": 4
+    }
+  ]
+}
