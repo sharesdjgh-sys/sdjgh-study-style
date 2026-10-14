@@ -18,7 +18,7 @@ export function MethodPreview() {
     >
       <div className="section-heading">
         <div>
-          <span className="eyebrow">어떤 공부캐든, 스킬은 자유롭게</span>
+          <span className="eyebrow">다른 공부캐의 스킬도 하나씩 열어 봐요</span>
           <h2 id="method-preview-title">
             같은 공부도,
             <br />
@@ -27,8 +27,8 @@ export function MethodPreview() {
         </div>
         <p>
           오늘 할 공부를 고르고, 마음에 드는 공부 스킬을 만나 보세요.
-          <br className="desktop-only" />내 공부캐와 함께 새로운 스킬도 10분씩
-          익혀 봐요.
+          <br className="desktop-only" />
+          로그인 후 하트로 스킬을 열고, 10분씩 익혀 봐요.
         </p>
       </div>
       <div className="method-preview-bar">

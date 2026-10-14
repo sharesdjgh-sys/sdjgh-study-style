@@ -34,8 +34,9 @@ export function MethodCatalog() {
         <SkillWallet />
       </div>
       <p className="skill-catalog-guide">
-        왼쪽 위는 공부 방식, 캐릭터 배지는 내가 연 시그니처예요. 다른 유형의
-        스킬도 자유롭게 써 보세요.
+        왼쪽 위는 공부 방식, 캐릭터 배지는 내가 연 시그니처예요. 로그인 후
+        캐릭터 카드를 도감에 저장하거나 하트 1~3개로 스킬을 열어 보세요. 열린
+        스킬은 내 유형과 상관없이 연습할 수 있어요.
       </p>
       {(Object.keys(CATEGORIES) as MethodCategory[]).map((category) => (
         <section

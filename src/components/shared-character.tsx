@@ -51,7 +51,7 @@ export function SharedCharacter({
             <strong>재미로 만나고, 공부법은 다양하게!</strong>
             <br />
             성격·능력을 진단하지 않아요. 어떤 캐릭터가 나와도 다양한 공부법을
-            자유롭게 시도해 보세요.
+            알아보세요. 스킬 연습은 로그인 후 해당 스킬을 열면 할 수 있어요.
           </p>
         </aside>
         <Link
