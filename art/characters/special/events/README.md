@@ -4,6 +4,7 @@
 
 | 컬렉션 | 최종 구성 | 미리보기 | 제작 기록 |
 | --- | --- | --- | --- |
+| 배지 카드 모아보기 | 최종 캐릭터 48장 + 단체 5장 | [배지 카드 전용 갤러리](../../../../ref/sdj-badge-cards-preview.html) | 캐릭터·종류 필터, 6장씩 보기 |
 | 캐릭터 카드 | 16명 × 특별 2장·일상 1장 = 48장 | [전체 카드](../../../../ref/sdj-character-cards-preview.html) | [README](sdj-character-v2/README.md) |
 | 단체 카드 | 16인 단체 1장 + 유형별 4인 단체 4장 = 5장 | [단체 카드](../../../../ref/sdj-school-cards-preview.html) | [README](sdj-school-v2/README.md) |
 | 재선별 비교 | 수정한 12장의 전후 비교 | [비교·교표 확대](../../../../ref/sdj-character-cards-review.html) | [수정 이유](sdj-character-v2/review.json) |
