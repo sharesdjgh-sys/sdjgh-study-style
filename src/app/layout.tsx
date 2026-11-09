@@ -14,6 +14,8 @@ import { SkillProvider } from "@/components/skill-provider";
 import "./skills.css";
 import { GoodsProvider } from "@/components/goods-provider";
 import "./goods.css";
+import { PwaProvider } from "@/components/pwa-provider";
+import { AppInstallPrompt } from "@/components/app-install-prompt";
 export const viewport: Viewport = {
   themeColor: "#27785d",
 };
@@ -50,17 +52,20 @@ export default function RootLayout({
             <SkillProvider>
               <GoodsProvider>
                 <AccountResultsProvider>
-                  <SourceCapture />
-                  <a className="skip-link" href="#main">
-                    본문으로 바로가기
-                  </a>
-                  <div className="site-shell">
-                    <Header />
-                    <GiftNotice />
-                    {children}
-                    <Footer />
-                  </div>
-                  <QuickMenu />
+                  <PwaProvider>
+                    <SourceCapture />
+                    <a className="skip-link" href="#main">
+                      본문으로 바로가기
+                    </a>
+                    <div className="site-shell">
+                      <Header />
+                      <GiftNotice />
+                      {children}
+                      <Footer />
+                    </div>
+                    <QuickMenu />
+                    <AppInstallPrompt />
+                  </PwaProvider>
                 </AccountResultsProvider>
               </GoodsProvider>
             </SkillProvider>

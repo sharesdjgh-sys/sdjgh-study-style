@@ -4,6 +4,7 @@ import { Icon } from "./icon";
 import styles from "./footer.module.css";
 import { HeaderAccount } from "./header-account";
 import { HeaderNavigation } from "./header-navigation";
+import { InstallAppButton } from "./app-install-prompt";
 export function Header() {
   return (
     <header className="header">
@@ -49,6 +50,7 @@ export function Footer() {
           <p>공부캐를 모으고, 공부 스킬을 넓혀요.</p>
         </div>
         <nav className={styles.navigation} aria-label="푸터 메뉴">
+          <InstallAppButton />
           <Link href="/collection">내 도감</Link>
           <Link href="/account">내 정보</Link>
           <Link href="/methods">공부 스킬북</Link>

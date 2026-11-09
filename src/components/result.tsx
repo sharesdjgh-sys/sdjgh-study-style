@@ -36,6 +36,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSavedSession } from "./use-saved-session";
 import { useAuth } from "./auth-provider";
 import styles from "./result.module.css";
+import { ResultCollectionCta } from "./result-collection-cta";
 const AXES = [
   {
     key: "social",
@@ -240,6 +241,7 @@ export function TypeResult({
           )}
         </div>
       </section>
+      {session && <ResultCollectionCta />}
       {context}
       {cardSession && (
         <ResultCardDownload

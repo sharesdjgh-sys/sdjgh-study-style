@@ -91,6 +91,99 @@
 .consentNotes a {
   font-size: 0.875rem;
 }
+.consentNotes .keepsakeNote {
+  padding: 26px;
+  border-color: #e8dba5;
+  background: #fffdf3;
+}
+.keepsakeHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.keepsakeHeading > img {
+  flex-shrink: 0;
+  transform: rotate(7deg);
+}
+.keepsakeEyebrow {
+  display: block;
+  margin-bottom: 9px;
+  color: #806c37;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.keepsakeHeading h2 {
+  margin: 0;
+  color: #334d3a;
+  font-size: clamp(1.375rem, 4vw, 1.75rem);
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+.keepsakeHeading h2 span {
+  background: linear-gradient(
+    transparent 65%,
+    #fee500 65%,
+    #fee500 94%,
+    transparent 94%
+  );
+}
+.keepsakeKakao {
+  position: relative;
+  padding-left: 28px;
+  white-space: nowrap;
+}
+.keepsakeKakao > img {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+}
+.keepsakeKakao strong {
+  color: #594824;
+  font-weight: 600;
+}
+.consentNotes .keepsakeLead {
+  margin-bottom: 12px;
+}
+.keepsakeGuest {
+  margin: 18px 0 12px;
+  padding-top: 14px;
+  border-top: 1px dashed #ded4b3;
+}
+.keepsakeGuest summary {
+  padding: 6px 0;
+  color: #685a35;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.keepsakeGuest summary:focus-visible {
+  outline: 2px solid #27785d;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.keepsakeGuest[open] summary {
+  margin-bottom: 8px;
+}
+.consentNotes .keepsakeGuest p,
+.consentNotes .keepsakeRetake {
+  font-size: 0.8125rem;
+  color: #6e7366;
+}
+@media (max-width: 480px) {
+  .consentNotes .keepsakeNote {
+    padding: 20px;
+  }
+  .keepsakeHeading > img {
+    width: 64px;
+    height: 64px;
+  }
+}
 .consentForm {
   margin-top: 22px;
   display: grid;

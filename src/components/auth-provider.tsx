@@ -20,7 +20,7 @@ const Context = createContext({
   message: "",
   busy: true,
   refresh: async () => {},
-  login: async () => {},
+  login: async (_returnTo?: string) => {},
   logout: async () => {},
   signedOut: () => {},
 });
@@ -111,45 +111,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }));
     notifyAuthChange();
   }, [invalidate]);
-  const login = useCallback(async () => {
-    if (action.current) return;
-    action.current = true;
-    invalidate();
-    const current = serial.current;
-    setState((old) => ({
-      ...old,
-      status: "redirecting",
-      message: "카카오 로그인 화면으로 이동하고 있어요…",
-    }));
-    try {
-      const response = await fetch(
-        `/api/auth/kakao/start?returnTo=${encodeURIComponent(location.pathname + location.search)}`,
-        {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          signal: AbortSignal.timeout(10000),
-        },
-      );
-      if (!response.ok) throw new Error("login_unavailable");
-      const payload = await response.json();
-      const url = new URL(payload.authorizationUrl);
-      if (
-        url.origin !== "https://kauth.kakao.com" ||
-        url.pathname !== "/oauth/authorize"
-      )
-        throw new Error("invalid_redirect");
-      if (current === serial.current) window.location.assign(url.toString());
-    } catch {
-      if (current === serial.current) {
-        action.current = false;
-        setState((old) => ({
-          ...old,
-          status: "anonymous",
-          message: "로그인을 시작하지 못했어요. 잠시 후 다시 눌러 주세요.",
-        }));
+  const login = useCallback(
+    async (returnTo?: string) => {
+      if (action.current) return;
+      action.current = true;
+      invalidate();
+      const current = serial.current;
+      setState((old) => ({
+        ...old,
+        status: "redirecting",
+        message: "카카오 로그인 화면으로 이동하고 있어요…",
+      }));
+      try {
+        const response = await fetch(
+          `/api/auth/kakao/start?returnTo=${encodeURIComponent(returnTo ?? location.pathname + location.search)}`,
+          {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            signal: AbortSignal.timeout(10000),
+          },
+        );
+        if (!response.ok) throw new Error("login_unavailable");
+        const payload = await response.json();
+        const url = new URL(payload.authorizationUrl);
+        if (
+          url.origin !== "https://kauth.kakao.com" ||
+          url.pathname !== "/oauth/authorize"
+        )
+          throw new Error("invalid_redirect");
+        if (current === serial.current) window.location.assign(url.toString());
+      } catch {
+        if (current === serial.current) {
+          action.current = false;
+          setState((old) => ({
+            ...old,
+            status: "anonymous",
+            message: "로그인을 시작하지 못했어요. 잠시 후 다시 눌러 주세요.",
+          }));
+        }
       }
-    }
-  }, [invalidate]);
+    },
+    [invalidate],
+  );
   const logout = useCallback(async () => {
     if (action.current) return;
     action.current = true;

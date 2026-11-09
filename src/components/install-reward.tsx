@@ -1,93 +1,42 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import { useSkills, SKILL_ERRORS } from "./skill-provider";
 import { useAuth } from "./auth-provider";
 
-type InstallPrompt = Event & {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: string }>;
-};
+import { usePwa } from "./pwa-provider";
+
 export function InstallReward() {
   const skills = useSkills();
   const auth = useAuth();
-  const prompt = useRef<InstallPrompt | null>(null);
+  const pwa = usePwa();
+  const { env, canInstall, installed } = pwa;
   const helpId = useId();
-  const [canInstall, setCanInstall] = useState(false);
-  const [installed, setInstalled] = useState(false);
-  const [env, setEnv] = useState({
-    mobile: false,
-    standalone: false,
-    ios: false,
-    kakao: false,
-    ready: false,
-  });
   const [help, setHelp] = useState<"install" | "shortcut" | null>(null);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const actionLock = useRef(false);
-  useEffect(() => {
-    const query = window.matchMedia("(display-mode: standalone)");
-    const check = () => {
-      const ios =
-        /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      setEnv({
-        mobile: /Android/i.test(navigator.userAgent) || ios,
-        standalone:
-          query.matches ||
-          Boolean(
-            (navigator as Navigator & { standalone?: boolean }).standalone,
-          ),
-        ios,
-        kakao: /KAKAOTALK/i.test(navigator.userAgent),
-        ready: true,
-      });
-    };
-    const frame = requestAnimationFrame(check);
-    const available = (e: Event) => {
-      e.preventDefault();
-      prompt.current = e as InstallPrompt;
-      setCanInstall(true);
-    };
-    const complete = () => {
-      prompt.current = null;
-      setCanInstall(false);
-      setInstalled(true);
-      check();
-    };
-    window.addEventListener("beforeinstallprompt", available);
-    window.addEventListener("appinstalled", complete);
-    query.addEventListener("change", check);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("beforeinstallprompt", available);
-      window.removeEventListener("appinstalled", complete);
-      query.removeEventListener("change", check);
-    };
-  }, []);
   async function install() {
-    const pending = prompt.current;
-    if (actionLock.current || !pending || env.kakao) return;
+    if (actionLock.current || pwa.installing) return;
     actionLock.current = true;
-    prompt.current = null;
-    setCanInstall(false);
     setBusy(true);
     setMessage("");
     try {
-      await pending.prompt();
-      const choice = await pending.userChoice;
-      setMessage(
-        choice.outcome === "accepted"
-          ? "설치가 완료되면 홈 화면의 StudyCrew 아이콘으로 실행해 주세요."
-          : "설치를 취소했어요. 지금처럼 웹으로 계속 이용할 수 있어요.",
-      );
-    } catch {
-      setMessage(
-        "설치 창을 열지 못했어요. 설치 방법을 확인하거나 웹으로 계속 이용해 주세요.",
-      );
-      setHelp("install");
+      const outcome = await pwa.install();
+      if (outcome === "accepted") {
+        setMessage(
+          "설치가 완료되면 홈 화면의 StudyCrew 아이콘으로 실행해 주세요.",
+        );
+      } else if (outcome === "dismissed") {
+        setMessage("설치를 취소했어요. 지금처럼 웹으로 계속 이용할 수 있어요.");
+      } else {
+        setHelp("install");
+        if (outcome === "failed")
+          setMessage(
+            "설치 창을 열지 못했어요. 아래 설치 방법을 확인해 주세요.",
+          );
+      }
     } finally {
       actionLock.current = false;
       setBusy(false);

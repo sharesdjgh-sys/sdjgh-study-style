@@ -194,3 +194,9 @@ CSV는 화면과 같은 조건으로 전체 결과를 내보내며 계정 목록
 ### 관리자 기능 검증
 
 npx vitest run tests/unit/admin.test.ts tests/unit/admin-db.test.ts tests/unit/admin-api.test.ts tests/unit/migration-runner.test.ts로 권한·집계·CSV·인덱스 재실행을 검사합니다. 로컬 서버 실행 후 npx playwright test tests/e2e/admin.spec.ts로 데스크톱·모바일 화면을 확인합니다. 브라우저 테스트는 API 대역을 사용하며 실제 카카오 관리자 지정은 배포 환경에서 별도로 확인합니다.
+
+## 최초 로그인 앱 설치 안내
+
+앱 설치 자동 팝업은 신규 계정의 최초 로그인 세션에서 도감 저장 후 한 번만 허용한다. 기존 계정, 재로그인, 탈퇴 후 재가입에는 자동 표시하지 않는다. 서버가 표시 권한을 원자적으로 소진하므로 브라우저 기록 삭제나 동시 탭에서도 반복되지 않으며, 도감·하단 메뉴의 수동 설치 안내는 계속 사용할 수 있다. 7일 재노출 정책은 사용하지 않는다.
+
+배포 전에 `db/014_install_onboarding.sql`을 적용한다 (`npm.cmd run db:migrate`). 기존 데이터는 보존되며, 마이그레이션이 없거나 확인 요청이 실패하면 자동 팝업을 표시하지 않는다.

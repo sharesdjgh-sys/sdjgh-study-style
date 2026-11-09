@@ -75,17 +75,52 @@ export function QuizIntro({
             가까운 쪽과 그 정도를 골라요.
           </p>
         </section>
-        <section>
-          <h2>기록과 캐릭터는 이렇게 보관해요</h2>
-          <p>
-            진행 중 답변은 이 브라우저에 <mark>최대 24시간</mark>, 완료 결과는{" "}
-            <mark>7일</mark> 보관해요. 로그인하면 완료한 검사 답변·점수와 도감을
-            계정에 저장해요.
+        <section
+          className={styles.keepsakeNote}
+          aria-labelledby="keepsake-title"
+        >
+          <div className={styles.keepsakeHeading}>
+            <div>
+              <span className={styles.keepsakeEyebrow}>
+                오늘 만난 친구, 다음에도 함께
+              </span>
+              <h2 id="keepsake-title">
+                처음 만난 공부캐,
+                <br />
+                <span>내 도감에 쏙!</span>
+              </h2>
+            </div>
+            <Image
+              src="/ui-icons/nav-collection.webp"
+              width={88}
+              height={88}
+              alt=""
+            />
+          </div>
+          <p className={styles.keepsakeLead}>
+            처음 만난 친구를 오래 간직하고 싶다면,{" "}
+            <span className={styles.keepsakeKakao}>
+              <Image src="/kakaotalk-icon.png" width={22} height={22} alt="" />
+              <strong>카톡으로</strong>
+            </span>{" "}
+            로그인하고 도감에 담아 주세요.
           </p>
           <p>
-            첫 캐릭터는 로그인 없이 만날 수 있어요.{" "}
-            <strong>재검사에서는 새 캐릭터를 지급하지 않으며,</strong> 처음 만난
-            캐릭터와 도감은 유지돼요.
+            내 검사 기록과 도감에 모은 친구들은 계정에 남아요. 다른 기기로
+            찾아와도 같은 카카오 계정이면 다시 만날 수 있어요.
+          </p>
+          <details className={styles.keepsakeGuest}>
+            <summary>로그인 없이 먼저 만나봐도 괜찮아요</summary>
+            <p>
+              첫 검사와 결과 확인은 로그인 없이도 할 수 있어요. 진행 중 답변은{" "}
+              <strong>최대 24시간</strong>, 완료 결과는 <strong>7일</strong>{" "}
+              동안 이 브라우저에만 남아요. 다른 기기로 이어지지 않고, 브라우저
+              기록을 지우면 사라질 수 있어요.
+            </p>
+          </details>
+          <p className={styles.keepsakeRetake}>
+            다시 검사해도 첫 친구는 그대로예요. 재검사로 새 캐릭터가 추가되지는
+            않아요.
           </p>
           <Link
             className="text-link"

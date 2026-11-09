@@ -137,3 +137,16 @@ await sql.query(
   ),
 );
 console.log("분석용 일별 집계 장기 보관 정책 적용 완료");
+
+const installOnboarding = await readFile(
+  new URL("../db/014_install_onboarding.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  installOnboarding
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+    .map((statement) => sql.query(statement)),
+);
+console.log("최초 로그인 세션의 앱 설치 안내 1회 정책 준비 완료");

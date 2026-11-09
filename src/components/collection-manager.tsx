@@ -1,4 +1,5 @@
 "use client";
+import { InstallAppButton } from "./app-install-prompt";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -345,6 +346,7 @@ export function CollectionManager() {
                 도착한 선물 <strong>{data.pending.length}개</strong>
               </span>
             </div>
+            <InstallAppButton />
             <p className="collection-invite-progress">
               {progress.unlocked ? (
                 <>

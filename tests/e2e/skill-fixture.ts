@@ -11,6 +11,7 @@ export async function mockSkills(
   const owner = "e1dcbb36-9c6e-4de6-8f57-f11b43765a7c";
   const state = {
     signedIn: true,
+    installInvitation: false,
     goods: structuredClone(EMPTY_GOODS),
     progress: {
       ...structuredClone(EMPTY_SKILLS),
@@ -35,6 +36,11 @@ export async function mockSkills(
   await page.route("**/api/auth/logout", (r) => {
     state.signedIn = false;
     return r.fulfill({ json: { ok: true } });
+  });
+  await page.route("**/api/auth/install-prompt", (r) => {
+    const show = state.signedIn && state.installInvitation;
+    state.installInvitation = false;
+    return r.fulfill({ json: { show } });
   });
   await page.route("**/api/collection", (r) =>
     r.fulfill({

@@ -44,6 +44,7 @@ import {
 } from "../../src/app/api/referrals/route";
 import { GET as collection } from "../../src/app/api/collection/route";
 import { GET as authSession } from "../../src/app/api/auth/session/route";
+import { POST as installPrompt } from "../../src/app/api/auth/install-prompt/route";
 import {
   GET as skillGet,
   POST as skillPost,
@@ -106,6 +107,7 @@ beforeAll(async () => {
   await db.exec(await readFile("db/007_home_screen_rewards.sql", "utf8"));
   await db.exec(await readFile("db/008_goods_stars.sql", "utf8"));
   await db.exec(await readFile("db/009_card_stars.sql", "utf8"));
+  await db.exec(await readFile("db/014_install_onboarding.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -142,6 +144,75 @@ afterEach(() => {
 afterAll(async () => {
   await db.close();
 });
+it("기존 계정에는 앱 설치 팝업을 소급해서 표시하지 않는다", async () => {
+  await register(request("/api/collection/register", { session: session() }));
+  expect(
+    await (await installPrompt(request("/api/auth/install-prompt"))).json(),
+  ).toEqual({ show: false });
+});
+
+async function firstInstallLogin(value = "first-login") {
+  await db.query("SELECT * FROM establish_collection_session($1,$2,$3,$4,$5)", [
+    "9000",
+    identityHash("9000"),
+    "BBBBBBBBBB",
+    digest(value),
+    "",
+  ]);
+  mocks.jar.set("study-collection", value);
+}
+
+it("최초 로그인에서 도감 저장 후 설치 팝업을 원자적으로 한 번만 허용한다", async () => {
+  await firstInstallLogin();
+  expect(
+    await (await installPrompt(request("/api/auth/install-prompt"))).json(),
+  ).toEqual({ show: false });
+  await register(request("/api/collection/register", { session: session() }));
+  const responses = await Promise.all([
+    installPrompt(request("/api/auth/install-prompt")),
+    installPrompt(request("/api/auth/install-prompt")),
+  ]);
+  const payloads = await Promise.all(
+    responses.map((response) => response.json()),
+  );
+  expect(payloads.filter((payload) => payload.show)).toHaveLength(1);
+  expect(
+    await (await installPrompt(request("/api/auth/install-prompt"))).json(),
+  ).toEqual({ show: false });
+});
+
+it("처음에 안내를 보지 않아도 재로그인하면 새 기기와 이전 세션 모두 자동 안내를 하지 않는다", async () => {
+  await firstInstallLogin();
+  await register(request("/api/collection/register", { session: session() }));
+  await firstInstallLogin("second-login");
+  expect(
+    await (await installPrompt(request("/api/auth/install-prompt"))).json(),
+  ).toEqual({ show: false });
+  mocks.jar.set("study-collection", "first-login");
+  expect(
+    await (await installPrompt(request("/api/auth/install-prompt"))).json(),
+  ).toEqual({ show: false });
+});
+
+it("설치 팝업 확인은 유효한 세션과 동일 출처 요청에서만 허용한다", async () => {
+  expect(
+    (
+      await installPrompt(
+        request(
+          "/api/auth/install-prompt",
+          {},
+          "POST",
+          "https://other.example",
+        ),
+      )
+    ).status,
+  ).toBe(403);
+  mocks.jar.delete("study-collection");
+  expect(
+    (await installPrompt(request("/api/auth/install-prompt"))).status,
+  ).toBe(401);
+});
+
 it("바로가기 완료 확인 후 1개와 설치 추가 2개를 계정에 기록한다", async () => {
   const claim = (payload: object) => skillPost(request("/api/skills", payload));
   expect((await claim({ action: "shortcut" })).status).toBe(400);
