@@ -138,6 +138,18 @@ await sql.query(
 );
 console.log("분석용 일별 집계 장기 보관 정책 적용 완료");
 
+const schoolEvent = await readFile(
+  new URL("../db/013_school_event.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  schoolEvent
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean)
+    .map((statement) => sql.query(statement)),
+);
+console.log("서여고 이벤트 계정별 참여 기록 준비 완료");
 const installOnboarding = await readFile(
   new URL("../db/014_install_onboarding.sql", import.meta.url),
   "utf8",

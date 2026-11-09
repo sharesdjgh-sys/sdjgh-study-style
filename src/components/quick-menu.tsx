@@ -9,6 +9,7 @@ export function QuickMenu() {
   const { path, items } = useNavigationItems();
   if (
     path.startsWith("/quiz") ||
+    path === "/events/sdj" ||
     path === "/admin" ||
     path.startsWith("/admin/")
   )

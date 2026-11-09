@@ -13,6 +13,7 @@ export function GiftNotice() {
     !data.signedIn ||
     !data.pending.length ||
     path.startsWith("/quiz") ||
+    path === "/events/sdj" ||
     path === "/collection"
   )
     return null;

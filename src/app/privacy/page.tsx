@@ -98,6 +98,15 @@ export default function Page() {
         </p>
       </section>
       <section className="prose-section">
+        <h2>학교 이벤트 참여 기록</h2>
+        <p>
+          학교 이벤트 페이지에서 참여를 등록하면 행사 식별자, 서비스 계정
+          식별자, 참여 시각과 참여 경로를 계정에 보관해요. 참여 여부 확인과 중복
+          등록 방지에 사용하며, 계정을 삭제하면 함께 삭제해요. 별도의 학교
+          인증이나 이름·학년·반 정보 수집은 하지 않아요.
+        </p>
+      </section>
+      <section className="prose-section">
         <h2>서비스 개선을 위한 최소 이용 통계</h2>
         <p>
           지정된 관리자는 서비스 운영과 개선을 위해 계정별 첫 캐릭터,

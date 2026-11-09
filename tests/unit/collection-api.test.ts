@@ -1161,3 +1161,30 @@ it("7일 지난 서버 결과는 복원하지만 만료된 기기 기록은 신�
       .status,
   ).toBe(200);
 });
+
+it("행사 참여 로그인 취소 후에도 검증된 행사 복귀 주소를 유지한다", async () => {
+  const response = await start(
+    new Request(
+      origin +
+        "/api/auth/kakao/start?returnTo=" +
+        encodeURIComponent("/events/sdj?from=qr&join=1"),
+      {
+        method: "POST",
+        headers: { Origin: origin, Accept: "application/json" },
+      },
+    ),
+  );
+  const authorization = new URL((await response.json()).authorizationUrl);
+  const result = await callback(
+    new Request(
+      origin +
+        "/api/auth/kakao/callback?state=" +
+        authorization.searchParams.get("state") +
+        "&error=access_denied",
+    ),
+  );
+  const destination = new URL(result.headers.get("location")!);
+  expect(destination.pathname).toBe("/events/sdj");
+  expect(destination.searchParams.get("join")).toBe("1");
+  expect(destination.searchParams.get("auth")).toBe("cancelled");
+});

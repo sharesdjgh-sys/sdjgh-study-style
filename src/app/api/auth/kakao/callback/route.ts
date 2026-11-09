@@ -26,22 +26,26 @@ const finish = (
   return NextResponse.redirect(url, 303);
 };
 export async function GET(request: Request) {
-  if (!loginConfigured()) return finish("unavailable");
+  let returnPath = "/collection";
+  const complete = (status: string, retryAt?: string) =>
+    finish(status, retryAt, returnPath);
+  if (!loginConfigured()) return complete("unavailable");
   const params = new URL(request.url).searchParams;
   const jar = await cookies();
   const browser = jar.get(OAUTH_COOKIE)?.value;
   const state = params.get("state");
-  if (!browser || !state || state.length > 100) return finish("expired");
+  if (!browser || !state || state.length > 100) return complete("expired");
   try {
     const sql = database();
     const rows =
       await sql`DELETE FROM collection_oauth_states WHERE state_hash=${hash(state)}
       AND browser_hash=${hash(browser)} AND expires_at>now() RETURNING state_hash,return_path`;
     jar.set(OAUTH_COOKIE, "", cookieOptions(0));
-    if (!rows.length) return finish("expired");
-    if (params.has("error")) return finish("cancelled");
+    if (!rows.length) return complete("expired");
+    returnPath = authReturnPath(String(rows[0].return_path ?? ""));
+    if (params.has("error")) return complete("cancelled");
     const code = params.get("code");
-    if (!code || code.length > 2048) return finish("failed");
+    if (!code || code.length > 2048) return complete("failed");
     const exchange = await timedAuth("kakao_token", () =>
       fetch("https://kauth.kakao.com/oauth/token", {
         method: "POST",
@@ -59,9 +63,9 @@ export async function GET(request: Request) {
         }),
       }),
     );
-    if (!exchange.ok) return finish("failed");
+    if (!exchange.ok) return complete("failed");
     const tokens = await exchange.json();
-    if (typeof tokens.access_token !== "string") return finish("failed");
+    if (typeof tokens.access_token !== "string") return complete("failed");
     const identity = await timedAuth("kakao_identity", () =>
       fetch("https://kapi.kakao.com/v2/user/me?property_keys=%5B%5D", {
         cache: "no-store",
@@ -69,10 +73,10 @@ export async function GET(request: Request) {
         headers: { Authorization: `Bearer ${tokens.access_token}` },
       }),
     );
-    if (!identity.ok) return finish("failed");
+    if (!identity.ok) return complete("failed");
     const profile = await identity.json();
     if (!Number.isSafeInteger(profile.id) || profile.id <= 0)
-      return finish("failed");
+      return complete("failed");
     // Provider tokens and profile data are discarded; only the app-scoped ID persists.
     const value = token();
     const previous = jar.get(AUTH_COOKIE)?.value;
@@ -84,16 +88,15 @@ export async function GET(request: Request) {
     );
     if (accounts[0]?.rejoin_after) {
       jar.set(AUTH_COOKIE, "", cookieOptions(0));
-      return finish(
+      return complete(
         "rejoin_blocked",
         new Date(accounts[0].rejoin_after).toISOString(),
       );
     }
-    if (!accounts[0]?.account_id) return finish("failed");
+    if (!accounts[0]?.account_id) return complete("failed");
     jar.set(AUTH_COOKIE, value, cookieOptions(30 * 86400));
-    const target = String(rows[0].return_path ?? "");
-    return finish("success", undefined, authReturnPath(target));
+    return complete("success");
   } catch {
-    return finish("failed");
+    return complete("failed");
   }
 }

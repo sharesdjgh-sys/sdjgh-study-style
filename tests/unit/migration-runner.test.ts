@@ -74,7 +74,7 @@ it("실제 마이그레이션 실행기가 단일 명령 prepared query로 설�
           "SELECT count(*)::int AS total FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'",
         )
       ).rows[0].total,
-    ).toBe(19);
+    ).toBe(20);
     expect((await db.query("SELECT study_rollup()")).rows).toHaveLength(1);
     expect(
       (await db.query("SELECT total FROM study_daily WHERE version='history'"))
