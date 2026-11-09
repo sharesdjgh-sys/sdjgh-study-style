@@ -1,7 +1,11 @@
+export type CharacterMbti = `${"E" | "I"}${"S" | "N"}${"T" | "F"}${"J" | "P"}`;
+
 export type Character = {
   number: string;
   name: string;
   species: string;
+  /** 캐릭터 프로필 설정이며 사용자의 검사 결과와는 별개예요. */
+  mbti: CharacterMbti;
   line: string;
   intro: string;
   habit: string;
@@ -13,6 +17,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "01",
     name: "루미",
     species: "부엉이",
+    mbti: "INTJ",
     line: "복잡한 생각도, 한 장의 지도로.",
     intro:
       "조용히 노트를 펼치면 흩어진 생각들이 제자리를 찾아. 큰 그림을 그린 다음, 한 칸씩 채워가는 시간이 좋아.",
@@ -24,6 +29,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "02",
     name: "모아",
     species: "여우",
+    mbti: "INTP",
     line: "이 생각, 저 생각. 이어보면 발견!",
     intro:
       "노트의 빈칸은 새로운 길이 시작되는 곳이야. 궁금한 개념부터 그리다 보면, 나만의 연결이 하나씩 생기거든.",
@@ -35,6 +41,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "03",
     name: "루트",
     species: "사슴",
+    mbti: "ENTJ",
     line: "우리 생각을 한눈에 펼쳐볼까?",
     intro:
       "서로 다른 생각도 한 장에 그리면 어디서 만나는지 보여. 먼저 길을 정하고 친구들과 빈칸을 채워가는 게 좋아.",
@@ -46,6 +53,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "04",
     name: "피코",
     species: "카멜레온",
+    mbti: "ENFP",
     line: "다르게 보면, 새롭게 연결돼!",
     intro:
       "친구가 던진 한마디에 그림의 방향이 바뀌는 순간이 재밌어. 색도 배치도 바꿔보면서 새로운 관점을 찾아보자.",
@@ -57,6 +65,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "05",
     name: "소리",
     species: "사막여우",
+    mbti: "INFJ",
     line: "내 목소리로 차근차근 풀어볼게.",
     intro:
       "조용한 곳에서 오늘 배운 걸 내 문장으로 말해봐. 처음엔 짧아도 괜찮아. 순서대로 설명하다 보면 빈틈이 들려.",
@@ -68,6 +77,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "06",
     name: "멜로",
     species: "고양이",
+    mbti: "INFP",
     line: "혼잣말인 줄 알았지? 생각 정리 중!",
     intro:
       "문득 떠오른 질문을 나한테 던져보곤 해. 딱딱한 문장보다 내가 평소 쓰는 말로 풀어낼 때 더 편하거든.",
@@ -79,6 +89,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "07",
     name: "토크",
     species: "리트리버",
+    mbti: "ENFJ",
     line: "오늘의 설명 담당, 돌아가면서!",
     intro:
       "혼자 알고 끝내기보다 서로 설명해주는 시간이 좋아. 범위와 차례를 정하고 질문을 하나씩 주고받아보자.",
@@ -90,6 +101,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "08",
     name: "리프",
     species: "왕관앵무",
+    mbti: "ENTP",
     line: "잠깐, 그 얘기 들으니까 궁금한 게 있어!",
     intro:
       "질문 하나가 또 다른 질문으로 이어질 때 신나. 생각나는 예시를 나누고, 마지막엔 오늘의 발견을 한마디로 남겨.",
@@ -101,6 +113,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "09",
     name: "토리",
     species: "비버",
+    mbti: "ISTJ",
     line: "하나씩 꺼내서, 차곡차곡 이해하기.",
     intro:
       "내 손으로 개념을 옮기고 묶어보면 생각이 정돈돼. 기준을 정해 카드를 나누고, 하나씩 확인하는 시간이 좋아.",
@@ -112,6 +125,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "10",
     name: "몽",
     species: "라쿤",
+    mbti: "ISTP",
     line: "직접 바꿔보면 뭔가 떠오를걸?",
     intro:
       "종이를 접고 카드를 뒤집고 순서를 바꾸다 보면 새로운 생각이 나. 완벽한 준비보다 일단 만져보는 쪽이 좋아.",
@@ -123,6 +137,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "11",
     name: "블록",
     species: "곰",
+    mbti: "ESTJ",
     line: "네 조각과 내 조각, 함께 완성하자.",
     intro:
       "할 일을 나누고 각자 만든 조각을 맞추는 게 좋아. 모양이 달라도 연결되는 이유를 설명하면 하나가 될 수 있어.",
@@ -134,6 +149,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "12",
     name: "조이",
     species: "수달",
+    mbti: "ESTP",
     line: "그 조각, 여기 붙이면 어때?",
     intro:
       "친구와 조각을 주고받다가 생각지도 못한 모양이 나오는 게 좋아. 정해진 답을 만들기 전에 조합부터 즐겨봐.",
@@ -145,6 +161,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "13",
     name: "페이스",
     species: "펭귄",
+    mbti: "ISFJ",
     line: "나만의 속도로, 한 구간씩.",
     intro:
       "오래 버티기보다 짧은 구간을 차근차근 이어가고 싶어. 잠깐 자세를 바꾸고 돌아오면 다음 질문부터 시작해.",
@@ -156,6 +173,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "14",
     name: "바니",
     species: "토끼",
+    mbti: "ISFP",
     line: "조금 바꿔서, 가볍게 다시 시작!",
     intro:
       "같은 자리에서 막히면 작은 변화를 주고 싶어. 편한 자세를 찾아 다시 시작하고, 궁금한 질문부터 하나 꺼내봐.",
@@ -167,6 +185,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "15",
     name: "루카",
     species: "허스키",
+    mbti: "ESFJ",
     line: "우리, 다음 구간도 같이 가볼까?",
     intro:
       "친구들과 공부할 때 시작과 쉼의 리듬을 맞추고 싶어. 각자 답할 시간을 갖고 다시 모여 질문을 확인해보자.",
@@ -178,6 +197,7 @@ export const CHARACTERS: Record<string, Character> = {
     number: "16",
     name: "스킵",
     species: "쿼카",
+    mbti: "ESFP",
     line: "분위기 바꾸고, 한 번 더 해보자!",
     intro:
       "다 같이 막혔을 땐 잠깐 리듬을 바꿔보자. 편하게 자세를 바꾸고 질문을 주고받으면 다시 시작할 계기가 생겨.",

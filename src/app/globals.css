@@ -4107,13 +4107,19 @@ legend {
   transform: rotateY(180deg);
   background: linear-gradient(155deg, #fffefa 35%, var(--character-tint));
 }
-.character-back-symbol {
-  align-self: flex-start;
+.character-back-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.character-back-symbol,
+.character-mbti {
+  flex-shrink: 0;
   display: grid;
   place-items: center;
   width: 48px;
   height: 48px;
-  margin-top: 28px;
   border: 1px solid var(--character-line);
   border-radius: 14px;
   color: var(--character-deep);
@@ -4129,6 +4135,15 @@ legend {
 }
 .character-back-hello strong {
   color: var(--character-deep);
+}
+.character-mbti {
+  width: 96px;
+  font-family: "Cafe24 Ssurround", Pretendard, system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-indent: 0.06em;
 }
 .character-back .character-intro {
   font-size: 16px;

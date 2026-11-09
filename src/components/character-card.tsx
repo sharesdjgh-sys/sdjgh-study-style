@@ -109,9 +109,12 @@ export function CharacterCard({
             <span>이 캐릭터의 공부 이야기</span>
             <span className="character-edition">No. {character.number}</span>
           </div>
-          <span className="character-back-symbol" aria-hidden="true">
-            {FAMILIES[type.modality].symbol}
-          </span>
+          <div className="character-back-profile">
+            <span className="character-back-symbol" aria-hidden="true">
+              {FAMILIES[type.modality].symbol}
+            </span>
+            <span className="character-mbti">{character.mbti}</span>
+          </div>
           <p className="character-back-hello">
             안녕, 나는 <strong>{character.name}!</strong>
           </p>
