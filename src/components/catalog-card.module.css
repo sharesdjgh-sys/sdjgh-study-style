@@ -6,6 +6,64 @@
   --character-tint: var(--card-tint);
   --character-line: color-mix(in srgb, var(--card-line) 35%, white);
 }
+.palette[data-discovered="true"] :global(.character-face) {
+  border-color: color-mix(in srgb, var(--card-accent) 75%, white);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--card-accent) 45%, transparent),
+    0 0 18px color-mix(in srgb, var(--card-accent) 35%, transparent),
+    0 10px 30px -10px color-mix(in srgb, var(--card-line) 35%, transparent);
+}
+/* Keep the foil on each face so it follows the card when flipped. */
+.palette[data-discovered="true"] :global(.character-face)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 3px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    var(--card-accent) 10%,
+    #fff5cc 28%,
+    var(--card-line) 42%,
+    #fff 48%,
+    #fff5cc 52%,
+    var(--card-accent) 58%,
+    var(--card-line) 75%,
+    #fff5cc 90%
+  );
+  background-size: 250% 250%;
+  background-position: 30% 50%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+.palette[data-discovered="true"]:is(:hover, :focus-within)
+  :global(.character-face) {
+  box-shadow:
+    0 0 0 1px var(--card-accent),
+    0 0 26px color-mix(in srgb, var(--card-accent) 50%, transparent),
+    0 12px 32px -10px color-mix(in srgb, var(--card-line) 45%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .palette[data-discovered="true"] :global(.character-face)::after {
+    animation: collectedShimmer 6s ease-in-out infinite alternate;
+  }
+}
+@keyframes collectedShimmer {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
 .palette :global(.mystery-card) {
   background: radial-gradient(
     ellipse at 50% 35%,

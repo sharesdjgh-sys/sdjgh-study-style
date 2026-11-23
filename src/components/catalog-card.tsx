@@ -17,6 +17,7 @@ export function CatalogCard({
     "--card-ink": theme.ink,
     "--card-tint": theme.tint,
     "--card-line": theme.rim,
+    "--card-accent": theme.accent,
   } as CSSProperties;
   return (
     <div
