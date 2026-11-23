@@ -9,7 +9,7 @@ export async function renderGoods(
   prizeNumber?: number,
 ) {
   const special = card.kind !== "daily";
-  const [font, art] = await Promise.all([
+  const [font, art, mascot] = await Promise.all([
     readFile(join(process.cwd(), "public/fonts/Pretendard-Medium.woff")),
     back
       ? sharp(
@@ -30,6 +30,7 @@ export async function renderGoods(
         )
           .png()
           .toBuffer(),
+    back && prizeNumber ? readFile(join(process.cwd(), "public/seoipi-prize.png")) : undefined,
   ]);
   const rendered = new ImageResponse(
     <div
@@ -91,12 +92,17 @@ export async function renderGoods(
           >
             {`“${card.back.quote}”`}
           </div>
-          {prizeNumber && (
-            <div
-              style={{ fontSize: 36 }}
-            >{`서여고 당첨 번호 · ${prizeNumber}번`}</div>
-          )}
           <div style={{ fontSize: 28 }}>{`— ${card.name}의 한마디`}</div>
+          {mascot && prizeNumber && (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", gap: 32, padding: 16, border: "2px solid #ac9368", borderRadius: 12 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`data:image/png;base64,${mascot.toString("base64")}`} alt="" width={120} height={120} style={{ objectFit: "contain" }} />
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                <span style={{ fontSize: 28 }}>서여고 당첨 번호</span>
+                <span style={{ fontSize: 44 }}>{String(prizeNumber).padStart(2, "0")}번</span>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div

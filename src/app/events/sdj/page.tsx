@@ -1,8 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getGoods } from "@/lib/goods";
 import { SDJ_EVENT } from "@/lib/sdj-event";
 
+import cardsIcon from "./nav-cards.webp";
+import gameIcon from "./nav-game.webp";
+import crestCardIcon from "./nav-crest.webp";
+import voucherIcon from "./nav-voucher.webp";
+import festivalPoster from "./festival-poster.webp";
+import meloPreview from "./melo-preview.webp";
+import mongPreview from "./mong-preview.webp";
+import lumiPreview from "./lumi-preview.webp";
 import pangLogo from "./gameplay/pangpangstar-logo.webp";
 import mazeLogo from "./gameplay/mazerun-logo.webp";
 import pangpangstar from "./gameplay/pangpangstar.webp";
@@ -44,6 +53,7 @@ export const metadata: Metadata = {
 
 const cards = [
   {
+    card: getGoods("visual-solo-planned--daily-01")!,
     image: lumi,
     type: "일상 포토카드",
     name: "루미",
@@ -51,6 +61,7 @@ const cards = [
     hint: "지도 옆 머그잔을 살펴보세요.",
   },
   {
+    card: getGoods("auditory-solo-flexible--special-01")!,
     image: melo,
     type: "특별 의상 카드",
     name: "멜로",
@@ -72,20 +83,11 @@ export default async function SdjEventPage({
         <span>StudyCrew × 서대전여자고등학교</span>
         <a href="#participate">매점권 지급 안내 ↓</a>
       </div>
-      <section className={styles.hero} aria-labelledby="event-title">
-        <div>
-          <p className={styles.eyebrow}>서여고 포스터 QR 참여 혜택</p>
-          <h1 id="event-title">
-            내 공부캐를 찾으면
-            <br />
-            <em>랜덤 카드 한 장 더!</em>
-          </h1>
-          <p className={styles.lead}>포스터 QR로 참여하면 초대 없이도 한 장을 받아요.</p>
-          <p className={styles.intro}>
-            포스터 QR로 카카오 로그인 후 검사 결과를 도감에 저장하세요. 나와
-            닮은 공부캐를 만나고, 선물로 받은 카드 한 장을 열어 다른 공부캐도
-            만날 수 있어요.
-          </p>{" "}
+      <section className={styles.festivalCover} aria-labelledby="event-title">
+        <h1 id="event-title" className={styles.titleText}>서여고 스페셜 이벤트 · 내 공부캐를 찾으면 랜덤 카드 한 장 더!</h1>
+        <Image className={styles.coverArt} src={festivalPoster} preload sizes="(max-width: 1100px) 100vw, 1100px" alt="몽, 루미, 멜로가 펼친 책에서 반짝이는 랜덤 카드를 발견하는 축제 포스터" />
+        <div className={styles.coverEntry}>
+          <p>카카오톡으로 로그인하고 내 공부캐를 찾아보세요.<br />검사 결과를 도감에 저장하면 <strong>랜덤 공부캐 카드 한 장</strong>을 더 받아요.</p>
           <div id="start">
             {fromQr ? (
               <QrBonus
@@ -98,45 +100,38 @@ export default async function SdjEventPage({
             )}
           </div>
         </div>
-        <div
-          className={styles.rewardPair}
-          aria-label="내 검사 결과 카드와 랜덤 공부캐 카드"
-        >
-          <figure>
-            <Image
-              src="/result-cards/visual-solo-planned-fixed-v2.webp"
-              alt="검사 결과 카드 예시, 루미"
-              width={240}
-              height={360}
-            />
-            <figcaption>내 검사 결과 카드</figcaption>
+        <section className={styles.coverSamples} aria-labelledby="sample-cast-title">
+          <h2 id="sample-cast-title">공부캐 3인 예시</h2>
+          <figure className={styles.cardFan}>
+            <Image src={meloPreview} alt="멜로 예시 카드, 청각형 게이지가 가장 높아요." sizes="(max-width: 760px) 30vw, 165px" />
+            <Image src={mongPreview} alt="몽 예시 카드, 촉각형 게이지가 가장 높아요." sizes="(max-width: 760px) 30vw, 165px" />
+            <Image src={lumiPreview} alt="루미 예시 카드, 시각형 게이지가 가장 높아요." sizes="(max-width: 760px) 30vw, 165px" />
+            <figcaption>나는 어떤 공부캐를 만나게 될까?</figcaption>
           </figure>
-          <span aria-hidden="true">+</span>
-          <figure>
-            <Image
-              src="/ui-icons/card-pack-v1.webp"
-              alt="도감에서 열어 보는 미개봉 카드팩"
-              width={240}
-              height={240}
-            />
-            <figcaption>랜덤 공부캐 카드</figcaption>
-          </figure>
-        </div>
+        </section>
       </section>
-      <nav className={styles.sectionNav} aria-label="이벤트 상세 안내">
-        <a href="#how-to">공부캐 카드 얻는 법</a>
-        <a href="#games">AI 게임</a>
-        <a href="#examples">교표가 담긴 카드</a>
-        <a href="#participate">카드별 매점권</a>
+      <nav className={styles.sectionNav} aria-label="행사 안내 목차">
+        {([
+          ["how-to", "공부캐 카드 얻는 법", cardsIcon],
+          ["games", "AI 게임", gameIcon],
+          ["examples", "교표가 담긴 카드", crestCardIcon],
+          ["participate", "카드별 매점권", voucherIcon],
+         ] as const).map(([id, title, icon]) => (
+          <a key={id} href={`#${id}`}>
+            <Image className={styles.navIcon} src={icon} alt="" sizes="42px" />
+            <strong>{title}</strong>
+            <span className={styles.navArrow} aria-hidden="true">↓</span>
+          </a>
+        ))}
       </nav>
-      <section className={styles.section} aria-labelledby="how-to">
-        <h2 id="how-to">내 공부캐를 찾고, 한 장 더 열어봐!</h2>
+      <section id="how-to" className={styles.section} aria-labelledby="how-to-title">
+        <h2 id="how-to-title">내 공부캐를 찾고, 한 장 더 열어봐!</h2>
         <ol className={styles.steps}>
           <li>
             <span>01</span>
             <h3>나와 닮은 공부캐 찾기</h3>
             <p>
-              카톡으로 로그인하고 질문에 답해요. 결과에서 내 공부 습관과 나에게
+              카카오톡으로 로그인하고 질문에 답해요. 결과에서 내 공부 습관과 나에게
               맞는 공부법을 확인하고 도감에 저장해요.
             </p>
           </li>
@@ -168,7 +163,9 @@ export default async function SdjEventPage({
           <p className={styles.eyebrow}>직접 개발한 AI 게임 2종</p>
           <h2 id="games-title">내가 모은 공부캐로 한 판 붙을래?</h2>
           <p>
-            송원제에 오면 내 도감에서 캐릭터를 골라 직접 플레이할 수 있어요.
+            송원제 축제에서 <strong>내 도감에 모은 공부캐</strong>를 골라요.
+            <br />
+            그 캐릭터로 팡팡스타와 메이즈런을 즐겨 보세요!
           </p>
         </header>
         {[
@@ -178,7 +175,10 @@ export default async function SdjEventPage({
             logo: pangLogo,
             alt: "눈 덮인 학교 운동장에서 스킵이 멜로에게 폴짝 별똥 박치기를 쓰는 실제 게임 화면",
             caption: "스킵의 ‘폴짝 별똥 박치기’가 멜로에게 적중하는 순간.",
-            rule: "상대를 맞혀 별을 모으면 내 공부캐만의 스킬을 쓸 수 있어요.",
+            hook: "지금 쓸까, 필살기까지 모을까?",
+            play: "친구와 1대1 대결! 공격을 맞히면 내 별 게이지가 차올라요.",
+            moves: [["별 1개", "공부캐 고유 기술 쓰기"], ["별 3개", "모아 둔 별로 필살기 날리기"]],
+            win: "두 라운드를 먼저 따내면 승리!",
           },
           {
             name: "메이즈런",
@@ -186,9 +186,12 @@ export default async function SdjEventPage({
             logo: mazeLogo,
             alt: "어두운 미로 한가운데 두 플레이어와 등교 완료 표시가 보이는 실제 게임 화면",
             caption: "둘 다 학교 앞에 모였다. 이제 누가 먼저 집에 갈까?",
-            rule: "친구와 안개 낀 미로를 달려요. 학교에 들렀다가 자기 집에 먼저 도착하면 승리!",
+            hook: "학교 찍고, 누가 먼저 집에 갈까?",
+            play: "지나온 길이 점점 어두워져요. 갈림길을 잘 기억해요!",
+            moves: [["등교", "안개 속 미로 한가운데 학교 찾기"], ["하교", "학교에서 내 집까지 달리기"]],
+            win: "학교에 들른 뒤 내 집에 먼저 도착하면 승리!",
           },
-        ].map(({ name, shot, logo, alt, caption, rule }) => (
+        ].map(({ name, shot, logo, alt, caption, hook, play, moves, win }) => (
           <article key={name} className={styles.gameFeature}>
             <div className={styles.gameText}>
               <h3>
@@ -199,7 +202,17 @@ export default async function SdjEventPage({
                   sizes="(max-width:760px) 230px, 310px"
                 />
               </h3>
-              <p>{rule}</p>
+              <h4 className={styles.gameHook}>{hook}</h4>
+              <p>{play}</p>
+              <dl className={styles.gameMoves}>
+                {moves.map(([label, action]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{action}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className={styles.gameWin}>{win}</p>
             </div>
             <figure>
               <a
@@ -256,9 +269,9 @@ export default async function SdjEventPage({
           <p>스페셜 모션 카드는 영상으로 즐기는 카드예요.</p>
         </div>
         <p className={styles.sampleTip}>아래 카드 그림을 눌러 크게 보고, 숨은 교표를 찾아보세요.</p>
-        <div className={styles.samples}>
+        <div className={styles.samples} id="crest-card-preview">
           {cards.map((card) => (
-            <CrestSample key={card.title} {...card} />
+            <CrestSample key={card.title} {...card} initiallyBack={params.preview === "back"} />
           ))}
         </div>
       </section>
@@ -277,7 +290,7 @@ export default async function SdjEventPage({
           </h2>
           <Image src={seoipiCutout} alt="" sizes="90px" />
           </div>
-          <p>2,000원권 총 50장 · 총 10만 원</p>
+          <p>2,000원권 총 50장 · 총 상금 10만원</p>
         </div>
         <div className={styles.detailBody}>
           <dl className={styles.facts}>
@@ -324,7 +337,6 @@ export default async function SdjEventPage({
               <strong>총 14,000원</strong> · 매점권 7장
             </p>
           </div>
-          <p>행사 일정은 추후 이 페이지에서 안내할게요.</p>
         </div>
       </section>
       <div className={styles.eventFooter}>

@@ -9,6 +9,7 @@ import styles from "./goods-gallery.module.css";
 import { useGoods } from "./goods-provider";
 import { Star, StarWallet } from "./star-wallet";
 import { goodsPrice } from "@/lib/goods";
+import { GoodsCardBack } from "./goods-card-back";
 import { GoodsActions } from "./goods-actions";
 import { GoodsReveal } from "./goods-reveal";
 import { GoodsMotionPlayer } from "./goods-motion-player";
@@ -435,17 +436,7 @@ export function GoodsFace({
           </small>
         </div>
       ) : back ? (
-        <div className={styles.back}>
-          <span>
-            {card.back.edition} · {card.name}
-          </span>
-          <Image src={avatar(card.code)} alt="" width={58} height={58} />
-          <h3>{card.title}</h3>
-          <p>{card.back.story}</p>
-          <blockquote>“{card.back.quote}”</blockquote>
-          <small>— {card.name}의 한마디</small>
-          {number && <strong>서여고 당첨 번호 · {number}번</strong>}
-        </div>
+        <GoodsCardBack card={card} number={number} />
       ) : (
         <>
           <Image

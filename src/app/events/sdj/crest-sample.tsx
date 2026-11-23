@@ -1,30 +1,36 @@
 ﻿"use client";
 import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
+import { GoodsCardBack } from "@/components/goods-card-back";
+import type { GoodsCard } from "@/lib/goods";
+import goodsStyles from "@/components/goods-gallery.module.css";
 import styles from "./page.module.css";
 
 export function CrestSample({
+  card,
+  initiallyBack,
   image,
   name,
   title,
   type,
   hint,
 }: {
+  card: GoodsCard;
+  initiallyBack: boolean;
   image: StaticImageData;
   name: string;
   title: string;
   type: string;
   hint: string;
 }) {
-  const [back, setBack] = useState(false);
+  const [back, setBack] = useState(initiallyBack);
   return (
     <article>
       {back ? (
         <div className={styles.sampleReverse}>
-          <span>서여고 교표 카드 · 견본</span>
-          <strong>{title}</strong>
-          <b>당첨 번호 000번 (예시)</b>
-          <small>실제 지급 시에는 소장 카드의 번호를 보여주세요.</small>
+          <div className={`${goodsStyles.card} ${card.kind === "daily" ? "" : goodsStyles.special}`}>
+            <GoodsCardBack card={card} sample />
+          </div>
         </div>
       ) : (
         <a href={image.src} aria-label={title + " 원본 크게 보기"}>

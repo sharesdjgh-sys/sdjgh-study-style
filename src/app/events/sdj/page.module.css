@@ -23,7 +23,7 @@
   outline-offset: 5px;
 }
 .page :is(section[id]) {
-  scroll-margin-top: 24px;
+  scroll-margin-top: 0;
 }
 .eventBar {
   display: flex;
@@ -882,7 +882,7 @@
   background: #ede9dd;
   overflow: hidden;
 }
-.samples img {
+.samples article > a > img {
   display: block;
   width: 100%;
   height: clamp(220px, 32vw, 380px);
@@ -944,7 +944,7 @@
 }
 .gameFeature {
   display: grid;
-  grid-template-columns: minmax(0, 2.4fr) minmax(160px, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(255px, 1fr);
   gap: clamp(20px, 3vw, 42px);
   align-items: center;
 }
@@ -956,6 +956,48 @@
 .gameText {
   grid-column: 2;
   grid-row: 1;
+}
+.gameFeature {
+  --game-accent: #ffcf83;
+}
+.gameFeature:last-child {
+  --game-accent: #a5e7d3;
+}
+.gameHook {
+  margin: 14px 0 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: -.045em;
+  word-break: keep-all;
+  text-wrap: balance;
+}
+.gameMoves {
+  margin: 18px 0;
+  display: grid;
+  gap: 8px;
+}
+.gameMoves div {
+  display: grid;
+  grid-template-columns: 4em 1fr;
+  align-items: baseline;
+  gap: 10px;
+  line-height: 1.5;
+  font-size: 15px;
+}
+.gameMoves dt {
+  padding: 2px 0;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  color: var(--game-accent);
+  font-weight: 700;
+  text-align: center;
+}
+.gameMoves dd { margin: 0; word-break: keep-all; }
+.gameText .gameWin {
+  border-top: 1px solid #48615a;
+  padding-top: 12px;
+  color: var(--game-accent);
+  font-weight: 750;
 }
 .gameFeature figure {
   grid-column: 1;
@@ -996,12 +1038,12 @@
 }
 
 @media (max-width: 700px) {
-  .samples img {
+  .samples article > a > img {
     height: auto;
     width: 100%;
     aspect-ratio: 2 / 3;
   }
-  .samples h3 {
+  .samples article > h3 {
     font-size: 16px;
     line-height: 1.4;
     word-break: keep-all;
@@ -1032,49 +1074,79 @@
   }
 }
 
-.rewardPair {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(4px, 1vw, 18px);
-  margin: 22px auto;
-  max-width: 510px;
-  width: 100%;
+.titleText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.rewardPair figure {
+.cardFan {
+  position: relative;
+  width: min(100%, 450px);
+  aspect-ratio: 1.32;
+  justify-self: center;
   margin: 0;
-  text-align: center;
 }
-.rewardPair img {
-  width: 100%;
-  height: clamp(165px, 22vw, 285px);
-  object-fit: contain;
+.cardFan img {
+  position: absolute;
+  top: 7%;
+  width: 35%;
+  height: auto;
+  border-radius: 4%;
+  box-shadow: 0 8px 16px #46290f35;
 }
-.rewardPair figcaption {
-  margin-top: 12px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.rewardPair > span {
-  color: #926137;
-  font-size: 30px;
+.cardFan img:first-child { left: 3%; transform: rotate(-9deg); }
+.cardFan img:nth-child(2) { left: 32.5%; top: 0; z-index: 1; }
+.cardFan img:nth-child(3) { right: 3%; transform: rotate(9deg); }
+.cardFan figcaption {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  right: 5%;
+  background: #ffdfa0;
+  color: #284632;
+  box-shadow: 2px 3px 0 #0e302c66;
+  padding: 6px 15px;
+  font-size: clamp(12px, 1.3vw, 17px);
+  font-weight: 750;
+  transform: rotate(-4deg);
 }
 .sectionNav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  padding: 16px;
-  background: #214338;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px clamp(12px, 2vw, 28px);
+  background: #fffaf0;
+  border-bottom: 1px solid var(--event-line);
 }
 .sectionNav a {
-  padding: 5px;
-  color: #fff6e3;
-  font-size: 14px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  min-height: 52px;
+  border: 1px solid #dfdbcc;
+  border-radius: 10px;
+  background: #fffef8;
+  color: var(--event-ink);
+  font-size: clamp(13px, 1.15vw, 16px);
+  word-break: keep-all;
 }
-.sectionNav a:hover {
-  text-decoration: underline;
+.navIcon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+.navArrow { margin-left: auto; color: #627662; }
+.sectionNav a:hover, .sectionNav a:focus-visible { border-color: #71856a; background: #faf8eb; }
+@media (max-width: 760px) {
+  .cardFan { width: min(96%,350px); margin-top: 24px; }
+  .sectionNav { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .sectionNav a { padding: 7px; gap: 6px; }
+  .navIcon { width: 34px; height: 34px; }
 }
 
 /* Follow the printed crest outline, retaining the white chevron inside. */
@@ -1183,23 +1255,18 @@
 }
 
 .sampleReverse {
-  min-height: clamp(220px, 32vw, 380px);
-  box-sizing: border-box;
-  align-content: center;
-  text-align: center;
-  display: grid;
-  gap: 8px;
-  border-radius: 12px;
-  padding: 18px;
-  background: #214338;
-  color: #fff8de;
+  width: min(100%, 253px);
+  margin-inline: auto;
+  container-type: inline-size;
 }
-.sampleReverse b {
-  color: #ffcf83;
-}
-.sampleReverse small {
-  line-height: 1.6;
-}
+.samples .sampleReverse > div > div { padding: 4cqw; gap: 2cqw; border-width: 2cqw; }
+.samples .sampleReverse img { width: 20cqw; height: 20cqw; }
+.samples .sampleReverse h3 { font-size: 7cqw; }
+.samples .sampleReverse p, .samples .sampleReverse blockquote { font-size: 5.3cqw; line-height: 1.5; }
+.samples .sampleReverse blockquote { padding-top: 2cqw; }
+.samples .sampleReverse small, .samples .sampleReverse span { font-size: 4.6cqw; }
+.samples .sampleReverse b { font-size: 5.6cqw; }
+.samples .sampleReverse img[alt="서잎이"] { width: 16cqw; height: 16cqw; }
 
 .samples article > button {
   margin: 10px 0 4px;
@@ -1259,3 +1326,22 @@
 .cardKinds { margin-top: 24px; line-height: 1.7; word-break: keep-all; }
 .cardKinds p + p { margin-top: 4px; color: var(--event-muted); }
 .page .cardKinds + .sampleTip { margin-top: 10px; }
+
+.festivalCover { background: #fff6e5; }
+.coverArt { display: block; width: 100%; height: auto; }
+.coverEntry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px clamp(20px, 4vw, 48px) 12px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.coverEntry > div { flex-shrink: 0; }
+.coverSamples { padding: 0 clamp(20px, 4vw, 48px) 20px; }
+.coverSamples h2 { padding-top: 16px; text-align: center; font-size: 18px; }
+.coverSamples figure { margin: 24px auto 0; }
+@media (max-width: 760px) {
+  .coverEntry { display: grid; gap: 14px; font-size: 14px; }
+}

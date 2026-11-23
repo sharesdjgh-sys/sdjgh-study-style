@@ -7,6 +7,7 @@ import { useGoods } from "./goods-provider";
 import { Icon } from "./icon";
 import { useSavedSession } from "./use-saved-session";
 import { CharacterMotion } from "./character-motion";
+import { PrizeSlip } from "./goods-card-back";
 import { GroupPhotoSilhouette } from "./group-photo-silhouette";
 
 const photograph = "/api/collection/special-card";
@@ -122,11 +123,10 @@ export function SpecialPhotoDialog({
       </div>
       <div className="special-photo-frame">
         {back && number ? (
-          <p>
-            <strong>서여고 당첨 번호 · {number}번</strong>
-            <br />
-            {photo.title}
-          </p>
+          <div>
+            <p>{photo.title}</p>
+            <PrizeSlip number={number} />
+          </div>
         ) : (
           <SpecialPhoto photo={photo} />
         )}

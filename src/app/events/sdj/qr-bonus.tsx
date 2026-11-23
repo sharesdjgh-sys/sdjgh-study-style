@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth-provider";
 import styles from "./page.module.css";
@@ -37,7 +38,7 @@ export function QrBonus({ resume }: { resume: boolean }) {
   return (
     <>
       <button
-        className={styles.primary}
+        className={auth.status === "authenticated" ? styles.primary : styles.kakaoButton}
         disabled={busy || auth.busy}
         onClick={() =>
           auth.status === "authenticated"
@@ -45,11 +46,14 @@ export function QrBonus({ resume }: { resume: boolean }) {
             : void auth.login("/events/sdj?from=qr&bonus=1")
         }
       >
+        {auth.status !== "authenticated" && (
+          <Image src="/kakao-symbol.svg" alt="" width={20} height={20} />
+        )}
         {busy
           ? "카드 확인 중…"
           : auth.status === "authenticated"
             ? "공부캐 카드 받으러 가기"
-            : "카카오로 로그인하고 공부캐 찾기"}
+            : "카카오톡으로 로그인하고 내 공부캐 찾기"}
       </button>
       <p role="status">{message || auth.message}</p>
     </>
