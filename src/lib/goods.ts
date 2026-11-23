@@ -12,6 +12,7 @@ export const goodsKindLabel = (card: GoodsCard) =>
       : "특별 의상 카드";
 export const getGoods = (id: string) => GOODS.find((card) => card.id === id);
 export type GoodsProgress = {
+  prizeNumbers?: Record<string, number>;
   equipped: string[];
   balance: number;
   owned: string[];

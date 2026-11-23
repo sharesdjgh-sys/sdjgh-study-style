@@ -17,6 +17,7 @@ export function FamilyCollectionCard({ modality }: { modality: Modality }) {
   const { collected, total, unlocked } = specialCardProgress(data, modality);
   const label = FAMILIES[modality].label;
   const photo: CollectionPhoto = {
+    design: modality,
     url: `/api/collection/special-card?family=${modality}`,
     alt: `${label} 공부캐 네 명이 함께 찍은 기념 단체사진`,
     title: `${label} 친구들, 다 모였다!`,

@@ -1,0 +1,57 @@
+"use client";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth-provider";
+import styles from "./page.module.css";
+
+export function QrBonus({ resume }: { resume: boolean }) {
+  const auth = useAuth();
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const claim = useCallback(async () => {
+    setBusy(true);
+    setMessage("");
+    try {
+      const response = await fetch("/api/events/sdj/bonus", {
+        method: "POST",
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!response.ok) throw new Error();
+      const { status } = await response.json();
+      if (status === "awaiting_result") router.push("/quiz");
+      else if (
+        ["granted", "already_granted", "collection_complete"].includes(status)
+      )
+        router.push("/collection");
+      else throw new Error();
+    } catch {
+      setMessage("카드 혜택을 확인하지 못했어요. 다시 눌러 주세요.");
+    } finally {
+      setBusy(false);
+    }
+  }, [router]);
+  useEffect(() => {
+    if (resume && auth.status === "authenticated") void claim();
+  }, [resume, auth.status, claim]);
+  return (
+    <>
+      <button
+        className={styles.primary}
+        disabled={busy || auth.busy}
+        onClick={() =>
+          auth.status === "authenticated"
+            ? void claim()
+            : void auth.login("/events/sdj?from=qr&bonus=1")
+        }
+      >
+        {busy
+          ? "카드 확인 중…"
+          : auth.status === "authenticated"
+            ? "공부캐 카드 받으러 가기"
+            : "카카오로 로그인하고 공부캐 찾기"}
+      </button>
+      <p role="status">{message || auth.message}</p>
+    </>
+  );
+}

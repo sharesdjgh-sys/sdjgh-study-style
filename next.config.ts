@@ -13,6 +13,7 @@ const config: NextConfig = {
     "/api/goods/video": ["./art/goods-motion/*.mp4"],
     "/api/goods/image": [
       "./art/goods/*.webp",
+      "./art/characters/special/events/sdj-character-v2/*.webp",
       "./public/characters/thumbs/*.png",
       "./public/fonts/Pretendard-Medium.woff",
     ],
@@ -21,6 +22,8 @@ const config: NextConfig = {
       "./public/fonts/Pretendard-Medium.woff",
     ],
     "/api/collection/special-card": [
+      "./art/characters/special/events/sdj-school-v2/*.webp",
+      "./art/characters/special/events/sdj-school-v2/*.png",
       "./art/characters/special/group-photo.webp",
       "./art/characters/special/group-photo.png",
       "./art/characters/special/families/*.webp",

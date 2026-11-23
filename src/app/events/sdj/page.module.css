@@ -351,6 +351,8 @@
   color: var(--event-ink);
 }
 .detailsSection {
+  --event-muted: #d6e2d7;
+  --event-line: #48615a;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 50px;
@@ -365,11 +367,15 @@
   line-height: 1.9;
 }
 .facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 15px;
   margin: 0;
 }
 .facts > div {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   gap: 15px;
   padding: 16px 0;
   border-bottom: 1px solid var(--event-line);
@@ -602,7 +608,6 @@
     display: none;
   }
   .facts > div {
-    grid-template-columns: 85px 1fr;
     font-size: 12px;
   }
   .faq summary {
@@ -845,3 +850,412 @@
   font-weight: 800;
   white-space: nowrap;
 }
+
+.cast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+.cast > div {
+  width: 33%;
+  text-align: center;
+}
+.cast img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cast > div:nth-child(2) {
+  transform: translateY(-12%);
+}
+.samples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+  margin-top: 24px;
+}
+.samples article > a {
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #ede9dd;
+  overflow: hidden;
+}
+.samples img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 32vw, 380px);
+  object-fit: contain;
+}
+.samples article > p {
+  margin: 12px 0 4px;
+  color: var(--event-muted);
+  font-size: 13px;
+}
+.samples summary {
+  cursor: pointer;
+  padding-block: 8px;
+  font-size: 14px;
+}
+.samples details p,
+.detailBody > p {
+  line-height: 1.65;
+}
+.detailBody > p {
+  margin-top: 16px;
+}
+@media (max-width: 700px) {
+  .samples {
+    gap: 16px 12px;
+  }
+  .cast {
+    margin-top: 26px;
+  }
+}
+
+.arcade,
+.detailsSection {
+  background: #122e2d;
+  color: #fff8de;
+}
+.arcade {
+  padding: clamp(28px, 5vw, 66px) clamp(18px, 4vw, 48px);
+}
+.arcade header {
+  margin-bottom: 36px;
+}
+.detailsSection .eyebrow,
+.arcade header .eyebrow {
+  color: #ffcf83;
+  margin-bottom: 10px !important;
+}
+.arcade h2 {
+  font-size: clamp(26px, 4vw, 48px);
+  letter-spacing: -0.055em;
+  line-height: 1.2;
+}
+.arcade header > p:last-child,
+.gameText p {
+  margin-top: 12px;
+  line-height: 1.7;
+  color: #d6e2d7;
+  word-break: keep-all;
+}
+.gameFeature {
+  display: grid;
+  grid-template-columns: minmax(0, 2.4fr) minmax(160px, 1fr);
+  gap: clamp(20px, 3vw, 42px);
+  align-items: center;
+}
+.gameFeature + .gameFeature {
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid #48615a;
+}
+.gameText {
+  grid-column: 2;
+  grid-row: 1;
+}
+.gameFeature figure {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+.gameFeature figure a,
+.gameFeature img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gameFeature figure a {
+  cursor: zoom-in;
+}
+.gameText h3 {
+  color: #ffca77;
+  font-size: clamp(25px, 3.2vw, 38px);
+}
+.gameFeature:last-child h3 {
+  color: #99e5d0;
+}
+.gameFeature figcaption {
+  margin-top: 9px;
+  font-size: 13px;
+  color: #c2d3c9;
+}
+@media (max-width: 760px) {
+  .gameFeature {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .gameText,
+  .gameFeature figure {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .samples img {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+  }
+  .samples h3 {
+    font-size: 16px;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .samples article > p {
+    font-size: 12px;
+  }
+  .samples details p {
+    font-size: 13px;
+    word-break: keep-all;
+  }
+}
+
+.gameText h3 {
+  width: min(100%, 310px);
+  aspect-ratio: 5 / 2;
+}
+.gameText .gameLogo {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+@media (max-width: 760px) {
+  .gameText h3 {
+    width: min(78%, 230px);
+  }
+}
+
+.rewardPair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(4px, 1vw, 18px);
+  margin: 22px auto;
+  max-width: 510px;
+  width: 100%;
+}
+.rewardPair figure {
+  margin: 0;
+  text-align: center;
+}
+.rewardPair img {
+  width: 100%;
+  height: clamp(165px, 22vw, 285px);
+  object-fit: contain;
+}
+.rewardPair figcaption {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.rewardPair > span {
+  color: #926137;
+  font-size: 30px;
+}
+.sectionNav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 16px;
+  background: #214338;
+}
+.sectionNav a {
+  padding: 5px;
+  color: #fff6e3;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sectionNav a:hover {
+  text-decoration: underline;
+}
+
+/* Follow the printed crest outline, retaining the white chevron inside. */
+.schoolCrest {
+  clip-path: polygon(
+    2.9% 68%,
+    3.7% 63%,
+    5.9% 58%,
+    9.6% 53%,
+    14% 49.4%,
+    20% 46%,
+    23.8% 41%,
+    25.9% 34%,
+    26% 25%,
+    27.1% 20%,
+    29% 15.8%,
+    32.3% 11.1%,
+    36% 7.7%,
+    40.5% 5.3%,
+    46% 3.5%,
+    50% 3.1%,
+    55% 3.6%,
+    60.6% 5.6%,
+    66% 9.6%,
+    70% 15%,
+    73% 22%,
+    74% 29%,
+    74.1% 35%,
+    75% 40%,
+    77.4% 44.3%,
+    82% 47.9%,
+    88% 51%,
+    92.2% 56.5%,
+    95.2% 63%,
+    96.6% 69%,
+    96.4% 76%,
+    94.8% 82%,
+    92% 87%,
+    88% 91.7%,
+    83.6% 95%,
+    78% 96.8%,
+    73% 96.7%,
+    67% 95.3%,
+    61% 92.7%,
+    55% 90.2%,
+    50% 89.5%,
+    45% 90.3%,
+    39% 93%,
+    32% 96%,
+    26% 96.8%,
+    21% 96.4%,
+    15.4% 93.6%,
+    10.7% 89%,
+    7% 83.8%,
+    4.3% 78.2%,
+    3% 72.5%
+  );
+}
+
+.crestNote {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  max-width: 335px;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+@media (max-width: 700px) {
+  .crestNote {
+    margin-top: 16px;
+  }
+}
+
+.payoutExample {
+  margin-top: 18px;
+  padding: 16px 18px;
+  background: #ffffff0d;
+  border-radius: 8px;
+  max-width: 26rem;
+}
+.payoutExample h3 {
+  font-size: 15px;
+}
+.payoutExample dl {
+  margin: 12px 0;
+}
+.payoutExample dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.payoutExample dd {
+  margin: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.payoutExample > p {
+  border-top: 1px solid var(--event-line);
+  padding-top: 10px;
+  color: #ffcf83;
+}
+
+.sampleReverse {
+  min-height: clamp(220px, 32vw, 380px);
+  box-sizing: border-box;
+  align-content: center;
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 18px;
+  background: #214338;
+  color: #fff8de;
+}
+.sampleReverse b {
+  color: #ffcf83;
+}
+.sampleReverse small {
+  line-height: 1.6;
+}
+
+.samples article > button {
+  margin: 10px 0 4px;
+  border: 1px solid #8d9c8c;
+  background: transparent;
+  color: var(--event-ink);
+  padding: 7px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .sampleReverse {
+    aspect-ratio: 2/3;
+    min-height: 0;
+  }
+}
+
+.crestGuide { display: grid; gap: 6px; line-height: 1.7; word-break: keep-all; }
+.crestGuide strong { font-weight: 750; }
+.crestGuide p:last-child { margin-top: 6px; }
+.crestGuide p:last-child strong { color: #894625; }
+.page .sampleTip { margin-top: 20px; font-size: 14px; color: var(--event-muted); }
+
+.detailBody .noPrizeNote {
+  padding: 12px 16px;
+  border-inline-start: 3px solid #ffcf83;
+  background: #ffffff0d;
+  color: #ffcf83;
+  line-height: 1.65;
+}
+
+.mascotGuide {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 48px);
+  padding: clamp(16px, 3vw, 32px);
+  border: 1px solid var(--event-line);
+  border-radius: 18px;
+  background: #fff;
+}
+.mascotGuide figure { margin: 0; text-align: center; }
+.mascotGuide img { display: block; width: min(100%, 126px); height: auto; margin: 0 auto 6px; }
+.mascotGuide figcaption { color: var(--event-muted); font-size: 12px; }
+.mascotGuide figcaption strong { color: var(--event-ink); white-space: nowrap; }
+@media (max-width: 620px) {
+  .mascotGuide { grid-template-columns: 78px minmax(0, 1fr); gap: 12px; }
+  .mascotGuide figure { align-self: start; }
+  .mascotGuide figcaption strong { display: block; }
+  .mascotGuide .crestGuide { font-size: 14px; }
+}
+
+.prizeHeading { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.prizeHeading h2 { margin-bottom:0; word-break:keep-all; }
+.prizeHeading img { width:clamp(54px, 6.5vw, 90px); height:auto; flex:none; }
+
+.cardKinds { margin-top: 24px; line-height: 1.7; word-break: keep-all; }
+.cardKinds p + p { margin-top: 4px; color: var(--event-muted); }
+.page .cardKinds + .sampleTip { margin-top: 10px; }

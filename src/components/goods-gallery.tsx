@@ -411,6 +411,7 @@ export function GoodsFace({
   back?: boolean;
   locked?: boolean;
 }) {
+  const number = useGoods().progress.prizeNumbers?.[card.id];
   return (
     <div
       className={`${styles.card} ${card.kind !== "daily" ? styles.special : ""}`}
@@ -443,11 +444,17 @@ export function GoodsFace({
           <p>{card.back.story}</p>
           <blockquote>“{card.back.quote}”</blockquote>
           <small>— {card.name}의 한마디</small>
+          {number && <strong>서여고 당첨 번호 · {number}번</strong>}
         </div>
       ) : (
         <>
           <Image
-            src={`/goods/${card.id}.webp?v=${card.imageVersion}`}
+            unoptimized={Boolean(number)}
+            src={
+              number
+                ? `/api/goods/image?id=${card.id}`
+                : `/goods/${card.id}.webp?v=${card.imageVersion}`
+            }
             alt={`${card.name} · ${card.title}`}
             width={384}
             height={576}

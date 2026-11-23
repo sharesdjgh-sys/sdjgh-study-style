@@ -1,3 +1,4 @@
+import { database } from "@/lib/db";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { account, collectionData, json } from "@/lib/collection-server";
@@ -24,10 +25,17 @@ export async function GET(request: Request) {
 
     const download = params.get("download") === "1";
     const extension = format === "mp4" ? "mp4" : download ? "png" : "webp";
+    const prize =
+      format !== "mp4" &&
+      (
+        await database()`SELECT number FROM sdj_prize_cards WHERE account_id=${owner.id}::uuid AND design=${modality ?? "group-photo"}`
+      ).length > 0;
     const photograph = await readFile(
       join(
         process.cwd(),
-        `art/characters/special/${modality ? `families/${modality}${format === "mp4" ? "-loop-8s-v1" : ""}` : "group-photo"}.${extension}`,
+        prize
+          ? `art/characters/special/events/sdj-school-v2/${modality ?? "group-photo"}.${extension}`
+          : `art/characters/special/${modality ? `families/${modality}${format === "mp4" ? "-loop-8s-v1" : ""}` : "group-photo"}.${extension}`,
       ),
     );
     const headers: Record<string, string> = {

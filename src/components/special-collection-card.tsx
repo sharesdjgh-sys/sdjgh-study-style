@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { collectionProgress } from "@/lib/collection-progress";
 import { useCollection } from "./collection-provider";
+import { useGoods } from "./goods-provider";
 import { Icon } from "./icon";
 import { useSavedSession } from "./use-saved-session";
 import { CharacterMotion } from "./character-motion";
@@ -16,6 +17,7 @@ export type CollectionPhoto = {
   caption: string;
   filename: string;
   videoUrl?: string;
+  design?: string;
 };
 const fullPhoto: CollectionPhoto = {
   url: photograph,
@@ -37,7 +39,9 @@ export function SpecialPhoto({
 }) {
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  if (photo.videoUrl)
+  const number =
+    useGoods().progress.prizeNumbers?.[photo.design ?? "group-photo"];
+  if (photo.videoUrl && !number)
     return (
       <CharacterMotion
         asset={{ video: photo.videoUrl, poster: photo.url }}
@@ -85,6 +89,9 @@ export function SpecialPhotoDialog({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const number =
+    useGoods().progress.prizeNumbers?.[photo.design ?? "group-photo"];
+  const [back, setBack] = useState(false);
   useEffect(() => {
     const element = dialog.current;
     const opener = document.activeElement;
@@ -114,10 +121,23 @@ export function SpecialPhotoDialog({
         </button>
       </div>
       <div className="special-photo-frame">
-        <SpecialPhoto photo={photo} />
+        {back && number ? (
+          <p>
+            <strong>서여고 당첨 번호 · {number}번</strong>
+            <br />
+            {photo.title}
+          </p>
+        ) : (
+          <SpecialPhoto photo={photo} />
+        )}
       </div>
       <div className="special-photo-dialog-footer">
         <p>{photo.caption}</p>
+        {number && (
+          <button className="button secondary" onClick={() => setBack(!back)}>
+            {back ? "앞면 보기" : "뒷면 보기"}
+          </button>
+        )}
         <a
           className="button primary"
           href={photoUrl(photo, "download=1")}

@@ -13,11 +13,15 @@ export async function GET(request: Request) {
     const owner = await account();
     if (!owner) return json({ error: "unauthorized" }, 401);
     const owned =
-      await database()`SELECT 1 FROM goods_unlocks WHERE account_id=${owner.id}::uuid AND goods_id=${card.id}`;
+      await database()`SELECT p.number FROM goods_unlocks u LEFT JOIN sdj_prize_cards p ON p.account_id=u.account_id AND p.design=u.goods_id WHERE u.account_id=${owner.id}::uuid AND u.goods_id=${card.id}`;
     if (!owned.length) return json({ error: "goods_required" }, 403);
     if (await limited(`goods-image:${owner.id}`, 120))
       return json({ error: "rate_limit" }, 429);
-    const jpeg = await renderGoods(card, side === "back");
+    const jpeg = await renderGoods(
+      card,
+      side === "back",
+      owned[0].number ?? undefined,
+    );
     const filename = `StudyCrew-${card.name}-${card.title}-${side === "back" ? "뒷면" : "앞면"}.jpg`;
     return new Response(jpeg, {
       headers: {

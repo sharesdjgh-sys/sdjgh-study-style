@@ -111,6 +111,8 @@ beforeAll(async () => {
   await db.exec(await readFile("db/015_wearable_goods.sql", "utf8"));
   await db.exec(await readFile("db/016_separate_wearables.sql", "utf8"));
   await db.exec(await readFile("db/017_second_accessories.sql", "utf8"));
+  await db.exec(await readFile("db/018_sdj_qr_reward.sql", "utf8"));
+  await db.exec(await readFile("db/019_sdj_prize_cards.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(

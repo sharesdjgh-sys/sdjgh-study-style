@@ -271,7 +271,7 @@ export function AdminDashboard({
     <main id="main" className={styles.page}>
       <header className={styles.heading}>
         <span className="eyebrow">STUDYCREW ADMIN</span>
-        <h1>관리자 통계</h1>
+        <h1>관리자 통계</h1><a href="/admin/sdj-prizes">서여고 매점권 지급대장</a>
         <p>참여부터 수집과 실천까지, 서비스의 현재 모습을 살펴봐요.</p>
       </header>
       {auth.busy ? (

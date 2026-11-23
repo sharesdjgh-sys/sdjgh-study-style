@@ -186,3 +186,14 @@ await sql.transaction(
     .split(/^-- statement-breakpoint\s*$/m)
     .map((statement) => sql.query(statement.trim())),
 );
+const sdjQrReward = await readFile(
+  new URL("../db/018_sdj_qr_reward.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  sdjQrReward
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => sql.query(s.trim())),
+);
+const sdjPrizes = await readFile(new URL("../db/019_sdj_prize_cards.sql", import.meta.url), "utf8");
+await sql.transaction(sdjPrizes.split(/^-- statement-breakpoint\s*$/m).map(s => sql.query(s.trim())));

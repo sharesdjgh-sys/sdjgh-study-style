@@ -3,7 +3,11 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import sharp from "sharp";
 import type { GoodsCard } from "./goods";
-export async function renderGoods(card: GoodsCard, back: boolean) {
+export async function renderGoods(
+  card: GoodsCard,
+  back: boolean,
+  prizeNumber?: number,
+) {
   const special = card.kind !== "daily";
   const [font, art] = await Promise.all([
     readFile(join(process.cwd(), "public/fonts/Pretendard-Medium.woff")),
@@ -16,7 +20,14 @@ export async function renderGoods(card: GoodsCard, back: boolean) {
         )
           .png()
           .toBuffer()
-      : sharp(join(process.cwd(), `art/goods/${card.id}.webp`))
+      : sharp(
+          join(
+            process.cwd(),
+            prizeNumber
+              ? `art/characters/special/events/sdj-character-v2/${card.id}.webp`
+              : `art/goods/${card.id}.webp`,
+          ),
+        )
           .png()
           .toBuffer(),
   ]);
@@ -80,6 +91,11 @@ export async function renderGoods(card: GoodsCard, back: boolean) {
           >
             {`“${card.back.quote}”`}
           </div>
+          {prizeNumber && (
+            <div
+              style={{ fontSize: 36 }}
+            >{`서여고 당첨 번호 · ${prizeNumber}번`}</div>
+          )}
           <div style={{ fontSize: 28 }}>{`— ${card.name}의 한마디`}</div>
         </div>
       ) : (

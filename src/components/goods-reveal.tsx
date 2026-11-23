@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useGoods } from "./goods-provider";
 import { goodsPrice, goodsKindLabel, type GoodsCard } from "@/lib/goods";
 import { Star } from "./star-wallet";
 import styles from "./goods-reveal.module.css";
@@ -12,6 +13,7 @@ export function GoodsReveal({
   card: GoodsCard;
   onFinish: () => void;
 }) {
+  const number = useGoods().progress.prizeNumbers?.[card.id];
   const special = card.kind !== "daily";
   const motion = card.kind === "motion";
   const finish = useRef(onFinish);
@@ -113,7 +115,12 @@ export function GoodsReveal({
             </div>
             <div className={styles.front}>
               <Image
-                src={`/goods/${card.id}.webp?v=${card.imageVersion}`}
+                unoptimized={Boolean(number)}
+                src={
+                  number
+                    ? `/api/goods/image?id=${card.id}`
+                    : `/goods/${card.id}.webp?v=${card.imageVersion}`
+                }
                 alt=""
                 width={384}
                 height={576}
