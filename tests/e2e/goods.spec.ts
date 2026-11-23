@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { mockSkills } from "./skill-fixture";
 import { goodsPrice, getGoods } from "../../src/lib/goods";
+import { alternateAccessory } from "../../src/lib/wearables";
 import sharp from "sharp";
 test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배치", async ({
   page,
@@ -59,6 +60,114 @@ test("굿즈 필터, 카드마다 다른 뒷면, 팝업 닫기와 반응형 배�
     path: `test-results/goods-${test.info().project.name}.png`,
     fullPage: true,
   });
+});
+test("착용 굿즈 미리보기와 구매, 상세 화면 착용 해제", async ({ page }) => {
+  const state = await mockSkills(page);
+  state.goods.balance = 6;
+  let equipped: string[] = [];
+  await page.route("**/api/goods", async (route) => {
+    if (route.request().method() === "POST") {
+      const input = route.request().postDataJSON();
+      if (input.equipped === undefined) {
+        state.goods.balance -= 2;
+        state.goods.owned.push(input.id);
+      } else {
+        equipped = equipped.filter((id) => id !== input.id);
+        if (input.equipped) {
+          equipped = equipped.filter(
+            (id) => id !== alternateAccessory(input.id),
+          );
+          equipped.push(input.id);
+        }
+      }
+    }
+    await route.fulfill({
+      json: {
+        accountId: "e1dcbb36-9c6e-4de6-8f57-f11b43765a7c",
+        progress: { ...state.goods, equipped },
+        outcome: "updated",
+      },
+    });
+  });
+  await page.goto("/goods");
+  await page.getByRole("button", { name: "착용 굿즈", exact: true }).click();
+  const product = page.getByAltText("별자리 탐험 케이프 단품");
+  await expect(product).toBeVisible();
+  await expect
+    .poll(() =>
+      product.evaluate((image) => (image as HTMLImageElement).naturalWidth),
+    )
+    .toBeGreaterThan(0);
+  await expect(page.getByRole("button", { name: /상세 보기$/ })).toHaveCount(3);
+  await page
+    .locator('button[aria-label$="상세 보기"] img')
+    .evaluateAll(async (images) => {
+      await Promise.all(
+        images.map((image) => (image as HTMLImageElement).decode()),
+      );
+    });
+  await page.getByRole("region", { name: "굿즈 목록" }).screenshot({
+    path: `test-results/wearable-grid-${test.info().project.name}.png`,
+  });
+  await page.getByRole("button", { name: "액세서리", exact: true }).click();
+  await expect(page.getByRole("button", { name: /상세 보기$/ })).toHaveCount(2);
+  await page.getByRole("button", { name: "초승달 깃털핀 상세 보기" }).click();
+  const portrait = page.getByAltText("루미 착용 미리보기");
+  await expect(portrait).toHaveAttribute("src", /dressing(?:%2F|\/)accessory/i);
+  await page
+    .getByRole("button", { name: "별자리 탐험 케이프 입혀 보기", exact: true })
+    .click();
+  await expect(portrait).toHaveAttribute("src", /dressing(?:%2F|\/)both/i);
+  await page.getByRole("button", { name: "달책 미니백 입혀 보기" }).click();
+  await expect(portrait).toHaveAttribute("src", /dressing(?:%2F|\/)both2/i);
+  await expect
+    .poll(() =>
+      portrait.evaluate((image) => (image as HTMLImageElement).naturalWidth),
+    )
+    .toBeGreaterThan(0);
+  await page.getByRole("dialog").screenshot({
+    path: `test-results/wearable-detail-${test.info().project.name}.png`,
+  });
+  await expect(
+    page.getByRole("button", { name: "초승달 깃털핀 입혀 보기" }),
+  ).toHaveAttribute("aria-pressed", "false");
+  const clothes = page.getByRole("region", { name: "별자리 탐험 케이프" });
+  const accessory = page.getByRole("region", { name: "초승달 깃털핀" });
+  const second = page.getByRole("region", { name: "달책 미니백" });
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: "초승달 깃털핀 상세 보기" }),
+  ).toBeFocused();
+  await page.getByRole("button", { name: "전체", exact: true }).click();
+  for (const [title, product] of [
+    ["별자리 탐험 케이프", clothes],
+    ["초승달 깃털핀", accessory],
+    ["달책 미니백", second],
+  ] as const) {
+    await page.getByRole("button", { name: title + " 상세 보기" }).click();
+    await product.getByRole("button", { name: "별 2개로 구매" }).click();
+    await product.getByRole("button", { name: "착용하기" }).click();
+    await expect(
+      product.getByRole("button", { name: "착용 해제" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "닫기", exact: true }).click();
+  }
+  await page.goto("/types/visual-solo-planned");
+  await expect(
+    page.getByAltText("별자리 탐험 케이프 · 달책 미니백 착용 중인 루미"),
+  ).toBeVisible();
+  await accessory.getByRole("button", { name: "착용하기" }).click();
+  await expect(
+    page.getByAltText("별자리 탐험 케이프 · 초승달 깃털핀 착용 중인 루미"),
+  ).toBeVisible();
+  await accessory.getByRole("button", { name: "착용 해제" }).click();
+  await expect(
+    page.getByAltText("별자리 탐험 케이프 착용 중인 루미"),
+  ).toBeVisible();
+  await clothes.getByRole("button", { name: "착용 해제" }).click();
+  await expect(
+    page.getByAltText("별자리 탐험 케이프 착용 중인 루미"),
+  ).toHaveCount(0);
 });
 test("비로그인은 굿즈를 노출하지 않고 도감 안내를 보여준다", async ({
   page,

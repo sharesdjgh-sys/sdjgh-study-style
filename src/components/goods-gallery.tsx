@@ -13,17 +13,31 @@ import { GoodsActions } from "./goods-actions";
 import { GoodsReveal } from "./goods-reveal";
 import { GoodsMotionPlayer } from "./goods-motion-player";
 
+import {
+  wardrobe,
+  wearableOptions,
+  wearableId,
+  itemImage,
+  type WearableOption,
+} from "@/lib/wearables";
+import { Wearable } from "./wearable";
 const characters = Object.entries(CHARACTERS);
 function avatar(code: string) {
   return `/characters/thumbs/${code}${code === "auditory-solo-flexible" ? "-v2" : ""}.png`;
 }
 export function GoodsGallery() {
+  const [wearables, setWearables] = useState(false);
   const collection = useCollection();
   const goods = useGoods();
   const [ownedOnly, setOwnedOnly] = useState(false);
   const [character, setCharacter] = useState("all");
   const [kind, setKind] = useState("all");
   const [active, setActive] = useState<GoodsCard | null>(null);
+  const [selectedItem, setSelectedItem] = useState<{
+    code: string;
+    option: WearableOption;
+  } | null>(null);
+  const [wearKind, setWearKind] = useState("all");
   const trigger = useRef<HTMLButtonElement | null>(null);
   const ready =
     collection.loaded && goods.loaded && !collection.error && !goods.error;
@@ -40,7 +54,26 @@ export function GoodsGallery() {
       (kind === "all" || c.kind === kind) &&
       (!ownedOnly || goods.progress.owned.includes(c.id)),
   );
+  const products = characters
+    .filter(([code]) => ownedCharacters.has(code))
+    .flatMap(([code]) =>
+      wearableOptions.map((option) => ({
+        code,
+        option,
+        id: wearableId(code, option),
+      })),
+    );
+  const visibleProducts = products.filter(
+    (p) =>
+      (selectedCharacter === "all" || p.code === selectedCharacter) &&
+      (wearKind === "all" ||
+        wearKind === (p.option === "clothes" ? "clothes" : "accessory")) &&
+      (!ownedOnly || goods.progress.owned.includes(p.id)),
+  );
+  const count = wearables ? visibleProducts.length : visible.length;
+  const total = wearables ? products.length : available.length;
   function close() {
+    setSelectedItem(null);
     setActive(null);
     requestAnimationFrame(() => trigger.current?.focus());
   }
@@ -60,9 +93,13 @@ export function GoodsGallery() {
             </em>
           </h1>
           <p>
-            포근한 일상 3장, 상상 속 의상 5장, 움직이는 스페셜 1장.
+            {wearables
+              ? "공부캐의 옷과 전용 액세서리."
+              : "포근한 일상 3장, 상상 속 의상 5장, 움직이는 스페셜 1장."}
             <br />
-            별로 소장하면 내 공부캐의 그림과 이야기, 특별한 영상이 열려요.
+            {wearables
+              ? "마음에 드는 굿즈를 골라 입혀 보고 별로 소장해요."
+              : "별로 소장하면 내 공부캐의 그림과 이야기, 특별한 영상이 열려요."}
           </p>
         </div>
         <div className={styles.heroCards} aria-hidden="true">
@@ -77,13 +114,24 @@ export function GoodsGallery() {
         </div>
       </header>
       <StarWallet history compact />
+      <nav className={styles.characters} aria-label="굿즈 종류">
+        <button aria-pressed={!wearables} onClick={() => setWearables(false)}>
+          카드 굿즈
+        </button>
+        <button aria-pressed={wearables} onClick={() => setWearables(true)}>
+          착용 굿즈
+        </button>
+      </nav>
       <nav className={styles.characters} aria-label="굿즈 캐릭터">
         <button
           aria-pressed={selectedCharacter === "all"}
           onClick={() => setCharacter("all")}
         >
           <strong>내 공부캐 전체</strong>
-          <small>{available.length}가지 순간</small>
+          <small>
+            {total}
+            {wearables ? "개 굿즈" : "가지 순간"}
+          </small>
         </button>
         {characters
           .filter(([code]) => ownedCharacters.has(code))
@@ -103,8 +151,8 @@ export function GoodsGallery() {
         <div className={styles.filters}>
           <div className={styles.filterTop}>
             <button
-              aria-pressed={kind === "all"}
-              onClick={() => setKind("all")}
+              aria-pressed={(wearables ? wearKind : kind) === "all"}
+              onClick={() => (wearables ? setWearKind("all") : setKind("all"))}
             >
               전체
             </button>
@@ -117,18 +165,45 @@ export function GoodsGallery() {
               내 굿즈만
             </label>
           </div>
-          <div className={styles.kindFilters}>
-            {[
-              ["daily", "일상 포토카드"],
-              ["special", "특별 의상 카드"],
-              ["motion", "스페셜 모션 카드"],
-            ].map(([value, label]) => (
+          <div
+            className={styles.kindFilters}
+            style={
+              wearables
+                ? { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }
+                : undefined
+            }
+          >
+            {(wearables
+              ? [
+                  ["clothes", "옷"],
+                  ["accessory", "액세서리"],
+                ]
+              : [
+                  ["daily", "일상 포토카드"],
+                  ["special", "특별 의상 카드"],
+                  ["motion", "스페셜 모션 카드"],
+                ]
+            ).map(([value, label]) => (
               <button
                 key={value}
-                aria-pressed={kind === value}
-                onClick={() => setKind(value)}
+                aria-pressed={(wearables ? wearKind : kind) === value}
+                onClick={() =>
+                  wearables ? setWearKind(value) : setKind(value)
+                }
               >
-                {value === "motion" ? (
+                {wearables ? (
+                  <Image
+                    src={itemImage(
+                      selectedCharacter === "all"
+                        ? (products[0]?.code ?? "visual-solo-planned")
+                        : selectedCharacter,
+                      value === "clothes" ? "clothes" : "accessory",
+                    )}
+                    alt=""
+                    width={36}
+                    height={36}
+                  />
+                ) : value === "motion" ? (
                   <Star size={30} />
                 ) : (
                   <Image
@@ -150,7 +225,9 @@ export function GoodsGallery() {
               : `${CHARACTERS[selectedCharacter].name}의 컬렉션`}
           </h2>
           <span>
-            {visible.length}장 / {available.length}장
+            {count}
+            {wearables ? "개" : "장"} / {total}
+            {wearables ? "개" : "장"}
           </span>
         </div>
         {!collection.loaded || !goods.loaded ? (
@@ -170,46 +247,101 @@ export function GoodsGallery() {
           </div>
         ) : (
           <div className={styles.grid}>
-            {visible.map((card) => (
-              <article key={card.id}>
-                <button
-                  className={styles.open}
-                  onClick={(e) => {
-                    trigger.current = e.currentTarget;
-                    setActive(card);
-                  }}
-                  aria-label={`${card.name} ${card.title} 카드 보기`}
-                >
-                  <GoodsFace
-                    card={card}
-                    locked={!goods.progress.owned.includes(card.id)}
-                  />
-                </button>
-                <div className={styles.itemInfo}>
-                  <div>
-                    <strong>{card.name}</strong>
-                    <small>
-                      {goodsKindLabel(card)}{" "}
-                      {card.kind === "motion"
-                        ? "· 약 15초"
-                        : card.theme.slice(-2)}
-                    </small>
-                  </div>
-                  <span>
-                    {goods.progress.owned.includes(card.id) ? (
-                      "보관 중"
-                    ) : (
-                      <>
-                        <Star size={16} /> {goodsPrice(card)}
-                      </>
-                    )}
-                  </span>
-                </div>
-              </article>
-            ))}
+            {wearables
+              ? visibleProducts.map(({ code, option, id }) => {
+                  const name = wardrobe[code][option];
+                  const owned = goods.progress.owned.includes(id);
+                  return (
+                    <article key={id}>
+                      <button
+                        className={styles.open}
+                        aria-label={name + " 상세 보기"}
+                        onClick={(e) => {
+                          trigger.current = e.currentTarget;
+                          setSelectedItem({ code, option });
+                        }}
+                      >
+                        <div
+                          className={`${styles.card} ${styles.wearableFace}`}
+                        >
+                          <Image
+                            src={itemImage(code, option)}
+                            width={384}
+                            height={576}
+                            sizes="(max-width:640px) 45vw, (max-width:1024px) 30vw, 280px"
+                            alt={name + " 단품"}
+                          />
+                          <div className={styles.caption}>
+                            <strong>{name}</strong>
+                          </div>
+                        </div>
+                      </button>
+                      <div className={styles.itemInfo}>
+                        <div>
+                          <strong>{CHARACTERS[code].name}</strong>
+                          <small>
+                            {option === "clothes"
+                              ? "옷"
+                              : option === "accessory2"
+                                ? "액세서리 · 두 번째 컬렉션"
+                                : "액세서리"}
+                          </small>
+                        </div>
+                        <span>
+                          {goods.progress.equipped?.includes(id) ? (
+                            "착용 중"
+                          ) : owned ? (
+                            "보관 중"
+                          ) : (
+                            <>
+                              <Star size={16} /> 2
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    </article>
+                  );
+                })
+              : visible.map((card) => (
+                  <article key={card.id}>
+                    <button
+                      className={styles.open}
+                      onClick={(e) => {
+                        trigger.current = e.currentTarget;
+                        setActive(card);
+                      }}
+                      aria-label={`${card.name} ${card.title} 카드 보기`}
+                    >
+                      <GoodsFace
+                        card={card}
+                        locked={!goods.progress.owned.includes(card.id)}
+                      />
+                    </button>
+                    <div className={styles.itemInfo}>
+                      <div>
+                        <strong>{card.name}</strong>
+                        <small>
+                          {goodsKindLabel(card)}{" "}
+                          {card.kind === "motion"
+                            ? "· 약 15초"
+                            : card.theme.slice(-2)}
+                        </small>
+                      </div>
+                      <span>
+                        {goods.progress.owned.includes(card.id) ? (
+                          "보관 중"
+                        ) : (
+                          <>
+                            <Star size={16} /> {goodsPrice(card)}
+                          </>
+                        )}
+                      </span>
+                    </div>
+                  </article>
+                ))}
           </div>
         )}
-        {!visible.length &&
+        {!count &&
           collection.loaded &&
           goods.loaded &&
           !goods.error &&
@@ -222,7 +354,7 @@ export function GoodsGallery() {
               </h3>
               <p>
                 {ownedOnly
-                  ? "별로 마음에 드는 카드를 교환하면 여기에 보관돼요."
+                  ? "별로 마음에 드는 굿즈를 교환하면 여기에 보관돼요."
                   : "계정 도감에 저장한 캐릭터의 굿즈를 모아 볼 수 있어요."}
               </p>
               {ownedOnly && (
@@ -230,6 +362,7 @@ export function GoodsGallery() {
                   className="button star-button"
                   onClick={() => {
                     setOwnedOnly(false);
+                    setWearKind("all");
                     setCharacter("all");
                     setKind("all");
                   }}
@@ -243,6 +376,19 @@ export function GoodsGallery() {
             </div>
           )}
       </section>
+      {selectedItem &&
+        wearables &&
+        ready &&
+        visibleProducts.some(
+          (p) =>
+            p.code === selectedItem.code && p.option === selectedItem.option,
+        ) && (
+          <WearableDialog
+            key={wearableId(selectedItem.code, selectedItem.option)}
+            {...selectedItem}
+            close={close}
+          />
+        )}
       {active && ready && visible.some((card) => card.id === active.id) && (
         <GoodsDialog
           key={`${collection.data.accountId}-${active.id}`}
@@ -346,14 +492,7 @@ function GoodsDialog({
   const goods = useGoods();
   const owned =
     goods.loaded && !goods.error && goods.progress.owned.includes(card.id);
-  useEffect(() => {
-    dialog.current?.showModal();
-    const old = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = old;
-    };
-  }, []);
+  useModal(dialog);
   return (
     <dialog
       ref={dialog}
@@ -468,6 +607,52 @@ function GoodsDialog({
           }}
         />
       )}
+    </dialog>
+  );
+}
+
+function useModal(dialog: React.RefObject<HTMLDialogElement | null>) {
+  useEffect(() => {
+    dialog.current?.showModal();
+    const old = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = old;
+    };
+  }, [dialog]);
+}
+
+function WearableDialog({
+  code,
+  option,
+  close,
+}: {
+  code: string;
+  option: WearableOption;
+  close: () => void;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useModal(dialog);
+  return (
+    <dialog
+      ref={dialog}
+      className={styles.dialog}
+      aria-label={wardrobe[code][option]}
+      onCancel={(e) => {
+        e.preventDefault();
+        close();
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div className={styles.dialogHead}>
+        <strong>{CHARACTERS[code].name}의 옷장</strong>
+        <button className="button secondary" onClick={close}>
+          닫기
+        </button>
+      </div>
+      <Wearable code={code} selected={option} />
     </dialog>
   );
 }

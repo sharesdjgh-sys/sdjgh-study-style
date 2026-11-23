@@ -12,6 +12,7 @@ export const goodsKindLabel = (card: GoodsCard) =>
       : "특별 의상 카드";
 export const getGoods = (id: string) => GOODS.find((card) => card.id === id);
 export type GoodsProgress = {
+  equipped: string[];
   balance: number;
   owned: string[];
   families: string[];
@@ -24,6 +25,7 @@ export type GoodsProgress = {
   }[];
 };
 export const EMPTY_GOODS: GoodsProgress = {
+  equipped: [],
   balance: 0,
   owned: [],
   families: [],

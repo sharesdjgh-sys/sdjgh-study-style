@@ -16,8 +16,9 @@ const Context = createContext({
   error: false,
   signedIn: false,
   refresh: async () => {},
-  redeem: async (id: string): Promise<string> => {
+  redeem: async (id: string, equipped?: boolean): Promise<string> => {
     void id;
+    void equipped;
     throw Error("unauthorized");
   },
 });
@@ -79,14 +80,14 @@ export function GoodsProvider({ children }: { children: ReactNode }) {
     };
   }, [refresh, data.cards]);
   const redeem = useCallback(
-    async (id: string) => {
+    async (id: string, equipped?: boolean) => {
       if (!owner) throw Error("unauthorized");
       ++serial.current;
       try {
         const response = await fetch("/api/goods", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id }),
+          body: JSON.stringify({ id, equipped }),
           signal: AbortSignal.timeout(15000),
         });
         const result = await response.json();

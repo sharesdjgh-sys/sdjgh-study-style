@@ -7,6 +7,14 @@ import { CHARACTER_MOTIONS } from "@/lib/character-motions";
 import { FAMILIES, type StudyType } from "@/lib/content";
 import { SIGNATURE_METHODS, getMethod } from "@/lib/methods";
 import { Icon } from "./icon";
+import {
+  equippedOutfit,
+  outfitImage,
+  wardrobe as wardrobeCatalog,
+  wearableOptions,
+  isWorn,
+} from "@/lib/wearables";
+import { useGoods } from "./goods-provider";
 import { CharacterMotion } from "./character-motion";
 
 export function CharacterCard({
@@ -14,13 +22,18 @@ export function CharacterCard({
   title,
   detailLink = false,
   priority = false,
+  wardrobe = false,
 }: {
   type: StudyType;
   title?: string;
   detailLink?: boolean;
   priority?: boolean;
+  wardrobe?: boolean;
 }) {
   const character = CHARACTERS[type.code];
+  const goods = useGoods();
+  const worn = equippedOutfit(type.code, goods.progress.equipped ?? []);
+  const equipped = wardrobe && (worn.clothes || worn.accessory);
   const motion = CHARACTER_MOTIONS[type.code];
   const [flipped, setFlipped] = useState(false);
   const previousFlipped = useRef(false);
@@ -59,7 +72,7 @@ export function CharacterCard({
             <span className="character-spark spark-right" aria-hidden="true">
               ✦
             </span>
-            {motion ? (
+            {motion && !equipped ? (
               <CharacterMotion
                 key={type.code}
                 asset={motion}
@@ -70,8 +83,15 @@ export function CharacterCard({
               />
             ) : (
               <Image
-                src={type.asset!}
-                alt={`${character.name}, ${character.species} 공부 캐릭터`}
+                src={equipped ? outfitImage(type.code, worn) : type.asset!}
+                alt={
+                  equipped
+                    ? `${wearableOptions
+                        .filter((slot) => isWorn(worn, slot))
+                        .map((slot) => wardrobeCatalog[type.code][slot])
+                        .join(" · ")} 착용 중인 ${character.name}`
+                    : `${character.name}, ${character.species} 공부 캐릭터`
+                }
                 width={768}
                 height={768}
                 sizes="(max-width: 767px) 90vw, (max-width: 1100px) 45vw, 400px"

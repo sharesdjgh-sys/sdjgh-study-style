@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useGoods } from "./goods-provider";
+import { wearableName } from "@/lib/wearables";
 import { getGoods } from "@/lib/goods";
 import { getMethod, type MethodId } from "@/lib/methods";
 import { FAMILIES, type Modality } from "@/lib/content";
@@ -41,7 +42,7 @@ export function StarWallet({
                 {!goods.loaded || goods.error
                   ? "—"
                   : goods.progress.owned.length}
-                장
+                개
               </strong>
             </span>
             <p>
@@ -95,7 +96,7 @@ export function StarWallet({
                   {!goods.loaded || goods.error
                     ? "—"
                     : goods.progress.owned.length}
-                  장
+                  개
                 </b>
               </small>
             </div>
@@ -137,7 +138,8 @@ export function StarWallet({
                       {e.reason === "card"
                         ? CHARACTERS[e.reference]?.name
                         : e.reason === "goods"
-                          ? `${getGoods(e.reference)?.name ?? ""} · ${getGoods(e.reference)?.title ?? ""}`
+                          ? (wearableName(e.reference) ??
+                            `${getGoods(e.reference)?.name ?? ""} · ${getGoods(e.reference)?.title ?? ""}`)
                           : e.reason === "practice"
                             ? getMethod(e.reference as MethodId)?.name
                             : FAMILIES[e.reference as Modality]?.label}

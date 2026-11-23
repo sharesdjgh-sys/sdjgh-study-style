@@ -150,6 +150,15 @@ await sql.transaction(
     .map((statement) => sql.query(statement)),
 );
 console.log("서여고 이벤트 계정별 참여 기록 준비 완료");
+const wearables = await readFile(
+  new URL("../db/015_wearable_goods.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  wearables
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((s) => sql.query(s.trim())),
+);
 const installOnboarding = await readFile(
   new URL("../db/014_install_onboarding.sql", import.meta.url),
   "utf8",
@@ -162,3 +171,18 @@ await sql.transaction(
     .map((statement) => sql.query(statement)),
 );
 console.log("최초 로그인 세션의 앱 설치 안내 1회 정책 준비 완료");
+await sql.query(
+  await readFile(
+    new URL("../db/016_separate_wearables.sql", import.meta.url),
+    "utf8",
+  ),
+);
+const secondAccessories = await readFile(
+  new URL("../db/017_second_accessories.sql", import.meta.url),
+  "utf8",
+);
+await sql.transaction(
+  secondAccessories
+    .split(/^-- statement-breakpoint\s*$/m)
+    .map((statement) => sql.query(statement.trim())),
+);

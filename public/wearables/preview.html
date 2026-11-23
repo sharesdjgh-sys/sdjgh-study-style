@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공부캐 옷장 · 굿즈 입혀보기</title>
+<style>
+* { box-sizing: border-box }
+body { margin:0; color:#362a22; background:#faf7f0; font-family:Pretendard,"Malgun Gothic",sans-serif }
+main { max-width:1320px; margin:auto; padding:clamp(14px,4vw,52px) }
+header { margin-bottom:24px; border-bottom:2px solid #493b2c }
+h1 { font-size:clamp(32px,5vw,54px); margin:0; letter-spacing:-.06em }
+header p { color:#64564a; line-height:1.5 }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr)); gap:18px }
+article { border:1px solid #dfd6c6; background:#fffdfa; border-radius:22px; padding:16px }
+h2 { font-size:22px; margin:0 0 10px }
+.portrait { width:100%; height:230px; object-fit:contain; background:#f5efe2; border-radius:14px }
+.choices { display:grid; grid-template-columns:1fr 1fr; margin-top:9px; gap:7px }
+button { display:grid; justify-items:center; gap:3px; padding:9px 4px; background:#faf8f4; border:1px solid #d9d1c3; color:inherit; border-radius:13px; cursor:pointer; font:inherit }
+button[aria-pressed="true"] { background:#e8f1df; border-color:#416435; box-shadow:inset 0 0 0 1px #416435 }
+button:focus-visible { outline:3px solid #2769ad; outline-offset:2px }
+button img { height:76px; width:100%; object-fit:contain }
+button small { color:#635948 } button strong { font-size:14px }
+</style>
+</head>
+<body><main><header><h1>공부캐 옷장</h1><p>옷이나 액세서리를 눌러 입혀 보세요. 한 번 더 누르면 그 아이템만 벗겨져요.</p></header>
+<div class="grid">
+<article data-code="visual-solo-planned"><h2>루미</h2>
+<img class="portrait" src="../characters/visual-solo-planned.webp" alt="루미 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/visual-solo-planned.webp" alt=""><small>옷</small><strong>별자리 탐험 케이프</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/visual-solo-planned.webp" alt=""><small>액세서리</small><strong>초승달 깃털핀</strong></button>
+</div></article>
+<article data-code="visual-solo-flexible"><h2>모아</h2>
+<img class="portrait" src="../characters/visual-solo-flexible.webp" alt="모아 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/visual-solo-flexible.webp" alt=""><small>옷</small><strong>낙서 여행가 코트</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/visual-solo-flexible.webp" alt=""><small>액세서리</small><strong>색연필 귀핀</strong></button>
+</div></article>
+<article data-code="visual-team-planned"><h2>루트</h2>
+<img class="portrait" src="../characters/visual-team-planned.webp" alt="루트 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/visual-team-planned.webp" alt=""><small>옷</small><strong>숲길 안내자 제복</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/visual-team-planned.webp" alt=""><small>액세서리</small><strong>나침반 어깨띠</strong></button>
+</div></article>
+<article data-code="visual-team-flexible"><h2>피코</h2>
+<img class="portrait" src="../characters/visual-team-flexible.webp" alt="피코 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/visual-team-flexible.webp" alt=""><small>옷</small><strong>물감 주머니 작업복</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/visual-team-flexible.webp" alt=""><small>액세서리</small><strong>팔레트 화가 베레모</strong></button>
+</div></article>
+<article data-code="auditory-solo-planned"><h2>소리</h2>
+<img class="portrait" src="../characters/auditory-solo-planned.webp" alt="소리 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/auditory-solo-planned.webp" alt=""><small>옷</small><strong>딸기 니트 카디건</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/auditory-solo-planned.webp" alt=""><small>액세서리</small><strong>딸기우유 낭독 안경</strong></button>
+</div></article>
+<article data-code="auditory-solo-flexible"><h2>멜로</h2>
+<img class="portrait" src="../characters/auditory-solo-flexible-v2.webp" alt="멜로 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/auditory-solo-flexible.webp" alt=""><small>옷</small><strong>별사탕 라디오 재킷</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/auditory-solo-flexible.webp" alt=""><small>액세서리</small><strong>보랏빛 라디오 헤드폰</strong></button>
+</div></article>
+<article data-code="auditory-team-planned"><h2>토크</h2>
+<img class="portrait" src="../characters/auditory-team-planned.webp" alt="토크 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/auditory-team-planned.webp" alt=""><small>옷</small><strong>설명왕 세일러복</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/auditory-team-planned.webp" alt=""><small>액세서리</small><strong>발표왕 별 배지</strong></button>
+</div></article>
+<article data-code="auditory-team-flexible"><h2>리프</h2>
+<img class="portrait" src="../characters/auditory-team-flexible.webp" alt="리프 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/auditory-team-flexible.webp" alt=""><small>옷</small><strong>잎새 요정 조끼</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/auditory-team-flexible.webp" alt=""><small>액세서리</small><strong>질문 요정 날개</strong></button>
+</div></article>
+<article data-code="tactile-solo-planned"><h2>토리</h2>
+<img class="portrait" src="../characters/tactile-solo-planned.webp" alt="토리 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/tactile-solo-planned.webp" alt=""><small>옷</small><strong>차곡차곡 데님 멜빵</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/tactile-solo-planned.webp" alt=""><small>액세서리</small><strong>도토리 이름표</strong></button>
+</div></article>
+<article data-code="tactile-solo-flexible"><h2>몽</h2>
+<img class="portrait" src="../characters/tactile-solo-flexible.webp" alt="몽 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/tactile-solo-flexible.webp" alt=""><small>옷</small><strong>종이학 실험 가운</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/tactile-solo-flexible.webp" alt=""><small>액세서리</small><strong>종이별 귀걸이</strong></button>
+</div></article>
+<article data-code="tactile-team-planned"><h2>블록</h2>
+<img class="portrait" src="../characters/tactile-team-planned.webp" alt="블록 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/tactile-team-planned.webp" alt=""><small>옷</small><strong>퍼즐 공방 점프수트</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/tactile-team-planned.webp" alt=""><small>액세서리</small><strong>퍼즐 귀핀</strong></button>
+</div></article>
+<article data-code="tactile-team-flexible"><h2>조이</h2>
+<img class="portrait" src="../characters/tactile-team-flexible.webp" alt="조이 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/tactile-team-flexible.webp" alt=""><small>옷</small><strong>조각놀이 패딩 조끼</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/tactile-team-flexible.webp" alt=""><small>액세서리</small><strong>조각놀이 롤러스케이트</strong></button>
+</div></article>
+<article data-code="motion-solo-planned"><h2>페이스</h2>
+<img class="portrait" src="../characters/motion-solo-planned.webp" alt="페이스 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/motion-solo-planned.webp" alt=""><small>옷</small><strong>구간 타이머 트랙슈트</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/motion-solo-planned.webp" alt=""><small>액세서리</small><strong>구간 타이머 배지</strong></button>
+</div></article>
+<article data-code="motion-solo-flexible"><h2>바니</h2>
+<img class="portrait" src="../characters/motion-solo-flexible.webp" alt="바니 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/motion-solo-flexible.webp" alt=""><small>옷</small><strong>사뿐사뿐 발레복</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/motion-solo-flexible.webp" alt=""><small>액세서리</small><strong>복숭아 리본 토슈즈</strong></button>
+</div></article>
+<article data-code="motion-team-planned"><h2>루카</h2>
+<img class="portrait" src="../characters/motion-team-planned.webp" alt="루카 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/motion-team-planned.webp" alt=""><small>옷</small><strong>팀 코치 응원 유니폼</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/motion-team-planned.webp" alt=""><small>액세서리</small><strong>팀 코치 손목밴드</strong></button>
+</div></article>
+<article data-code="motion-team-flexible"><h2>스킵</h2>
+<img class="portrait" src="../characters/motion-team-flexible.webp" alt="스킵 기본 모습">
+<div class="choices">
+<button type="button" data-slot="clothes" aria-pressed="false"><img src="dressing/items/clothes/motion-team-flexible.webp" alt=""><small>옷</small><strong>톡톡 치어리더 의상</strong></button>
+<button type="button" data-slot="accessory" aria-pressed="false"><img src="dressing/items/accessory/motion-team-flexible.webp" alt=""><small>액세서리</small><strong>톡톡 응원 폼폼</strong></button>
+</div></article>
+</div></main>
+<script>
+for (const card of document.querySelectorAll("article")) {
+  const portrait = card.querySelector(".portrait");
+  const base = portrait.getAttribute("src");
+  const name = card.querySelector("h2").textContent;
+  card.addEventListener("click", event => {
+    const choice = event.target.closest("button");
+    if (!choice) return;
+    choice.setAttribute("aria-pressed", String(choice.getAttribute("aria-pressed") !== "true"));
+    const active = Array.from(card.querySelectorAll('button[aria-pressed="true"]'));
+    const state = active.length === 2 ? "both" : active[0]?.dataset.slot;
+    portrait.src = state ? "dressing/" + state + "/" + card.dataset.code + ".webp" : base;
+    portrait.alt = name + " · " + (active.map(button => button.querySelector("strong").textContent).join(" + ") || "기본 모습");
+  });
+}
+</script></body></html>

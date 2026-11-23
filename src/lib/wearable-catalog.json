@@ -1,0 +1,114 @@
+[
+  {
+    "code": "visual-solo-planned",
+    "clothes": "별자리 탐험 케이프",
+    "accessory": "초승달 깃털핀",
+    "legacySlot": "clothes",
+    "accessory2": "달책 미니백"
+  },
+  {
+    "code": "visual-solo-flexible",
+    "clothes": "낙서 여행가 코트",
+    "accessory": "색연필 귀핀",
+    "legacySlot": "clothes",
+    "accessory2": "여우 발자국 스탬프 반지"
+  },
+  {
+    "code": "visual-team-planned",
+    "clothes": "숲길 안내자 제복",
+    "accessory": "나침반 어깨띠",
+    "legacySlot": "clothes",
+    "accessory2": "나뭇잎 길잡이 이어커프"
+  },
+  {
+    "code": "visual-team-flexible",
+    "clothes": "물감 주머니 작업복",
+    "accessory": "팔레트 화가 베레모",
+    "legacySlot": "accessory",
+    "accessory2": "수채화 젤리 선글라스"
+  },
+  {
+    "code": "auditory-solo-planned",
+    "clothes": "딸기 니트 카디건",
+    "accessory": "딸기우유 낭독 안경",
+    "legacySlot": "accessory",
+    "accessory2": "목소리 편지 로켓"
+  },
+  {
+    "code": "auditory-solo-flexible",
+    "clothes": "별사탕 라디오 재킷",
+    "accessory": "보랏빛 라디오 헤드폰",
+    "legacySlot": "clothes",
+    "accessory2": "음표 꼬리 방울"
+  },
+  {
+    "code": "auditory-team-planned",
+    "clothes": "설명왕 세일러복",
+    "accessory": "발표왕 별 배지",
+    "legacySlot": "clothes",
+    "accessory2": "마이크 배턴 홀스터"
+  },
+  {
+    "code": "auditory-team-flexible",
+    "clothes": "잎새 요정 조끼",
+    "accessory": "질문 요정 날개",
+    "legacySlot": "accessory",
+    "accessory2": "메아리 깃털 바람개비"
+  },
+  {
+    "code": "tactile-solo-planned",
+    "clothes": "차곡차곡 데님 멜빵",
+    "accessory": "도토리 이름표",
+    "legacySlot": "clothes",
+    "accessory2": "색인 카드 부채"
+  },
+  {
+    "code": "tactile-solo-flexible",
+    "clothes": "종이학 실험 가운",
+    "accessory": "종이별 귀걸이",
+    "legacySlot": "clothes",
+    "accessory2": "접이식 여우 안경집"
+  },
+  {
+    "code": "tactile-team-planned",
+    "clothes": "퍼즐 공방 점프수트",
+    "accessory": "퍼즐 귀핀",
+    "legacySlot": "clothes",
+    "accessory2": "조립왕 공구 멜빵띠"
+  },
+  {
+    "code": "tactile-team-flexible",
+    "clothes": "조각놀이 패딩 조끼",
+    "accessory": "조각놀이 롤러스케이트",
+    "legacySlot": "accessory",
+    "accessory2": "물수제비 조개 머리핀"
+  },
+  {
+    "code": "motion-solo-planned",
+    "clothes": "구간 타이머 트랙슈트",
+    "accessory": "구간 타이머 배지",
+    "legacySlot": "clothes",
+    "accessory2": "빙판 구간 머플러"
+  },
+  {
+    "code": "motion-solo-flexible",
+    "clothes": "사뿐사뿐 발레복",
+    "accessory": "복숭아 리본 토슈즈",
+    "legacySlot": "clothes",
+    "accessory2": "깡총 우체통 크로스백"
+  },
+  {
+    "code": "motion-team-planned",
+    "clothes": "팀 코치 응원 유니폼",
+    "accessory": "팀 코치 손목밴드",
+    "legacySlot": "clothes",
+    "accessory2": "하프타임 캡틴 완장"
+  },
+  {
+    "code": "motion-team-flexible",
+    "clothes": "톡톡 치어리더 의상",
+    "accessory": "톡톡 응원 폼폼",
+    "legacySlot": "clothes",
+    "accessory2": "별똥별 허리 리본"
+  }
+]

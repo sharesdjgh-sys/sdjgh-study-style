@@ -19,6 +19,7 @@ import {
   AXIS_MAX,
   STRENGTH_TEXT,
 } from "@/lib/scoring";
+import { Wearable } from "./wearable";
 import { CharacterCard } from "./character-card";
 import { CHARACTERS } from "@/lib/characters";
 import { Share } from "./share";
@@ -237,7 +238,10 @@ export function TypeResult({
           {hideCharacter ? (
             <MysteryCard type={type} priority />
           ) : (
-            <CharacterCard type={type} priority />
+            <>
+              <CharacterCard type={type} priority wardrobe />
+              <Wearable code={type.code} detail />
+            </>
           )}
         </div>
       </section>

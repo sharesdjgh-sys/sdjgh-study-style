@@ -1,4 +1,4 @@
-﻿import {
+import {
   beforeAll,
   beforeEach,
   afterAll,
@@ -108,6 +108,9 @@ beforeAll(async () => {
   await db.exec(await readFile("db/008_goods_stars.sql", "utf8"));
   await db.exec(await readFile("db/009_card_stars.sql", "utf8"));
   await db.exec(await readFile("db/014_install_onboarding.sql", "utf8"));
+  await db.exec(await readFile("db/015_wearable_goods.sql", "utf8"));
+  await db.exec(await readFile("db/016_separate_wearables.sql", "utf8"));
+  await db.exec(await readFile("db/017_second_accessories.sql", "utf8"));
 }, 60000);
 beforeEach(async () => {
   await db.exec(
@@ -392,6 +395,55 @@ it("실천 API는 세 질문과 서버의 10분 경과를 확인한 뒤 별을 �
       ).json()
     ).awarded,
   ).toBe(0);
+});
+it("착용 굿즈는 구매 후 무료로 착용하고 해제한다", async () => {
+  const id = "visual-solo-planned--wearable-01";
+  const change = async (equipped?: boolean) =>
+    (await goodsPost(request("/api/goods", { id, equipped }))).json();
+  await register(request("/api/collection/register", { session: session() }));
+  expect((await change(true)).error).toBe("not_owned");
+  await db.query("UPDATE collection_accounts SET star_balance=2 WHERE id=$1", [
+    owner,
+  ]);
+  expect((await change()).progress.balance).toBe(0);
+  expect((await change()).outcome).toBe("already_owned");
+  expect((await change(true)).progress.equipped).toContain(id);
+  expect((await (await goodsGet()).json()).progress.equipped).toContain(id);
+  expect((await change(false)).progress.equipped).not.toContain(id);
+  expect((await change(true)).progress.balance).toBe(0);
+  const accessory = "visual-solo-planned--wearable-02";
+  const accessoryAction = async (equipped?: boolean) =>
+    (
+      await goodsPost(request("/api/goods", { id: accessory, equipped }))
+    ).json();
+  expect((await accessoryAction(true)).error).toBe("not_owned");
+  expect((await accessoryAction()).error).toBe("insufficient_stars");
+  await db.query("UPDATE collection_accounts SET star_balance=2 WHERE id=$1", [
+    owner,
+  ]);
+  expect((await accessoryAction()).progress.balance).toBe(0);
+  expect((await accessoryAction(true)).progress.equipped.sort()).toEqual([
+    id,
+    accessory,
+  ]);
+  const newId = "visual-solo-planned--wearable-03";
+  const newer = async (equipped?: boolean) =>
+    (await goodsPost(request("/api/goods", { id: newId, equipped }))).json();
+  expect((await newer(true)).error).toBe("not_owned");
+  expect((await (await goodsGet()).json()).progress.equipped.sort()).toEqual([
+    id,
+    accessory,
+  ]);
+  await db.query("UPDATE collection_accounts SET star_balance=2 WHERE id=$1", [
+    owner,
+  ]);
+  expect((await newer()).progress.balance).toBe(0);
+  expect((await newer(true)).progress.equipped.sort()).toEqual([id, newId]);
+  expect((await accessoryAction(true)).progress.equipped.sort()).toEqual([
+    id,
+    accessory,
+  ]);
+  expect((await accessoryAction(false)).progress.equipped).toEqual([id]);
 });
 it("굿즈 API는 인증·출처·캐릭터 보유·별 잔액을 검사하고 구매자만 앞뒤 JPG를 저장한다", async () => {
   const id = "visual-solo-planned--special-01";
