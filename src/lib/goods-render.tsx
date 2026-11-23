@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { formatSdjPrizeNumber } from "@/lib/sdj-prize-number";
 import sharp from "sharp";
 import type { GoodsCard } from "./goods";
 export async function renderGoods(
@@ -99,7 +100,7 @@ export async function renderGoods(
               <img src={`data:image/png;base64,${mascot.toString("base64")}`} alt="" width={120} height={120} style={{ objectFit: "contain" }} />
               <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
                 <span style={{ fontSize: 28 }}>서여고 당첨 번호</span>
-                <span style={{ fontSize: 44 }}>{String(prizeNumber).padStart(2, "0")}번</span>
+                <span style={{ fontSize: 44 }}>{formatSdjPrizeNumber(prizeNumber)}</span>
               </div>
             </div>
           )}

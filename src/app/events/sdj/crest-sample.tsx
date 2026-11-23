@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 import { GoodsCardBack } from "@/components/goods-card-back";
@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 
 export function CrestSample({
   card,
+  number,
   initiallyBack,
   image,
   name,
@@ -16,6 +17,7 @@ export function CrestSample({
   hint,
 }: {
   card: GoodsCard;
+  number: number;
   initiallyBack: boolean;
   image: StaticImageData;
   name: string;
@@ -29,7 +31,7 @@ export function CrestSample({
       {back ? (
         <div className={styles.sampleReverse}>
           <div className={`${goodsStyles.card} ${card.kind === "daily" ? "" : goodsStyles.special}`}>
-            <GoodsCardBack card={card} sample />
+            <GoodsCardBack card={card} number={number} sample />
           </div>
         </div>
       ) : (

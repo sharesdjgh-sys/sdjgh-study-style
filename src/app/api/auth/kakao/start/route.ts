@@ -44,6 +44,7 @@ export async function POST(request: Request) {
       redirect_uri: callbackUrl(),
       state,
     }).toString();
+    if (returnPath === "/events/sdj?manager=login") url.searchParams.set("scope", "account_email");
     return wantsJson
       ? json({ authorizationUrl: url.toString() })
       : NextResponse.redirect(url, 303);

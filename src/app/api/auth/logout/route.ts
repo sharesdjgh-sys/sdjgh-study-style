@@ -6,6 +6,7 @@ import {
   json,
   sameOrigin,
 } from "@/lib/collection-server";
+import { MANAGER_COOKIE } from "@/lib/sdj-manager";
 import { database } from "@/lib/db";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "origin" }, 403);
@@ -17,6 +18,7 @@ export async function POST(request: Request) {
       await sql`DELETE FROM collection_sessions WHERE token_hash=${hash(value)}`;
     }
     jar.set(AUTH_COOKIE, "", cookieOptions(0));
+    jar.set(MANAGER_COOKIE, "", cookieOptions(0));
     return json({ ok: true });
   } catch {
     return json({ error: "unavailable" }, 503);

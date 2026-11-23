@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getGoods } from "@/lib/goods";
+import { canViewSdjPrizes } from "@/lib/sdj-manager";
 import { SDJ_EVENT } from "@/lib/sdj-event";
 
 import cardsIcon from "./nav-cards.webp";
@@ -23,8 +25,8 @@ import seoipiCutout from "./seoipi-cutout.webp";
 import seoipi from "./seoipi.webp";
 import crest from "../../../../ref/서여고 로고.webp";
 
-import lumi from "../../../../art/characters/special/events/sdj-character-v2/visual-solo-planned--daily-01.webp";
-import melo from "../../../../art/characters/special/events/sdj-character-v2/auditory-solo-flexible--special-01.webp";
+import melo from "../../../../art/characters/special/events/sdj-character-v2/auditory-solo-flexible--daily-01.webp";
+import lumi from "../../../../art/characters/special/events/sdj-character-v2/visual-solo-planned--special-05.webp";
 const description =
   "내 공부캐와 나에게 맞는 공부법을 찾고, 다른 학교에 다니는 친구나 동생을 초대해 함께 카드를 모아보세요. 송원제에서는 내가 모은 공부캐로 AI 자체 개발 게임 팡팡스타와 메이즈런을 즐길 수 있어요.";
 export const metadata: Metadata = {
@@ -53,20 +55,22 @@ export const metadata: Metadata = {
 
 const cards = [
   {
-    card: getGoods("visual-solo-planned--daily-01")!,
-    image: lumi,
+    card: getGoods("auditory-solo-flexible--daily-01")!,
+    image: melo,
+    number: 6,
     type: "일상 포토카드",
-    name: "루미",
-    title: "산책을 접어 둔 지도",
-    hint: "지도 옆 머그잔을 살펴보세요.",
+    name: "멜로",
+    title: "코코아는 왜 식을까",
+    hint: "코코아 머그잔을 살펴보세요.",
   },
   {
-    card: getGoods("auditory-solo-flexible--special-01")!,
-    image: melo,
+    card: getGoods("visual-solo-planned--special-05")!,
+    image: lumi,
+    number: 21,
     type: "특별 의상 카드",
-    name: "멜로",
-    title: "물음표를 좇는 꿈 탐정",
-    hint: "탐정 가방의 장식을 살펴보세요.",
+    name: "루미",
+    title: "새벽 도시의 조감도 화가",
+    hint: "화가 앞치마의 작은 자수를 살펴보세요.",
   },
 ];
 
@@ -77,6 +81,8 @@ export default async function SdjEventPage({
 }) {
   const params = await searchParams;
   const fromQr = params.from === "qr";
+  const showPrizeResults = await canViewSdjPrizes(true);
+  if (showPrizeResults && params.manager === "login" && params.auth === "success") redirect("/admin/sdj-prizes");
   return (
     <main id="main" className={styles.page}>
       <div className={styles.eventBar}>
@@ -343,6 +349,17 @@ export default async function SdjEventPage({
         <span>StudyCrew × 서여고</span>
         <a href="#start">내 공부캐 찾으러 가기 ↑</a>
       </div>
+      {showPrizeResults ? (
+        <div className={styles.eventFooter}>
+          <span>행사 운영</span>
+          <Link className="button secondary" href="/admin/sdj-prizes">당첨 결과 보기 · 지급 관리</Link>
+        </div>
+      ) : (
+        <form className={styles.eventFooter} method="post" action="/api/auth/kakao/start?returnTo=%2Fevents%2Fsdj%3Fmanager%3Dlogin">
+          <span>{params.manager === "login" && params.auth ? "운영자 인증을 완료하지 못했어요. 지정된 계정과 이메일 제공 동의를 확인해 주세요." : "행사 운영자 전용"}</span>
+          <button className="button secondary" type="submit">운영자 로그인 · 당첨 결과 확인</button>
+        </form>
+      )}
     </main>
   );
 }

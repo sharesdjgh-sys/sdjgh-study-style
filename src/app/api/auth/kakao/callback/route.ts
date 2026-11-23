@@ -13,6 +13,7 @@ import {
 import { database } from "@/lib/db";
 import { siteUrl } from "@/lib/site";
 import { identityHash, timedAuth } from "@/lib/auth-server";
+import { MANAGER_COOKIE, managerProof, verifiedSdjManager } from "@/lib/sdj-manager";
 import { authReturnPath } from "@/lib/auth-contract";
 export const runtime = "nodejs";
 const finish = (
@@ -66,13 +67,16 @@ export async function GET(request: Request) {
     if (!exchange.ok) return complete("failed");
     const tokens = await exchange.json();
     if (typeof tokens.access_token !== "string") return complete("failed");
-    const identity = await timedAuth("kakao_identity", () =>
-      fetch("https://kapi.kakao.com/v2/user/me?property_keys=%5B%5D", {
+    const loadIdentity = (keys: string[]) =>
+      fetch("https://kapi.kakao.com/v2/user/me?" + new URLSearchParams({ property_keys: JSON.stringify(keys) }), {
         cache: "no-store",
         signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Bearer ${tokens.access_token}` },
-      }),
-    );
+      });
+    const identity = await timedAuth("kakao_identity", async () => {
+      const response = await loadIdentity(["kakao_account.email"]);
+      return response.status === 400 || response.status === 403 ? loadIdentity([]) : response;
+    });
     if (!identity.ok) return complete("failed");
     const profile = await identity.json();
     if (!Number.isSafeInteger(profile.id) || profile.id <= 0)
@@ -94,6 +98,8 @@ export async function GET(request: Request) {
       );
     }
     if (!accounts[0]?.account_id) return complete("failed");
+    const manager = verifiedSdjManager(profile.kakao_account);
+    jar.set(MANAGER_COOKIE, manager ? managerProof(value) : "", cookieOptions(manager ? 30 * 86400 : 0));
     jar.set(AUTH_COOKIE, value, cookieOptions(30 * 86400));
     return complete("success");
   } catch {
