@@ -75,7 +75,7 @@ export function PrizeLedgerView({
   };
   return (
     <main id="main" className={styles.page}>
-      <Link href="/events/sdj" className={styles.back}>
+      <Link href="/events/sdj?from=qr" className={styles.back}>
         ← 서여고 이벤트
       </Link>
       <header className={styles.hero}>

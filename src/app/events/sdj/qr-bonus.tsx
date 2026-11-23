@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth-provider";
 import styles from "./page.module.css";
 
-export function QrBonus({ resume }: { resume: boolean }) {
+export function EventEntry({ resume }: { resume: boolean }) {
   const auth = useAuth();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -33,18 +33,21 @@ export function QrBonus({ resume }: { resume: boolean }) {
     }
   }, [router]);
   useEffect(() => {
-    if (resume && auth.status === "authenticated") void claim();
+    if (!resume || auth.status !== "authenticated") return;
+    void claim();
   }, [resume, auth.status, claim]);
   return (
     <>
       <button
         className={auth.status === "authenticated" ? styles.primary : styles.kakaoButton}
         disabled={busy || auth.busy}
-        onClick={() =>
-          auth.status === "authenticated"
-            ? void claim()
-            : void auth.login("/events/sdj?from=qr&bonus=1")
-        }
+        onClick={() => {
+          if (auth.status !== "authenticated") {
+            void auth.login("/events/sdj?from=qr&bonus=1");
+          } else {
+            void claim();
+          }
+        }}
       >
         {auth.status !== "authenticated" && (
           <Image src="/kakao-symbol.svg" alt="" width={20} height={20} />
@@ -52,7 +55,7 @@ export function QrBonus({ resume }: { resume: boolean }) {
         {busy
           ? "카드 확인 중…"
           : auth.status === "authenticated"
-            ? "공부캐 카드 받으러 가기"
+            ? "내 공부캐 찾기"
             : "카카오톡으로 로그인하고 내 공부캐 찾기"}
       </button>
       <p role="status">{message || auth.message}</p>

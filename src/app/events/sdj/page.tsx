@@ -18,7 +18,7 @@ import pangLogo from "./gameplay/pangpangstar-logo.webp";
 import mazeLogo from "./gameplay/mazerun-logo.webp";
 import pangpangstar from "./gameplay/pangpangstar.webp";
 import mazerun from "./gameplay/mazerun.webp";
-import { QrBonus } from "./qr-bonus";
+import { EventEntry } from "./qr-bonus";
 import { CrestSample } from "./crest-sample";
 import styles from "./page.module.css";
 import seoipiCutout from "./seoipi-cutout.webp";
@@ -32,7 +32,7 @@ const description =
 export const metadata: Metadata = {
   title: SDJ_EVENT.title,
   description,
-  alternates: { canonical: SDJ_EVENT.path },
+  alternates: { canonical: SDJ_EVENT.path + "?from=qr" },
   twitter: {
     card: "summary",
     title: SDJ_EVENT.title,
@@ -80,7 +80,15 @@ export default async function SdjEventPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
-  const fromQr = params.from === "qr";
+  if (params.from !== "qr") {
+    const query = new URLSearchParams({ from: "qr" });
+    for (const key of ["manager", "auth", "preview", "bonus"]) {
+      const value = params[key];
+      if (typeof value === "string") query.set(key, value);
+    }
+    if (params.start === "1") query.set("bonus", "1");
+    redirect(SDJ_EVENT.path + "?" + query.toString());
+  }
   const showPrizeResults = await canViewSdjPrizes(true);
   if (showPrizeResults && params.manager === "login" && params.auth === "success") redirect("/admin/sdj-prizes");
   return (
@@ -95,15 +103,9 @@ export default async function SdjEventPage({
         <div className={styles.coverEntry}>
           <p>카카오톡으로 로그인하고 내 공부캐를 찾아보세요.<br />검사 결과를 도감에 저장하면 <strong>랜덤 공부캐 카드 한 장</strong>을 더 받아요.</p>
           <div id="start">
-            {fromQr ? (
-              <QrBonus
-                resume={params.bonus === "1" && params.auth === "success"}
-              />
-            ) : (
-              <Link className={styles.primary} href="/quiz">
-                내 공부캐 찾기 ↗
-              </Link>
-            )}
+            <EventEntry
+              resume={params.auth === "success" && params.bonus === "1"}
+            />
           </div>
         </div>
         <section className={styles.coverSamples} aria-labelledby="sample-cast-title">
@@ -347,19 +349,23 @@ export default async function SdjEventPage({
       </section>
       <div className={styles.eventFooter}>
         <span>StudyCrew × 서여고</span>
-        <a href="#start">내 공부캐 찾으러 가기 ↑</a>
+        <a href="#start">행사 참여하기 ↑</a>
       </div>
       {showPrizeResults ? (
-        <div className={styles.eventFooter}>
-          <span>행사 운영</span>
-          <Link className="button secondary" href="/admin/sdj-prizes">당첨 결과 보기 · 지급 관리</Link>
-        </div>
-      ) : (
+        <Link className={styles.ledgerLink} href="/admin/sdj-prizes">
+          <Image src={voucherIcon} alt="" width={46} height={46} />
+          <span>
+            <strong>매점권 지급대장</strong>
+            <small>당첨 결과 확인 · 지급 처리</small>
+          </span>
+          <span className={styles.ledgerArrow} aria-hidden="true">→</span>
+        </Link>
+      ) : params.manager === "login" ? (
         <form className={styles.eventFooter} method="post" action="/api/auth/kakao/start?returnTo=%2Fevents%2Fsdj%3Fmanager%3Dlogin">
-          <span>{params.manager === "login" && params.auth ? "운영자 인증을 완료하지 못했어요. 지정된 계정과 이메일 제공 동의를 확인해 주세요." : "행사 운영자 전용"}</span>
-          <button className="button secondary" type="submit">운영자 로그인 · 당첨 결과 확인</button>
+          <span>{params.auth ? "운영자 인증을 완료하지 못했어요. 지정된 계정과 이메일 제공 동의를 확인해 주세요." : "행사 운영자 전용"}</span>
+          <button className="button secondary" type="submit">카카오톡으로 운영자 로그인</button>
         </form>
-      )}
+      ) : null}
     </main>
   );
 }
