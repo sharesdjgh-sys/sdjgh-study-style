@@ -101,7 +101,7 @@ export default async function SdjEventPage({
         <h1 id="event-title" className={styles.titleText}>서여고 스페셜 이벤트 · 내 공부캐를 찾으면 랜덤 카드 한 장 더!</h1>
         <Image className={styles.coverArt} src={festivalPoster} preload sizes="(max-width: 1100px) 100vw, 1100px" alt="몽, 루미, 멜로가 펼친 책에서 반짝이는 랜덤 카드를 발견하는 축제 포스터" />
         <div className={styles.coverEntry}>
-          <p>카카오톡으로 로그인하고 내 공부캐를 찾아보세요.<br />검사 결과를 도감에 저장하면 <strong>랜덤 공부캐 카드 한 장</strong>을 더 받아요.</p>
+          <p>카톡으로 로그인하고 내 공부캐를 찾아보세요.<br />검사 결과를 도감에 저장하면 <strong>랜덤 공부캐 카드 한 장</strong>을 더 받아요.</p>
           <div id="start">
             <EventEntry
               resume={params.auth === "success" && params.bonus === "1"}
@@ -139,7 +139,7 @@ export default async function SdjEventPage({
             <span>01</span>
             <h3>나와 닮은 공부캐 찾기</h3>
             <p>
-              카카오톡으로 로그인하고 질문에 답해요. 결과에서 내 공부 습관과 나에게
+              카톡으로 로그인하고 질문에 답해요. 결과에서 내 공부 습관과 나에게
               맞는 공부법을 확인하고 도감에 저장해요.
             </p>
           </li>

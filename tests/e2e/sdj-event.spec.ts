@@ -51,7 +51,7 @@ test("포스터 QR에서 실제 배지 카드를 살펴보고 공부캐 검사�
   await expect(page.locator("#participate")).toContainText("10,000원 × 1건");
   await expect(page.locator("#participate")).toContainText("14,000원");
   await expect(
-    page.getByRole("button", { name: "카카오톡으로 로그인하고 내 공부캐 찾기" }),
+    page.getByRole("button", { name: "카톡으로 로그인하고 내 공부캐 찾기" }),
   ).toBeVisible();
   await expect(page.getByText("도감에서 랜덤 공부캐 카드 열기")).toBeVisible();
 });
@@ -61,7 +61,7 @@ test("일반 행사 링크에서도 카카오톡 로그인으로 참여를 시�
   await page.goto("/events/sdj");
   await expect(page).toHaveURL(/\/events\/sdj\?from=qr$/);
   await expect(page.locator("#start").getByRole("button", {
-    name: "카카오톡으로 로그인하고 내 공부캐 찾기",
+    name: "카톡으로 로그인하고 내 공부캐 찾기",
   })).toBeVisible();
   await expect(page.locator('#start a[href="/quiz"]')).toHaveCount(0);
 });

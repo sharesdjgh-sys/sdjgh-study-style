@@ -56,7 +56,7 @@ export function EventEntry({ resume }: { resume: boolean }) {
           ? "카드 확인 중…"
           : auth.status === "authenticated"
             ? "내 공부캐 찾기"
-            : "카카오톡으로 로그인하고 내 공부캐 찾기"}
+            : "카톡으로 로그인하고 내 공부캐 찾기"}
       </button>
       <p role="status">{message || auth.message}</p>
     </>
