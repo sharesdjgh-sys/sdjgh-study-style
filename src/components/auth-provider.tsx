@@ -1,4 +1,7 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
+import Script from "next/script";
+import { getKakao } from "@/lib/kakao-browser";
 import {
   createContext,
   useCallback,
@@ -40,9 +43,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [slow, setSlow] = useState(false);
   const serial = useRef(0);
   const action = useRef(false);
+  const prepared = useRef<{
+    path: string;
+    expires: number;
+    launch: () => Promise<unknown> | void;
+  } | null>(null);
   const controller = useRef<AbortController | null>(null);
   const pending = useRef<Promise<void> | null>(null);
   const invalidate = useCallback(() => {
+    prepared.current = null;
     serial.current++;
     controller.current?.abort();
     pending.current = null;
@@ -63,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const response = await fetch("/api/auth/session", {
           cache: "no-store",
-          signal: AbortSignal.any([abort.signal, AbortSignal.timeout(10000)]),
+          signal: requestSignal(10000, abort.signal),
         });
         if (!response.ok) throw new Error("session_unavailable");
         const session: AuthSession = await response.json();
@@ -114,6 +123,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(
     async (returnTo?: string) => {
       if (action.current) return;
+      const path = returnTo ?? location.pathname + location.search;
+      const previous = prepared.current;
       action.current = true;
       invalidate();
       const current = serial.current;
@@ -123,12 +134,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         message: "카카오 로그인 화면으로 이동하고 있어요…",
       }));
       try {
+        if (
+          previous &&
+          previous.path === path &&
+          previous.expires > Date.now()
+        ) {
+          await previous.launch();
+          return;
+        }
         const response = await fetch(
-          `/api/auth/kakao/start?returnTo=${encodeURIComponent(returnTo ?? location.pathname + location.search)}`,
+          `/api/auth/kakao/start?returnTo=${encodeURIComponent(path)}`,
           {
             method: "POST",
             headers: { Accept: "application/json" },
-            signal: AbortSignal.timeout(10000),
+            signal: requestSignal(10000),
           },
         );
         if (!response.ok) throw new Error("login_unavailable");
@@ -139,7 +158,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           url.pathname !== "/oauth/authorize"
         )
           throw new Error("invalid_redirect");
-        if (current === serial.current) window.location.assign(url.toString());
+        if (current !== serial.current) return;
+        const sdk = getKakao();
+        const redirectUri = url.searchParams.get("redirect_uri");
+        const state = url.searchParams.get("state");
+        const scope = url.searchParams.get("scope");
+        const ios =
+          /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+          (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const mobile = ios || /Android/.test(navigator.userAgent);
+        if (mobile && sdk?.Auth && redirectUri && state) {
+          const launch = () => {
+            try {
+              return sdk.Auth.authorize({
+                redirectUri,
+                state,
+                ...(scope && { scope }),
+              });
+            } catch {
+              window.location.assign(url.toString());
+            }
+          };
+          // Safari may expire the tap while the server persists the OAuth state.
+          if (ios && !navigator.userActivation?.isActive) {
+            prepared.current = {
+              path,
+              expires: Date.now() + 9 * 60000,
+              launch,
+            };
+            action.current = false;
+            setState((old) => ({
+              ...old,
+              status: "anonymous",
+              message: "카카오톡을 열려면 로그인 버튼을 한 번 더 눌러 주세요.",
+            }));
+            return;
+          }
+          await launch();
+          return;
+        }
+        window.location.assign(url.toString());
       } catch {
         if (current === serial.current) {
           action.current = false;
@@ -166,7 +224,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
-        signal: AbortSignal.timeout(10000),
+        signal: requestSignal(10000),
       });
       if (!response.ok) throw new Error("logout_failed");
       if (current === serial.current) signedOut();
@@ -240,6 +298,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <Context.Provider
       value={{ ...state, message, busy, refresh, login, logout, signedOut }}
     >
+      {process.env.NEXT_PUBLIC_KAKAO_JS_KEY && (
+        <Script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.3/kakao.min.js" />
+      )}
       {children}
     </Context.Provider>
   );

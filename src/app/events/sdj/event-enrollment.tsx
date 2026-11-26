@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth-provider";
@@ -39,7 +40,7 @@ function Enrollment() {
       try {
         const response = await fetch("/api/events/sdj", {
           cache: "no-store",
-          signal: AbortSignal.any([abort.signal, AbortSignal.timeout(10000)]),
+          signal: requestSignal(10000, abort.signal),
         });
         if (!response.ok) throw new Error();
         const data: SdjEnrollment = await response.json();
@@ -51,7 +52,7 @@ function Enrollment() {
             body: JSON.stringify({
               source: params.get("from") === "qr" ? "poster_qr" : "event_page",
             }),
-            signal: AbortSignal.any([abort.signal, AbortSignal.timeout(10000)]),
+            signal: requestSignal(10000, abort.signal),
           });
           if (!result.ok || (await result.json()).enrolled !== true)
             throw new Error();
@@ -106,7 +107,7 @@ function Enrollment() {
               ? "poster_qr"
               : "event_page",
         }),
-        signal: AbortSignal.timeout(10000),
+        signal: requestSignal(10000),
       });
       if (response.status === 401) {
         await auth.refresh();
@@ -202,5 +203,17 @@ function Enrollment() {
         참여 기록 및 개인정보 안내
       </Link>
     </div>
+  );
+}
+
+export function ManagerLogin({ failed }: { failed: boolean }) {
+  const auth = useAuth();
+  const path = "/events/sdj?manager=login";
+  return (
+    <form className={styles.eventFooter} method="post" action={`/api/auth/kakao/start?returnTo=${encodeURIComponent(path)}`}
+      onSubmit={(event) => { event.preventDefault(); void auth.login(path); }}>
+      <span role="status">{auth.message || (failed ? "운영자 인증을 완료하지 못했어요. 지정된 계정과 이메일 제공 동의를 확인해 주세요." : "행사 운영자 전용")}</span>
+      <button className="button secondary" type="submit" disabled={auth.busy}>카카오톡으로 운영자 로그인</button>
+    </form>
   );
 }

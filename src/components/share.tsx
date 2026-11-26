@@ -1,5 +1,4 @@
 "use client";
-import Script from "next/script";
 import Image from "next/image";
 import styles from "./share.module.css";
 import { useState } from "react";
@@ -15,15 +14,7 @@ import {
   SHARE_IMAGE_WIDTH,
   SHARE_IMAGE_HEIGHT,
 } from "@/lib/share-image";
-declare global {
-  interface Window {
-    Kakao?: {
-      init: (key: string) => void;
-      isInitialized: () => boolean;
-      Share: { sendDefault: (options: object) => void };
-    };
-  }
-}
+import { getKakao } from "@/lib/kakao-browser";
 export function Share({
   type,
   kakaoLabel = "친구에게 카카오톡 공유",
@@ -32,8 +23,6 @@ export function Share({
   kakaoLabel?: string;
 }) {
   const { data } = useCollection();
-  const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
-  const [ready, setReady] = useState(false);
   const [message, setMessage] = useState("");
   const [manual, setManual] = useState("");
   const url = (home = false) => {
@@ -59,12 +48,13 @@ export function Share({
   }
   function kakao() {
     event("kakao");
-    if (!ready || !window.Kakao) {
+    const sdk = getKakao();
+    if (!sdk) {
       setMessage("카카오톡 공유를 열 수 없어요. 링크 복사를 이용해 주세요.");
       return;
     }
     try {
-      window.Kakao.Share.sendDefault({
+      sdk.Share.sendDefault({
         objectType: "feed",
         content: {
           title: type
@@ -101,21 +91,6 @@ export function Share({
   }
   return (
     <div className="share-block">
-      {key && (
-        <Script
-          src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.3/kakao.min.js"
-          strategy="lazyOnload"
-          onReady={() => {
-            try {
-              if (!window.Kakao?.isInitialized()) window.Kakao?.init(key);
-              setReady(true);
-            } catch {
-              setReady(false);
-            }
-          }}
-          onError={() => setReady(false)}
-        />
-      )}
       <div className={`button-row ${styles.actions}`}>
         <button
           className={`button secondary ${styles.copy}`}

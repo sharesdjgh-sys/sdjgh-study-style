@@ -258,7 +258,7 @@ test("로그인 시작 진행·지연·실패를 표시하고 뒤로 복원되�
     release = resolve;
   });
   let requests = 0;
-  await page.route("**/api/auth/kakao/start", async (route) => {
+  await page.route("**/api/auth/kakao/start?*", async (route) => {
     requests++;
     expect(route.request().headers().accept).toContain("application/json");
     await gate;

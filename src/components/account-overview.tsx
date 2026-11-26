@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -68,7 +69,7 @@ export function AccountOverview() {
     try {
       const response = await fetch("/api/collection/account", {
         method: "DELETE",
-        signal: AbortSignal.timeout(10000),
+        signal: requestSignal(10000),
       });
       if (!response.ok) throw new Error("delete_failed");
       auth.signedOut();

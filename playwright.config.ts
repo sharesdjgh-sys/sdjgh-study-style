@@ -12,6 +12,11 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   projects: [
+    {
+      name: "iphone-webkit",
+      testMatch: "**/kakao-login.spec.ts",
+      use: { ...devices["iPhone 13"], channel: undefined },
+    },
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     {
       name: "mobile",

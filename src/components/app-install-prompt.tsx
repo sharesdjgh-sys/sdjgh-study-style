@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -60,7 +61,7 @@ export function AppInstallPrompt() {
       try {
         const response = await fetch("/api/auth/install-prompt", {
           method: "POST",
-          signal: AbortSignal.timeout(10000),
+          signal: requestSignal(10000),
         });
         if (!response.ok) return;
         const payload = await response.json();

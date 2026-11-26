@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import {
   useCallback,
   useEffect,
@@ -52,10 +53,7 @@ function useResource<T>(url: string, revision: number) {
       try {
         const response = await fetch(url, {
           cache: "no-store",
-          signal: AbortSignal.any([
-            controller.signal,
-            AbortSignal.timeout(20000),
-          ]),
+          signal: requestSignal(20000, controller.signal),
         });
         if (!response.ok) {
           const body = await response.json().catch(() => ({}));
@@ -138,10 +136,7 @@ function ExportButton({
     try {
       const response = await fetch("/api/admin/export?" + query.toString(), {
         cache: "no-store",
-        signal: AbortSignal.any([
-          controller.signal,
-          AbortSignal.timeout(30000),
-        ]),
+        signal: requestSignal(30000, controller.signal),
       });
       if (!alive.current) return;
       if ([401, 403].includes(response.status)) {

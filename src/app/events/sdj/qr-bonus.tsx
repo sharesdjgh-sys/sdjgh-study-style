@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ export function EventEntry({ resume }: { resume: boolean }) {
     try {
       const response = await fetch("/api/events/sdj/bonus", {
         method: "POST",
-        signal: AbortSignal.timeout(10000),
+        signal: requestSignal(10000),
       });
       if (!response.ok) throw new Error();
       const { status } = await response.json();

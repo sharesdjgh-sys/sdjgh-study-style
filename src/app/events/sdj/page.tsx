@@ -1,3 +1,4 @@
+import { ManagerLogin } from "./event-enrollment";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -361,10 +362,7 @@ export default async function SdjEventPage({
           <span className={styles.ledgerArrow} aria-hidden="true">→</span>
         </Link>
       ) : params.manager === "login" ? (
-        <form className={styles.eventFooter} method="post" action="/api/auth/kakao/start?returnTo=%2Fevents%2Fsdj%3Fmanager%3Dlogin">
-          <span>{params.auth ? "운영자 인증을 완료하지 못했어요. 지정된 계정과 이메일 제공 동의를 확인해 주세요." : "행사 운영자 전용"}</span>
-          <button className="button secondary" type="submit">카카오톡으로 운영자 로그인</button>
-        </form>
+        <ManagerLogin failed={Boolean(params.auth)} />
       ) : null}
     </main>
   );

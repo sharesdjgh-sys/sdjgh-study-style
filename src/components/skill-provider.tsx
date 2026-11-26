@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import {
   createContext,
   useCallback,
@@ -54,7 +55,7 @@ export function SkillProvider({ children }: { children: ReactNode }) {
     try {
       const response = await fetch("/api/skills", {
         cache: "no-store",
-        signal: AbortSignal.timeout(10000),
+        signal: requestSignal(10000),
       });
       const result = await response.json();
       if (!response.ok || result.accountId !== owner)
@@ -97,7 +98,7 @@ export function SkillProvider({ children }: { children: ReactNode }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(input),
-        signal: AbortSignal.timeout(15000),
+        signal: requestSignal(15000),
       });
       const result = await response.json();
       if (current.current !== owner) throw Error("unauthorized");

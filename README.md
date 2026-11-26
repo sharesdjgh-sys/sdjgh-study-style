@@ -52,14 +52,14 @@ http://127.0.0.1:3000 에서 확인합니다. DB와 카카오 키가 없어도 �
 2. `npm.cmd run db:migrate`를 실행합니다. `db/001_analytics.sql`, `db/002_retention.sql`, `db/003_collections.sql`, `db/004_saved_results.sql`을 순서대로 적용합니다. Neon SQL Editor에서도 동일한 순서로 실행할 수 있습니다. 기존 계정이나 도감을 초기화하지 않는 추가 마이그레이션입니다.
 3. Vercel에 저장소를 연결하고 프레임워크는 Next.js, Node 버전은 24를 선택합니다.
 4. Vercel 환경변수에 `DATABASE_URL`, `NEXT_PUBLIC_SITE_URL`(운영 HTTPS 주소), `CRON_SECRET`(무작위 긴 문자열), `NEXT_PUBLIC_CONTACT_EMAIL`(공개 문의 주소)을 설정합니다.
-5. 카카오 공유를 사용하려면 `NEXT_PUBLIC_KAKAO_JS_KEY`를 추가하고 카카오 Developers에서 JavaScript SDK 도메인과 제품 링크 도메인에 운영 주소를 등록합니다. 개발/미리보기 도메인을 사용할 때도 해당 설정을 확인합니다.
+5. 모바일 카카오톡 간편로그인과 카카오 공유를 사용하려면 `NEXT_PUBLIC_KAKAO_JS_KEY`를 추가하고 카카오 Developers에서 JavaScript SDK 도메인과 제품 링크 도메인에 운영 주소를 등록합니다. 개발/미리보기 도메인을 사용할 때도 해당 설정을 확인합니다.
 6. 환경변수 설정 후 배포합니다. 공개 변수는 빌드 시 적용되므로 바꾸면 재배포하세요.
 7. 운영 도메인에서 QR과 공유 미리보기를 확인한 뒤 포스터에 사용합니다. 이미지 URL은 카카오 서버에서 로그인 없이 접근할 수 있어야 합니다.
 
 ### 카카오 로그인과 수집 도감
 
 1. 카카오 Developers에서 같은 앱의 카카오 로그인을 활성화하고 REST API 키와 Client Secret을 서버 환경변수 `KAKAO_REST_API_KEY`, `KAKAO_CLIENT_SECRET`에 설정합니다. 브라우저용 `NEXT_PUBLIC_KAKAO_JS_KEY`와 혼동하지 마세요. 별도로 최소 32자의 무작위 서버 비밀키 `AUTH_IDENTITY_HMAC_SECRET`을 준비합니다. 이 키는 탈퇴 식별값 생성에 사용하므로 최초 설정 후 유지·백업하고, 임의로 교체하거나 `NEXT_PUBLIC_` 환경변수에 넣지 마세요. 누락되면 로그인과 탈퇴는 제한 정책을 우회하지 않고 실패합니다.
-2. 카카오 리다이렉트 URI에 `NEXT_PUBLIC_SITE_URL` + `/api/auth/kakao/callback`을 정확히 등록합니다. 로컬에서는 `http://127.0.0.1:3000`과 `http://localhost:3000`을 섞지 마세요. 운영 주소는 HTTPS를 사용합니다.
+2. 같은 앱의 JavaScript 키와 REST API 키 각각의 카카오 로그인 리다이렉트 URI에 `NEXT_PUBLIC_SITE_URL` + `/api/auth/kakao/callback`을 정확히 등록합니다. 로컬에서는 `http://127.0.0.1:3000`과 `http://localhost:3000`을 섞지 마세요. 운영 주소는 HTTPS를 사용합니다.
 3. 일반 로그인에 이름·이메일·프로필·친구 목록을 필수로 설정하지 않습니다. 서여고 행사 운영자 확인에는 카카오계정(이메일) 항목의 사용 권한이 필요합니다. 운영자가 추가 동의를 해야 할 때는 /events/sdj?manager=login 에서 인증합니다. 인증되고 유효한 이메일을 대조한 서버 세션에서 홍보 페이지 하단의 당첨 결과 보기가 열립니다. 이 앱은 앱 회원번호만 저장하며 제공자 토큰을 보관하지 않습니다. 로그인 요청은 같은 출처 POST, 일회성 OAuth state와 브라우저 쿠키, 10분 유효기간으로 보호합니다.
 4. `/collection`에서 첫 결과 저장, 다른 계정의 추천 가입, 선물 개봉, 같은 계정의 다른 브라우저 복원을 확인합니다. 카카오 전송 웹훅은 보상 조건이 아니므로 설정하지 않습니다.
 5. Vercel Preview에서는 운영 DB와 분리된 Neon 브랜치·테스트 카카오 설정을 사용합니다. 외부 OAuth·실제 Neon 연결·카카오 인앱 브라우저 검증은 설정한 배포 환경에서 수행해야 합니다.

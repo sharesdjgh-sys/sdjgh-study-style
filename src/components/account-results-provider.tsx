@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -64,10 +65,7 @@ export function AccountResultsProvider({
         const fetchResults = async () => {
           const response = await fetch("/api/results", {
             cache: "no-store",
-            signal: AbortSignal.any([
-              controller.signal,
-              AbortSignal.timeout(10000),
-            ]),
+            signal: requestSignal(10000, controller.signal),
           });
           if (response.status === 401) void refreshAuth();
           if (!response.ok)
@@ -104,10 +102,7 @@ export function AccountResultsProvider({
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(session),
-              signal: AbortSignal.any([
-                controller.signal,
-                AbortSignal.timeout(10000),
-              ]),
+              signal: requestSignal(10000, controller.signal),
             });
             if (response.status === 401) void refreshAuth();
             if (!response.ok)

@@ -1,4 +1,5 @@
 "use client";
+import { requestSignal } from "@/lib/request-signal";
 import {
   createContext,
   Fragment,
@@ -53,7 +54,7 @@ export function CollectionProvider({
     try {
       const response = await fetch("/api/collection", {
         cache: "no-store",
-        signal: AbortSignal.any([abort.signal, AbortSignal.timeout(10000)]),
+        signal: requestSignal(10000, abort.signal),
       });
       if (!response.ok) throw new Error("unavailable");
       const data: CollectionData = await response.json();
